@@ -30,14 +30,17 @@
 #include "nec2c.h"
 #include "shared.h"
 
+#ifndef _WIN32
 /* signal handler */
 static void sig_handler( int signal );
+#endif
 
 /*-------------------------------------------------------------------*/
 
 int main( int argc, char **argv )
 {
-  char infile[81] = "", otfile[81] = "";
+  char infile[NEC2C_PATH_MAX + 1] = "";
+  char otfile[NEC2C_PATH_BUFFER_SIZE] = "";
   char ain[3], line_buf[LINE_LEN];
 
 /* input card mnemonic list */
@@ -79,6 +82,7 @@ int main( int argc, char **argv )
   /* getopt() variables */
   int option;
 
+#ifndef _WIN32
   /*** signal handler related code ***/
   /* new and old actions for sigaction() */
   struct sigaction sa_new, sa_old;
@@ -95,6 +99,7 @@ int main( int argc, char **argv )
   sigaction( SIGFPE,  &sa_new, 0 );
   sigaction( SIGTERM, &sa_new, 0 );
   sigaction( SIGABRT, &sa_new, 0 );
+#endif
 
   /*** command line arguments handler ***/
   if( argc == 1 )
@@ -109,15 +114,15 @@ int main( int argc, char **argv )
 	switch( option )
 	{
 	  case 'i' : /* specify input file name */
-		if( strlen(optarg) > 75 )
+		if( strlen(optarg) > NEC2C_PATH_MAX )
 		  abort_on_error(-1);
-		strcpy( infile, optarg );
+		snprintf( infile, sizeof(infile), "%s", optarg );
 		break;
 
 	  case 'o' : /* specify output file name */
-		if( strlen(optarg) > 75 )
+		if( strlen(optarg) > NEC2C_PATH_MAX )
 		  abort_on_error(-2);
-		strcpy( otfile, optarg );
+		snprintf( otfile, sizeof(otfile), "%s", optarg );
 		break;
 
 	  case 'h' : /* print usage and exit */
@@ -139,7 +144,7 @@ int main( int argc, char **argv )
   /*** open input file ***/
   if( (input_fp = fopen(infile, "r")) == NULL )
   {
-	char mesg[88] = "nec2c: ";
+	char mesg[NEC2C_PATH_BUFFER_SIZE + 8] = "nec2c: ";
 
 	strcat( mesg, infile );
 	perror( mesg );
@@ -156,14 +161,13 @@ int main( int argc, char **argv )
 	infile[idx] = '\0';
 
 	/* make the output file name from input file */
-	strcpy( otfile, infile );
-	strcat( otfile, ".out" ); /* add extension */
+	snprintf( otfile, sizeof(otfile), "%s.out", infile );
   }
 
   /* open output file */
   if( (output_fp = fopen(otfile, "w")) == NULL )
   {
-	char mesg[88] = "nec2c: ";
+	char mesg[NEC2C_PATH_BUFFER_SIZE + 8] = "nec2c: ";
 
 	strcat( mesg, otfile );
 	perror( mesg );
@@ -896,16 +900,15 @@ int main( int argc, char **argv )
 
 		  if( plot_fp == NULL )
 		  {
-			char plotfile[81];
+			char plotfile[NEC2C_PATH_BUFFER_SIZE];
 
 			/* Make a plot file name */
-			strcpy( plotfile, infile );
-			strcat( plotfile, ".plt" );
+			snprintf( plotfile, sizeof(plotfile), "%s.plt", infile );
 
 			/* Open plot file */
 			if( (plot_fp = fopen(plotfile, "w")) == NULL )
 			{
-			  char mesg[88] = "nec2c: ";
+			  char mesg[NEC2C_PATH_BUFFER_SIZE + 8] = "nec2c: ";
 
 			  strcat( mesg, plotfile );
 			  perror( mesg );
@@ -1978,6 +1981,7 @@ void prnt( int in1, int in2, int in3, double fl1, double fl2,
 
 /*-----------------------------------------------------------------------*/
 
+#ifndef _WIN32
 static void sig_handler( int signal )
 {
   fprintf( stderr, "\n" );
@@ -2006,6 +2010,7 @@ static void sig_handler( int signal )
   }
 
 } /* end of sig_handler() */
+#endif
 
 /*------------------------------------------------------------------------*/
 

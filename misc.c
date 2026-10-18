@@ -77,12 +77,16 @@ void abort_on_error( int why )
 /* Returns process time (user+system) BUT in _msec_ */
 void secnds( double *x)
 {
+#ifndef _WIN32
   struct tms buffer;
   double clk_tck;
 
   times(&buffer);
   clk_tck = sysconf( _SC_CLK_TCK );
   *x = 1000.0 * (double)(buffer.tms_utime + buffer.tms_stime) / clk_tck;
+#else
+  *x = 1000.0 * (double)clock() / (double)CLOCKS_PER_SEC;
+#endif
 
   return;
 }

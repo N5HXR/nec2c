@@ -1,0 +1,23 @@
+# Autotools build products
+/.deps/
+/autom4te.cache/
+/Makefile
+/Makefile.in
+/aclocal.m4
+/compile
+/config.guess
+/config.h
+/config.h.in
+/config.log
+/config.status
+/config.sub
+/configure
+/depcomp
+/install-sh
+/missing
+/stamp-h1
+
+# Compiler and executable output
+/*.o
+/nec2c
+/nec2c.exe

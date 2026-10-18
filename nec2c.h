@@ -12,7 +12,10 @@
 #include <errno.h>
 #include <time.h>
 #include <sys/types.h>
+
+#ifndef _WIN32
 #include <sys/times.h>
+#endif
 
 #ifndef	TRUE
 #define	TRUE	1
@@ -79,6 +82,11 @@
 
 /* max length of a line read from input file */
 #define	LINE_LEN	132
+
+/* Maximum path length accepted on the command line.  Extra room in path
+ * buffers accommodates a generated ".out" or ".plt" extension. */
+#define NEC2C_PATH_MAX 255
+#define NEC2C_PATH_BUFFER_SIZE (NEC2C_PATH_MAX + 5)
 
 /*** Structs encapsulating global ("common") variables ***/
 /* common  /crnt/ */

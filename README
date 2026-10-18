@@ -102,6 +102,21 @@
   prefix. There is also this hypertext documentation file which
   you can copy to a location of your choice.
 
+  WINDOWS / MSYS2 FORK:
+  The N5HXR fork includes small portability changes intended for native
+  Windows builds with the MSYS2 MinGW toolchain. From an MSYS2 MinGW shell,
+  install the development tools, then run:
+
+    ./autogen.sh
+    ./configure
+    make
+
+  The resulting nec2c.exe is a native Windows executable when built from a
+  MinGW shell. This fork accepts input and output paths up to 255 characters
+  long and omits POSIX sigaction handling on Windows. Timing on Windows uses
+  the standard C clock() function. These changes are deliberately kept small
+  so the numerical implementation remains aligned with upstream nec2c.
+
   4. USAGE: nec2c is run as a non-interactive command-line application
   and is invoked in the following manner:
   nec2c -i<input-file-name> [-o<output-file-name>][-hv]
