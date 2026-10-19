@@ -23,6 +23,7 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
+AM_PATH_PYTHON([3.6])
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [sin])

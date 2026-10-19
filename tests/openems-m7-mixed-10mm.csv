@@ -1,0 +1,2 @@
+frequency_mhz,vacuum_r_ohm,vacuum_x_ohm,er3_r_ohm,er3_x_ohm,delta_r_ohm,delta_x_ohm,mesh_mm,openems_method
+300.0,69.29618631711804,125.53648740536576,69.05653379865879,125.41704041493783,-0.23965251845925195,-0.11944699042793161,10.0,EC-FDTD

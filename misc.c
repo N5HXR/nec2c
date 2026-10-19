@@ -166,6 +166,13 @@ int load_line( char *buff, FILE *pfile )
 
   } /* end of while( num_chr < max_chr ) */
 
+  if( (num_chr == LINE_LEN) && (chr != CR) && (chr != LF) && (chr != EOF) )
+  {
+	while( (chr != CR) && (chr != LF) && (chr != EOF) )
+	  chr = fgetc(pfile);
+	eof = LINE_TRUNCATED;
+  }
+
   /* Capitalize first two characters (mnemonics) */
   if( (buff[0] > 0x60) && (buff[0] < 0x79) )
 	buff[0] -= 0x20;
@@ -195,6 +202,11 @@ void mem_alloc( void **ptr, size_t req )
 
 void mem_realloc( void **ptr, size_t req )
 {
+  if( req == 0 )
+  {
+	free_ptr( ptr );
+	return;
+  }
   *ptr = realloc( *ptr, req );
   if( *ptr == NULL )
 	abort_on_error( -4 );

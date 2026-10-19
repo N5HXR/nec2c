@@ -82,6 +82,7 @@
 
 /* max length of a line read from input file */
 #define	LINE_LEN	132
+#define LINE_TRUNCATED (-2)
 
 /* Maximum path length accepted on the command line.  Extra room in path
  * buffers accommodates a generated ".out" or ".plt" extension. */
@@ -507,7 +508,7 @@ void rom2(double a, double b, complex double *sum, double dmin);
 void sflds(double t, complex double *e);
 /* input.c */
 void qdsrc(int is, complex double v, complex double *e);
-void readmn(char *gm, int *i1, int *i2, int *i3, int *i4, double *f1, double *f2, double *f3, double *f4, double *f5, double *f6);
+void readmn(char *gm, char *free_field, size_t free_field_size, int *i1, int *i2, int *i3, int *i4, double *f1, double *f2, double *f3, double *f4, double *f5, double *f6);
 /* main.c */
 int main(int argc, char **argv);
 void Null_Pointers(void);

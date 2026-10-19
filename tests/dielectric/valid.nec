@@ -1,0 +1,7 @@
+CM M2 VALID DIELECTRIC PARSER FIXTURE
+CE
+GW 1 1 100 0 0 100 0 1 0.001
+GE
+FR 0 1 0 0 1.0
+DF "resources/valid-model.diel"
+EN

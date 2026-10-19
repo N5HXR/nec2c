@@ -1,0 +1,12 @@
+# Canonical M2 resource. Records intentionally use non-canonical ID order.
+nec2c-dielectric 1
+
+BOX 20 -2 -1 0  -1 1 2
+REGION 20 MATERIAL 2
+MATERIAL 2 ER 3.0
+MATERIAL 1 ER 1.0
+REGION 10 MATERIAL 1
+BOX 10 0 0 0  1 2 3 # an inline comment
+
+MESH MAX_ASPECT 1.5 MAX_CELLS 750 MAX_KH 0.4
+END

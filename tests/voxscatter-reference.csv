@@ -1,0 +1,8 @@
+# VoxScatter commit,73f7bba2897ee6d8e6e34812adb40442440a419b
+# Generator,tools/voxscatter_m5_reference.m
+# Geometry,32 equal voxels selected from a 4x4x4 requested-radius sphere
+# epsilon_r,3
+# requested-radius k0*a,0.8
+# incident,+x propagation and +z polarization
+cells,solver_flag,relative_residual,px_re,px_im,py_re,py_im,pz_re,pz_im
+32,0,7.6679041492556663e-12,-8.1746917922077307e-18,2.1799178112553949e-17,-1.0899589056276974e-17,-2.0436729480519327e-18,5.342961381535476,0.74715742986799372

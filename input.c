@@ -217,18 +217,19 @@ void qdsrc( int is, complex double v, complex double *e )
 
 /*-----------------------------------------------------------------------*/
 
-void readmn( char *gm, int *i1, int *i2, int *i3, int *i4,
+void readmn( char *gm, char *free_field, size_t free_field_size,
+	int *i1, int *i2, int *i3, int *i4,
 	double *f1, double *f2, double *f3,
 	double *f4, double *f5, double *f6 )
 {
   char line_buf[134];
-  int nlin, i, line_idx;
+  int nlin, i, line_idx, line_status;
   int nint = 4, nflt = 6;
   int iarr[4] = { 0, 0, 0, 0 };
   double rarr[6] = { 0., 0., 0., 0., 0., 0. };
 
   /* read a line from input file */
-  load_line( line_buf, input_fp );
+  line_status = load_line( line_buf, input_fp );
 
   /* get line length */
   nlin= (int)strlen( line_buf );
@@ -245,6 +246,16 @@ void readmn( char *gm, int *i1, int *i2, int *i3, int *i4,
   /* extract card's mnemonic code */
   strncpy( gm, line_buf, 2 );
   gm[2] = '\0';
+  if( free_field_size > 0 )
+	free_field[0] = '\0';
+
+  if( line_status == LINE_TRUNCATED )
+  {
+	fprintf( output_fp,
+		"\n  COMMAND DATA CARD \"%s\" ERROR:"
+		"\n  LINE EXCEEDS THE 132 CHARACTER LIMIT; CARD WAS NOT TRUNCATED.\n", gm );
+	stop(-1);
+  }
 
   /* Exit if "XT" command read (for testing) */
   if( strcmp( gm, "XT" ) == 0 )
@@ -254,6 +265,15 @@ void readmn( char *gm, int *i1, int *i2, int *i3, int *i4,
 	fprintf( output_fp,
 		"\n\n  nec2c: Exiting after an \"XT\" command in readgm()" );
 	stop(0);
+  }
+
+  if( strcmp( gm, "DF" ) == 0 )
+  {
+	*i1 = *i2 = *i3 = *i4 = 0;
+	*f1 = *f2 = *f3 = *f4 = *f5 = *f6 = 0.0;
+	if( free_field_size > 0 )
+	  snprintf( free_field, free_field_size, "%s", &line_buf[2] );
+	return;
   }
 
   /* Return if only mnemonic on card */

@@ -12,12 +12,25 @@
 /config.status
 /config.sub
 /configure
+/configure~
 /depcomp
 /install-sh
 /missing
 /stamp-h1
+/test-driver
+/test-suite.log
+/*.tar.gz
 
 # Compiler and executable output
 /*.o
 /nec2c
 /nec2c.exe
+
+# Test-runner products
+/tests/*.log
+/tests/*.trs
+/tests/__pycache__/
+/tests/.deps/
+/tests/.dirstamp
+/tests/*.o
+/tests/vie_kernel_test

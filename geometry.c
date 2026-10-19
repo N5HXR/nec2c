@@ -330,6 +330,10 @@ void conect( int ignd )
 		"       TOTAL PATCHES USED: %d   PATCHES"
 		" IN A SYMMETRIC CELL: %d",  data.m, data.mp );
 
+  /* A DF-only job intentionally has no wire or surface geometry. */
+  if( data.n == 0 && data.m == 0 )
+	return;
+
   iseg=( data.n+ data.m)/( data.np+ data.mp);
   if( iseg != 1)
   {
