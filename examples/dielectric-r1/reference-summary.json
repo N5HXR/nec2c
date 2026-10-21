@@ -1,0 +1,113 @@
+{
+  "feature_revision": 1,
+  "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+  "examples": [
+    {
+      "example": "free-space",
+      "solver": "dense",
+      "frequency_count": 1,
+      "z_ohm": [
+        [
+          74.13219016158,
+          10.03804193817
+        ],
+        [
+          74.13219016158,
+          10.03804193817
+        ],
+        [
+          74.13219016158,
+          10.03804193817
+        ]
+      ],
+      "absorbed_power_w": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "power_defects": [
+        0.002908284051099,
+        0.002908284051099,
+        0.002908284051099
+      ],
+      "residuals": [
+        9.7006e-15,
+        9.7006e-15,
+        9.7006e-15
+      ],
+      "output_file": "free-space.out"
+    },
+    {
+      "example": "pec-materials",
+      "solver": "fft",
+      "frequency_count": 3,
+      "z_ohm": [
+        [
+          58.53212664781,
+          -49.22053840889
+        ],
+        [
+          73.16270887136,
+          12.8012887346
+        ],
+        [
+          90.85383135006,
+          73.26262344921
+        ]
+      ],
+      "absorbed_power_w": [
+        5.585656534847e-08,
+        7.924803839474e-08,
+        3.638683824566e-08
+      ],
+      "power_defects": [
+        0.002989424981491,
+        0.002885574616893,
+        0.002798095481046
+      ],
+      "residuals": [
+        1.282103618394e-14,
+        1.767345239316e-14,
+        8.015828430211e-15
+      ],
+      "output_file": "pec-materials.out"
+    },
+    {
+      "example": "real-ground",
+      "solver": "gmres",
+      "frequency_count": 1,
+      "z_ohm": [
+        [
+          73.60611807173,
+          12.16552718888
+        ]
+      ],
+      "absorbed_power_w": [
+        2.686167380036e-07
+      ],
+      "power_defects": [
+        0.0002691314745527
+      ],
+      "residuals": [
+        2.165619253457e-11
+      ],
+      "output_file": "real-ground.out"
+    },
+    {
+      "example": "plane-wave",
+      "solver": "dense",
+      "frequency_count": 1,
+      "z_ohm": [],
+      "absorbed_power_w": [
+        3.184937864392e-09
+      ],
+      "power_defects": [
+        6.87657e-11
+      ],
+      "residuals": [
+        1.576e-16
+      ],
+      "output_file": "plane-wave.out"
+    }
+  ]
+}

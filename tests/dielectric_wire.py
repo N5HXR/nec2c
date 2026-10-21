@@ -123,8 +123,8 @@ def main() -> None:
             "FR 0 1 0 0 299.792458\nEX 0 1 6 0 1 0\n"
             "DF \"cube.diel\"\nRP 0 1 1 0000 90 0 0 0 0 0\nEN\n"
         )
-        rejected = run(deck, expect_success=False)
-        assert "DIELECTRIC CONTRIBUTIONS TO RADIATION PATTERNS ARE SCHEDULED FOR M8" in rejected
+        pattern = run(deck)
+        assert "COUPLED SCATTERED FAR FIELD (R TIMES E, V)" in pattern
 
         reciprocal_geometry = (
             "CE\nGW 1 11 0 0 -0.24 0 0 0.24 0.001\n"

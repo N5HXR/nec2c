@@ -1,0 +1,289 @@
+{
+  "scope": "M10 PEC, positive gaps, lossless dielectric",
+  "status": "COMPLETE: scoped PEC-only M10 acceptance gates pass (2026-10-20)",
+  "delta_z_tolerance_ohm": 2,
+  "binary_provenance": {
+    "binary_sha256": "20a2f16545f988841af080455ed17b9c82cf527b419a16bd5a26dff82fd705fb",
+    "solver": "gmres",
+    "requested_relative_tolerance": 1e-10
+  },
+  "frequency_cases": [
+    {
+      "frequency_mhz": 280,
+      "mesh_max_kh": 0.3,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        -0.47287609677999853,
+        -0.5724214884999981
+      ],
+      "runs": [
+        {
+          "er": 1,
+          "z_ohm": [
+            61.90487450674,
+            -19.52106124454
+          ],
+          "active_cells": 0,
+          "true_residual": 9.275768181825e-15,
+          "power_defect": 0.002314136110045,
+          "cpu_seconds": 0.01,
+          "wall_seconds": 0.15386024117469788
+        },
+        {
+          "er": 3,
+          "z_ohm": [
+            61.43199840996,
+            -20.09348273304
+          ],
+          "active_cells": 64,
+          "true_residual": 2.329880077928e-11,
+          "power_defect": 0.00235211370858,
+          "cpu_seconds": 12.74,
+          "wall_seconds": 177.49460357427597
+        }
+      ]
+    },
+    {
+      "frequency_mhz": 300,
+      "delta_z_ohm": [
+        -0.31729156654999713,
+        -1.1690056472200006
+      ]
+    },
+    {
+      "frequency_mhz": 320,
+      "mesh_max_kh": 0.3,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        -0.14616429624000205,
+        -1.9745624103300017
+      ],
+      "runs": [
+        {
+          "er": 1,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "cpu_seconds": 0.0,
+          "wall_seconds": 0.1774412989616394
+        },
+        {
+          "er": 3,
+          "z_ohm": [
+            99.12273004169,
+            59.45646700218
+          ],
+          "active_cells": 64,
+          "true_residual": 2.186967332007e-11,
+          "power_defect": 0.002092586479336,
+          "cpu_seconds": 12.25,
+          "wall_seconds": 164.7972313761711
+        }
+      ]
+    }
+  ],
+  "wire_refinement": [
+    {
+      "frequency_mhz": 300,
+      "mesh_max_kh": 0.3,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        -0.3567588110099962,
+        -1.1896748207700014
+      ],
+      "runs": [
+        {
+          "er": 1,
+          "z_ohm": [
+            79.94214840221,
+            21.49726187158
+          ],
+          "active_cells": 0,
+          "true_residual": 1.314007762348e-14,
+          "power_defect": 0.00017678966404,
+          "cpu_seconds": 0.01,
+          "wall_seconds": 0.24372723698616028
+        },
+        {
+          "er": 3,
+          "z_ohm": [
+            79.5853895912,
+            20.30758705081
+          ],
+          "active_cells": 64,
+          "true_residual": 2.907846763388e-11,
+          "power_defect": 0.0001875163753762,
+          "cpu_seconds": 13.22,
+          "wall_seconds": 184.05528286099434
+        }
+      ]
+    }
+  ],
+  "openems_comparisons": [
+    {
+      "frequency_mhz": 280,
+      "nec_delta_z_ohm": [
+        -0.47287609677999853,
+        -0.5724214884999981
+      ],
+      "openems_mesh_mm": 15,
+      "error_ohm": 0.18942644893683258
+    },
+    {
+      "frequency_mhz": 280,
+      "nec_delta_z_ohm": [
+        -0.47287609677999853,
+        -0.5724214884999981
+      ],
+      "openems_mesh_mm": 20,
+      "error_ohm": 0.12943727850598752
+    },
+    {
+      "frequency_mhz": 300,
+      "nec_delta_z_ohm": [
+        -0.31729156654999713,
+        -1.1690056472200006
+      ],
+      "openems_mesh_mm": 15,
+      "error_ohm": 0.39823244202885
+    },
+    {
+      "frequency_mhz": 300,
+      "nec_delta_z_ohm": [
+        -0.31729156654999713,
+        -1.1690056472200006
+      ],
+      "openems_mesh_mm": 20,
+      "error_ohm": 0.2763116748645166
+    },
+    {
+      "frequency_mhz": 320,
+      "nec_delta_z_ohm": [
+        -0.14616429624000205,
+        -1.9745624103300017
+      ],
+      "openems_mesh_mm": 15,
+      "error_ohm": 0.8218318372415293
+    },
+    {
+      "frequency_mhz": 320,
+      "nec_delta_z_ohm": [
+        -0.14616429624000205,
+        -1.9745624103300017
+      ],
+      "openems_mesh_mm": 20,
+      "error_ohm": 0.5589476531394023
+    }
+  ],
+  "physical_checks": {
+    "remote_ground_feed_errors_ohm": [
+      2.8754004447365937,
+      0.045037343149497956,
+      0.0034515308008407756
+    ],
+    "port_reciprocity_relative_error_vacuum": 7.819023334453019e-05,
+    "port_reciprocity_relative_error_loaded": 7.571286272142052e-05,
+    "max_plane_wave_power_defect": 0.001563665248429,
+    "refined_closed_patch_power_defect": 0.001273079418956
+  },
+  "limitations": [
+    "Absolute feed impedance differs between NEC delta-gap and OpenEMS finite feed; the 2-ohm gate applies to dielectric-induced delta Z.",
+    "Physical port reciprocity retains native NEC collocation error; separate dyadic tests check stricter kernel reciprocity.",
+    "Closed PEC surfaces used for patch power validation."
+  ],
+  "volume_refinement": {
+    "cases": [
+      {
+        "frequency_mhz": 300,
+        "mesh_max_kh": 0.4,
+        "wire_segments": 11,
+        "delta_z_ohm": [
+          -0.31750581632999797,
+          -1.1752064661999988
+        ],
+        "runs": [
+          {
+            "er": 1,
+            "z_ohm": [
+              78.64604736189,
+              21.77955767548
+            ],
+            "active_cells": 0,
+            "true_residual": 8.399038961945e-15,
+            "power_defect": 0.002180701974656,
+            "cpu_seconds": 0.01,
+            "wall_seconds": 0.11537328362464905
+          },
+          {
+            "er": 3,
+            "z_ohm": [
+              78.32854154556,
+              20.60435120928
+            ],
+            "active_cells": 27,
+            "true_residual": 7.560475639038e-11,
+            "power_defect": 0.00221347110101,
+            "cpu_seconds": 3.06,
+            "wall_seconds": 43.311631202697754
+          }
+        ]
+      },
+      {
+        "frequency_mhz": 300,
+        "mesh_max_kh": 0.24,
+        "wire_segments": 11,
+        "delta_z_ohm": [
+          -0.31710853814999496,
+          -1.1661330555999996
+        ],
+        "runs": [
+          {
+            "er": 1,
+            "z_ohm": [
+              78.64604736189,
+              21.77955767548
+            ],
+            "active_cells": 0,
+            "true_residual": 8.399038961945e-15,
+            "power_defect": 0.002180701974656,
+            "cpu_seconds": 0.01,
+            "wall_seconds": 0.11922788619995117
+          },
+          {
+            "er": 3,
+            "z_ohm": [
+              78.32893882374,
+              20.61342461988
+            ],
+            "active_cells": 125,
+            "true_residual": 7.840100543433e-11,
+            "power_defect": 0.002218116099405,
+            "cpu_seconds": 39.93,
+            "wall_seconds": 547.2532519996166
+          }
+        ]
+      }
+    ],
+    "intermediate_64_cell_checkpoint": "m10-nec-pec-300.json",
+    "successive_delta_z_changes_ohm": [
+      0.006204519239307499,
+      0.0028784165804322313
+    ]
+  },
+  "regression": {
+    "command": "make check -j2",
+    "total": 18,
+    "passed": 18,
+    "failed": 0
+  },
+  "sensitivity_evidence": "m10-pec-sensitivity-review.json",
+  "sensitivity_summary": {
+    "max_domain_delta_z_change_ohm": 0.005736904665182163,
+    "max_feed_delta_z_change_ohm": 0.00629206060934404,
+    "all_four_runs_reached_minus_60_db": true
+  }
+}

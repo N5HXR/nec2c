@@ -1,0 +1,39 @@
+{
+  "frequency_mhz": 300,
+  "ground": "PEC GN 1",
+  "wire_radius_m": 0.005,
+  "wire_length_m": 0.475,
+  "wire_center_z_m": 0.6,
+  "wire_segments": 11,
+  "extended_kernel": true,
+  "epsilon_r": 3,
+  "cube_minimum_m": [
+    0.05,
+    -0.05,
+    0.55
+  ],
+  "cube_maximum_m": [
+    0.15,
+    0.05,
+    0.65
+  ],
+  "mesh_max_kh": 0.3,
+  "active_cells": 64,
+  "solver": "dense-operator GMRES",
+  "gmres_requested_relative_tolerance": 1e-10,
+  "gmres_true_relative_residual": 2.37334400936e-11,
+  "vacuum_z_ohm": [
+    78.64604736189,
+    21.77955767548
+  ],
+  "loaded_z_ohm": [
+    78.32875579534,
+    20.61055202826
+  ],
+  "delta_z_ohm": [
+    -0.31729156654999713,
+    -1.1690056472200006
+  ],
+  "power_defect": 0.002217610947235,
+  "acceptance": "single NEC volume resolution and frequency; finite OpenEMS feed differs from NEC delta-gap; not full M10 closure"
+}

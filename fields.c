@@ -217,7 +217,9 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 
   } /* for( ip = 0; ip < gnd.ksymp; ip++ ) */
 
-  if( gnd.iperf != 2)
+  /* A caller may request the direct field while retaining material state.
+     Sommerfeld corrections require both the ground image and GN 2. */
+  if( gnd.ksymp == 1 || gnd.iperf != 2)
 	return;
 
   /* field due to ground using sommerfeld/norton */
@@ -1136,6 +1138,11 @@ void nefld( double xob, double yob, double zob,
 
 	for( i = 0; i < data.n; i++ )
 	{
+      /* Unit-current coupling assembly has many exactly zero basis terms.
+         Their field is identically zero; avoid evaluating unused kernels. */
+      if(crnt.air[i]==0.0 && crnt.aii[i]==0.0 &&
+         crnt.bir[i]==0.0 && crnt.bii[i]==0.0 &&
+         crnt.cir[i]==0.0 && crnt.cii[i]==0.0) continue;
 	  ix = i+1;
 	  dataj.s= data.si[i];
 	  dataj.b= data.bi[i];

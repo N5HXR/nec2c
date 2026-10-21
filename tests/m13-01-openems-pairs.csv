@@ -1,0 +1,10 @@
+dielectric_sigma_s_m,ground,mesh_mm,wire_cell_mm,domain_margin_mm,feed_gap_mm,cube_bottom_mm,frequency_mhz,delta_r_ohm,delta_x_ohm,status,vacuum_job,loaded_job
+0.02,pec,15.0,2.5,0,10,0.0,280.0,2.996341027642515,1.9496190049007769,completed_pair,pec-verify-a8eed7c504ce,pec-verify-7c0475a445a0
+0.02,pec,15.0,2.5,0,10,0.0,300.0,3.067173727335799,-0.1863393143883414,completed_pair,pec-verify-a8eed7c504ce,pec-verify-7c0475a445a0
+0.02,pec,15.0,2.5,0,10,0.0,320.0,2.5843701249851563,-3.4299013297964933,completed_pair,pec-verify-a8eed7c504ce,pec-verify-7c0475a445a0
+0.02,pec,15.0,2.5,150.0,10,0.0,280.0,2.9885686138002256,1.9609921274824913,completed_pair,pec-verify-8f7ce2d3757e,pec-verify-8f8655c2f82a
+0.02,pec,15.0,2.5,150.0,10,0.0,300.0,3.0783044337473484,-0.1606337954089554,completed_pair,pec-verify-8f7ce2d3757e,pec-verify-8f8655c2f82a
+0.02,pec,15.0,2.5,150.0,10,0.0,320.0,2.5959125500232716,-3.4156037924369826,completed_pair,pec-verify-8f7ce2d3757e,pec-verify-8f8655c2f82a
+0.02,pec,20.0,5.0,0,10,0.0,280.0,2.786955333284169,1.8871319085389322,completed_pair,pec-verify-46ad3cbf7ee8,pec-verify-9e946bb38624
+0.02,pec,20.0,5.0,0,10,0.0,300.0,2.867842695660812,-0.13455770407859546,completed_pair,pec-verify-46ad3cbf7ee8,pec-verify-9e946bb38624
+0.02,pec,20.0,5.0,0,10,0.0,320.0,2.3928152218949066,-3.063205353649437,completed_pair,pec-verify-46ad3cbf7ee8,pec-verify-9e946bb38624

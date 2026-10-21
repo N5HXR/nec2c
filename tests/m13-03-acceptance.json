@@ -1,0 +1,951 @@
+{
+  "step": "M13-03",
+  "date": "2026-10-21",
+  "status": "COMPLETE",
+  "scope": "Touching passive scalar dielectric materials in free space and over PEC; conductor contact remains deferred M12",
+  "native_verification_status": "PASS",
+  "openems": {
+    "status": "PASS",
+    "package": "/tmp/m13-03-openems.tar.gz",
+    "expected_archive": "/tmp/m13-03-results.tar.gz",
+    "expected_verification_runs": 12,
+    "orientations": [
+      "x",
+      "z"
+    ],
+    "package_sha256": "61b11331206187d2a155c6bf5c4977b3715a71a70703244df3cebe5a336b38b8",
+    "expected_pilots": 2,
+    "frequencies_mhz": [
+      280,
+      300,
+      320
+    ],
+    "largest_planned_grid_cells": 1401744,
+    "materials": [
+      {
+        "epsilon_r": 2,
+        "conductivity_s_m": 0.01
+      },
+      {
+        "epsilon_r": 4,
+        "conductivity_s_m": 0.03
+      }
+    ],
+    "offline_runner_checks": "PASS: material boxes, shared mesh anchors, cache/review orientation isolation, NEC references, wall-time controls",
+    "archive_sha256": "8276865a05946fa939608d08507f2a225435b3cb08ac229b9b93ea8c42d663f9",
+    "verification_runs": 12,
+    "explicit_final_decay_range_db": [
+      -64.88,
+      -60.15
+    ],
+    "maximum_mesh_delta_z_change_ohm": 0.40850041156565803,
+    "maximum_domain_delta_z_change_ohm": 0.04448764050246788,
+    "review": "m13-03-openems-review.json",
+    "pairs": "m13-03-openems-pairs.csv",
+    "native_comparisons": [
+      {
+        "material_split": "x",
+        "frequency_mhz": 280,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          1.4328974452299974,
+          1.497627563950001
+        ],
+        "reference_delta_z_ohm": [
+          1.6966616714481688,
+          1.285249003352476
+        ],
+        "component_errors_ohm": [
+          0.2637642262181714,
+          0.21237856059752502
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 0.3386387751483095,
+        "status": "PASS"
+      },
+      {
+        "material_split": "x",
+        "frequency_mhz": 300,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          1.120614724470002,
+          0.15771155036000195
+        ],
+        "reference_delta_z_ohm": [
+          1.3059367525257102,
+          -0.28745181925428653
+        ],
+        "component_errors_ohm": [
+          0.1853220280557082,
+          0.4451633696142885
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 0.4821977599792727,
+        "status": "PASS"
+      },
+      {
+        "material_split": "x",
+        "frequency_mhz": 320,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          0.46716718543999036,
+          -1.6668268160199986
+        ],
+        "reference_delta_z_ohm": [
+          0.2461181151644638,
+          -2.5930367309846787
+        ],
+        "component_errors_ohm": [
+          0.22104907027552656,
+          0.9262099149646801
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 0.9522223994679786,
+        "status": "PASS"
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 280,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          2.586472326470002,
+          2.7134273935000017
+        ],
+        "reference_delta_z_ohm": [
+          3.0880033929219906,
+          2.3284419732934634
+        ],
+        "component_errors_ohm": [
+          0.5015310664519887,
+          0.38498542020653836
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 0.6322556321521178,
+        "status": "PASS"
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 300,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          2.525040671340008,
+          0.10025840009999953
+        ],
+        "reference_delta_z_ohm": [
+          2.9688043846190766,
+          -0.807259082993248
+        ],
+        "component_errors_ohm": [
+          0.4437637132790684,
+          0.9075174830932475
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.0102050362887378,
+        "status": "PASS"
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 320,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          1.824908113369986,
+          -3.353952910830003
+        ],
+        "reference_delta_z_ohm": [
+          1.6080266997624193,
+          -5.243883090277777
+        ],
+        "component_errors_ohm": [
+          0.21688141360756674,
+          1.8899301794477736
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.9023337327493066,
+        "status": "PASS"
+      },
+      {
+        "material_split": "x",
+        "frequency_mhz": 320.0,
+        "pitch_m": 0.0125,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          0.5390795365499912,
+          -1.5907647120999968
+        ],
+        "reference_delta_z_ohm": [
+          0.2461181151644638,
+          -2.5930367309846787
+        ],
+        "component_errors_ohm": [
+          0.2929614213855274,
+          1.0022720188846819
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.0442105124252508,
+        "status": "PASS"
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 320.0,
+        "pitch_m": 0.0125,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          1.9119458436699972,
+          -3.2701781342200036
+        ],
+        "reference_delta_z_ohm": [
+          1.6080266997624193,
+          -5.243883090277777
+        ],
+        "component_errors_ohm": [
+          0.3039191439075779,
+          1.973704956057773
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.996967225469795,
+        "status": "PASS"
+      },
+      {
+        "material_split": "x",
+        "frequency_mhz": 320.0,
+        "pitch_m": 0.025,
+        "wire_segments": 21,
+        "native_delta_z_ohm": [
+          0.3789938148999994,
+          -1.7842714395199977
+        ],
+        "reference_delta_z_ohm": [
+          0.2461181151644638,
+          -2.5930367309846787
+        ],
+        "component_errors_ohm": [
+          0.1328756997355356,
+          0.808765291464681
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 0.819607984501224,
+        "status": "PASS"
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 320.0,
+        "pitch_m": 0.025,
+        "wire_segments": 21,
+        "native_delta_z_ohm": [
+          1.6891177525999979,
+          -3.6263637239700017
+        ],
+        "reference_delta_z_ohm": [
+          1.6080266997624193,
+          -5.243883090277777
+        ],
+        "component_errors_ohm": [
+          0.08109105283757856,
+          1.617519366307775
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.6195507584608186,
+        "status": "PASS"
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 320.0,
+        "pitch_m": 0.0125,
+        "wire_segments": 21,
+        "native_delta_z_ohm": [
+          1.7835826593999968,
+          -3.5467598586199998
+        ],
+        "reference_delta_z_ohm": [
+          1.6080266997624193,
+          -5.243883090277777
+        ],
+        "component_errors_ohm": [
+          0.17555595963757753,
+          1.697123231657777
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.7061791108781068,
+        "status": "PASS"
+      }
+    ],
+    "convergence": [
+      {
+        "material_split": "x",
+        "frequency_mhz": 280,
+        "mesh_delta_z_change_ohm": 0.1218922185968104,
+        "domain_delta_z_change_ohm": 0.01626255211420006
+      },
+      {
+        "material_split": "x",
+        "frequency_mhz": 300,
+        "mesh_delta_z_change_ohm": 0.10226557512860127,
+        "domain_delta_z_change_ohm": 0.01790301340069192
+      },
+      {
+        "material_split": "x",
+        "frequency_mhz": 320,
+        "mesh_delta_z_change_ohm": 0.2245241809169533,
+        "domain_delta_z_change_ohm": 0.03456329087447942
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 280,
+        "mesh_delta_z_change_ohm": 0.21489318130413454,
+        "domain_delta_z_change_ohm": 0.01719337294772512
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 300,
+        "mesh_delta_z_change_ohm": 0.20461011122862732,
+        "domain_delta_z_change_ohm": 0.025159895022714124
+      },
+      {
+        "material_split": "z",
+        "frequency_mhz": 320,
+        "mesh_delta_z_change_ohm": 0.40850041156565803,
+        "domain_delta_z_change_ohm": 0.04448764050246788
+      }
+    ]
+  },
+  "acceptance_rule": "Each induced delta R/delta X component discrepancy <= max(2 ohm, 2% of corresponding OpenEMS reference component)",
+  "implementation_status": "COMPLETE",
+  "initial_analytical_status": "PASS",
+  "analytical_checks": {
+    "static_face_kernel": "Independent closed-form normal/tangential 2-cell electrostatic reference; <=4e-6 current relative error",
+    "coated_sphere": {
+      "core_epsilon": [
+        4,
+        -0.4
+      ],
+      "shell_epsilon": [
+        2,
+        -0.2
+      ],
+      "outer_radius_m": 0.03,
+      "inner_radius_m": 0.018,
+      "frequency_mhz": 1,
+      "finest_relative_error_limits": {
+        "polarizability": 0.03,
+        "absorption": 0.03
+      },
+      "per_grid_relative_error_limit": 0.08,
+      "refinements": [
+        {
+          "diameter_cells": 8,
+          "cells": 280,
+          "polarizability_relative_error": 0.03566447337877932,
+          "absorption_relative_error": 0.06367436833447826
+        },
+        {
+          "diameter_cells": 12,
+          "cells": 912,
+          "polarizability_relative_error": 0.021884926096481874,
+          "absorption_relative_error": 0.020466132927378533
+        },
+        {
+          "diameter_cells": 16,
+          "cells": 2176,
+          "polarizability_relative_error": 0.021422834098470723,
+          "absorption_relative_error": 0.025457090570956353
+        }
+      ]
+    }
+  },
+  "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+  "solver_memory_budget_bytes": 536870912,
+  "conductor_contact": "Deferred M12; no change",
+  "anisotropy": "Out of scope",
+  "real_ground": "Later M13 increment",
+  "native_pillar_cases": [
+    {
+      "experiment": "M13-03",
+      "material_split": "x",
+      "frequency_mhz": 280,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        1.4328974452299974,
+        1.497627563950001
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            61.90487450674,
+            -19.52106124454
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.275768181825e-15,
+          "power_defect": 0.002314136110045,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.2273705005645752,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            63.33777195197,
+            -18.02343368059
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 7.327432549255e-11,
+          "power_defect": 0.002105013432547,
+          "absorbed_power_w": 0.0005554956233249,
+          "accounted_solver_bytes": 3535344,
+          "wall_seconds": 59.99722194671631,
+          "solver_cpu_seconds": 5.05
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8412
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "x",
+      "frequency_mhz": 300,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        1.120614724470002,
+        0.15771155036000195
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            78.64604736189,
+            21.77955767548
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 8.399038961945e-15,
+          "power_defect": 0.002180701974656,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.10380429029464722,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            79.76666208636,
+            21.93726922584
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 5.817606800544e-11,
+          "power_defect": 0.002021339514165,
+          "absorbed_power_w": 0.0004042815678707,
+          "accounted_solver_bytes": 3535344,
+          "wall_seconds": 61.14912408590317,
+          "solver_cpu_seconds": 4.86
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8832
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "x",
+      "frequency_mhz": 320,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        0.46716718543999036,
+        -1.6668268160199986
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.23054972290992737,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            99.73606152337,
+            59.76420259649
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 4.420222036438e-11,
+          "power_defect": 0.001932254979354,
+          "absorbed_power_w": 0.0002440548256509,
+          "accounted_solver_bytes": 3535344,
+          "wall_seconds": 61.262299209833145,
+          "solver_cpu_seconds": 4.71
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8844
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "z",
+      "frequency_mhz": 280,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.586472326470002,
+        2.7134273935000017
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            61.90487450674,
+            -19.52106124454
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.275768181825e-15,
+          "power_defect": 0.002314136110045,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.16347849369049072,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            64.49134683321,
+            -16.80763385104
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 3.892822430803e-11,
+          "power_defect": 0.0020664763015,
+          "absorbed_power_w": 0.000631267629303,
+          "accounted_solver_bytes": 3535344,
+          "wall_seconds": 66.001982152462,
+          "solver_cpu_seconds": 5.02
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8856
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "z",
+      "frequency_mhz": 300,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.525040671340008,
+        0.10025840009999953
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            78.64604736189,
+            21.77955767548
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 8.399038961945e-15,
+          "power_defect": 0.002180701974656,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.17578795552253723,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            81.17108803323,
+            21.87981607558
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 3.149065854376e-11,
+          "power_defect": 0.001997663702284,
+          "absorbed_power_w": 0.0004829263448678,
+          "accounted_solver_bytes": 3535344,
+          "wall_seconds": 69.28282091021538,
+          "solver_cpu_seconds": 4.92
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8868
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "z",
+      "frequency_mhz": 320,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        1.824908113369986,
+        -3.353952910830003
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.19620731472969055,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            101.0938024513,
+            58.07707650168
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 7.772014867616e-11,
+          "power_defect": 0.001921322762208,
+          "absorbed_power_w": 0.0003143194742453,
+          "accounted_solver_bytes": 3535344,
+          "wall_seconds": 67.71106541156769,
+          "solver_cpu_seconds": 4.77
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8880
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "x",
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.0125,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        0.5390795365499912,
+        -1.5907647120999968
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.16561931371688843,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            99.80797387448,
+            59.84026470041
+          ],
+          "active_cells": 3328,
+          "true_relative_residual": 5.585281283881e-11,
+          "power_defect": 0.00192958000651,
+          "absorbed_power_w": 0.0002471539208201,
+          "accounted_solver_bytes": 28036080,
+          "wall_seconds": 504.7978563308716,
+          "solver_cpu_seconds": 38.3
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 29944
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "z",
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.0125,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        1.9119458436699972,
+        -3.2701781342200036
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.15669912099838257,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            101.1808401816,
+            58.16085127829
+          ],
+          "active_cells": 3328,
+          "true_relative_residual": 5.718191361949e-11,
+          "power_defect": 0.001918982464586,
+          "absorbed_power_w": 0.000319541531295,
+          "accounted_solver_bytes": 28036080,
+          "wall_seconds": 511.69030341506004,
+          "solver_cpu_seconds": 38.34
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 30216
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "x",
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        0.3789938148999994,
+        -1.7842714395199977
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            103.0302397531,
+            60.92736499289
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.154088346587e-15,
+          "power_defect": 0.0001079265985558,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 54800,
+          "wall_seconds": 0.304599791765213,
+          "solver_cpu_seconds": 0.02
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            103.409233568,
+            59.14309355337
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 9.955723907104e-11,
+          "power_defect": 0.0001117232772449,
+          "absorbed_power_w": 0.0002409844294235,
+          "accounted_solver_bytes": 3956384,
+          "wall_seconds": 121.54915577173233,
+          "solver_cpu_seconds": 8.74
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8392
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "z",
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        1.6891177525999979,
+        -3.6263637239700017
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            103.0302397531,
+            60.92736499289
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.154088346587e-15,
+          "power_defect": 0.0001079265985558,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 54800,
+          "wall_seconds": 0.3410767912864685,
+          "solver_cpu_seconds": 0.02
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            104.7193575057,
+            57.30100126892
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 9.40523583228e-11,
+          "power_defect": 0.0001200119494481,
+          "absorbed_power_w": 0.0003105893157936,
+          "accounted_solver_bytes": 3956384,
+          "wall_seconds": 122.44291815161705,
+          "solver_cpu_seconds": 8.77
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8816
+    },
+    {
+      "experiment": "M13-03",
+      "material_split": "z",
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.0125,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        1.7835826593999968,
+        -3.5467598586199998
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            103.0302397531,
+            60.92736499289
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.154088346587e-15,
+          "power_defect": 0.0001079265985558,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 54800,
+          "wall_seconds": 0.33022016286849976,
+          "solver_cpu_seconds": 0.02
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            104.8138224125,
+            57.38060513427
+          ],
+          "active_cells": 3328,
+          "true_relative_residual": 9.693376948084e-11,
+          "power_defect": 0.0001188430637679,
+          "absorbed_power_w": 0.0003157594221907,
+          "accounted_solver_bytes": 31252640,
+          "wall_seconds": 907.7171356976032,
+          "solver_cpu_seconds": 70.22
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 33308
+    }
+  ],
+  "native_coarse_status": "PASS: all six frequency/orientation pairs meet residual, absorption and power gates",
+  "native_refinement_status": "PASS",
+  "regression": {
+    "status": "PASS",
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "initial_log": "/tmp/m13-03-suite.log",
+    "log": "/tmp/m13-03-suite-final.log",
+    "summary": "test-suite.log",
+    "verification_note": "Initial full run: 21 PASS, new material group failed on coarse mixed-conductor power fixture. Corrected only that fixture; reran the new group and aggregated all 22 results with make check RECHECK_LOGS=tests/m13_materials.log. Solver binary unchanged."
+  },
+  "patch_mixed_fixture_refinement": {
+    "wire_segments_coarse": 11,
+    "wire_segments_refined": 21,
+    "coarse_homogeneous_power_defect": [
+      0.003740240480882,
+      0.003904089486337
+    ],
+    "coarse_heterogeneous_power_defect": [
+      0.003740225675194,
+      0.003904071172648
+    ],
+    "refined_heterogeneous_power_defect": [
+      0.001607986923566,
+      0.001774102304536
+    ],
+    "ground_order": [
+      "free space",
+      "PEC"
+    ],
+    "power_defect_gate": 0.003,
+    "note": "Use the same 21-segment central-feed wire as M13-01 mixed-conductor tests; no production-code or tolerance change."
+  },
+  "completion_date": "2026-10-21",
+  "native_refinements": [
+    {
+      "material_split": "x",
+      "refinement": "volume",
+      "frequency_mhz": 320,
+      "delta_z_change_ohm": 0.1046748770952476
+    },
+    {
+      "material_split": "x",
+      "refinement": "wire",
+      "frequency_mhz": 320,
+      "delta_z_change_ohm": 0.1468597387354311
+    },
+    {
+      "material_split": "z",
+      "refinement": "volume",
+      "frequency_mhz": 320,
+      "delta_z_change_ohm": 0.12080471717541824
+    },
+    {
+      "material_split": "z",
+      "refinement": "wire",
+      "frequency_mhz": 320,
+      "delta_z_change_ohm": 0.3043791602485933
+    },
+    {
+      "material_split": "z",
+      "refinement": "volume at 21 wire segments",
+      "frequency_mhz": 320,
+      "delta_z_change_ohm": 0.12353296724111235
+    },
+    {
+      "material_split": "z",
+      "refinement": "wire at 12.5 mm volume pitch",
+      "frequency_mhz": 320,
+      "delta_z_change_ohm": 0.3049172959148259
+    }
+  ],
+  "maximum_component_error_ohm": 1.973704956057773,
+  "final_binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+  "source_distribution_check": "PASS: make dist",
+  "benchmark_note": "Native and regression checks use the same solver binary; the mixed-conductor fixture correction changes only wire discretization in the test."
+}

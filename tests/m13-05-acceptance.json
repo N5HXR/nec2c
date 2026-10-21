@@ -1,0 +1,118 @@
+{
+  "step": "M13-05",
+  "date": "2026-10-21",
+  "status": "COMPLETE",
+  "purpose": "Production tree material provenance and sensitivity reporting; final M13 exit-criterion review",
+  "previous_steps": [
+    {
+      "step": "M13-01",
+      "status": "COMPLETE",
+      "record": "tests/m13-01-acceptance.json",
+      "sha256": "735ce1ff37298900b138d36a44cedea69d040fb429813e14afd93f77483245c3"
+    },
+    {
+      "step": "M13-02",
+      "status": "COMPLETE",
+      "record": "tests/m13-02-acceptance.json",
+      "sha256": "3b0ee996c3e6f8986cd763f9559a9db6e8683d693341a94d584390b3b8481167"
+    },
+    {
+      "step": "M13-03",
+      "status": "COMPLETE",
+      "record": "tests/m13-03-acceptance.json",
+      "sha256": "13b716384df0215566fd58f3e2bb3740240b31752fd3948445dc47091e6a5d85"
+    },
+    {
+      "step": "M13-04",
+      "status": "COMPLETE",
+      "record": "tests/m13-04-acceptance.json",
+      "sha256": "c4edb6c2b326e6d65aeea2170cc6f4ebe5d8d89efc6851a0d7838d422c8212eb"
+    }
+  ],
+  "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+  "openems": "No new run needed: M13-01/02/03/04 independent refinement evidence retained; this step adds reporting and a synthetic native witness",
+  "remote_ground": {
+    "status": "PASS",
+    "electric_ratio": 0.00202262,
+    "magnetic_ratio": 0.0157424,
+    "scope": "localized point E/H reflection at k0=.01, fixed .1 m direct separation, heights .5 -> 4 m, epsilon_ground=4-i*.4"
+  },
+  "supported_scope": [
+    "Passive isotropic nonmagnetic scalar constants and frequency tables",
+    "Free-space/PEC wire and patch coupling under existing conductor clearance constraints",
+    "Touching dielectric materials and PEC-ground contact",
+    "GN 2 wires with strictly positive ground and conductor clearances, dense or GMRES"
+  ],
+  "excluded": [
+    "GN 0 dielectric coupling",
+    "Real-ground patches",
+    "Ground contact/burial for real ground",
+    "Screens and cliff ground",
+    "Ground FFT",
+    "Conductor/dielectric contact and penetration (deferred M12)",
+    "Anisotropy and magnetic media"
+  ],
+  "exit_criteria": {
+    "passive_sign_and_absorption": "M13-01/M13-04 analytical Joule and interface-flux tests",
+    "zero_loss_and_ground_limits": "M13-01/03/04 limits; M13-05 remote-ground test",
+    "real_ground_subset_and_reciprocity": "M13-04 scoped GN 2 wires acceptance",
+    "frequency_tables_no_extrapolation": "M13-02",
+    "layered_concentric_analytical_cases": "M13-03 interface and coated-sphere references",
+    "lossy_openems_independent_refinement": "M13-01/02/03/04",
+    "tree_material_assumptions_and_uncertainty": "M13-05 material report and synthetic sensitivity/refinement witness"
+  },
+  "milestone_status": "M13 COMPLETE for the agreed scalar-material and GN 2 wires-first scope",
+  "regression": {
+    "groups": 24,
+    "pass": 24,
+    "fail": 0,
+    "solver_binary_unchanged": true
+  },
+  "tree_witness": {
+    "material_scenarios": 5,
+    "coarse_active_cells": 156,
+    "refined_active_cells": 1248,
+    "frequency_mhz": 100,
+    "ground": "PEC",
+    "sampled_ranges": {
+      "epsilon_r": [
+        2,
+        4
+      ],
+      "sigma_s_m": [
+        0.005,
+        0.02
+      ],
+      "absorbed_power_w": [
+        3.48644105329e-07,
+        9.848721594684e-07
+      ],
+      "r_ohm": [
+        9.499955853314,
+        9.894527478045
+      ],
+      "x_ohm": [
+        -824.5539687981,
+        -824.2284656721
+      ]
+    },
+    "refinement_component_change_ohm": [
+      0.016868092645999866,
+      0.022101778699948227
+    ],
+    "maximum_power_defect": 0.002721869588452,
+    "maximum_true_relative_residual": 9.61730386372e-11,
+    "empirical_vegetation_validation": false,
+    "interpretation": "Arbitrary scalar-material sensitivity witnesses, not measured vegetation or a certified production-tree error bound"
+  },
+  "report_artifacts": [
+    {
+      "file": "tests/m13-05-tree-input.json",
+      "sha256": "c44ad14c12a4da2be800dee88c607f02f1c1c2b1486c3682738222ee8e5dac94"
+    },
+    {
+      "file": "tests/m13-05-tree-report.json",
+      "sha256": "5032cd8c94947bbb8afd5dbc93a9d24732a35e64a6e0590e35374c18a5cc2d5c"
+    }
+  ]
+}

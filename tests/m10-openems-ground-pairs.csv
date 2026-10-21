@@ -1,0 +1,13 @@
+ground,mesh_mm,wire_cell_mm,frequency_mhz,delta_r_ohm,delta_x_ohm,status,vacuum_job,loaded_job
+pec,15.0,2.5,280.0,-0.4493238584285564,-0.7603780569552008,completed_pair,pec-verify-486d60d9dc39,pec-verify-484d1c3579c6
+pec,15.0,2.5,300.0,-0.2953056103834797,-1.5666307163689481,completed_pair,pec-verify-486d60d9dc39,pec-verify-484d1c3579c6
+pec,15.0,2.5,320.0,-0.19099955220185905,-2.7951703365204708,completed_pair,pec-verify-486d60d9dc39,pec-verify-484d1c3579c6
+pec,20.0,5,280.0,-0.4556535661939023,-0.7007078615380085,completed_pair,pec-verify-85c86a016cb3,pec-verify-aa24844484da
+pec,20.0,5,300.0,-0.30409263089343597,-1.4450018967669251,completed_pair,pec-verify-85c86a016cb3,pec-verify-aa24844484da
+pec,20.0,5,320.0,-0.18483784433315975,-2.5321705483874837,completed_pair,pec-verify-85c86a016cb3,pec-verify-aa24844484da
+real,15.0,2.5,280.0,-0.5042221863419627,-0.7904093360447382,provisional_incomplete_pair,real-verify-66b7ac295978,real-verify-69d5c70c59e4
+real,15.0,2.5,300.0,-0.341488207455086,-1.5802220506190352,provisional_incomplete_pair,real-verify-66b7ac295978,real-verify-69d5c70c59e4
+real,15.0,2.5,320.0,-0.32709871037992855,-2.7512992595450783,provisional_incomplete_pair,real-verify-66b7ac295978,real-verify-69d5c70c59e4
+real,20.0,5,280.0,-0.49424449695642636,-0.7271271412658953,completed_pair,real-verify-d4bc7a2d6106,real-verify-4b5b59d9d5cb
+real,20.0,5,300.0,-0.3678210350601745,-1.4583226503002606,completed_pair,real-verify-d4bc7a2d6106,real-verify-4b5b59d9d5cb
+real,20.0,5,320.0,-0.2731227433441319,-2.5047968868992854,completed_pair,real-verify-d4bc7a2d6106,real-verify-4b5b59d9d5cb

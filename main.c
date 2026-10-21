@@ -30,6 +30,7 @@
 #include "nec2c.h"
 #include "shared.h"
 #include "dielectric.h"
+#include "dielectric_fft.h"
 
 #include <ctype.h>
 
@@ -54,7 +55,7 @@ static double highest_requested_frequency(int mode, int count,
 
 static int run_dielectric_frequencies(const dielectric_model *model,
       const dielectric_mesh_result *mesh, int frequency_mode,
-      int frequency_count, double first_mhz, double step,
+      int frequency_count, double first_mhz, double step, int iterative,
       const dielectric_plane_wave *wave,
       const dielectric_pattern_request *pattern, FILE *stream,
       dielectric_diagnostic *diagnostic)
@@ -63,7 +64,7 @@ static int run_dielectric_frequencies(const dielectric_model *model,
   double frequency = first_mhz;
   for(index = 0; index < frequency_count; ++index)
   {
-    if(!dielectric_solve_plane_wave(model, mesh, frequency, wave, pattern,
+    if(!dielectric_solve_plane_wave(model, mesh, frequency, iterative, wave, pattern,
                                     stream, diagnostic))
       return 0;
     if(frequency_mode == 1)
@@ -77,15 +78,15 @@ static int run_dielectric_frequencies(const dielectric_model *model,
 static int run_dielectric_wire_frequencies(const dielectric_model *model,
       const dielectric_mesh_result *mesh, int frequency_mode,
       int frequency_count, double first_mhz, double step, double rkh,
-      int extended_kernel, const dielectric_plane_wave *wave,
-      FILE *stream, dielectric_diagnostic *diagnostic)
+      int extended_kernel, int iterative, const dielectric_plane_wave *wave,
+      const dielectric_pattern_request *pattern, FILE *stream, dielectric_diagnostic *diagnostic)
 {
   int index;
   double frequency = first_mhz;
   for(index = 0; index < frequency_count; ++index)
   {
     if(!dielectric_solve_conductor_coupled(model, mesh, frequency, rkh,
-                                           extended_kernel, wave, stream, diagnostic))
+                                           extended_kernel, iterative, wave, pattern, stream, diagnostic))
       return 0;
     if(frequency_mode == 1)
       frequency *= step;
@@ -95,7 +96,7 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
   return 1;
 }
 
-static int dielectric_m7_mode_supported(int excitation_seen, int plane_wave_seen,
+static int dielectric_mode_supported(int excitation_seen, int plane_wave_seen,
                                         int command, FILE *stream)
 {
   const char *reason = NULL;
@@ -104,19 +105,19 @@ static int dielectric_m7_mode_supported(int excitation_seen, int plane_wave_seen
     reason = data.m == 0
         ? "WIRE MODE REQUIRES AN ORDINARY VOLTAGE-SOURCE EX CARD (TYPE 0)"
         : "PATCH MODE REQUIRES AN ORDINARY VOLTAGE SOURCE OR PLANE-WAVE EX CARD";
-  else if(gnd.ksymp != 1)
-    reason = "GROUND COUPLING IS NOT YET SUPPORTED";
+  else if(gnd.ksymp != 1 && gnd.iperf != 1 && gnd.iperf != 2)
+    reason = "GN 0 DIELECTRIC COUPLING IS NOT YET SUPPORTED";
   else if(zload.nload != 0)
     reason = "WIRE LOADING (LD) IS NOT YET SUPPORTED";
   else if(netcx.nonet != 0)
     reason = "NETWORK AND TRANSMISSION-LINE CARDS ARE NOT YET SUPPORTED";
   else if(data.ipsym != 0)
     reason = "GEOMETRY SYMMETRY IS NOT YET SUPPORTED";
-  else if(command == 8)
-    reason = "DIELECTRIC CONTRIBUTIONS TO RADIATION PATTERNS ARE SCHEDULED FOR M8";
+  else if(command == 8 && gnd.ifar != 0)
+    reason = "ONLY RP MODE 0 IS SUPPORTED";
   if(reason == NULL)
     return 1;
-  fprintf(stream, "\n\n  DIELECTRIC SOLVER ERROR: MILESTONE M7 %s", reason);
+  fprintf(stream, "\n\n  DIELECTRIC SOLVER ERROR: %s", reason);
   return 0;
 }
 
@@ -134,6 +135,7 @@ int main( int argc, char **argv )
   dielectric_plane_wave dielectric_wave;
   int dielectric_excitation_seen, dielectric_any_excitation_seen;
   int dielectric_solved;
+  int dielectric_iterative = 0;
 
 /* input card mnemonic list */
 #define NUM_CMNDS  21
@@ -201,7 +203,7 @@ int main( int argc, char **argv )
   }
 
   /* process command line options */
-  while( (option = getopt(argc, argv, "i:o:hv") ) != -1 )
+  while( (option = getopt(argc, argv, "i:o:s:r:n:hv") ) != -1 )
   {
 	switch( option )
 	{
@@ -217,6 +219,31 @@ int main( int argc, char **argv )
 		snprintf( otfile, sizeof(otfile), "%s", optarg );
 		break;
 
+      case 's':
+        if(strcmp(optarg, "gmres") == 0) dielectric_iterative = 1;
+        else if(strcmp(optarg, "fft") == 0) dielectric_iterative = 2;
+        else if(strcmp(optarg, "dense") == 0) dielectric_iterative = 0;
+        else
+        {
+          fprintf(stderr, "nec2c: -s requires dense or gmres or fft\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 'r': {
+        char *end;double value=strtod(optarg,&end);
+        if(!*optarg || *end || !isfinite(value) || value<=0 || value>=1) {
+          fprintf(stderr,"nec2c: -r requires a relative tolerance between 0 and 1\n");exit(EXIT_FAILURE);
+        }
+        dielectric_gmres_settings.relative_tolerance=value;break;
+      }
+      case 'n': {
+        char *end;unsigned long value=strtoul(optarg,&end,10);
+        if(!*optarg || *end || !value || value>10000) {
+          fprintf(stderr,"nec2c: -n requires an iteration limit from 1 to 10000\n");exit(EXIT_FAILURE);
+        }
+        dielectric_gmres_settings.maximum_iterations=value;break;
+      }
 	  case 'h' : /* print usage and exit */
 		usage();
 		exit(0);
@@ -231,7 +258,7 @@ int main( int argc, char **argv )
 
 	} /* end of switch( option ) */
 
-  } /* while( (option = getopt(argc, argv, "i:o:hv") ) != -1 ) */
+  } /* while( (option = getopt(argc, argv, "i:o:s:r:n:hv") ) != -1 ) */
 
   if( (infile[0] == '/') || (infile[0] == '\\') ||
 	  (isalpha((unsigned char)infile[0]) && (infile[1] == ':')) )
@@ -530,6 +557,11 @@ int main( int argc, char **argv )
 			zpnorm=0.;
 		  igo=1;
 		  iflow=1;
+          if(dielectric.loaded)
+          {
+            dielectric_mesh_free(&dielectric_mesh);
+            dielectric_solved=0;
+          }
 
 		  continue; /* continue card input loop */
 
@@ -1075,7 +1107,9 @@ int main( int argc, char **argv )
 
 		  if( dielectric.loaded && ! dielectric_mesh.built )
 		  {
-			double mesh_frequency = highest_requested_frequency(
+			if(!dielectric_validate_sweep(&dielectric,ifrq,nfrq,save.fmhz,delfrq,&dielectric_error))
+            { dielectric_print_diagnostic(output_fp,&dielectric_error);stop(-1); }
+            double mesh_frequency = highest_requested_frequency(
 				ifrq, nfrq, save.fmhz, delfrq);
 			if( ! dielectric_mesh_build(&dielectric, mesh_frequency, &data,
 				&dielectric_mesh, &dielectric_error) )
@@ -1088,14 +1122,17 @@ int main( int argc, char **argv )
 		  if(dielectric.loaded && !dielectric_solved &&
 		     (dielectric_excitation_seen || dielectric_any_excitation_seen))
 		  {
+            dielectric_pattern_request deferred_request;
+            memset(&deferred_request, 0, sizeof(deferred_request));
+            deferred_request.near_enabled = (fpat.near != -1);
 			if(data.n != 0 || data.m != 0)
 			{
-			  if(!dielectric_m7_mode_supported(dielectric_any_excitation_seen,
+			  if(!dielectric_mode_supported(dielectric_any_excitation_seen,
 			          dielectric_excitation_seen, ain_num, output_fp))
 				stop(-1);
 			  if(!run_dielectric_wire_frequencies(&dielectric, &dielectric_mesh,
-			          ifrq, nfrq, save.fmhz, delfrq, rkh, iexk,
-			          dielectric_excitation_seen ? &dielectric_wave : NULL, output_fp,
+			          ifrq, nfrq, save.fmhz, delfrq, rkh, iexk, dielectric_iterative,
+			          dielectric_excitation_seen ? &dielectric_wave : NULL, &deferred_request, output_fp,
 			          &dielectric_error))
 			  {
 				dielectric_print_diagnostic(output_fp, &dielectric_error);
@@ -1111,7 +1148,7 @@ int main( int argc, char **argv )
 				stop(-1);
 			  }
 			  if(!run_dielectric_frequencies(&dielectric, &dielectric_mesh,
-			          ifrq, nfrq, save.fmhz, delfrq, &dielectric_wave, NULL,
+			          ifrq, nfrq, save.fmhz, delfrq, dielectric_iterative, &dielectric_wave, &deferred_request,
 			          output_fp, &dielectric_error))
 			  {
 				dielectric_print_diagnostic(output_fp, &dielectric_error);
@@ -1119,6 +1156,7 @@ int main( int argc, char **argv )
 			  }
 			}
 			dielectric_solved=1;
+            fpat.near=-1;
 		  }
 
 		  /* time the process */
@@ -1134,7 +1172,9 @@ int main( int argc, char **argv )
 		dielectric_pattern_request request;
 		if( ! dielectric_mesh.built )
 		{
-		  double mesh_frequency = highest_requested_frequency(
+		  if(!dielectric_validate_sweep(&dielectric,ifrq,nfrq,save.fmhz,delfrq,&dielectric_error))
+            { dielectric_print_diagnostic(output_fp,&dielectric_error);stop(-1); }
+            double mesh_frequency = highest_requested_frequency(
 			  ifrq, nfrq, save.fmhz, delfrq);
 		  if( ! dielectric_mesh_build(&dielectric, mesh_frequency, &data,
 			  &dielectric_mesh, &dielectric_error) )
@@ -1144,20 +1184,33 @@ int main( int argc, char **argv )
 		  }
 		  dielectric_print_mesh_report( output_fp, &dielectric_mesh );
 		}
+        memset(&request, 0, sizeof(request));
+        request.near_enabled = (fpat.near != -1);
+        if(ain_num == 8)
+        {
+          request.enabled = 1;
+          request.theta_count = (size_t)fpat.nth;
+          request.phi_count = (size_t)fpat.nph;
+          request.theta_start_degrees = fpat.thets;
+          request.phi_start_degrees = fpat.phis;
+          request.theta_step_degrees = fpat.dth;
+          request.phi_step_degrees = fpat.dph;
+        }
 		if(data.n != 0 || data.m != 0)
 		{
-		  if(!dielectric_m7_mode_supported(dielectric_any_excitation_seen,
+		  if(!dielectric_mode_supported(dielectric_any_excitation_seen,
 		          dielectric_excitation_seen, ain_num, output_fp))
 			stop(-1);
 		  if(!run_dielectric_wire_frequencies(&dielectric, &dielectric_mesh,
-		          ifrq, nfrq, save.fmhz, delfrq, rkh, iexk,
-		          dielectric_excitation_seen ? &dielectric_wave : NULL, output_fp,
+		          ifrq, nfrq, save.fmhz, delfrq, rkh, iexk, dielectric_iterative,
+		          dielectric_excitation_seen ? &dielectric_wave : NULL, &request, output_fp,
 		          &dielectric_error))
 		  {
 			dielectric_print_diagnostic(output_fp, &dielectric_error);
 			stop(-1);
 		  }
 		  dielectric_solved=1;
+            fpat.near=-1;
 		  continue;
 		}
 		if(!dielectric_excitation_seen)
@@ -1166,25 +1219,15 @@ int main( int argc, char **argv )
 		          " REQUIRES A PLANE-WAVE EX CARD (TYPE 1, 2, OR 3)");
 		  stop(-1);
 		}
-		memset(&request, 0, sizeof(request));
-		if(ain_num == 8)
-		{
-		  request.enabled=1;
-		  request.theta_count=(size_t)fpat.nth;
-		  request.phi_count=(size_t)fpat.nph;
-		  request.theta_start_degrees=fpat.thets;
-		  request.phi_start_degrees=fpat.phis;
-		  request.theta_step_degrees=fpat.dth;
-		  request.phi_step_degrees=fpat.dph;
-		}
 		if(!run_dielectric_frequencies(&dielectric, &dielectric_mesh,
-		        ifrq, nfrq, save.fmhz, delfrq, &dielectric_wave, &request,
+		        ifrq, nfrq, save.fmhz, delfrq, dielectric_iterative, &dielectric_wave, &request,
 		        output_fp, &dielectric_error))
 		{
 		  dielectric_print_diagnostic(output_fp, &dielectric_error);
 		  stop(-1);
 		}
 		dielectric_solved=1;
+            fpat.near=-1;
 		continue;
 	  }
 

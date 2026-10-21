@@ -253,9 +253,10 @@ static complex double duffy_integral_recursive(const reduced_integral *integral,
       {
         const difference_segment *segment = &integral->segment[axis];
         double extent = fabs(segment->upper - segment->lower);
-        double sign = segment->upper == 0.0 ? -1.0 : 1.0;
+        double origin = fabs(segment->lower) <= fabs(segment->upper) ? segment->lower : segment->upper;
+        double sign = origin == segment->lower ? 1.0 : -1.0;
         double mapped = axis == sector ? t : t * normalized[axis];
-        coordinate[axis] = sign * extent * mapped;
+        coordinate[axis] = origin + sign * extent * mapped;
         radius_squared += coordinate[axis] * coordinate[axis];
         jacobian *= extent;
         physical_weight *= segment_weight(segment, coordinate[axis]);
@@ -281,11 +282,21 @@ static int segment_has_zero_endpoint(const difference_segment *segment)
 static complex double integrate_reduced_box(const reduced_integral *integral)
 {
   double coordinate[3] = {0.0, 0.0, 0.0};
+  double nearest_squared = integral->fixed_squared, largest_extent = 0.0;
   int singular = 1;
   int axis;
   for(axis = 0; axis < integral->dimensions; axis++)
-    singular &= segment_has_zero_endpoint(&integral->segment[axis]);
-  if(!singular)
+  {
+    const difference_segment *segment = &integral->segment[axis];
+    double nearest = fmin(fabs(segment->lower),fabs(segment->upper));
+    nearest_squared += nearest*nearest;
+    largest_extent = fmax(largest_extent,segment->upper-segment->lower);
+    singular &= segment_has_zero_endpoint(segment);
+  }
+  /* The same sector partition is valid about any corner. Resolve the
+     closest corner at small nonzero separation instead of losing the
+     near-singular boundary layer when an endpoint ceases to be zero. */
+  if(!singular && sqrt(nearest_squared) >= 0.1*largest_extent)
     return tensor_integral_recursive(integral, 0, coordinate, 1.0);
   else
   {
@@ -300,11 +311,12 @@ static complex double integrate_reduced_box(const reduced_integral *integral)
   }
 }
 
-static int append_break(double breaks[6], int *count, double value)
+static int append_break(double breaks[6], int *count, double value, double tolerance)
 {
   int index;
+  if(fabs(value) <= tolerance) value=0.0;
   for(index = 0; index < *count; index++)
-    if(value == breaks[index])
+    if(fabs(value-breaks[index]) <= tolerance)
       return 1;
   if(*count >= 6)
     return 0;
@@ -333,36 +345,42 @@ static int make_segments(double a_min, double a_max, int a_varies,
                          segment_list *list, double *fixed)
 {
   double breaks[6];
+  /* Resolve coincident faces/breakpoints at relative geometry precision.
+     A one-ulp contact error must not select a different singular map.
+     Scale locally so genuinely positive gaps survive electrical rescaling. */
+  double tolerance=VIE_GEOMETRY_TOLERANCE*DBL_EPSILON*
+      fmax(fmax(fabs(a_min),fabs(a_max)),fmax(fabs(b_min),fabs(b_max)));
   int break_count = 0;
   int index;
   memset(list, 0, sizeof(*list));
   if(!a_varies && !b_varies)
   {
     *fixed = a_min - b_min;
+    if(fabs(*fixed) <= tolerance) *fixed=0.0;
     return 1;
   }
   if(a_varies && b_varies)
   {
-    if(!append_break(breaks, &break_count, a_min - b_max) ||
-       !append_break(breaks, &break_count, a_min - b_min) ||
-       !append_break(breaks, &break_count, a_max - b_max) ||
-       !append_break(breaks, &break_count, a_max - b_min))
+    if(!append_break(breaks, &break_count, a_min - b_max, tolerance) ||
+       !append_break(breaks, &break_count, a_min - b_min, tolerance) ||
+       !append_break(breaks, &break_count, a_max - b_max, tolerance) ||
+       !append_break(breaks, &break_count, a_max - b_min, tolerance))
       return 0;
   }
   else if(a_varies)
   {
-    append_break(breaks, &break_count, a_min - b_min);
-    append_break(breaks, &break_count, a_max - b_min);
+    append_break(breaks, &break_count, a_min - b_min, tolerance);
+    append_break(breaks, &break_count, a_max - b_min, tolerance);
   }
   else
   {
-    append_break(breaks, &break_count, a_min - b_max);
-    append_break(breaks, &break_count, a_min - b_min);
+    append_break(breaks, &break_count, a_min - b_max, tolerance);
+    append_break(breaks, &break_count, a_min - b_min, tolerance);
   }
   sort_breaks(breaks, break_count);
   if((breaks[0] < 0.0) && (breaks[break_count - 1] > 0.0))
   {
-    append_break(breaks, &break_count, 0.0);
+    append_break(breaks, &break_count, 0.0, tolerance);
     sort_breaks(breaks, break_count);
   }
   for(index = 0; index + 1 < break_count; index++)
@@ -413,16 +431,18 @@ static complex double integrate_segment_product(const segment_list lists[3],
           else
             integral.fixed_squared += fixed[axis] * fixed[axis];
         }
-        if(integral.fixed_squared > 0.0)
         {
-          double largest_extent = 0.0;
+          double largest_extent = 0.0, nearest_squared = integral.fixed_squared;
           double ratio;
           for(axis = 0; axis < integral.dimensions; axis++)
-            largest_extent = fmax(largest_extent,
-                                  fabs(integral.segment[axis].upper -
-                                       integral.segment[axis].lower));
-          ratio = sqrt(integral.fixed_squared) / largest_extent;
-          while((ratio < 0.1) && (integral.radial_power < 8))
+          {
+            const difference_segment *segment = &integral.segment[axis];
+            double nearest=fmin(fabs(segment->lower),fabs(segment->upper));
+            nearest_squared += nearest*nearest;
+            largest_extent = fmax(largest_extent,segment->upper-segment->lower);
+          }
+          ratio = sqrt(nearest_squared) / largest_extent;
+          while((ratio > 0.0) && (ratio < 0.1) && (integral.radial_power < 8))
           {
             integral.radial_power++;
             ratio *= 10.0;

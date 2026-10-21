@@ -1,0 +1,5 @@
+N3 quarter-metre canonical self/near blocks: 13; maximum pre/post difference 0
+Baseline kernel source: git a869b312581829be69f28b7efe08b2f8beadb3d2:vie_kernel.c
+Translated 25 mm touching-cell pair, dense tolerances 5e-7 / 5e-10:
+Before correction: quadrature order 48 versus canonical order 8; maximum block difference 5.6937638381882039e-08
+After correction: quadrature order 8 for both; maximum block difference 1.1107649934270853e-16

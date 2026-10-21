@@ -1,0 +1,154 @@
+{
+  "schema": "nec2c-tree-material-report-1",
+  "assumptions": {
+    "geometry_assumptions": [
+      "Synthetic rectilinear trunk, two branches and homogeneous crown; dimensions in archived input decks",
+      "Positive wire clearance; tree touches ideal PEC ground"
+    ],
+    "material_provenance": [
+      "ER 2/3/4 and sigma .005/.01/.02 S/m are arbitrary sensitivity witnesses, not measured wood or foliage data",
+      "Constant isotropic nonmagnetic material at 100 MHz; same material throughout this illustrative tree"
+    ],
+    "excluded_effects": [
+      "Anisotropy, spatial moisture variation and measured frequency dispersion",
+      "Leaves, bark, roots and unresolved branch structure",
+      "Real-ground effects; GN 2 has separate small-fixture acceptance and no FFT support"
+    ],
+    "ground": "PEC"
+  },
+  "nominal": {
+    "name": "nominal",
+    "epsilon_r": 3,
+    "sigma_s_m": 0.01,
+    "frequency_mhz": 100,
+    "pitch_m": 0.1,
+    "z_ohm": [
+      9.656040430328,
+      -824.3669906412
+    ],
+    "true_relative_residual": 7.258158507267e-11,
+    "power_defect": 0.002688204142416,
+    "absorbed_power_w": 6.286098555502e-07,
+    "active_cells": 156
+  },
+  "scenarios": [
+    {
+      "name": "nominal",
+      "epsilon_r": 3,
+      "sigma_s_m": 0.01,
+      "frequency_mhz": 100,
+      "pitch_m": 0.1,
+      "z_ohm": [
+        9.656040430328,
+        -824.3669906412
+      ],
+      "true_relative_residual": 7.258158507267e-11,
+      "power_defect": 0.002688204142416,
+      "absorbed_power_w": 6.286098555502e-07,
+      "active_cells": 156
+    },
+    {
+      "name": "er-low",
+      "epsilon_r": 2,
+      "sigma_s_m": 0.01,
+      "frequency_mhz": 100,
+      "pitch_m": 0.1,
+      "z_ohm": [
+        9.66988518907,
+        -824.5539687981
+      ],
+      "true_relative_residual": 4.746671884299e-11,
+      "power_defect": 0.002678171159222,
+      "absorbed_power_w": 8.005701414654e-07,
+      "active_cells": 156
+    },
+    {
+      "name": "er-high",
+      "epsilon_r": 4,
+      "sigma_s_m": 0.01,
+      "frequency_mhz": 100,
+      "pitch_m": 0.1,
+      "z_ohm": [
+        9.674979566885,
+        -824.2284656721
+      ],
+      "true_relative_residual": 8.28788146983e-11,
+      "power_defect": 0.002692289135184,
+      "absorbed_power_w": 5.157821123352e-07,
+      "active_cells": 156
+    },
+    {
+      "name": "sigma-low",
+      "epsilon_r": 3,
+      "sigma_s_m": 0.005,
+      "frequency_mhz": 100,
+      "pitch_m": 0.1,
+      "z_ohm": [
+        9.499955853314,
+        -824.3372354197
+      ],
+      "true_relative_residual": 6.157396491859e-11,
+      "power_defect": 0.002721869588452,
+      "absorbed_power_w": 3.48644105329e-07,
+      "active_cells": 156
+    },
+    {
+      "name": "sigma-high",
+      "epsilon_r": 3,
+      "sigma_s_m": 0.02,
+      "frequency_mhz": 100,
+      "pitch_m": 0.1,
+      "z_ohm": [
+        9.894527478045,
+        -824.3234053358
+      ],
+      "true_relative_residual": 9.61730386372e-11,
+      "power_defect": 0.002637636006831,
+      "absorbed_power_w": 9.848721594684e-07,
+      "active_cells": 156
+    }
+  ],
+  "sampled_ranges": {
+    "epsilon_r": [
+      2,
+      4
+    ],
+    "sigma_s_m": [
+      0.005,
+      0.02
+    ],
+    "absorbed_power_w": [
+      3.48644105329e-07,
+      9.848721594684e-07
+    ],
+    "r_ohm": [
+      9.499955853314,
+      9.894527478045
+    ],
+    "x_ohm": [
+      -824.5539687981,
+      -824.2284656721
+    ]
+  },
+  "interpretation": "Envelope of supplied scenarios only; not a confidence interval, probability distribution, or guaranteed bound over unsampled materials. Numerical residual and power defect do not bound material or geometry error.",
+  "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+  "numerical_refinement": {
+    "name": "refined",
+    "epsilon_r": 3,
+    "sigma_s_m": 0.01,
+    "frequency_mhz": 100,
+    "pitch_m": 0.05,
+    "z_ohm": [
+      9.672908522974,
+      -824.3448888625
+    ],
+    "true_relative_residual": 5.871606492311e-11,
+    "power_defect": 0.002682246107067,
+    "absorbed_power_w": 6.463602736294e-07,
+    "active_cells": 1248
+  },
+  "refinement_component_change_ohm": [
+    0.016868092645999866,
+    0.022101778699948227
+  ]
+}

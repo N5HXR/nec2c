@@ -1,0 +1,460 @@
+{
+  "status": "COMPLETE",
+  "scope": "M11 lossless dielectric contact with PEC; conductor/dielectric clearance retained",
+  "acceptance_rule": "For each delta R and delta X: absolute discrepancy <= max(2 ohm,0.02*abs(OpenEMS reference component)); complex-vector error is diagnostic only.",
+  "native_pillar_cases": [
+    {
+      "frequency_mhz": 300,
+      "pitch_m": 0.0125,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        3.5815796794500017,
+        1.2777373230699993
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            78.64604736189,
+            21.77955767548
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 8.399038961945e-15,
+          "power_defect": 0.002180701974656,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.15206372737884521,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            82.22762704134,
+            23.05729499855
+          ],
+          "active_cells": 3328,
+          "true_relative_residual": 3.581732150504e-11,
+          "power_defect": 0.002254942921773,
+          "accounted_solver_bytes": 27929584,
+          "wall_seconds": 634.4769639074802,
+          "solver_cpu_seconds": 40.27
+        }
+      ],
+      "peak_child_rss_kib": 27620
+    },
+    {
+      "frequency_mhz": 300,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        3.545733575240007,
+        1.162251546660002
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            78.64604736189,
+            21.77955767548
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 8.399038961945e-15,
+          "power_defect": 0.002180701974656,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.2068091332912445,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            82.19178093713,
+            22.94180922214
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 2.955361380804e-11,
+          "power_defect": 0.002254999964405,
+          "accounted_solver_bytes": 3522032,
+          "wall_seconds": 68.90188306570053,
+          "solver_cpu_seconds": 5.02
+        }
+      ],
+      "peak_child_rss_kib": 8088
+    },
+    {
+      "frequency_mhz": 280.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.732526402359994,
+        2.750257254450002
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            61.90487450674,
+            -19.52106124454
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.275768181825e-15,
+          "power_defect": 0.002314136110045,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.21486777067184448,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            64.6374009091,
+            -16.77080399009
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 2.669592410491e-11,
+          "power_defect": 0.00238699985863,
+          "accounted_solver_bytes": 3522032,
+          "wall_seconds": 83.4894562959671,
+          "solver_cpu_seconds": 5.16
+        }
+      ],
+      "peak_child_rss_kib": 8104
+    },
+    {
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        4.383127736769993,
+        -1.2049892664100028
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.2480165958404541,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            103.6520220747,
+            60.2260401461
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 3.199869173803e-11,
+          "power_defect": 0.002130423805925,
+          "accounted_solver_bytes": 3522032,
+          "wall_seconds": 80.3347042798996,
+          "solver_cpu_seconds": 4.95
+        }
+      ],
+      "peak_child_rss_kib": 8200
+    },
+    {
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        3.645566651610011,
+        1.0021020584099993
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            79.94214840221,
+            21.49726187158
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 1.314007762348e-14,
+          "power_defect": 0.00017678966404,
+          "accounted_solver_bytes": 54800,
+          "wall_seconds": 0.42086106538772583,
+          "solver_cpu_seconds": 0.02
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            83.58771505382,
+            22.49936392999
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 4.846803427815e-11,
+          "power_defect": 0.0002238887629152,
+          "accounted_solver_bytes": 3943072,
+          "wall_seconds": 140.17864885926247,
+          "solver_cpu_seconds": 9.13
+        }
+      ],
+      "peak_child_rss_kib": 8192
+    },
+    {
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        4.474664247500002,
+        -1.5350434294899955
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            103.0302397531,
+            60.92736499289
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.154088346587e-15,
+          "power_defect": 0.0001079265985558,
+          "accounted_solver_bytes": 54800,
+          "wall_seconds": 0.41691339015960693,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            107.5049040006,
+            59.3923215634
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 5.309438937381e-11,
+          "power_defect": 0.0001601506248844,
+          "accounted_solver_bytes": 3943072,
+          "wall_seconds": 149.04565125703812,
+          "solver_cpu_seconds": 9.01
+        }
+      ],
+      "peak_child_rss_kib": 8096
+    }
+  ],
+  "openems_checks": [
+    {
+      "frequency_mhz": 300,
+      "pitch_m": 0.0125,
+      "wire_segments": 11,
+      "delta_r_error_ohm": 0.8911945017541711,
+      "delta_x_error_ohm": 0.7987216453803327,
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true,
+      "complex_error_diagnostic_ohm": 1.1967388632261975
+    },
+    {
+      "frequency_mhz": 300,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_r_error_ohm": 0.9270406059641658,
+      "delta_x_error_ohm": 0.6832358689703355,
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true,
+      "complex_error_diagnostic_ohm": 1.1516143181439076
+    },
+    {
+      "frequency_mhz": 280.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_r_error_ohm": 0.6641843480613971,
+      "delta_x_error_ohm": 0.24994551176448887,
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true,
+      "complex_error_diagnostic_ohm": 0.7096573870967281
+    },
+    {
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_r_error_ohm": 1.0564509570678524,
+      "delta_x_error_ohm": 1.7344257747188365,
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true,
+      "complex_error_diagnostic_ohm": 2.030842532718531
+    },
+    {
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_r_error_ohm": 0.8272075295941619,
+      "delta_x_error_ohm": 0.5230863807203328,
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true,
+      "complex_error_diagnostic_ohm": 0.9787193973312132
+    },
+    {
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_r_error_ohm": 0.9649144463378434,
+      "delta_x_error_ohm": 1.4043716116388438,
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true,
+      "complex_error_diagnostic_ohm": 1.7039130002228842
+    }
+  ],
+  "volume_refinement_delta_z_change_ohm": 0.120921080627216,
+  "wire_refinement_delta_z_change_ohm": 0.18871804822071686,
+  "grounded_skeleton": {
+    "model": "skeleton",
+    "ground": "pec",
+    "dielectric_bottom_gap_m": 0,
+    "binary_sha256": "db13ff5ef11c393d34b5f85a460cf9d7b8c6cdec4699ba318113234db19849d0",
+    "target_relative_residual": 1e-10,
+    "wall_seconds": 89.58816292881966,
+    "peak_rss_kib": 28064,
+    "returncode": 0,
+    "command": [
+      "/tmp/m11-pec-checkpoint-nec2c",
+      "-s",
+      "fft",
+      "-r",
+      "1e-10",
+      "-n",
+      "300",
+      "-i",
+      "/tmp/m11-pec-skeleton/model.nec",
+      "-o",
+      "/tmp/m11-pec-skeleton/model.out"
+    ],
+    "iterations": 18.0,
+    "true_relative_residual": 5.431855432275e-11,
+    "accounted_solver_bytes": 26195760.0,
+    "power_defect": 0.003003094512436,
+    "solver_cpu_milliseconds": 6370.0,
+    "feed_impedance_real_ohm": 63.75396415968,
+    "feed_impedance_imag_ohm": -36.03802573873
+  },
+  "kernel_checks": {
+    "independent_static_oracle_cases": 8,
+    "minimum_tested_dynamic_bottom_gap_m": 1e-06,
+    "original_relative_tolerance": 2e-08,
+    "original_absolute_tolerance": 2e-11,
+    "maximum_order": 64
+  },
+  "physical_integration_log": "tests/m11_pec_contact.log",
+  "sanitizer": "PEC FFT adapter ASan/UBSan passes with leak detection disabled because LeakSanitizer is unavailable under this ptrace environment",
+  "regression": {
+    "command": "make check -j2",
+    "total": 19,
+    "passed": 19,
+    "failed": 0
+  },
+  "additional_contact_physical_checks": {
+    "port_reciprocity_relative_error": 7.882198472404483e-05,
+    "tangential_e_boundary_residual": 2.741327616792793e-18,
+    "normal_h_boundary_residual": 1.2775328954497234e-23
+  },
+  "grounded_tree": {
+    "model": "tree",
+    "ground": "pec",
+    "dielectric_bottom_gap_m": 0,
+    "binary_sha256": "db13ff5ef11c393d34b5f85a460cf9d7b8c6cdec4699ba318113234db19849d0",
+    "target_relative_residual": 1e-10,
+    "wall_seconds": 2075.888901978731,
+    "peak_rss_kib": 240416,
+    "returncode": 0,
+    "command": [
+      "/tmp/m11-pec-checkpoint-nec2c",
+      "-s",
+      "fft",
+      "-r",
+      "1e-10",
+      "-n",
+      "300",
+      "-i",
+      "/tmp/m11-pec-tree/model.nec",
+      "-o",
+      "/tmp/m11-pec-tree/model.out"
+    ],
+    "iterations": 45.0,
+    "true_relative_residual": 9.070779582712e-11,
+    "accounted_solver_bytes": 244753200.0,
+    "power_defect": 0.002808294345499,
+    "solver_cpu_milliseconds": 155420.0,
+    "feed_impedance_real_ohm": 64.99102696638,
+    "feed_impedance_imag_ohm": -31.89532941029,
+    "active_cells": 9432,
+    "physical_geometry_fixture": "dielectric/m11-pec-tree.nec",
+    "nominal_runtime_target_seconds": 2400,
+    "runtime_target_met": true,
+    "runtime_status": "40-minute grounded-tree target accepted by user on 2026-10-21; further optimization deferred",
+    "accepted_power_w": 0.006200078344,
+    "radiated_power_w": 0.006182666699044,
+    "angular_quadrature_relative_change": 0.0005848312284261,
+    "far_field_rows": [
+      [
+        0.0,
+        0.0,
+        -0.4593928248269,
+        0.2720364246803,
+        -0.0018176884813,
+        0.001066354714349
+      ],
+      [
+        45.0,
+        0.0,
+        -0.3212826076262,
+        0.5013485559311,
+        0.001045928641476,
+        0.0003053703500365
+      ],
+      [
+        90.0,
+        0.0,
+        -0.01069896744718,
+        -1.702898085159,
+        1.826050386178e-19,
+        -3.078149328055e-19
+      ],
+      [
+        0.0,
+        90.0,
+        -0.0018176884813,
+        0.001066354714349,
+        0.4593928248269,
+        -0.2720364246803
+      ],
+      [
+        45.0,
+        90.0,
+        0.2984992392249,
+        -0.6681607550911,
+        -0.2454682950556,
+        -0.1693294500529
+      ],
+      [
+        90.0,
+        90.0,
+        -0.7624261238707,
+        1.296335611145,
+        6.075810344744e-17,
+        6.438064208811e-17
+      ]
+    ],
+    "timing_note": "Elapsed time is observed on the constrained VM and includes scheduling delay; CPU time is recorded separately. This verification overlapped other test/checkpoint jobs.",
+    "original_runtime_target_seconds": 1800,
+    "runtime_decision_date": "2026-10-21"
+  },
+  "source_distribution_check": "make dist passed; includes new code, fixtures, tests, references and reports",
+  "completion_date": "2026-10-21"
+}

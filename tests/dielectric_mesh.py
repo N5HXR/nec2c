@@ -179,13 +179,9 @@ BOX 2 0.1 0 0 0.2 0.1 0.1
 MESH MAX_KH 0.5 MAX_CELLS 1000 MAX_ASPECT 2
 END
 """
-        expect_failure(
-            binary,
-            root,
-            "cross-material-touch",
-            cross_material,
-            "touching boxes with different material IDs are not supported",
-        )
+        deck = write_model(root / "cross-material-touch", cross_material)
+        status, output = invoke(binary, deck, root)
+        assert status == 0 and number_after("ACTIVE CELLS:", output) == 2, output
 
         aspect_model = base_resource(
             "BOX 1 0 0 0 0.2 0.02 0.02\n",

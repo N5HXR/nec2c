@@ -1,0 +1,419 @@
+{
+  "runs": [
+    {
+      "job_id": "pec-verify-484d1c3579c6",
+      "ground": "pec",
+      "epsilon_r": 3,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -64.94,
+      "engine_seconds": 64.17,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 69.05945482168633,
+          "x_ohm": 8.570660053146682,
+          "last_10_percent_sensitivity_ohm": 0.04211155124346594
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 93.31518568322065,
+          "x_ohm": 50.2699564831324,
+          "last_10_percent_sensitivity_ohm": 0.06683880680079396
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.84452284305567,
+          "x_ohm": 90.81276481986056,
+          "last_10_percent_sensitivity_ohm": 0.112461845752413
+        }
+      ]
+    },
+    {
+      "job_id": "pec-verify-486d60d9dc39",
+      "ground": "pec",
+      "epsilon_r": 1,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -64.83,
+      "engine_seconds": 64.05,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 69.50877868011489,
+          "x_ohm": 9.331038110101883,
+          "last_10_percent_sensitivity_ohm": 0.04274740511655023
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 93.61049129360413,
+          "x_ohm": 51.836587199501345,
+          "last_10_percent_sensitivity_ohm": 0.06800743664050267
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 126.03552239525753,
+          "x_ohm": 93.60793515638103,
+          "last_10_percent_sensitivity_ohm": 0.11493270705137099
+        }
+      ]
+    },
+    {
+      "job_id": "pec-verify-85c86a016cb3",
+      "ground": "pec",
+      "epsilon_r": 1,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "wire_radius_mm": 5,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -46.16,
+      "engine_seconds": 14.79,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 66.61396947579814,
+          "x_ohm": -6.761047528131593,
+          "last_10_percent_sensitivity_ohm": 0.0592612129636828
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.19590639833329,
+          "x_ohm": 33.737460533136904,
+          "last_10_percent_sensitivity_ohm": 0.08206885131065261
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.29276500213604,
+          "x_ohm": 72.89855516186205,
+          "last_10_percent_sensitivity_ohm": 0.1274537991817411
+        }
+      ]
+    },
+    {
+      "job_id": "pec-verify-aa24844484da",
+      "ground": "pec",
+      "epsilon_r": 3,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "wire_radius_mm": 5,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -46.24,
+      "engine_seconds": 14.68,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 66.15831590960424,
+          "x_ohm": -7.461755389669602,
+          "last_10_percent_sensitivity_ohm": 0.05814967470190057
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 87.89181376743986,
+          "x_ohm": 32.29245863636998,
+          "last_10_percent_sensitivity_ohm": 0.0803461014191246
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.10792715780288,
+          "x_ohm": 70.36638461347457,
+          "last_10_percent_sensitivity_ohm": 0.12420489928091498
+        }
+      ]
+    },
+    {
+      "job_id": "real-verify-4b5b59d9d5cb",
+      "ground": "real",
+      "epsilon_r": 3,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "wire_radius_mm": 5,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -57.67,
+      "engine_seconds": 20.89,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 67.11405543739575,
+          "x_ohm": -8.163598357193083,
+          "last_10_percent_sensitivity_ohm": 0.05604309392135377
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.43559149313404,
+          "x_ohm": 31.116784529204146,
+          "last_10_percent_sensitivity_ohm": 0.08075730184138638
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 115.91552772180926,
+          "x_ohm": 68.92878118051999,
+          "last_10_percent_sensitivity_ohm": 0.13014894529851068
+        }
+      ]
+    },
+    {
+      "job_id": "real-verify-66b7ac295978",
+      "ground": "real",
+      "epsilon_r": 1,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -61.42,
+      "engine_seconds": 88.33,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 70.57964914157346,
+          "x_ohm": 8.63808368183083,
+          "last_10_percent_sensitivity_ohm": 0.05712680313863277
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 94.27588380856291,
+          "x_ohm": 50.537009052333666,
+          "last_10_percent_sensitivity_ohm": 0.09017228931233649
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.80620017865202,
+          "x_ohm": 92.04462645246285,
+          "last_10_percent_sensitivity_ohm": 0.15205882249628117
+        }
+      ]
+    },
+    {
+      "job_id": "real-verify-69d5c70c59e4",
+      "ground": "real",
+      "epsilon_r": 3,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "result_present": false,
+      "normal_early_stop": false,
+      "last_logged_energy_db": -57.71,
+      "engine_seconds": null,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "provisional_incomplete_or_unconfirmed",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 70.07542695523149,
+          "x_ohm": 7.847674345786092,
+          "last_10_percent_sensitivity_ohm": 0.06868896562796235
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 93.93439560110782,
+          "x_ohm": 48.95678700171463,
+          "last_10_percent_sensitivity_ohm": 0.10730143745710649
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.47910146827209,
+          "x_ohm": 89.29332719291777,
+          "last_10_percent_sensitivity_ohm": 0.17930171196442604
+        }
+      ]
+    },
+    {
+      "job_id": "real-verify-d4bc7a2d6106",
+      "ground": "real",
+      "epsilon_r": 1,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "wire_radius_mm": 5,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -57.56,
+      "engine_seconds": 20.6,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 67.60829993435217,
+          "x_ohm": -7.436471215927187,
+          "last_10_percent_sensitivity_ohm": 0.05711532654329009
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.80341252819422,
+          "x_ohm": 32.57510717950441,
+          "last_10_percent_sensitivity_ohm": 0.08244754382055676
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.18865046515339,
+          "x_ohm": 71.43357806741928,
+          "last_10_percent_sensitivity_ohm": 0.13337526291058774
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "ground": "pec",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.4493238584285564,
+      "delta_x_ohm": -0.7603780569552008,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-486d60d9dc39",
+      "loaded_job": "pec-verify-484d1c3579c6"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.2953056103834797,
+      "delta_x_ohm": -1.5666307163689481,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-486d60d9dc39",
+      "loaded_job": "pec-verify-484d1c3579c6"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.19099955220185905,
+      "delta_x_ohm": -2.7951703365204708,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-486d60d9dc39",
+      "loaded_job": "pec-verify-484d1c3579c6"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.4556535661939023,
+      "delta_x_ohm": -0.7007078615380085,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-85c86a016cb3",
+      "loaded_job": "pec-verify-aa24844484da"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.30409263089343597,
+      "delta_x_ohm": -1.4450018967669251,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-85c86a016cb3",
+      "loaded_job": "pec-verify-aa24844484da"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.18483784433315975,
+      "delta_x_ohm": -2.5321705483874837,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-85c86a016cb3",
+      "loaded_job": "pec-verify-aa24844484da"
+    },
+    {
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.5042221863419627,
+      "delta_x_ohm": -0.7904093360447382,
+      "status": "provisional_incomplete_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-69d5c70c59e4"
+    },
+    {
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.341488207455086,
+      "delta_x_ohm": -1.5802220506190352,
+      "status": "provisional_incomplete_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-69d5c70c59e4"
+    },
+    {
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.32709871037992855,
+      "delta_x_ohm": -2.7512992595450783,
+      "status": "provisional_incomplete_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-69d5c70c59e4"
+    },
+    {
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.49424449695642636,
+      "delta_x_ohm": -0.7271271412658953,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-d4bc7a2d6106",
+      "loaded_job": "real-verify-4b5b59d9d5cb"
+    },
+    {
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.3678210350601745,
+      "delta_x_ohm": -1.4583226503002606,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-d4bc7a2d6106",
+      "loaded_job": "real-verify-4b5b59d9d5cb"
+    },
+    {
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.2731227433441319,
+      "delta_x_ohm": -2.5047968868992854,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-d4bc7a2d6106",
+      "loaded_job": "real-verify-4b5b59d9d5cb"
+    }
+  ],
+  "acceptance": "unreviewed physical/source/domain accuracy; provisional entries are not converged evidence"
+}

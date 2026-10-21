@@ -77,12 +77,6 @@ static int intervals_overlap_interior(double amin, double amax,
   return fmax(amin, bmin) < fmin(amax, bmax);
 }
 
-static int intervals_touch_or_overlap(double amin, double amax,
-                                      double bmin, double bmax)
-{
-  return fmax(amin, bmin) <= fmin(amax, bmax);
-}
-
 static int validate_box_relationships(const dielectric_model *model,
                                       dielectric_diagnostic *diagnostic)
 {
@@ -100,7 +94,6 @@ static int validate_box_relationships(const dielectric_model *model,
     {
       const dielectric_region *right_region = find_region(model, model->boxes[right].region_id);
       int interior = 1;
-      int closed = 1;
       int axis;
       if(right_region == NULL)
       {
@@ -113,9 +106,6 @@ static int validate_box_relationships(const dielectric_model *model,
         interior &= intervals_overlap_interior(
             model->boxes[left].minimum[axis], model->boxes[left].maximum[axis],
             model->boxes[right].minimum[axis], model->boxes[right].maximum[axis]);
-        closed &= intervals_touch_or_overlap(
-            model->boxes[left].minimum[axis], model->boxes[left].maximum[axis],
-            model->boxes[right].minimum[axis], model->boxes[right].maximum[axis]);
       }
       if(interior)
       {
@@ -124,16 +114,6 @@ static int validate_box_relationships(const dielectric_model *model,
                  model->boxes[right].region_id);
         mesh_diagnostic(diagnostic, model, model->boxes[right].source_line,
                         "BOX", value, "physical box interiors overlap");
-        return 0;
-      }
-      if(closed && (left_region->material_id != right_region->material_id))
-      {
-        char value[64];
-        snprintf(value, sizeof(value), "%d,%d", left_region->material_id,
-                 right_region->material_id);
-        mesh_diagnostic(diagnostic, model, model->boxes[right].source_line,
-                        "BOX", value,
-                        "touching boxes with different material IDs are not supported");
         return 0;
       }
     }
@@ -412,7 +392,7 @@ int dielectric_mesh_build(const dielectric_model *model, double frequency_mhz,
       region_mesh->material_id = material->id;
       region_mesh->diameter = sqrt(dx * dx + dy * dy + dz * dz);
       region_mesh->electrical_diameter =
-          k0 * sqrt(material->epsilon_r) * region_mesh->diameter;
+          k0 * dielectric_material_mesh_index(material,k0) * region_mesh->diameter;
       if(!isfinite(region_mesh->electrical_diameter))
       {
         mesh_diagnostic(diagnostic, model, region->source_line, "REGION", "diameter",
@@ -465,14 +445,14 @@ int dielectric_mesh_build(const dielectric_model *model, double frequency_mhz,
       goto failure;
     }
     candidate.declared_volume += box_mesh->physical_volume;
-    if(material->epsilon_r == 1.0)
+    if(!material->tabulated && material->epsilon_r == 1.0 && material->epsilon_loss == 0.0 && material->conductivity == 0.0)
     {
       candidate.vacuum_box_count++;
       candidate.vacuum_volume += box_mesh->physical_volume;
       continue;
     }
     candidate.active_volume += box_mesh->physical_volume;
-    maximum_edge = model->max_kh / (k0 * sqrt(material->epsilon_r));
+    maximum_edge = model->max_kh / (k0 * dielectric_material_mesh_index(material,k0));
     if(!isfinite(maximum_edge) || (maximum_edge <= 0.0))
     {
       mesh_diagnostic(diagnostic, model, box->source_line, "MESH", "cell edge",
@@ -576,7 +556,7 @@ int dielectric_mesh_build(const dielectric_model *model, double frequency_mhz,
                               "internal unresolved material reference");
               goto failure;
             }
-            cell->q = k0 * sqrt(material->epsilon_r) * longest;
+            cell->q = k0 * dielectric_material_mesh_index(material,k0) * longest;
           }
           cell->aspect = longest / shortest;
           box_mesh->numerical_volume += edge[0] * edge[1] * edge[2];

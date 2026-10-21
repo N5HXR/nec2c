@@ -1,0 +1,408 @@
+{
+  "step": "M13-04",
+  "date": "2026-10-21",
+  "status": "COMPLETE",
+  "scope": "GN 2 wires and scalar lossy volumes above passive planar real ground, with positive ground/conductor gaps; dense and assembled GMRES",
+  "native_verification_status": "PASS",
+  "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+  "openems": {
+    "status": "PASS",
+    "package": "/tmp/m13-04-openems.tar.gz",
+    "package_sha256": "5f9ae15f2fdd95d31e5da4a7f45413ef9b959e9ca0581236dec857991a2bcb49",
+    "expected_archive": "/tmp/m13-04-results.tar.gz",
+    "expected_verification_runs": 12,
+    "expected_pilots": 2,
+    "controls": [
+      "lossless",
+      "lossy"
+    ],
+    "frequencies_mhz": [
+      280,
+      300,
+      320
+    ],
+    "largest_planned_grid_cells": 1966500,
+    "previous_package_sha256": "91e56799e1fa872a2c035d3e6a9de8229627bef0e4123cc4f4e45ce6f927bad8",
+    "package_revision_note": "README runtime explanation corrected; simulation script and worker identical in both bundles; both produce equivalent evidence.",
+    "archive_sha256": "f03d708405d2ff66b61d708e6270722a79e4cf544fe1b5cad25dc104786f8c24",
+    "verification_runs": 12,
+    "pilots": 2,
+    "spectral_pairs": 18,
+    "maximum_component_error_ohm": 0.829760981268663,
+    "maximum_mesh_component_change_ohm": 0.28083141841622705,
+    "maximum_domain_component_change_ohm": 0.02994863390877356,
+    "review": "tests/m13-04-openems-review.json"
+  },
+  "native_plan": {
+    "primary_cells": 27,
+    "maximum_cells": 64,
+    "wire_segments": [
+      11,
+      21
+    ],
+    "dielectric_sigma_s_m": [
+      0,
+      0.02
+    ],
+    "ground_epsilon_r": 13,
+    "ground_sigma_s_m": 0.02
+  },
+  "acceptance_rule": "Each induced delta R/delta X component discrepancy <= max(2 ohm, 2% of corresponding OpenEMS reference component)",
+  "excluded": [
+    "GN 0",
+    "real-ground patches",
+    "ground contact/burial",
+    "screens/cliff ground",
+    "ground FFT",
+    "anisotropy",
+    "magnetic media"
+  ],
+  "analytical_reference": {
+    "relative_current_error": 5.810512435534006e-09,
+    "relative_current_gate": 5e-06,
+    "reference": "Independent finite-cube electrostatic image, Fresnel illumination and Joule absorption"
+  },
+  "native_completed_cases": [
+    {
+      "experiment": "M13-04",
+      "frequency_mhz": 280,
+      "divisions_per_axis": 3,
+      "pitch_m": 0.03333333333333333,
+      "wire_segments": 11,
+      "dielectric_sigma_s_m": 0.02,
+      "ground_epsilon_r": 13,
+      "ground_sigma_s_m": 0.02,
+      "delta_z_ohm": [
+        -0.769790849180005,
+        -0.46556542753999963
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            62.69894546676,
+            -19.87992841834
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 5.884433013166e-15,
+          "power_defect": 0.00244608352139,
+          "accepted_power_w": 0.007246138838255,
+          "upper_radiated_power_w": 0.003009136505574,
+          "lower_halfspace_power_w": 0.004254726993488,
+          "absorbed_power_w": 0.0,
+          "ground_flux_quadrature_change_w": 1.132242737067e-12,
+          "wall_seconds": 1.814583659172058,
+          "solver_cpu_seconds": 0.13
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            61.92915461758,
+            -20.34549384588
+          ],
+          "active_cells": 27,
+          "true_relative_residual": 9.252396816949e-11,
+          "power_defect": 0.002483691695445,
+          "accepted_power_w": 0.007287224375213,
+          "upper_radiated_power_w": 0.003002006395248,
+          "lower_halfspace_power_w": 0.004246357179072,
+          "absorbed_power_w": 5.696001955731e-05,
+          "ground_flux_quadrature_change_w": 1.130465512866e-12,
+          "wall_seconds": 362.4624554514885,
+          "solver_cpu_seconds": 26.21
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 7760
+    },
+    {
+      "experiment": "M13-04",
+      "frequency_mhz": 300,
+      "divisions_per_axis": 3,
+      "pitch_m": 0.03333333333333333,
+      "wire_segments": 11,
+      "dielectric_sigma_s_m": 0.02,
+      "ground_epsilon_r": 13,
+      "ground_sigma_s_m": 0.02,
+      "delta_z_ohm": [
+        -0.8245598184300036,
+        -1.14253469398
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            79.08469476773,
+            21.08074897213
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.430929695562e-15,
+          "power_defect": 0.0009054088991013,
+          "accepted_power_w": 0.005902911651628,
+          "upper_radiated_power_w": 0.002569495164059,
+          "lower_halfspace_power_w": 0.00333876103631,
+          "absorbed_power_w": 0.0,
+          "ground_flux_quadrature_change_w": 9.20223532791e-13,
+          "wall_seconds": 1.5852288603782654,
+          "solver_cpu_seconds": 0.11
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            78.2601349493,
+            19.93821427815
+          ],
+          "active_cells": 27,
+          "true_relative_residual": 6.741016408205e-11,
+          "power_defect": 0.0009173875653172,
+          "accepted_power_w": 0.005999537088805,
+          "upper_radiated_power_w": 0.002589899589727,
+          "lower_halfspace_power_w": 0.003366611346683,
+          "absorbed_power_w": 4.853005311712e-05,
+          "ground_flux_quadrature_change_w": 9.282683129108e-13,
+          "wall_seconds": 370.6018890142441,
+          "solver_cpu_seconds": 26.75
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8164
+    },
+    {
+      "experiment": "M13-04",
+      "frequency_mhz": 320,
+      "divisions_per_axis": 3,
+      "pitch_m": 0.03333333333333333,
+      "wire_segments": 11,
+      "dielectric_sigma_s_m": 0.02,
+      "ground_epsilon_r": 13,
+      "ground_sigma_s_m": 0.02,
+      "delta_z_ohm": [
+        -0.913883279649994,
+        -2.01305360888
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            99.2779813096,
+            60.60050532402
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 2.703786957153e-15,
+          "power_defect": 0.001271251585275,
+          "accepted_power_w": 0.003669205619394,
+          "upper_radiated_power_w": 0.001654253173299,
+          "lower_halfspace_power_w": 0.002010287962635,
+          "absorbed_power_w": 0.0,
+          "ground_flux_quadrature_change_w": 5.720701690137e-13,
+          "wall_seconds": 2.134473592042923,
+          "solver_cpu_seconds": 0.14
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            98.36409802995,
+            58.58745171514
+          ],
+          "active_cells": 27,
+          "true_relative_residual": 4.615992557403e-11,
+          "power_defect": 0.001275102854316,
+          "accepted_power_w": 0.003752067763691,
+          "upper_radiated_power_w": 0.001676224512254,
+          "lower_halfspace_power_w": 0.002037849089678,
+          "absorbed_power_w": 3.320988944348e-05,
+          "ground_flux_quadrature_change_w": 5.800676779188e-13,
+          "wall_seconds": 333.1561858355999,
+          "solver_cpu_seconds": 26.05
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 8176
+    },
+    {
+      "experiment": "M13-04",
+      "frequency_mhz": 300.0,
+      "divisions_per_axis": 3,
+      "pitch_m": 0.03333333333333333,
+      "wire_segments": 11,
+      "dielectric_sigma_s_m": 0.0,
+      "ground_epsilon_r": 13,
+      "ground_sigma_s_m": 0.02,
+      "delta_z_ohm": [
+        -0.37045267407999916,
+        -1.1886320894099995
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            79.08469476773,
+            21.08074897213
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.430929695562e-15,
+          "power_defect": 0.0009054088991013,
+          "accepted_power_w": 0.005902911651628,
+          "upper_radiated_power_w": 0.002569495164059,
+          "lower_halfspace_power_w": 0.00333876103631,
+          "absorbed_power_w": 0.0,
+          "ground_flux_quadrature_change_w": 9.20223532791e-13,
+          "wall_seconds": 1.400279313325882,
+          "solver_cpu_seconds": 0.11
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            78.71424209365,
+            19.89211688272
+          ],
+          "active_cells": 27,
+          "true_relative_residual": 7.499549053417e-11,
+          "power_defect": 0.0008797789679323,
+          "accepted_power_w": 0.005970773793455,
+          "upper_radiated_power_w": 0.002599281746525,
+          "lower_halfspace_power_w": 0.003376745008136,
+          "absorbed_power_w": 0.0,
+          "ground_flux_quadrature_change_w": 9.308248616335e-13,
+          "wall_seconds": 304.0600471496582,
+          "solver_cpu_seconds": 25.21
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 7748
+    },
+    {
+      "experiment": "M13-04",
+      "frequency_mhz": 300.0,
+      "divisions_per_axis": 4,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "dielectric_sigma_s_m": 0.02,
+      "ground_epsilon_r": 13,
+      "ground_sigma_s_m": 0.02,
+      "delta_z_ohm": [
+        -0.8244242297599982,
+        -1.138188200710001
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            79.08469476773,
+            21.08074897213
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.430929695562e-15,
+          "power_defect": 0.0009054088991013,
+          "accepted_power_w": 0.005902911651628,
+          "upper_radiated_power_w": 0.002569495164059,
+          "lower_halfspace_power_w": 0.00333876103631,
+          "absorbed_power_w": 0.0,
+          "ground_flux_quadrature_change_w": 9.20223532791e-13,
+          "wall_seconds": 1.7446024715900421,
+          "solver_cpu_seconds": 0.11
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            78.26027053797,
+            19.94256077142
+          ],
+          "active_cells": 64,
+          "true_relative_residual": 2.333681815786e-11,
+          "power_defect": 0.0009062153453848,
+          "accepted_power_w": 0.005999368515399,
+          "upper_radiated_power_w": 0.002589038926437,
+          "lower_halfspace_power_w": 0.003365516026999,
+          "absorbed_power_w": 5.025028177392e-05,
+          "ground_flux_quadrature_change_w": 9.278979494487e-13,
+          "wall_seconds": 1014.8241108357906,
+          "solver_cpu_seconds": 74.93
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 7740
+    },
+    {
+      "experiment": "M13-04",
+      "frequency_mhz": 300.0,
+      "divisions_per_axis": 3,
+      "pitch_m": 0.03333333333333333,
+      "wire_segments": 21,
+      "dielectric_sigma_s_m": 0.02,
+      "ground_epsilon_r": 13,
+      "ground_sigma_s_m": 0.02,
+      "delta_z_ohm": [
+        -0.8748656706400055,
+        -1.146591902659999
+      ],
+      "runs": [
+        {
+          "loaded": false,
+          "z_ohm": [
+            80.38511146563,
+            20.77351232044
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 1.858583562256e-14,
+          "power_defect": 0.002631092245969,
+          "accepted_power_w": 0.005830665547098,
+          "upper_radiated_power_w": 0.002541463371858,
+          "lower_halfspace_power_w": 0.003304543194149,
+          "absorbed_power_w": 0.0,
+          "ground_flux_quadrature_change_w": 9.111656741612e-13,
+          "wall_seconds": 2.2966287434101105,
+          "solver_cpu_seconds": 0.18
+        },
+        {
+          "loaded": true,
+          "z_ohm": [
+            79.51024579499,
+            19.62692041778
+          ],
+          "active_cells": 27,
+          "true_relative_residual": 7.130263817722e-11,
+          "power_defect": 0.002642404629009,
+          "accepted_power_w": 0.005927323492901,
+          "upper_radiated_power_w": 0.002562105763217,
+          "lower_halfspace_power_w": 0.003332693357433,
+          "absorbed_power_w": 4.818675928591e-05,
+          "ground_flux_quadrature_change_w": 9.191029014255e-13,
+          "wall_seconds": 517.553789138794,
+          "solver_cpu_seconds": 44.38
+        }
+      ],
+      "binary_sha256": "be00d866ec457a3aa81ecb4f3af8345455d89854c1dc67c3cdca2fdd640e0baf",
+      "peak_child_rss_kib": 7748
+    }
+  ],
+  "native_refinement": [
+    {
+      "cells": 64,
+      "wire_segments": 11,
+      "component_change_ohm": [
+        0.0001355886700054043,
+        0.00434649326999903
+      ]
+    },
+    {
+      "cells": 27,
+      "wire_segments": 21,
+      "component_change_ohm": [
+        0.050305852210001945,
+        0.004057208679999036
+      ]
+    }
+  ],
+  "maximum_native_power_defect": 0.002642404629009,
+  "maximum_native_true_relative_residual": 9.252396816949e-11,
+  "maximum_native_peak_child_rss_kib": 8176,
+  "regression": {
+    "groups": 23,
+    "pass": 23,
+    "fail": 0,
+    "solver_binary_unchanged": true,
+    "new_test": "tests/m13_real_ground.py",
+    "patch_policy_fixture": "Explicit nondegenerate distant patch checked independently after fixture edit"
+  }
+}

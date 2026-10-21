@@ -1,0 +1,16 @@
+model=skeleton cells=216 unknowns=648 rtol=1e-10 budget_bytes=536870912
+build_seconds=8.862155 plan_bytes=12586832 gmres_bytes=669760 caller_bytes=36288
+matvec_seconds=0.998576 solve_seconds=18.888449 peak_rss_kib=14856 iterations=17 applications=19 residual=4.96260894251e-11 status=converged
+integrated_normalized_current_0=-2.24149760527+0.472514556425j
+integrated_normalized_current_1=0.0177203676838-0.0095988499338j
+integrated_normalized_current_2=-0.0011550209246-0.0149354621134j
+far_axis0_component0=0+0j
+far_axis0_component1=0.0199302216808-0.00395539360848j
+far_axis0_component2=0.013256938867-0.00725417288106j
+far_axis1_component0=-2.34900494769-0.492766673874j
+far_axis1_component1=0+0j
+far_axis1_component2=0.00046963233839-0.0107682128561j
+far_axis2_component0=4.22785835141-0.0839374466564j
+far_axis2_component1=-0.0183042072039-0.00404808466534j
+far_axis2_component2=0+0j
+extinction_normalized=0.0839374466564 scattered16_normalized=0.0839374466564 scattered32_normalized=0.0839374466564 angular_relative_change=4.13337204092e-15 power_relative_defect=1.25654510044e-14

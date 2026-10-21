@@ -1,0 +1,433 @@
+{
+  "step": "M13-02",
+  "date": "2026-10-21",
+  "status": "COMPLETE",
+  "material_format_versions": [
+    1,
+    2,
+    3
+  ],
+  "interpolation": "Piecewise linear ER and either EI or SIGMA in ordinary frequency; no extrapolation; every declared table covers the whole FR sweep",
+  "table_mesh_bound": "highest requested k0 * sqrt(hypot(table-wide max ER, table-wide max imaginary magnitude)); includes interior knots",
+  "sample_vacuum_policy": "TABLE samples with ER=1 and zero loss reject; constant ER=1 vacuum remains supported",
+  "targeted_tests_log": "/tmp/m13-02-final-tests.log",
+  "nx_lifecycle": "PASS",
+  "repeated_fr_mesh_and_range": "PASS",
+  "native_pillar_cases": [
+    {
+      "experiment": "M13-02",
+      "conductivity_s_m": 0.015,
+      "evaluated_epsilon_r": 3.5,
+      "frequency_mhz": 280.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.5903479840300037,
+        2.129036721350001
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            61.90487450674,
+            -19.52106124454
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.275768181825e-15,
+          "power_defect": 0.002314136110045,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.25606581568717957,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3.5,
+          "z_ohm": [
+            64.49522249077,
+            -17.39202452319
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 5.394063317524e-11,
+          "power_defect": 0.002201887334043,
+          "absorbed_power_w": 0.0004381189625188,
+          "accounted_solver_bytes": 3522040,
+          "wall_seconds": 61.30927190184593,
+          "solver_cpu_seconds": 5.03
+        }
+      ],
+      "peak_child_rss_kib": 8132,
+      "binary_sha256": "937d57e00236ee77519c70e095bbde88f934671d9d641a5c345a60c8b155812a"
+    },
+    {
+      "experiment": "M13-02",
+      "conductivity_s_m": 0.02,
+      "evaluated_epsilon_r": 3.0,
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.547310340189995,
+        0.545605630419999
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            78.64604736189,
+            21.77955767548
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 8.399038961945e-15,
+          "power_defect": 0.002180701974656,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.11004292964935303,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3.0,
+          "z_ohm": [
+            81.19335770208,
+            22.3251633059
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 7.782270006199e-11,
+          "power_defect": 0.002017535594163,
+          "absorbed_power_w": 0.0004345179947478,
+          "accounted_solver_bytes": 3522040,
+          "wall_seconds": 58.90969714522362,
+          "solver_cpu_seconds": 4.97
+        }
+      ],
+      "peak_child_rss_kib": 8224,
+      "binary_sha256": "937d57e00236ee77519c70e095bbde88f934671d9d641a5c345a60c8b155812a"
+    },
+    {
+      "experiment": "M13-02",
+      "conductivity_s_m": 0.025,
+      "evaluated_epsilon_r": 2.5,
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        1.8733273228699971,
+        -1.249328585779999
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.1637897491455078,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 2.5,
+          "z_ohm": [
+            101.1422216608,
+            60.18170082673
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 4.828105324234e-11,
+          "power_defect": 0.001845444448408,
+          "absorbed_power_w": 0.0003373847723748,
+          "accounted_solver_bytes": 3522040,
+          "wall_seconds": 60.070976197719574,
+          "solver_cpu_seconds": 4.79
+        }
+      ],
+      "peak_child_rss_kib": 8236,
+      "binary_sha256": "937d57e00236ee77519c70e095bbde88f934671d9d641a5c345a60c8b155812a"
+    },
+    {
+      "experiment": "M13-02",
+      "conductivity_s_m": 0.025,
+      "evaluated_epsilon_r": 2.5,
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.0125,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        1.961204193869989,
+        -1.1789414425799976
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.16179049015045166,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 2.5,
+          "z_ohm": [
+            101.2300985318,
+            60.25208796993
+          ],
+          "active_cells": 3328,
+          "true_relative_residual": 4.858524132803e-11,
+          "power_defect": 0.001843658479475,
+          "absorbed_power_w": 0.0003406600803615,
+          "accounted_solver_bytes": 27929592,
+          "wall_seconds": 504.55153852701187,
+          "solver_cpu_seconds": 38.12
+        }
+      ],
+      "peak_child_rss_kib": 28272,
+      "binary_sha256": "937d57e00236ee77519c70e095bbde88f934671d9d641a5c345a60c8b155812a"
+    },
+    {
+      "experiment": "M13-02",
+      "conductivity_s_m": 0.025,
+      "evaluated_epsilon_r": 2.5,
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        1.8538135223000012,
+        -1.4364395734000013
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            103.0302397531,
+            60.92736499289
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.154088346587e-15,
+          "power_defect": 0.0001079265985558,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 54800,
+          "wall_seconds": 0.2424616515636444,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 2.5,
+          "z_ohm": [
+            104.8840532754,
+            59.49092541949
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 4.640469787601e-11,
+          "power_defect": 9.030105884065e-05,
+          "absorbed_power_w": 0.0003331464286831,
+          "accounted_solver_bytes": 3943080,
+          "wall_seconds": 124.74358037114143,
+          "solver_cpu_seconds": 8.63
+        }
+      ],
+      "peak_child_rss_kib": 8068,
+      "binary_sha256": "937d57e00236ee77519c70e095bbde88f934671d9d641a5c345a60c8b155812a"
+    }
+  ],
+  "prior_constant_material_knot_match": {
+    "frequency_mhz": 300,
+    "reference": "m13-01-acceptance.json",
+    "complex_delta_z_discrepancy_ohm": 0.0
+  },
+  "benchmark_note": "Pinned single-FR benchmark predates only repeated-FR mesh invalidation; single-FR physics and material evaluation are unchanged.",
+  "regression": {
+    "status": "PASS",
+    "total": 21,
+    "passed": 21,
+    "failed": 0,
+    "log": "/tmp/m13-02-suite.log",
+    "summary": "test-suite.log"
+  },
+  "openems": {
+    "status": "PASS",
+    "package": "/tmp/m13-02-openems.tar.gz",
+    "expected_archive": "/tmp/m13-02-results.tar.gz",
+    "witnesses": [
+      {
+        "frequency_mhz": 280,
+        "epsilon_r": 3.5,
+        "conductivity_s_m": 0.015
+      },
+      {
+        "frequency_mhz": 320,
+        "epsilon_r": 2.5,
+        "conductivity_s_m": 0.025
+      }
+    ],
+    "reused_knot_frequency_mhz": 300,
+    "expected_verification_runs": 12,
+    "review": "m13-02-openems-review.json",
+    "pairs": "m13-02-openems-pairs.csv",
+    "archive_sha256": "da7845be10f70a1feb56a7ee335e5dda487ad705413d6ebb1aefce507e2535cb",
+    "verification_runs": 12,
+    "native_comparisons": [
+      {
+        "frequency_mhz": 280.0,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          2.5903479840300037,
+          2.129036721350001
+        ],
+        "reference_delta_z_ohm": [
+          3.10072871311813,
+          1.763970808366146
+        ],
+        "component_errors_ohm": [
+          0.5103807290881264,
+          0.36506591298385516
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 0.6275042704613756,
+        "reference": "M13-02 designated witness",
+        "status": "PASS"
+      },
+      {
+        "frequency_mhz": 300.0,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          2.547310340189995,
+          0.545605630419999
+        ],
+        "reference_delta_z_ohm": [
+          3.0783044337473484,
+          -0.1606337954089554
+        ],
+        "component_errors_ohm": [
+          0.5309940935573536,
+          0.7062394258289544
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 0.8835886225999103,
+        "reference": "M13-01 retained knot",
+        "status": "PASS"
+      },
+      {
+        "frequency_mhz": 320.0,
+        "pitch_m": 0.025,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          1.8733273228699971,
+          -1.249328585779999
+        ],
+        "reference_delta_z_ohm": [
+          2.069993515629861,
+          -2.515489579278835
+        ],
+        "component_errors_ohm": [
+          0.19666619275986363,
+          1.2661609934988363
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.2813435342766668,
+        "reference": "M13-02 designated witness",
+        "status": "PASS"
+      },
+      {
+        "frequency_mhz": 320.0,
+        "pitch_m": 0.0125,
+        "wire_segments": 11,
+        "native_delta_z_ohm": [
+          1.961204193869989,
+          -1.1789414425799976
+        ],
+        "reference_delta_z_ohm": [
+          2.069993515629861,
+          -2.515489579278835
+        ],
+        "component_errors_ohm": [
+          0.10878932175987188,
+          1.3365481366988377
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.3409683211180299,
+        "reference": "M13-02 designated witness",
+        "status": "PASS"
+      },
+      {
+        "frequency_mhz": 320.0,
+        "pitch_m": 0.025,
+        "wire_segments": 21,
+        "native_delta_z_ohm": [
+          1.8538135223000012,
+          -1.4364395734000013
+        ],
+        "reference_delta_z_ohm": [
+          2.069993515629861,
+          -2.515489579278835
+        ],
+        "component_errors_ohm": [
+          0.2161799933298596,
+          1.079050005878834
+        ],
+        "component_limits_ohm": [
+          2,
+          2
+        ],
+        "complex_error_diagnostic_ohm": 1.1004920284596384,
+        "reference": "M13-02 designated witness",
+        "status": "PASS"
+      }
+    ],
+    "convergence": [
+      {
+        "frequency_mhz": 280,
+        "mesh_delta_z_change_ohm": 0.20946381178588666,
+        "domain_delta_z_change_ohm": 0.027495328752599454
+      },
+      {
+        "frequency_mhz": 320,
+        "mesh_delta_z_change_ohm": 0.33992950988817255,
+        "domain_delta_z_change_ohm": 0.026115092914166953
+      }
+    ]
+  },
+  "acceptance_rule": "Each designated witness induced delta R/delta X component discrepancy <= max(2 ohm, 2% of corresponding OpenEMS reference component)",
+  "volume_refinement_delta_z_change_ohm": 0.11259082726673027,
+  "wire_refinement_delta_z_change_ohm": 0.188125782658354,
+  "implementation_status": "COMPLETE",
+  "native_verification_status": "PASS",
+  "final_binary_sha256": "0bfa8da457c306118ef4db017df275d34dda042b42aa4a0f182e46a862458205",
+  "source_distribution_check": "PASS: make dist",
+  "targeted_checks": [
+    "SIGMA/EI knot and off-knot equivalence to constant materials",
+    "independent small-cube polarizability",
+    "non-collinear piecewise interpolation",
+    "conductive ER=1 remains active",
+    "ascending/descending/geometric frequency sweeps",
+    "whole-sweep range refusal before solving",
+    "interior material peak controls fixed mesh",
+    "unordered samples and forward references",
+    "invalid and ambiguous tables reject",
+    "separate tables retain EI/SIGMA material identity",
+    "nonuniform FFT remains unsupported",
+    "coupled wire free-space/PEC currents and power",
+    "NX releases table data",
+    "later FR rebuilds mesh and revalidates range"
+  ],
+  "completion_date": "2026-10-21"
+}

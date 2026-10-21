@@ -1,0 +1,15 @@
+model=skeleton cells=216 unknowns=648 rtol=1e-08 budget_bytes=536870912
+build_seconds=7.910329 plan_bytes=12586832 gmres_bytes=669760 caller_bytes=36288
+matvec_seconds=0.865662 solve_seconds=11.959151 peak_rss_kib=14884 iterations=14 applications=16 residual=3.33556793659e-09 status=converged
+integrated_normalized_current_0=-2.24149760503+0.472514555358j
+integrated_normalized_current_1=0.0177203690909-0.00959885310354j
+integrated_normalized_current_2=-0.00115502064724-0.0149354645273j
+far_axis0_component0=0+0j
+far_axis0_component1=0.019930223467-0.00395539662828j
+far_axis0_component2=0.013256939336-0.00725417505213j
+far_axis1_component0=-2.34900494731-0.492766675064j
+far_axis1_component1=0+0j
+far_axis1_component2=0.000469632959076-0.0107682151995j
+far_axis2_component0=4.22785835143-0.0839374466571j
+far_axis2_component1=-0.0183042104816-0.00404808356708j
+far_axis2_component2=0+0j

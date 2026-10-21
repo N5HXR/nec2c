@@ -1,0 +1,2427 @@
+{
+  "experiment": "M13-04",
+  "controls": [
+    {
+      "experiment_case": "lossless",
+      "runs": [
+        {
+          "job_id": "real-verify-66b7ac295978",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 1,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -60.54,
+          "engine_seconds": 88.97,
+          "engine_timestep_seconds": 5.5103e-12,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 70.57644430674677,
+              "x_ohm": 8.636170996601084,
+              "last_10_percent_sensitivity_ohm": 0.0633437457261207
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 94.28122480019117,
+              "x_ohm": 50.5394423381404,
+              "last_10_percent_sensitivity_ohm": 0.09823355007877345
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 125.79618025754407,
+              "x_ohm": 92.04386297167923,
+              "last_10_percent_sensitivity_ohm": 0.16302967150439632
+            }
+          ],
+          "experiment_case": "lossless"
+        },
+        {
+          "job_id": "real-verify-69d5c70c59e4",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 3,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -63.05,
+          "engine_seconds": 92.82,
+          "engine_timestep_seconds": 5.5103e-12,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 70.100335658639,
+              "x_ohm": 7.844430728789066,
+              "last_10_percent_sensitivity_ohm": 0.0404521547453162
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 93.89619120416357,
+              "x_ohm": 48.964521702384566,
+              "last_10_percent_sensitivity_ohm": 0.05937681492396634
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 125.53619430269339,
+              "x_ohm": 89.26172160598632,
+              "last_10_percent_sensitivity_ohm": 0.09323210341736211
+            }
+          ],
+          "experiment_case": "lossless"
+        },
+        {
+          "job_id": "real-verify-96216bff4dda",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 1,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -57.56,
+          "engine_seconds": 20.73,
+          "engine_timestep_seconds": 1.12303e-11,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 67.60829993435217,
+              "x_ohm": -7.436471215927187,
+              "last_10_percent_sensitivity_ohm": 0.05711532654329009
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 88.80341252819422,
+              "x_ohm": 32.57510717950441,
+              "last_10_percent_sensitivity_ohm": 0.08244754382055676
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 116.18865046515339,
+              "x_ohm": 71.43357806741928,
+              "last_10_percent_sensitivity_ohm": 0.13337526291058774
+            }
+          ],
+          "experiment_case": "lossless"
+        },
+        {
+          "job_id": "real-verify-bc461992f7f3",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 3,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -60.77,
+          "engine_seconds": 145.17,
+          "engine_timestep_seconds": 5.5103e-12,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 70.20430197764387,
+              "x_ohm": 7.728840425553476,
+              "last_10_percent_sensitivity_ohm": 0.04289585003070981
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 93.84127364217821,
+              "x_ohm": 48.79318315697652,
+              "last_10_percent_sensitivity_ohm": 0.06395163455870917
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 125.3997549138221,
+              "x_ohm": 89.19552062176999,
+              "last_10_percent_sensitivity_ohm": 0.10227554205355573
+            }
+          ],
+          "experiment_case": "lossless"
+        },
+        {
+          "job_id": "real-verify-c9c1ddb441c3",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 1,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -60.68,
+          "engine_seconds": 142.13,
+          "engine_timestep_seconds": 5.5103e-12,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 70.69840352226969,
+              "x_ohm": 8.52037867729369,
+              "last_10_percent_sensitivity_ohm": 0.04363179241051476
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 94.21347117298127,
+              "x_ohm": 50.37011927714375,
+              "last_10_percent_sensitivity_ohm": 0.06516999361284102
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 125.68776443763836,
+              "x_ohm": 91.94771335355412,
+              "last_10_percent_sensitivity_ohm": 0.10459689215900898
+            }
+          ],
+          "experiment_case": "lossless"
+        },
+        {
+          "job_id": "real-verify-fffd91ca61cd",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 3,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -57.67,
+          "engine_seconds": 20.69,
+          "engine_timestep_seconds": 1.12303e-11,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 67.11405543739575,
+              "x_ohm": -8.163598357193083,
+              "last_10_percent_sensitivity_ohm": 0.05604309392135377
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 88.43559149313404,
+              "x_ohm": 31.116784529204146,
+              "last_10_percent_sensitivity_ohm": 0.08075730184138638
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 115.91552772180926,
+              "x_ohm": 68.92878118051999,
+              "last_10_percent_sensitivity_ohm": 0.13014894529851068
+            }
+          ],
+          "experiment_case": "lossless"
+        }
+      ],
+      "pairs": [
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 280.0,
+          "delta_r_ohm": -0.4761086481077683,
+          "delta_x_ohm": -0.7917402678120178,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-66b7ac295978",
+          "loaded_job": "real-verify-69d5c70c59e4",
+          "experiment_case": "lossless"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 300.0,
+          "delta_r_ohm": -0.385033596027597,
+          "delta_x_ohm": -1.5749206357558307,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-66b7ac295978",
+          "loaded_job": "real-verify-69d5c70c59e4",
+          "experiment_case": "lossless"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 320.0,
+          "delta_r_ohm": -0.2599859548506771,
+          "delta_x_ohm": -2.782141365692908,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-66b7ac295978",
+          "loaded_job": "real-verify-69d5c70c59e4",
+          "experiment_case": "lossless"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 280.0,
+          "delta_r_ohm": -0.49410154462582057,
+          "delta_x_ohm": -0.7915382517402145,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-c9c1ddb441c3",
+          "loaded_job": "real-verify-bc461992f7f3",
+          "experiment_case": "lossless"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 300.0,
+          "delta_r_ohm": -0.3721975308030636,
+          "delta_x_ohm": -1.5769361201672325,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-c9c1ddb441c3",
+          "loaded_job": "real-verify-bc461992f7f3",
+          "experiment_case": "lossless"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 320.0,
+          "delta_r_ohm": -0.288009523816271,
+          "delta_x_ohm": -2.7521927317841346,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-c9c1ddb441c3",
+          "loaded_job": "real-verify-bc461992f7f3",
+          "experiment_case": "lossless"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 280.0,
+          "delta_r_ohm": -0.49424449695642636,
+          "delta_x_ohm": -0.7271271412658953,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-96216bff4dda",
+          "loaded_job": "real-verify-fffd91ca61cd",
+          "experiment_case": "lossless"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 300.0,
+          "delta_r_ohm": -0.3678210350601745,
+          "delta_x_ohm": -1.4583226503002606,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-96216bff4dda",
+          "loaded_job": "real-verify-fffd91ca61cd",
+          "experiment_case": "lossless"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0,
+          "ground": "real",
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 320.0,
+          "delta_r_ohm": -0.2731227433441319,
+          "delta_x_ohm": -2.5047968868992854,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-96216bff4dda",
+          "loaded_job": "real-verify-fffd91ca61cd",
+          "experiment_case": "lossless"
+        }
+      ],
+      "acceptance": "unreviewed physical/source/domain accuracy; provisional entries are not converged evidence"
+    },
+    {
+      "experiment_case": "lossy",
+      "runs": [
+        {
+          "job_id": "real-verify-4cbf926e7de1",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 3,
+          "dielectric_sigma_s_m": 0.02,
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -62.68,
+          "engine_seconds": 90.14,
+          "engine_timestep_seconds": 5.5103e-12,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 69.75075041031035,
+              "x_ohm": 7.970971252394688,
+              "last_10_percent_sensitivity_ohm": 0.043766521972132426
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 93.27594806820841,
+              "x_ohm": 48.967883213366655,
+              "last_10_percent_sensitivity_ohm": 0.067867478838651
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 124.51585060280482,
+              "x_ohm": 89.18111990744492,
+              "last_10_percent_sensitivity_ohm": 0.11251958322111143
+            }
+          ],
+          "experiment_case": "lossy"
+        },
+        {
+          "job_id": "real-verify-66b7ac295978",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 1,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -60.54,
+          "engine_seconds": 89.0,
+          "engine_timestep_seconds": 5.5103e-12,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 70.57644430674677,
+              "x_ohm": 8.636170996601084,
+              "last_10_percent_sensitivity_ohm": 0.0633437457261207
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 94.28122480019117,
+              "x_ohm": 50.5394423381404,
+              "last_10_percent_sensitivity_ohm": 0.09823355007877345
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 125.79618025754407,
+              "x_ohm": 92.04386297167923,
+              "last_10_percent_sensitivity_ohm": 0.16302967150439632
+            }
+          ],
+          "experiment_case": "lossy"
+        },
+        {
+          "job_id": "real-verify-96216bff4dda",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 1,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -57.56,
+          "engine_seconds": 20.8,
+          "engine_timestep_seconds": 1.12303e-11,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 67.60829993435217,
+              "x_ohm": -7.436471215927187,
+              "last_10_percent_sensitivity_ohm": 0.05711532654329009
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 88.80341252819422,
+              "x_ohm": 32.57510717950441,
+              "last_10_percent_sensitivity_ohm": 0.08244754382055676
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 116.18865046515339,
+              "x_ohm": 71.43357806741928,
+              "last_10_percent_sensitivity_ohm": 0.13337526291058774
+            }
+          ],
+          "experiment_case": "lossy"
+        },
+        {
+          "job_id": "real-verify-c8d0da416da3",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 3,
+          "dielectric_sigma_s_m": 0.02,
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -57.74,
+          "engine_seconds": 20.78,
+          "engine_timestep_seconds": 1.12303e-11,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 66.79094171472116,
+              "x_ohm": -8.031358969043003,
+              "last_10_percent_sensitivity_ohm": 0.05541126490871421
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 87.85729619302796,
+              "x_ohm": 31.13823633933272,
+              "last_10_percent_sensitivity_ohm": 0.07964792038363751
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 114.98698392636325,
+              "x_ohm": 68.8516664216012,
+              "last_10_percent_sensitivity_ohm": 0.12807992292575626
+            }
+          ],
+          "experiment_case": "lossy"
+        },
+        {
+          "job_id": "real-verify-c9c1ddb441c3",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 1,
+          "dielectric_sigma_s_m": 0,
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -60.68,
+          "engine_seconds": 142.11,
+          "engine_timestep_seconds": 5.5103e-12,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 70.69840352226969,
+              "x_ohm": 8.52037867729369,
+              "last_10_percent_sensitivity_ohm": 0.04363179241051476
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 94.21347117298127,
+              "x_ohm": 50.37011927714375,
+              "last_10_percent_sensitivity_ohm": 0.06516999361284102
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 125.68776443763836,
+              "x_ohm": 91.94771335355412,
+              "last_10_percent_sensitivity_ohm": 0.10459689215900898
+            }
+          ],
+          "experiment_case": "lossy"
+        },
+        {
+          "job_id": "real-verify-e0d8e202f123",
+          "material_split": "",
+          "witness_frequency_mhz": 0,
+          "ground": "real",
+          "epsilon_r": 3,
+          "dielectric_sigma_s_m": 0.02,
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "wire_radius_mm": 5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "result_present": true,
+          "normal_early_stop": true,
+          "last_logged_energy_db": -60.84,
+          "engine_seconds": 139.36,
+          "engine_timestep_seconds": 5.5103e-12,
+          "source_clipped_or_step_cap": false,
+          "status": "completed_early",
+          "impedance": [
+            {
+              "frequency_mhz": 280.0,
+              "r_ohm": 69.85627444841596,
+              "x_ohm": 7.8538746313722,
+              "last_10_percent_sensitivity_ohm": 0.042412556296552786
+            },
+            {
+              "frequency_mhz": 300.0,
+              "r_ohm": 93.21932360306909,
+              "x_ohm": 48.80543176681297,
+              "last_10_percent_sensitivity_ohm": 0.06308584544179054
+            },
+            {
+              "frequency_mhz": 320.0,
+              "r_ohm": 124.38221829869894,
+              "x_ohm": 89.10489876340546,
+              "last_10_percent_sensitivity_ohm": 0.10067609562688155
+            }
+          ],
+          "experiment_case": "lossy"
+        }
+      ],
+      "pairs": [
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 280.0,
+          "delta_r_ohm": -0.8256938964364195,
+          "delta_x_ohm": -0.6651997442063964,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-66b7ac295978",
+          "loaded_job": "real-verify-4cbf926e7de1",
+          "experiment_case": "lossy"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 300.0,
+          "delta_r_ohm": -1.005276731982761,
+          "delta_x_ohm": -1.5715591247737422,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-66b7ac295978",
+          "loaded_job": "real-verify-4cbf926e7de1",
+          "experiment_case": "lossy"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 320.0,
+          "delta_r_ohm": -1.2803296547392478,
+          "delta_x_ohm": -2.8627430642343086,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-66b7ac295978",
+          "loaded_job": "real-verify-4cbf926e7de1",
+          "experiment_case": "lossy"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 280.0,
+          "delta_r_ohm": -0.8421290738537266,
+          "delta_x_ohm": -0.6665040459214904,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-c9c1ddb441c3",
+          "loaded_job": "real-verify-e0d8e202f123",
+          "experiment_case": "lossy"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 300.0,
+          "delta_r_ohm": -0.9941475699121867,
+          "delta_x_ohm": -1.5646875103307778,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-c9c1ddb441c3",
+          "loaded_job": "real-verify-e0d8e202f123",
+          "experiment_case": "lossy"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 15.0,
+          "wire_cell_mm": 2.5,
+          "domain_margin_mm": 150.0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 320.0,
+          "delta_r_ohm": -1.3055461389394196,
+          "delta_x_ohm": -2.842814590148663,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-c9c1ddb441c3",
+          "loaded_job": "real-verify-e0d8e202f123",
+          "experiment_case": "lossy"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 280.0,
+          "delta_r_ohm": -0.8173582196310178,
+          "delta_x_ohm": -0.5948877531158159,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-96216bff4dda",
+          "loaded_job": "real-verify-c8d0da416da3",
+          "experiment_case": "lossy"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 300.0,
+          "delta_r_ohm": -0.946116335166252,
+          "delta_x_ohm": -1.4368708401716859,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-96216bff4dda",
+          "loaded_job": "real-verify-c8d0da416da3",
+          "experiment_case": "lossy"
+        },
+        {
+          "material_split": "",
+          "loaded_epsilon_r": 3,
+          "witness_frequency_mhz": 0,
+          "dielectric_sigma_s_m": 0.02,
+          "ground": "real",
+          "mesh_mm": 20.0,
+          "wire_cell_mm": 5.0,
+          "domain_margin_mm": 0,
+          "feed_gap_mm": 10,
+          "cube_bottom_mm": 550,
+          "frequency_mhz": 320.0,
+          "delta_r_ohm": -1.2016665387901355,
+          "delta_x_ohm": -2.5819116458180815,
+          "status": "completed_pair",
+          "vacuum_job": "real-verify-96216bff4dda",
+          "loaded_job": "real-verify-c8d0da416da3",
+          "experiment_case": "lossy"
+        }
+      ],
+      "acceptance": "unreviewed physical/source/domain accuracy; provisional entries are not converged evidence"
+    }
+  ],
+  "runs": [
+    {
+      "job_id": "real-verify-66b7ac295978",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 1,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -60.54,
+      "engine_seconds": 88.97,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 70.57644430674677,
+          "x_ohm": 8.636170996601084,
+          "last_10_percent_sensitivity_ohm": 0.0633437457261207
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 94.28122480019117,
+          "x_ohm": 50.5394423381404,
+          "last_10_percent_sensitivity_ohm": 0.09823355007877345
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.79618025754407,
+          "x_ohm": 92.04386297167923,
+          "last_10_percent_sensitivity_ohm": 0.16302967150439632
+        }
+      ],
+      "experiment_case": "lossless"
+    },
+    {
+      "job_id": "real-verify-69d5c70c59e4",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 3,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -63.05,
+      "engine_seconds": 92.82,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 70.100335658639,
+          "x_ohm": 7.844430728789066,
+          "last_10_percent_sensitivity_ohm": 0.0404521547453162
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 93.89619120416357,
+          "x_ohm": 48.964521702384566,
+          "last_10_percent_sensitivity_ohm": 0.05937681492396634
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.53619430269339,
+          "x_ohm": 89.26172160598632,
+          "last_10_percent_sensitivity_ohm": 0.09323210341736211
+        }
+      ],
+      "experiment_case": "lossless"
+    },
+    {
+      "job_id": "real-verify-96216bff4dda",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 1,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -57.56,
+      "engine_seconds": 20.73,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 67.60829993435217,
+          "x_ohm": -7.436471215927187,
+          "last_10_percent_sensitivity_ohm": 0.05711532654329009
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.80341252819422,
+          "x_ohm": 32.57510717950441,
+          "last_10_percent_sensitivity_ohm": 0.08244754382055676
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.18865046515339,
+          "x_ohm": 71.43357806741928,
+          "last_10_percent_sensitivity_ohm": 0.13337526291058774
+        }
+      ],
+      "experiment_case": "lossless"
+    },
+    {
+      "job_id": "real-verify-bc461992f7f3",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 3,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -60.77,
+      "engine_seconds": 145.17,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 70.20430197764387,
+          "x_ohm": 7.728840425553476,
+          "last_10_percent_sensitivity_ohm": 0.04289585003070981
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 93.84127364217821,
+          "x_ohm": 48.79318315697652,
+          "last_10_percent_sensitivity_ohm": 0.06395163455870917
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.3997549138221,
+          "x_ohm": 89.19552062176999,
+          "last_10_percent_sensitivity_ohm": 0.10227554205355573
+        }
+      ],
+      "experiment_case": "lossless"
+    },
+    {
+      "job_id": "real-verify-c9c1ddb441c3",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 1,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -60.68,
+      "engine_seconds": 142.13,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 70.69840352226969,
+          "x_ohm": 8.52037867729369,
+          "last_10_percent_sensitivity_ohm": 0.04363179241051476
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 94.21347117298127,
+          "x_ohm": 50.37011927714375,
+          "last_10_percent_sensitivity_ohm": 0.06516999361284102
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.68776443763836,
+          "x_ohm": 91.94771335355412,
+          "last_10_percent_sensitivity_ohm": 0.10459689215900898
+        }
+      ],
+      "experiment_case": "lossless"
+    },
+    {
+      "job_id": "real-verify-fffd91ca61cd",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 3,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -57.67,
+      "engine_seconds": 20.69,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 67.11405543739575,
+          "x_ohm": -8.163598357193083,
+          "last_10_percent_sensitivity_ohm": 0.05604309392135377
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.43559149313404,
+          "x_ohm": 31.116784529204146,
+          "last_10_percent_sensitivity_ohm": 0.08075730184138638
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 115.91552772180926,
+          "x_ohm": 68.92878118051999,
+          "last_10_percent_sensitivity_ohm": 0.13014894529851068
+        }
+      ],
+      "experiment_case": "lossless"
+    },
+    {
+      "job_id": "real-verify-4cbf926e7de1",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 3,
+      "dielectric_sigma_s_m": 0.02,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -62.68,
+      "engine_seconds": 90.14,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 69.75075041031035,
+          "x_ohm": 7.970971252394688,
+          "last_10_percent_sensitivity_ohm": 0.043766521972132426
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 93.27594806820841,
+          "x_ohm": 48.967883213366655,
+          "last_10_percent_sensitivity_ohm": 0.067867478838651
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 124.51585060280482,
+          "x_ohm": 89.18111990744492,
+          "last_10_percent_sensitivity_ohm": 0.11251958322111143
+        }
+      ],
+      "experiment_case": "lossy"
+    },
+    {
+      "job_id": "real-verify-66b7ac295978",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 1,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -60.54,
+      "engine_seconds": 89.0,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 70.57644430674677,
+          "x_ohm": 8.636170996601084,
+          "last_10_percent_sensitivity_ohm": 0.0633437457261207
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 94.28122480019117,
+          "x_ohm": 50.5394423381404,
+          "last_10_percent_sensitivity_ohm": 0.09823355007877345
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.79618025754407,
+          "x_ohm": 92.04386297167923,
+          "last_10_percent_sensitivity_ohm": 0.16302967150439632
+        }
+      ],
+      "experiment_case": "lossy"
+    },
+    {
+      "job_id": "real-verify-96216bff4dda",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 1,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -57.56,
+      "engine_seconds": 20.8,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 67.60829993435217,
+          "x_ohm": -7.436471215927187,
+          "last_10_percent_sensitivity_ohm": 0.05711532654329009
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.80341252819422,
+          "x_ohm": 32.57510717950441,
+          "last_10_percent_sensitivity_ohm": 0.08244754382055676
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.18865046515339,
+          "x_ohm": 71.43357806741928,
+          "last_10_percent_sensitivity_ohm": 0.13337526291058774
+        }
+      ],
+      "experiment_case": "lossy"
+    },
+    {
+      "job_id": "real-verify-c8d0da416da3",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 3,
+      "dielectric_sigma_s_m": 0.02,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -57.74,
+      "engine_seconds": 20.78,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 66.79094171472116,
+          "x_ohm": -8.031358969043003,
+          "last_10_percent_sensitivity_ohm": 0.05541126490871421
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 87.85729619302796,
+          "x_ohm": 31.13823633933272,
+          "last_10_percent_sensitivity_ohm": 0.07964792038363751
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 114.98698392636325,
+          "x_ohm": 68.8516664216012,
+          "last_10_percent_sensitivity_ohm": 0.12807992292575626
+        }
+      ],
+      "experiment_case": "lossy"
+    },
+    {
+      "job_id": "real-verify-c9c1ddb441c3",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 1,
+      "dielectric_sigma_s_m": 0,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -60.68,
+      "engine_seconds": 142.11,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 70.69840352226969,
+          "x_ohm": 8.52037867729369,
+          "last_10_percent_sensitivity_ohm": 0.04363179241051476
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 94.21347117298127,
+          "x_ohm": 50.37011927714375,
+          "last_10_percent_sensitivity_ohm": 0.06516999361284102
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 125.68776443763836,
+          "x_ohm": 91.94771335355412,
+          "last_10_percent_sensitivity_ohm": 0.10459689215900898
+        }
+      ],
+      "experiment_case": "lossy"
+    },
+    {
+      "job_id": "real-verify-e0d8e202f123",
+      "material_split": "",
+      "witness_frequency_mhz": 0,
+      "ground": "real",
+      "epsilon_r": 3,
+      "dielectric_sigma_s_m": 0.02,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -60.84,
+      "engine_seconds": 139.36,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 69.85627444841596,
+          "x_ohm": 7.8538746313722,
+          "last_10_percent_sensitivity_ohm": 0.042412556296552786
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 93.21932360306909,
+          "x_ohm": 48.80543176681297,
+          "last_10_percent_sensitivity_ohm": 0.06308584544179054
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 124.38221829869894,
+          "x_ohm": 89.10489876340546,
+          "last_10_percent_sensitivity_ohm": 0.10067609562688155
+        }
+      ],
+      "experiment_case": "lossy"
+    }
+  ],
+  "pairs": [
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.4761086481077683,
+      "delta_x_ohm": -0.7917402678120178,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-69d5c70c59e4",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.385033596027597,
+      "delta_x_ohm": -1.5749206357558307,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-69d5c70c59e4",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.2599859548506771,
+      "delta_x_ohm": -2.782141365692908,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-69d5c70c59e4",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.49410154462582057,
+      "delta_x_ohm": -0.7915382517402145,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-c9c1ddb441c3",
+      "loaded_job": "real-verify-bc461992f7f3",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.3721975308030636,
+      "delta_x_ohm": -1.5769361201672325,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-c9c1ddb441c3",
+      "loaded_job": "real-verify-bc461992f7f3",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.288009523816271,
+      "delta_x_ohm": -2.7521927317841346,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-c9c1ddb441c3",
+      "loaded_job": "real-verify-bc461992f7f3",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.49424449695642636,
+      "delta_x_ohm": -0.7271271412658953,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-96216bff4dda",
+      "loaded_job": "real-verify-fffd91ca61cd",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.3678210350601745,
+      "delta_x_ohm": -1.4583226503002606,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-96216bff4dda",
+      "loaded_job": "real-verify-fffd91ca61cd",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0,
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.2731227433441319,
+      "delta_x_ohm": -2.5047968868992854,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-96216bff4dda",
+      "loaded_job": "real-verify-fffd91ca61cd",
+      "experiment_case": "lossless"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.8256938964364195,
+      "delta_x_ohm": -0.6651997442063964,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-4cbf926e7de1",
+      "experiment_case": "lossy"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -1.005276731982761,
+      "delta_x_ohm": -1.5715591247737422,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-4cbf926e7de1",
+      "experiment_case": "lossy"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -1.2803296547392478,
+      "delta_x_ohm": -2.8627430642343086,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-66b7ac295978",
+      "loaded_job": "real-verify-4cbf926e7de1",
+      "experiment_case": "lossy"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.8421290738537266,
+      "delta_x_ohm": -0.6665040459214904,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-c9c1ddb441c3",
+      "loaded_job": "real-verify-e0d8e202f123",
+      "experiment_case": "lossy"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.9941475699121867,
+      "delta_x_ohm": -1.5646875103307778,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-c9c1ddb441c3",
+      "loaded_job": "real-verify-e0d8e202f123",
+      "experiment_case": "lossy"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 150.0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -1.3055461389394196,
+      "delta_x_ohm": -2.842814590148663,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-c9c1ddb441c3",
+      "loaded_job": "real-verify-e0d8e202f123",
+      "experiment_case": "lossy"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.8173582196310178,
+      "delta_x_ohm": -0.5948877531158159,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-96216bff4dda",
+      "loaded_job": "real-verify-c8d0da416da3",
+      "experiment_case": "lossy"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.946116335166252,
+      "delta_x_ohm": -1.4368708401716859,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-96216bff4dda",
+      "loaded_job": "real-verify-c8d0da416da3",
+      "experiment_case": "lossy"
+    },
+    {
+      "material_split": "",
+      "loaded_epsilon_r": 3,
+      "witness_frequency_mhz": 0,
+      "dielectric_sigma_s_m": 0.02,
+      "ground": "real",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 550,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -1.2016665387901355,
+      "delta_x_ohm": -2.5819116458180815,
+      "status": "completed_pair",
+      "vacuum_job": "real-verify-96216bff4dda",
+      "loaded_job": "real-verify-c8d0da416da3",
+      "experiment_case": "lossy"
+    }
+  ],
+  "acceptance": "PASS: all 12 verification decay/material/geometry audits, mesh/domain checks, and six native component comparisons pass",
+  "archive_sha256": "f03d708405d2ff66b61d708e6270722a79e4cf544fe1b5cad25dc104786f8c24",
+  "physical_audits": [
+    {
+      "directory": "results/lossless/real-verify-66b7ac295978",
+      "target_db": -60.0,
+      "final_db": -60.54,
+      "steps": 6510,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossless/real-verify-69d5c70c59e4",
+      "target_db": -60.0,
+      "final_db": -63.05,
+      "steps": 6762,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossless/real-verify-96216bff4dda",
+      "target_db": -60.0,
+      "final_db": -60.14,
+      "steps": 3034,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossless/real-verify-bc461992f7f3",
+      "target_db": -60.0,
+      "final_db": -60.77,
+      "steps": 6720,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossless/real-verify-c9c1ddb441c3",
+      "target_db": -60.0,
+      "final_db": -60.68,
+      "steps": 6720,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossless/real-verify-fffd91ca61cd",
+      "target_db": -60.0,
+      "final_db": -60.26,
+      "steps": 3034,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossy/real-verify-4cbf926e7de1",
+      "target_db": -60.0,
+      "final_db": -62.68,
+      "steps": 6636,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossy/real-verify-66b7ac295978",
+      "target_db": -60.0,
+      "final_db": -60.54,
+      "steps": 6510,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossy/real-verify-96216bff4dda",
+      "target_db": -60.0,
+      "final_db": -60.14,
+      "steps": 3034,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossy/real-verify-c8d0da416da3",
+      "target_db": -60.0,
+      "final_db": -60.35,
+      "steps": 3034,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossy/real-verify-c9c1ddb441c3",
+      "target_db": -60.0,
+      "final_db": -60.68,
+      "steps": 6720,
+      "xml_material_geometry_pass": true
+    },
+    {
+      "directory": "results/lossy/real-verify-e0d8e202f123",
+      "target_db": -60.0,
+      "final_db": -60.84,
+      "steps": 6720,
+      "xml_material_geometry_pass": true
+    }
+  ],
+  "mesh_audits": [
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossless/real-pilot-7752efe57425",
+      "cells": 490000,
+      "grid_cells": [
+        70,
+        70,
+        100
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.0068040370058873,
+      "projected_120000_step_seconds": 816.484440706476,
+      "projected_pair_120000_step_seconds": 1632.968881412952,
+      "pilot_simulated_seconds": 2.67056534e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossless/real-verify-66b7ac295978",
+      "cells": 1160900,
+      "grid_cells": [
+        95,
+        94,
+        130
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.013666666666666667,
+      "projected_120000_step_seconds": 1640.0,
+      "projected_pair_120000_step_seconds": 3280.0,
+      "pilot_simulated_seconds": 3.5872053e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossless/real-verify-69d5c70c59e4",
+      "cells": 1160900,
+      "grid_cells": [
+        95,
+        94,
+        130
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.01372670807453416,
+      "projected_120000_step_seconds": 1647.2049689440994,
+      "projected_pair_120000_step_seconds": 3294.409937888199,
+      "pilot_simulated_seconds": 3.72606486e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossless/real-verify-96216bff4dda",
+      "cells": 490000,
+      "grid_cells": [
+        70,
+        70,
+        100
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.006832564271588662,
+      "projected_120000_step_seconds": 819.9077125906394,
+      "projected_pair_120000_step_seconds": 1639.815425181279,
+      "pilot_simulated_seconds": 3.40727302e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossless/real-verify-bc461992f7f3",
+      "cells": 1966500,
+      "grid_cells": [
+        115,
+        114,
+        150
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.02160267857142857,
+      "projected_120000_step_seconds": 2592.3214285714284,
+      "projected_pair_120000_step_seconds": 5184.642857142857,
+      "pilot_simulated_seconds": 3.7029216e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossless/real-verify-c9c1ddb441c3",
+      "cells": 1966500,
+      "grid_cells": [
+        115,
+        114,
+        150
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.021150297619047617,
+      "projected_120000_step_seconds": 2538.035714285714,
+      "projected_pair_120000_step_seconds": 5076.071428571428,
+      "pilot_simulated_seconds": 3.7029216e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossless/real-verify-fffd91ca61cd",
+      "cells": 490000,
+      "grid_cells": [
+        70,
+        70,
+        100
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.006819380355965722,
+      "projected_120000_step_seconds": 818.3256427158866,
+      "projected_pair_120000_step_seconds": 1636.6512854317732,
+      "pilot_simulated_seconds": 3.40727302e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossy/real-pilot-fbab6663d094",
+      "cells": 490000,
+      "grid_cells": [
+        70,
+        70,
+        100
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.006921783010933558,
+      "projected_120000_step_seconds": 830.613961312027,
+      "projected_pair_120000_step_seconds": 1661.227922624054,
+      "pilot_simulated_seconds": 2.67056534e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossy/real-verify-4cbf926e7de1",
+      "cells": 1160900,
+      "grid_cells": [
+        95,
+        94,
+        130
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.013583484026522001,
+      "projected_120000_step_seconds": 1630.01808318264,
+      "projected_pair_120000_step_seconds": 3260.03616636528,
+      "pilot_simulated_seconds": 3.65663508e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossy/real-verify-66b7ac295978",
+      "cells": 1160900,
+      "grid_cells": [
+        95,
+        94,
+        130
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.013671274961597542,
+      "projected_120000_step_seconds": 1640.552995391705,
+      "projected_pair_120000_step_seconds": 3281.10599078341,
+      "pilot_simulated_seconds": 3.5872053e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossy/real-verify-96216bff4dda",
+      "cells": 490000,
+      "grid_cells": [
+        70,
+        70,
+        100
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.006855636123928807,
+      "projected_120000_step_seconds": 822.6763348714569,
+      "projected_pair_120000_step_seconds": 1645.3526697429138,
+      "pilot_simulated_seconds": 3.40727302e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossy/real-verify-c8d0da416da3",
+      "cells": 490000,
+      "grid_cells": [
+        70,
+        70,
+        100
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.006849044166117337,
+      "projected_120000_step_seconds": 821.8852999340804,
+      "projected_pair_120000_step_seconds": 1643.7705998681608,
+      "pilot_simulated_seconds": 3.40727302e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossy/real-verify-c9c1ddb441c3",
+      "cells": 1966500,
+      "grid_cells": [
+        115,
+        114,
+        150
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.021147321428571432,
+      "projected_120000_step_seconds": 2537.678571428572,
+      "projected_pair_120000_step_seconds": 5075.357142857144,
+      "pilot_simulated_seconds": 3.7029216e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m13-04-openems-review/raw/results/lossy/real-verify-e0d8e202f123",
+      "cells": 1966500,
+      "grid_cells": [
+        115,
+        114,
+        150
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.02073809523809524,
+      "projected_120000_step_seconds": 2488.571428571429,
+      "projected_pair_120000_step_seconds": 4977.142857142858,
+      "pilot_simulated_seconds": 3.7029216e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    }
+  ],
+  "convergence": [
+    {
+      "control": "lossless",
+      "frequency_mhz": 280,
+      "mesh_component_change_ohm": [
+        0.018135848848658043,
+        0.0646131265461225
+      ],
+      "domain_component_change_ohm": [
+        0.017992896518052248,
+        0.0002020160718032571
+      ]
+    },
+    {
+      "control": "lossless",
+      "frequency_mhz": 300,
+      "mesh_component_change_ohm": [
+        0.01721256096742252,
+        0.1165979854555701
+      ],
+      "domain_component_change_ohm": [
+        0.0128360652245334,
+        0.002015484411401758
+      ]
+    },
+    {
+      "control": "lossless",
+      "frequency_mhz": 320,
+      "mesh_component_change_ohm": [
+        0.013136788493454787,
+        0.2773444787936228
+      ],
+      "domain_component_change_ohm": [
+        0.02802356896559388,
+        0.02994863390877356
+      ]
+    },
+    {
+      "control": "lossy",
+      "frequency_mhz": 280,
+      "mesh_component_change_ohm": [
+        0.008335676805401704,
+        0.0703119910905805
+      ],
+      "domain_component_change_ohm": [
+        0.016435177417307045,
+        0.0013043017150939917
+      ]
+    },
+    {
+      "control": "lossy",
+      "frequency_mhz": 300,
+      "mesh_component_change_ohm": [
+        0.059160396816508865,
+        0.13468828460205629
+      ],
+      "domain_component_change_ohm": [
+        0.011129162070574239,
+        0.006871614442964358
+      ]
+    },
+    {
+      "control": "lossy",
+      "frequency_mhz": 320,
+      "mesh_component_change_ohm": [
+        0.07866311594911224,
+        0.28083141841622705
+      ],
+      "domain_component_change_ohm": [
+        0.025216484200171863,
+        0.019928474085645576
+      ]
+    }
+  ],
+  "native_comparisons": [
+    {
+      "frequency_mhz": 280,
+      "cells": 27,
+      "wire_segments": 11,
+      "sigma_s_m": 0.02,
+      "native_delta_z_ohm": [
+        -0.769790849180005,
+        -0.46556542753999963
+      ],
+      "openems_delta_z_ohm": [
+        -0.8421290738537266,
+        -0.6665040459214904
+      ],
+      "component_errors_ohm": [
+        0.07233822467372164,
+        0.20093861838149074
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 300,
+      "cells": 27,
+      "wire_segments": 11,
+      "sigma_s_m": 0.02,
+      "native_delta_z_ohm": [
+        -0.8245598184300036,
+        -1.14253469398
+      ],
+      "openems_delta_z_ohm": [
+        -0.9941475699121867,
+        -1.5646875103307778
+      ],
+      "component_errors_ohm": [
+        0.16958775148218308,
+        0.4221528163507777
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 320,
+      "cells": 27,
+      "wire_segments": 11,
+      "sigma_s_m": 0.02,
+      "native_delta_z_ohm": [
+        -0.913883279649994,
+        -2.01305360888
+      ],
+      "openems_delta_z_ohm": [
+        -1.3055461389394196,
+        -2.842814590148663
+      ],
+      "component_errors_ohm": [
+        0.39166285928942557,
+        0.829760981268663
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 300.0,
+      "cells": 27,
+      "wire_segments": 11,
+      "sigma_s_m": 0.0,
+      "native_delta_z_ohm": [
+        -0.37045267407999916,
+        -1.1886320894099995
+      ],
+      "openems_delta_z_ohm": [
+        -0.3721975308030636,
+        -1.5769361201672325
+      ],
+      "component_errors_ohm": [
+        0.0017448567230644585,
+        0.38830403075723297
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 300.0,
+      "cells": 64,
+      "wire_segments": 11,
+      "sigma_s_m": 0.02,
+      "native_delta_z_ohm": [
+        -0.8244242297599982,
+        -1.138188200710001
+      ],
+      "openems_delta_z_ohm": [
+        -0.9941475699121867,
+        -1.5646875103307778
+      ],
+      "component_errors_ohm": [
+        0.16972334015218848,
+        0.42649930962077676
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 300.0,
+      "cells": 27,
+      "wire_segments": 21,
+      "sigma_s_m": 0.02,
+      "native_delta_z_ohm": [
+        -0.8748656706400055,
+        -1.146591902659999
+      ],
+      "openems_delta_z_ohm": [
+        -0.9941475699121867,
+        -1.5646875103307778
+      ],
+      "component_errors_ohm": [
+        0.11928189927218114,
+        0.4180956076707787
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    }
+  ]
+}

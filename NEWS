@@ -1,1 +1,10 @@
+2026-10-21: Dielectric volume feature revision 1 complete.
+
+Self-consistent NEC conductor/dielectric volume coupling, dense/GMRES/FFT,
+passive scalar loss and frequency tables, touching dielectric materials,
+PEC-ground contact, and positive-gap GN 2 wires-first real ground.
+M12 contact/penetration, anisotropy and broader ground modes remain deferred.
+See docs/DIELECTRIC-REVISION-1-RELEASE.md and examples/dielectric-r1/README.md.
+Upstream program version remains 1.3.
+
 Please see the README file

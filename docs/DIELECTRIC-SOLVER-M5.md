@@ -1,5 +1,9 @@
 # M5 dielectric-only dense JVIE solver
 
+> Historical milestone record. The [revision-1 guide](DIELECTRIC-REVISION-1.md)
+> states current supported scope; later milestones extend some restrictions below.
+
+
 ## Result
 
 M5 is the first runnable dielectric result.  A free-space NEC deck containing

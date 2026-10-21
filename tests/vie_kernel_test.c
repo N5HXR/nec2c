@@ -262,6 +262,45 @@ static void test_contact_continuity_and_scaling(void)
     fail("electrical-scale invariance");
 }
 
+static void test_translated_contact_roundoff(void)
+{
+  vie_cuboid a={{0,0,0},{.025,.025,.025}},b=a,t=a,u=a;
+  complex double ref[3][3],translated[3][3];vie_kernel_report report;
+  int mask,d;
+  const double base[3]={.0875,-.0125,.3575};
+  for(mask=1;mask<8;mask++)
+  {
+    for(d=0;d<3;d++) {
+      b.center[d]=(mask&(1<<d)) ? .025:0;
+      t.center[d]=base[d];u.center[d]=base[d]+b.center[d];
+    }
+    require_kernel("canonical touching cubes",&a,&b,6.2875,ref,&report);
+    require_kernel("translated touching cubes",&t,&u,6.2875,translated,&report);
+    if(matrix_max_difference(ref,translated)>2e-10)
+      fail("translated contact quadrature consistency");
+    for(d=0;d<3;d++) if(mask&(1<<d)) u.center[d]=nextafter(u.center[d],INFINITY);
+    require_kernel("one-ulp touching cubes",&t,&u,6.2875,translated,&report);
+    if(matrix_max_difference(ref,translated)>2e-10)
+      fail("one-ulp contact quadrature consistency");
+  }
+}
+
+static void test_resolved_gap_at_small_scale(void)
+{
+  vie_cuboid a={{0,0,0},{.025,.025,.025}},b=a,t=a,u=a;
+  complex double ref[3][3],scaled[3][3];vie_kernel_report report;int d;
+  const double factor=1e-10;
+  b.center[0]=.025+2.5e-5;
+  require_kernel("resolved positive gap",&a,&b,6.2875,ref,&report);
+  for(d=0;d<3;d++) {
+    t.center[d]=a.center[d]*factor;u.center[d]=b.center[d]*factor;
+    t.size[d]=a.size[d]*factor;u.size[d]=b.size[d]*factor;
+  }
+  require_kernel("small-scale positive gap",&t,&u,6.2875/factor,scaled,&report);
+  if(matrix_max_difference(ref,scaled)>2e-10)
+    fail("resolved positive gap was changed by electrical scaling");
+}
+
 static void test_failure_behavior(void)
 {
   vie_cuboid cube = {{0.0, 0.0, 0.0}, {1.0, 1.0, 1.0}};
@@ -289,6 +328,8 @@ int main(void)
   test_reference_data();
   test_contact_continuity_and_scaling();
   test_failure_behavior();
+  test_translated_contact_roundoff();
+  test_resolved_gap_at_small_scale();
   if(failures != 0)
     return 1;
   printf("PASS: M4 cuboid kernel analytical, invariance, reciprocity, and static-limit checks\n");

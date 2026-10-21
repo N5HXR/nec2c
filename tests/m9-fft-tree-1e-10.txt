@@ -1,0 +1,19 @@
+model=tree cells=9432 unknowns=28296 rtol=1e-10 budget_bytes=536870912
+build_seconds=39.779651 plan_bytes=100742992 gmres_bytes=28538944 caller_bytes=1584576
+progress: matvecs=10 elapsed_seconds=65.481
+progress: matvecs=20 elapsed_seconds=135.451
+progress: matvecs=30 elapsed_seconds=205.476
+matvec_seconds=7.902220 solve_seconds=242.960866 peak_rss_kib=129840 iterations=33 applications=36 residual=9.8023076279e-11 status=converged
+integrated_normalized_current_0=87.467613335-44.5252362286j
+integrated_normalized_current_1=0.00794238434114+0.00119923614469j
+integrated_normalized_current_2=-0.0811428753347-0.242738849379j
+far_axis0_component0=0+0j
+far_axis0_component1=0.0748327242286-0.0150423417405j
+far_axis0_component2=-61.1509953353-24.1394055604j
+far_axis1_component0=39.8412710963+53.6268610318j
+far_axis1_component1=0+0j
+far_axis1_component2=0.208374267071-0.0115157927984j
+far_axis2_component0=163.045032126-151.345052517j
+far_axis2_component1=-0.0188513648971+0.0154909966511j
+far_axis2_component2=0+0j
+extinction_normalized=151.345052517 scattered16_normalized=151.345052513 scattered32_normalized=151.345052513 angular_relative_change=7.32397028764e-15 power_relative_defect=2.84463005964e-11

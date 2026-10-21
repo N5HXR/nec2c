@@ -1,0 +1,376 @@
+{
+  "runs": [
+    {
+      "job_id": "pec-verify-286bb1e9209d",
+      "ground": "pec",
+      "epsilon_r": 3,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 200.0,
+      "feed_gap_mm": 10,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -46.92,
+      "engine_seconds": 23.93,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 66.17746935919371,
+          "x_ohm": -7.508431205534274,
+          "last_10_percent_sensitivity_ohm": 0.05757160597634045
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 87.85639846041005,
+          "x_ohm": 32.241000392504716,
+          "last_10_percent_sensitivity_ohm": 0.07948545611261436
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.01313910061867,
+          "x_ohm": 70.34764035224606,
+          "last_10_percent_sensitivity_ohm": 0.12286260955283389
+        }
+      ],
+      "decay_target_db": -60.0,
+      "final_energy_db": -60.19,
+      "final_steps": 3116
+    },
+    {
+      "job_id": "pec-verify-485e4f9f89c3",
+      "ground": "pec",
+      "epsilon_r": 1,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 200.0,
+      "feed_gap_mm": 10,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -44.75,
+      "engine_seconds": 23.97,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 66.63592421501836,
+          "x_ohm": -6.807378364905741,
+          "last_10_percent_sensitivity_ohm": 0.05867732015266506
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.1642683011728,
+          "x_ohm": 33.68478899754408,
+          "last_10_percent_sensitivity_ohm": 0.08119654039101831
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.20178029590863,
+          "x_ohm": 72.8755159505015,
+          "last_10_percent_sensitivity_ohm": 0.1260841534152312
+        }
+      ],
+      "decay_target_db": -60.0,
+      "final_energy_db": -60.08,
+      "final_steps": 3116
+    },
+    {
+      "job_id": "pec-verify-04d3be1c02e1",
+      "ground": "pec",
+      "epsilon_r": 1,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 5.0,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -57.25,
+      "engine_seconds": 16.86,
+      "engine_timestep_seconds": 1.0167e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 66.68735468549947,
+          "x_ohm": -6.658057553652818,
+          "last_10_percent_sensitivity_ohm": 0.05422715668909012
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.31090679550518,
+          "x_ohm": 33.89576702606392,
+          "last_10_percent_sensitivity_ohm": 0.07726242869806241
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.46339897336048,
+          "x_ohm": 73.12211262356332,
+          "last_10_percent_sensitivity_ohm": 0.12385557169954589
+        }
+      ],
+      "decay_target_db": -60.0,
+      "final_energy_db": -61.07,
+      "final_steps": 3458
+    },
+    {
+      "job_id": "pec-verify-0d7f1498c05e",
+      "ground": "pec",
+      "epsilon_r": 3,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 5.0,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -57.35,
+      "engine_seconds": 16.86,
+      "engine_timestep_seconds": 1.0167e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 66.23387827396701,
+          "x_ohm": -7.358318094048796,
+          "last_10_percent_sensitivity_ohm": 0.053266614552135876
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.00685802298233,
+          "x_ohm": 32.45360866239726,
+          "last_10_percent_sensitivity_ohm": 0.0757079716351594
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.27508735811597,
+          "x_ohm": 70.59518830642952,
+          "last_10_percent_sensitivity_ohm": 0.12079193195209792
+        }
+      ],
+      "decay_target_db": -60.0,
+      "final_energy_db": -61.18,
+      "final_steps": 3458
+    }
+  ],
+  "pairs": [
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 5.0,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.45347641153246343,
+      "delta_x_ohm": -0.7002605403959778,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-04d3be1c02e1",
+      "loaded_job": "pec-verify-0d7f1498c05e",
+      "change_from_baseline_ohm": 0.002222633263481076,
+      "nec_delta_z_error_ohm": 0.12930263329633485
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 5.0,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.30404877252284734,
+      "delta_x_ohm": -1.442158363666664,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-04d3be1c02e1",
+      "loaded_job": "pec-verify-0d7f1498c05e",
+      "change_from_baseline_ohm": 0.002843871313711601,
+      "nec_delta_z_error_ohm": 0.27347354185704476
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 5.0,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.18831161524451545,
+      "delta_x_ohm": -2.5269243171338047,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-04d3be1c02e1",
+      "loaded_job": "pec-verify-0d7f1498c05e",
+      "change_from_baseline_ohm": 0.00629206060934404,
+      "nec_delta_z_error_ohm": 0.5539675735882033
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 200.0,
+      "feed_gap_mm": 10,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": -0.4584548558246553,
+      "delta_x_ohm": -0.7010528406285328,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-485e4f9f89c3",
+      "loaded_job": "pec-verify-286bb1e9209d",
+      "change_from_baseline_ohm": 0.002822451800875122,
+      "nec_delta_z_error_ohm": 0.129437231665032
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 200.0,
+      "feed_gap_mm": 10,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": -0.3078698407627485,
+      "delta_x_ohm": -1.4437886050393658,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-485e4f9f89c3",
+      "loaded_job": "pec-verify-286bb1e9209d",
+      "change_from_baseline_ohm": 0.003967290159919717,
+      "nec_delta_z_error_ohm": 0.27494443588617895
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 200.0,
+      "feed_gap_mm": 10,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": -0.1886411952899607,
+      "delta_x_ohm": -2.5278755982554344,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-485e4f9f89c3",
+      "loaded_job": "pec-verify-286bb1e9209d",
+      "change_from_baseline_ohm": 0.005736904665182163,
+      "nec_delta_z_error_ohm": 0.5549412319201967
+    }
+  ],
+  "acceptance": "Accepted M10 PEC feed/domain sensitivity: all four runs reach -60 dB; sampled delta-Z changes under 0.01 ohm; NEC differences under 2 ohm.",
+  "archive_sha256": "5fe0f0a21353ee1eedbc56aeea0ba808334f0b030cec3223ce6e0589d38d3541",
+  "mesh_audit": [
+    {
+      "directory": "/tmp/m10-pec-sensitivity-review/raw/pec-domain-check/pec-verify-286bb1e9209d",
+      "cells": 688500,
+      "grid_cells": [
+        90,
+        90,
+        85
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0000000000000204,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.007679717586649551,
+      "projected_120000_step_seconds": 921.5661103979461,
+      "projected_pair_120000_step_seconds": 1843.1322207958922,
+      "pilot_simulated_seconds": 3.49936148e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m10-pec-sensitivity-review/raw/pec-domain-check/pec-verify-485e4f9f89c3",
+      "cells": 688500,
+      "grid_cells": [
+        90,
+        90,
+        85
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0000000000000204,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.007692554557124518,
+      "projected_120000_step_seconds": 923.1065468549422,
+      "projected_pair_120000_step_seconds": 1846.2130937098843,
+      "pilot_simulated_seconds": 3.49936148e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m10-pec-sensitivity-review/raw/pec-feed-check/pec-verify-04d3be1c02e1",
+      "cells": 377300,
+      "grid_cells": [
+        70,
+        70,
+        77
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        5.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        2.0000000000002296
+      ],
+      "vacuum_cfl_seconds": 9.629166007732352e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 2.670650136987221e-12,
+      "engine_timestep_seconds": 1.0167e-11,
+      "measured_seconds_per_step": 0.004875650665124349,
+      "projected_120000_step_seconds": 585.0780798149219,
+      "projected_pair_120000_step_seconds": 1170.1561596298438,
+      "pilot_simulated_seconds": 3.5157486000000004e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m10-pec-sensitivity-review/raw/pec-feed-check/pec-verify-0d7f1498c05e",
+      "cells": 377300,
+      "grid_cells": [
+        70,
+        70,
+        77
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        5.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        2.0000000000002296
+      ],
+      "vacuum_cfl_seconds": 9.629166007732352e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 2.670650136987221e-12,
+      "engine_timestep_seconds": 1.0167e-11,
+      "measured_seconds_per_step": 0.004875650665124349,
+      "projected_120000_step_seconds": 585.0780798149219,
+      "projected_pair_120000_step_seconds": 1170.1561596298438,
+      "pilot_simulated_seconds": 3.5157486000000004e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    }
+  ]
+}

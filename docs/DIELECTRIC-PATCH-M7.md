@@ -1,5 +1,9 @@
 # M7 conducting-patch/dielectric coupling
 
+> Historical milestone record. The [revision-1 guide](DIELECTRIC-REVISION-1.md)
+> states current supported scope; later milestones extend some restrictions below.
+
+
 M7 extends the dense conductor/JVIE solve from wire-only geometry to NEC2
 conducting surface patches and mixed wire/patch geometry. It remains a
 free-space, separated-object feature: dielectric contact, NEC ground, loading,

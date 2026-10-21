@@ -1,0 +1,59 @@
+{
+  "frequency_mhz": 300,
+  "ground": "Sommerfeld GN 2",
+  "ground_epsilon_r": 13,
+  "ground_conductivity_s_per_m": 0.02,
+  "wire_radius_m": 0.005,
+  "wire_length_m": 0.475,
+  "wire_center_z_m": 0.6,
+  "wire_segments": 11,
+  "extended_kernel": true,
+  "epsilon_r": 3,
+  "cube_minimum_m": [
+    0.05,
+    -0.05,
+    0.55
+  ],
+  "cube_maximum_m": [
+    0.15,
+    0.05,
+    0.65
+  ],
+  "mesh_max_kh": 0.3,
+  "active_cells": 64,
+  "solver": "dense-operator GMRES",
+  "gmres_requested_relative_tolerance": 1e-10,
+  "gmres_true_relative_residual": 2.298610538446e-11,
+  "vacuum_z_ohm": [
+    79.08469476773,
+    21.08074897213
+  ],
+  "loaded_z_ohm": [
+    78.71405222046,
+    19.89813918016
+  ],
+  "delta_z_ohm": [
+    -0.3706425472699948,
+    -1.1826097919699983
+  ],
+  "power_defect": 0.0008755893910155,
+  "accepted_power_w": 0.005970569414821,
+  "upper_radiated_power_w": 0.002599191064314,
+  "lower_halfspace_power_w": 0.003376606117745,
+  "solver_cpu_seconds": 84.48,
+  "reflected_basis_cache_bytes": 101376,
+  "openems_comparison": {
+    "status": "completed coarse pair; single-frequency perturbation checkpoint only",
+    "mesh_mm": 20,
+    "wire_cell_mm": 5,
+    "vacuum_job": "real-verify-d4bc7a2d6106",
+    "loaded_job": "real-verify-4b5b59d9d5cb",
+    "delta_z_ohm": [
+      -0.3678210350601745,
+      -1.4583226503002606
+    ],
+    "complex_delta_error_ohm": 0.27572729494881987
+  },
+  "acceptance": "Below 2-ohm perturbation allowance at this checkpoint; one VIE resolution/frequency and one completed real-ground OpenEMS mesh; fine loaded OpenEMS result pending, absolute feed/source and domain convergence unresolved; not full M13 closure; real-ground verification is outside PEC-only M10 acceptance.",
+  "milestone": "M13 preliminary real-ground evidence (reassigned from M10 on 2026-10-20)"
+}

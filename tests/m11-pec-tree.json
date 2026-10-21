@@ -1,0 +1,91 @@
+{
+  "model": "tree",
+  "ground": "pec",
+  "dielectric_bottom_gap_m": 0,
+  "binary_sha256": "db13ff5ef11c393d34b5f85a460cf9d7b8c6cdec4699ba318113234db19849d0",
+  "target_relative_residual": 1e-10,
+  "wall_seconds": 2075.888901978731,
+  "peak_rss_kib": 240416,
+  "returncode": 0,
+  "command": [
+    "/tmp/m11-pec-checkpoint-nec2c",
+    "-s",
+    "fft",
+    "-r",
+    "1e-10",
+    "-n",
+    "300",
+    "-i",
+    "/tmp/m11-pec-tree/model.nec",
+    "-o",
+    "/tmp/m11-pec-tree/model.out"
+  ],
+  "iterations": 45.0,
+  "true_relative_residual": 9.070779582712e-11,
+  "accounted_solver_bytes": 244753200.0,
+  "power_defect": 0.002808294345499,
+  "solver_cpu_milliseconds": 155420.0,
+  "feed_impedance_real_ohm": 64.99102696638,
+  "feed_impedance_imag_ohm": -31.89532941029,
+  "active_cells": 9432,
+  "physical_geometry_fixture": "dielectric/m11-pec-tree.nec",
+  "nominal_runtime_target_seconds": 2400,
+  "runtime_target_met": true,
+  "runtime_status": "40-minute grounded-tree target accepted by user on 2026-10-21; further optimization deferred",
+  "accepted_power_w": 0.006200078344,
+  "radiated_power_w": 0.006182666699044,
+  "angular_quadrature_relative_change": 0.0005848312284261,
+  "far_field_rows": [
+    [
+      0.0,
+      0.0,
+      -0.4593928248269,
+      0.2720364246803,
+      -0.0018176884813,
+      0.001066354714349
+    ],
+    [
+      45.0,
+      0.0,
+      -0.3212826076262,
+      0.5013485559311,
+      0.001045928641476,
+      0.0003053703500365
+    ],
+    [
+      90.0,
+      0.0,
+      -0.01069896744718,
+      -1.702898085159,
+      1.826050386178e-19,
+      -3.078149328055e-19
+    ],
+    [
+      0.0,
+      90.0,
+      -0.0018176884813,
+      0.001066354714349,
+      0.4593928248269,
+      -0.2720364246803
+    ],
+    [
+      45.0,
+      90.0,
+      0.2984992392249,
+      -0.6681607550911,
+      -0.2454682950556,
+      -0.1693294500529
+    ],
+    [
+      90.0,
+      90.0,
+      -0.7624261238707,
+      1.296335611145,
+      6.075810344744e-17,
+      6.438064208811e-17
+    ]
+  ],
+  "timing_note": "Elapsed time is observed on the constrained VM and includes scheduling delay; CPU time is recorded separately. This verification overlapped other test/checkpoint jobs.",
+  "original_runtime_target_seconds": 1800,
+  "runtime_decision_date": "2026-10-21"
+}

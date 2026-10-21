@@ -285,6 +285,13 @@ static int compare_boxes(const void *left, const void *right)
   return 0;
 }
 
+static int compare_samples(const void *left,const void *right)
+{
+  const dielectric_sample *a=left,*b=right;
+  if(a->material_id!=b->material_id) return (a->material_id>b->material_id)-(a->material_id<b->material_id);
+  return (a->frequency_mhz>b->frequency_mhz)-(a->frequency_mhz<b->frequency_mhz);
+}
+
 void dielectric_model_init(dielectric_model *model)
 {
   memset(model, 0, sizeof(*model));
@@ -297,6 +304,7 @@ void dielectric_model_free(dielectric_model *model)
 {
   free(model->resource_path);
   free(model->materials);
+  free(model->samples);
   free(model->regions);
   free(model->boxes);
   dielectric_model_init(model);
@@ -356,11 +364,11 @@ static int parse_resource(dielectric_model *model, FILE *resource,
                        tokens[0], "first record must be NEC2C-DIELECTRIC <version>");
         return 0;
       }
-      if(!parse_positive_int(tokens[1], &version) || (version != 1))
+      if(!parse_positive_int(tokens[1], &version) || (version != 1 && version != 2 && version != 3))
       {
         set_diagnostic(diagnostic, model->resource_path, line_number,
                        "NEC2C-DIELECTRIC", tokens[1],
-                       "unsupported format version; expected 1");
+                       "unsupported format version; expected 1, 2 or 3");
         return 0;
       }
       model->format_version = version;
@@ -369,11 +377,12 @@ static int parse_resource(dielectric_model *model, FILE *resource,
     }
     if(keyword_equal(tokens[0], "MATERIAL"))
     {
-      dielectric_material material;
-      if((token_count != 4) || !keyword_equal(tokens[2], "ER"))
+      dielectric_material material = {0};
+      if(!(model->format_version == 3 && token_count == 3 && keyword_equal(tokens[2], "TABLE")) &&
+         ((token_count != 4 && !(model->format_version >= 2 && token_count == 6)) || !keyword_equal(tokens[2], "ER")))
       {
         set_diagnostic(diagnostic, model->resource_path, line_number, "MATERIAL",
-                       tokens[0], "expected MATERIAL <id> ER <epsilon-r>");
+                       tokens[0], "expected MATERIAL <id> ER <epsilon-r> (version 2 optionally EI <loss> or SIGMA <S/m>)");
         return 0;
       }
       if(!parse_positive_int(tokens[1], &material.id))
@@ -388,16 +397,50 @@ static int parse_resource(dielectric_model *model, FILE *resource,
                        tokens[1], "duplicate material ID");
         return 0;
       }
-      if(!parse_finite_double(tokens[3], &material.epsilon_r) ||
-         (material.epsilon_r < 1.0))
+      material.tabulated=(token_count==3);
+      material.epsilon_r=1;
+      if(!material.tabulated && (!parse_finite_double(tokens[3], &material.epsilon_r) ||
+         (material.epsilon_r < 1.0)))
       {
         set_diagnostic(diagnostic, model->resource_path, line_number, "MATERIAL",
                        tokens[3], "ER must be finite and greater than or equal to 1");
         return 0;
       }
+      if(token_count == 6)
+      {
+        double loss;
+        if(!parse_finite_double(tokens[5], &loss) || loss < 0 ||
+           (!keyword_equal(tokens[4], "EI") && !keyword_equal(tokens[4], "SIGMA")))
+        {
+          set_diagnostic(diagnostic, model->resource_path, line_number, "MATERIAL",
+                         tokens[4], "expected EI or SIGMA with a finite nonnegative value");
+          return 0;
+        }
+        if(keyword_equal(tokens[4], "EI")) material.epsilon_loss=loss;
+        else material.conductivity=loss;
+      }
       material.source_line = line_number;
       if(!append_material(model, material))
         goto allocation_failure;
+    }
+    else if(keyword_equal(tokens[0], "SAMPLE") && model->format_version==3)
+    {
+      dielectric_sample a={0}, *next;
+      if(token_count!=8 || !parse_positive_int(tokens[1],&a.material_id) ||
+         !keyword_equal(tokens[2],"FREQ_MHZ") || !parse_finite_double(tokens[3],&a.frequency_mhz) || a.frequency_mhz<=0 ||
+         !keyword_equal(tokens[4],"ER") || !parse_finite_double(tokens[5],&a.epsilon_r) || a.epsilon_r<1 ||
+         (!keyword_equal(tokens[6],"EI") && !keyword_equal(tokens[6],"SIGMA")) ||
+         !parse_finite_double(tokens[7],&a.loss) || a.loss<0 || (a.epsilon_r==1 && a.loss==0))
+      {
+        set_diagnostic(diagnostic,model->resource_path,line_number,"SAMPLE",tokens[0],
+          "expected SAMPLE <id> FREQ_MHZ <positive MHz> ER <ER>=1> EI|SIGMA <nonnegative loss>; sample must differ from vacuum");
+        return 0;
+      }
+      a.conductivity_kind=keyword_equal(tokens[6],"SIGMA");a.source_line=line_number;
+      if(model->sample_count>=SIZE_MAX/sizeof(*next)-1) goto allocation_failure;
+      next=realloc(model->samples,(model->sample_count+1)*sizeof(*next));
+      if(!next) goto allocation_failure;
+      model->samples=next;model->samples[model->sample_count++]=a;
     }
     else if(keyword_equal(tokens[0], "REGION"))
     {
@@ -584,6 +627,30 @@ invalid_mesh_value:
         return 0;
       }
   }
+  if(model->sample_count) qsort(model->samples,model->sample_count,sizeof(*model->samples),compare_samples);
+  {
+    size_t i,j;
+    for(i=0;i<model->sample_count;++i)
+    {
+      dielectric_sample *a=&model->samples[i];
+      for(j=0;j<model->material_count;++j) if(model->materials[j].id==a->material_id) break;
+      if(j==model->material_count || !model->materials[j].tabulated ||
+         (i && model->samples[i-1].material_id==a->material_id &&
+          (model->samples[i-1].frequency_mhz==a->frequency_mhz || model->samples[i-1].conductivity_kind!=a->conductivity_kind)))
+      {
+        set_diagnostic(diagnostic,model->resource_path,a->source_line,"SAMPLE","table",
+          "samples require a declared TABLE material, unique frequencies and one consistent EI or SIGMA representation");
+        return 0;
+      }
+      if(!model->materials[j].sample_count) model->materials[j].samples=a;
+      ++model->materials[j].sample_count;
+    }
+    for(j=0;j<model->material_count;++j) if(model->materials[j].tabulated && model->materials[j].sample_count<2)
+    {
+      set_diagnostic(diagnostic,model->resource_path,model->materials[j].source_line,"MATERIAL","TABLE","TABLE requires at least two distinct samples");
+      return 0;
+    }
+  }
   qsort(model->materials, model->material_count, sizeof(*model->materials), compare_materials);
   qsort(model->regions, model->region_count, sizeof(*model->regions), compare_regions);
   qsort(model->boxes, model->box_count, sizeof(*model->boxes), compare_boxes);
@@ -668,8 +735,19 @@ void dielectric_print_summary(FILE *stream, const dielectric_model *model)
           (unsigned long)model->region_count,
           (unsigned long)model->box_count);
   for(index = 0; index < model->material_count; index++)
-    fprintf(stream, "\n  MATERIAL %d ER %.17g", model->materials[index].id,
-            model->materials[index].epsilon_r);
+  {
+    const dielectric_material *m=&model->materials[index];
+    if(m->tabulated) fprintf(stream,"\n  MATERIAL %d TABLE SAMPLES %zu (LINEAR FREQUENCY; NO EXTRAPOLATION)",m->id,m->sample_count);
+    else
+    {
+      fprintf(stream,"\n  MATERIAL %d ER %.17g",m->id,m->epsilon_r);
+      if(model->format_version>=2) fprintf(stream,"\n  MATERIAL LOSS %d EI %.17g SIGMA %.17g S/M",m->id,m->epsilon_loss,m->conductivity);
+    }
+  }
+  for(index=0;index<model->sample_count;++index)
+    fprintf(stream,"\n  SAMPLE %d FREQ_MHZ %.17g ER %.17g %s %.17g",model->samples[index].material_id,
+      model->samples[index].frequency_mhz,model->samples[index].epsilon_r,
+      model->samples[index].conductivity_kind ? "SIGMA":"EI",model->samples[index].loss);
   fprintf(stream, "\n\n  REGIONS (ID, MATERIAL)");
   for(index = 0; index < model->region_count; index++)
     fprintf(stream, "\n  REGION %d MATERIAL %d", model->regions[index].id,
@@ -685,4 +763,45 @@ void dielectric_print_summary(FILE *stream, const dielectric_model *model)
           "  STATUS: PARSED; READY FOR DIELECTRIC SOLVER",
           model->max_kh, (unsigned long)model->max_cells, model->max_aspect,
           model->mesh_record_present ? "" : " (DEFAULTS)");
+}
+
+/* exp(+i omega t): Re(J . conj(E))/2 = omega eps0 (-Im(epsilon)) |E|^2/2.
+   J = i omega eps0 (epsilon-1) E; vacuum cells are omitted by the mesher. */
+double dielectric_absorbed_power(const dielectric_model *model,
+    const dielectric_mesh_result *mesh,const complex double *current,double k0)
+{
+  size_t cell, m;
+  double power=0, omega_eps0=k0*299792458.0*8.8541878128e-12;
+  for(cell=0;cell<mesh->cell_count;++cell)
+    for(m=0;m<model->material_count;++m)
+      if(model->materials[m].id==mesh->cells[cell].material_id)
+      {
+        complex double epsilon=dielectric_material_epsilon(&model->materials[m],k0);
+        double loss=-cimag(epsilon), norm=0;
+        int d;
+        if(loss==0) break;
+        for(d=0;d<3;++d) norm+=creal(current[3*cell+d]*conj(current[3*cell+d]));
+        power+=0.5*loss*norm/(omega_eps0*creal((epsilon-1)*conj(epsilon-1)))*
+          mesh->cells[cell].size[0]*mesh->cells[cell].size[1]*mesh->cells[cell].size[2];
+        break;
+      }
+  return power;
+}
+
+int dielectric_validate_sweep(const dielectric_model *model,int mode,int count,
+    double first,double step,dielectric_diagnostic *diagnostic)
+{
+  int i;size_t j;double f=first;
+  for(i=0;i<count;++i)
+  {
+    for(j=0;j<model->material_count;++j) if(model->materials[j].tabulated &&
+       (!isfinite(f) || f<=0 || !isfinite(cabs(dielectric_material_epsilon(&model->materials[j],2*3.14159265358979323846*f*1e6/299792458.0)))))
+    {
+      char value[128];snprintf(value,sizeof(value),"material=%d frequency_mhz=%.17g",model->materials[j].id,f);
+      set_diagnostic(diagnostic,model->resource_path,model->materials[j].source_line,"TABLE",value,"requested frequency is outside material table; extrapolation is prohibited");
+      return 0;
+    }
+    f=mode==1 ? f*step:f+step;
+  }
+  return 1;
 }

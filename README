@@ -1,3 +1,20 @@
+  DIELECTRIC VOLUME EXTENSION — REVISION 1 (2026-10-21)
+
+  Revision 1 is complete for the agreed M1–M11/M13 scope; M12 conductor/
+  dielectric contact is deferred. This feature revision does not change the
+  upstream nec2c 1.3 version number. Start with:
+
+    docs/DIELECTRIC-REVISION-1.md          User guide and supported scope
+    examples/dielectric-r1/README.md       Runnable canonical models
+    docs/DIELECTRIC-DEFERRED-WORK.md       Deferred features and design choices
+    docs/DIELECTRIC-REVISION-1-RELEASE.md   Release notes and announcement
+
+  Build with autoreconf -fi, ./configure, then make. Run the quick examples:
+
+    python3 examples/dielectric-r1/run.py --output-dir /tmp/nec2c-r1-examples
+
+  The upstream README is preserved below.
+
 
   README File for nec2c
 

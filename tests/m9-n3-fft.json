@@ -1,0 +1,33 @@
+{
+  "model": "tree",
+  "target_relative_residual": 1e-10,
+  "wall_seconds": 1224.7569738030434,
+  "peak_rss_kib": 140064,
+  "returncode": 0,
+  "command": [
+    "/home/josh/src/nec2c/nec2c",
+    "-s",
+    "fft",
+    "-r",
+    "1e-10",
+    "-n",
+    "300",
+    "-i",
+    "/tmp/m9-n3-integrated/model.nec",
+    "-o",
+    "/tmp/m9-n3-integrated/model.out"
+  ],
+  "iterations": 45.0,
+  "true_relative_residual": 7.753221966028e-11,
+  "accounted_solver_bytes": 141975080.0,
+  "power_defect": 0.002817462745461,
+  "cells": 9432,
+  "conductor_unknowns": 11,
+  "volume_unknowns": 28296,
+  "frequency_mhz": 28,
+  "epsilon_r": 3,
+  "pitch_m": 0.25,
+  "feed_impedance_real_ohm": 67.27269449915,
+  "feed_impedance_imag_ohm": -34.5714125879,
+  "solver_cpu_seconds": 86.46
+}

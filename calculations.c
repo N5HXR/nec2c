@@ -502,9 +502,17 @@ void intrp( double x, double y, complex double *f1,
   static double dx = 1., dy = 1., xs = 0., ys = 0., xz, yz;
   double xx, yy;
   static complex double a[4][4], b[4][4], c[4][4], d[4][4];
+  static complex double cached_epsilon;
   complex double p1=CPLX_00, p2=CPLX_00, p3=CPLX_00, p4=CPLX_00;
   complex double fx1, fx2, fx3, fx4;
 
+  /* Rebuilding the Sommerfeld table changes its values even if the next
+     observation reuses the same interpolation stencil. */
+  if(cached_epsilon != ggrid.epscf)
+  {
+    cached_epsilon=ggrid.epscf;
+    ixs=iys=igrs=-10;
+  }
   jump = FALSE;
   if( (x < xs) || (y < ys) )
 	jump = TRUE;

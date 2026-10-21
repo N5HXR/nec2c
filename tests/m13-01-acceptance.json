@@ -1,0 +1,393 @@
+{
+  "step": "M13-01",
+  "date": "2026-10-21",
+  "status": "COMPLETE",
+  "scope": "Passive isotropic constant scalar permittivity/conductivity; free space and PEC; existing conductor clearance retained",
+  "anisotropy": false,
+  "material_format_versions": [
+    1,
+    2
+  ],
+  "native_binary_sha256": "d391403f7dba4833412c24e71f4f22488eb4b65ff5cf1f3b2f3f90c65aae5a92",
+  "analytical_and_integration_checks": "PASS: tests/m13_loss.py; /tmp/m13-01-final-tests.log",
+  "static_fft_limit": "PASS: tests/dielectric_fft_test with zero-frequency lossless material check",
+  "regression": {
+    "total": 20,
+    "passed": 20,
+    "failed": 0,
+    "summary": "test-suite.log",
+    "initial_run_log": "/tmp/m13-suite.log",
+    "fft_rebuild_followup": "/tmp/m13-fft-followup.log",
+    "note": "One initial failure was a stale FFT test object after the API became complex-valued. Explicit header dependencies were added; rebuilt FFT test including complex-material cases passes. Aggregate summary refreshed from all 20 passing groups."
+  },
+  "native_pillar_cases": [
+    {
+      "experiment": "M13-01",
+      "conductivity_s_m": 0.02,
+      "frequency_mhz": 280.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.508372382809995,
+        2.2904865112599992
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            61.90487450674,
+            -19.52106124454
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.275768181825e-15,
+          "power_defect": 0.002314136110045,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.2567889392375946,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            64.41324688955,
+            -17.23057473328
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 9.004697465843e-11,
+          "power_defect": 0.002094909278052,
+          "absorbed_power_w": 0.0005983310610001,
+          "accounted_solver_bytes": 3522040,
+          "wall_seconds": 73.6824207007885,
+          "solver_cpu_seconds": 5.29
+        }
+      ],
+      "peak_child_rss_kib": 8028,
+      "binary_sha256": "d391403f7dba4833412c24e71f4f22488eb4b65ff5cf1f3b2f3f90c65aae5a92"
+    },
+    {
+      "experiment": "M13-01",
+      "conductivity_s_m": 0.02,
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.547310340189995,
+        0.545605630419999
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            78.64604736189,
+            21.77955767548
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 8.399038961945e-15,
+          "power_defect": 0.002180701974656,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.14826303720474243,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            81.19335770208,
+            22.3251633059
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 7.782270006199e-11,
+          "power_defect": 0.002017535594163,
+          "absorbed_power_w": 0.0004345179947478,
+          "accounted_solver_bytes": 3522040,
+          "wall_seconds": 73.08965203166008,
+          "solver_cpu_seconds": 5.26
+        }
+      ],
+      "peak_child_rss_kib": 8120,
+      "binary_sha256": "d391403f7dba4833412c24e71f4f22488eb4b65ff5cf1f3b2f3f90c65aae5a92"
+    },
+    {
+      "experiment": "M13-01",
+      "conductivity_s_m": 0.02,
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.3294931510699968,
+        -1.8740258594700023
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            99.26889433793,
+            61.43102941251
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 3.313872113249e-15,
+          "power_defect": 0.002057134294425,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.1676948070526123,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            101.598387489,
+            59.55700355304
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 6.698138429678e-11,
+          "power_defect": 0.001933573679174,
+          "absorbed_power_w": 0.0002665117674325,
+          "accounted_solver_bytes": 3522040,
+          "wall_seconds": 75.3908583521843,
+          "solver_cpu_seconds": 5.07
+        }
+      ],
+      "peak_child_rss_kib": 8128,
+      "binary_sha256": "d391403f7dba4833412c24e71f4f22488eb4b65ff5cf1f3b2f3f90c65aae5a92"
+    },
+    {
+      "experiment": "M13-01",
+      "conductivity_s_m": 0.02,
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.0125,
+      "wire_segments": 11,
+      "delta_z_ohm": [
+        2.6187691277799985,
+        0.6438977141399995
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            78.64604736189,
+            21.77955767548
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 8.399038961945e-15,
+          "power_defect": 0.002180701974656,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 33120,
+          "wall_seconds": 0.13995406031608582,
+          "solver_cpu_seconds": 0.01
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            81.26481648967,
+            22.42345538962
+          ],
+          "active_cells": 3328,
+          "true_relative_residual": 7.670567832768e-11,
+          "power_defect": 0.002016362426226,
+          "absorbed_power_w": 0.0004389962868618,
+          "accounted_solver_bytes": 27929592,
+          "wall_seconds": 558.024067491293,
+          "solver_cpu_seconds": 40.43
+        }
+      ],
+      "peak_child_rss_kib": 28948,
+      "binary_sha256": "d391403f7dba4833412c24e71f4f22488eb4b65ff5cf1f3b2f3f90c65aae5a92"
+    },
+    {
+      "experiment": "M13-01",
+      "conductivity_s_m": 0.02,
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        2.593010446240001,
+        0.41628537575000024
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            79.94214840221,
+            21.49726187158
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 1.314007762348e-14,
+          "power_defect": 0.00017678966404,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 54800,
+          "wall_seconds": 0.3222593367099762,
+          "solver_cpu_seconds": 0.02
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            82.53515884845,
+            21.91354724733
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 4.919256258891e-11,
+          "power_defect": 0.0001723828048537,
+          "absorbed_power_w": 0.00042913258197,
+          "accounted_solver_bytes": 3943080,
+          "wall_seconds": 133.4763484597206,
+          "solver_cpu_seconds": 9.23
+        }
+      ],
+      "peak_child_rss_kib": 8056,
+      "binary_sha256": "d391403f7dba4833412c24e71f4f22488eb4b65ff5cf1f3b2f3f90c65aae5a92"
+    },
+    {
+      "experiment": "M13-01",
+      "conductivity_s_m": 0.02,
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "delta_z_ohm": [
+        2.2965431224999975,
+        -2.112937529219998
+      ],
+      "runs": [
+        {
+          "epsilon_r": 1,
+          "z_ohm": [
+            103.0302397531,
+            60.92736499289
+          ],
+          "active_cells": 0,
+          "true_relative_residual": 9.154088346587e-15,
+          "power_defect": 0.0001079265985558,
+          "absorbed_power_w": 0.0,
+          "accounted_solver_bytes": 54800,
+          "wall_seconds": 0.30810603499412537,
+          "solver_cpu_seconds": 0.02
+        },
+        {
+          "epsilon_r": 3,
+          "z_ohm": [
+            105.3267828756,
+            58.81442746367
+          ],
+          "active_cells": 416,
+          "true_relative_residual": 3.939232577861e-11,
+          "power_defect": 0.0001169227818243,
+          "absorbed_power_w": 0.0002632813980625,
+          "accounted_solver_bytes": 3943080,
+          "wall_seconds": 118.07721272110939,
+          "solver_cpu_seconds": 9.12
+        }
+      ],
+      "peak_child_rss_kib": 8052,
+      "binary_sha256": "d391403f7dba4833412c24e71f4f22488eb4b65ff5cf1f3b2f3f90c65aae5a92"
+    }
+  ],
+  "openems": {
+    "experiment": "M13-01",
+    "status": "PASS",
+    "package": "/tmp/m13-01-openems.tar.gz",
+    "conductivity_s_m": 0.02,
+    "epsilon_r": 3,
+    "configurations": [
+      "loaded pilot",
+      "coarse vacuum/lossy pair",
+      "fine vacuum/lossy pair",
+      "fine enlarged-domain vacuum/lossy pair"
+    ],
+    "review": "m13-01-openems-review.json",
+    "pairs": "m13-01-openems-pairs.csv",
+    "archive_sha256": "60cdaa9c315f50ca5b94e30189496a17baeb77d08a714e82097888b6b5c81574"
+  },
+  "acceptance_rule": "Each induced delta R/delta X discrepancy <= max(2 ohm, 2% of corresponding OpenEMS reference component); complex-vector error is diagnostic only",
+  "volume_refinement_delta_z_change_ohm": 0.12152239318682322,
+  "wire_refinement_delta_z_change_ohm": 0.137157675544955,
+  "native_benchmark_note": "Pinned benchmark predates the lossless k0=0 guard and output-label clarification; positive-frequency constitutive equations and power calculations are unchanged.",
+  "independent_openems": "PASS: six verification runs, explicit <= -60 dB decay, material/mesh XML audits, mesh/domain sensitivity and component-wise impedance comparisons",
+  "physical_comparison_checks": [
+    {
+      "frequency_mhz": 280.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "component_errors_ohm": [
+        0.4801962309902308,
+        0.32949438377750795
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "component_errors_ohm": [
+        0.5309940935573536,
+        0.7062394258289544
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 11,
+      "component_errors_ohm": [
+        0.2664193989532748,
+        1.5415779329669803
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.0125,
+      "wire_segments": 11,
+      "component_errors_ohm": [
+        0.4595353059673499,
+        0.8045315095489549
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 300.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "component_errors_ohm": [
+        0.4852939875073474,
+        0.5769191711589556
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    },
+    {
+      "frequency_mhz": 320.0,
+      "pitch_m": 0.025,
+      "wire_segments": 21,
+      "component_errors_ohm": [
+        0.2993694275232741,
+        1.3026662632169845
+      ],
+      "component_limits_ohm": [
+        2,
+        2
+      ],
+      "passed": true
+    }
+  ],
+  "completion_date": "2026-10-21",
+  "source_distribution_check": "PASS: make dist",
+  "final_binary_sha256": "a77676cb54f2da5f942812c9e70a3544833d1a3c84719abe4d02b3ce5040763f"
+}

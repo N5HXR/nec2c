@@ -1,4 +1,8 @@
-# NEC2C dielectric resource format, version 1
+# NEC2C dielectric resource format, versions 1, 2 and 3
+
+Revision 1 is complete; see the [user guide](DIELECTRIC-REVISION-1.md) and
+[canonical examples](../examples/dielectric-r1/README.md) for current execution
+and ground/solver scope.
 
 This is the producer-facing contract for Antenna Turtle and other geometry
 generators. Milestones M2/M3 parse, validate, and mesh this format and report
@@ -50,15 +54,20 @@ MESH [MAX_KH <q>] [MAX_CELLS <count>] [MAX_ASPECT <ratio>]
 END
 ```
 
-Exactly one version header must be the first content record, and version `1`
-is currently supported. At least one `MATERIAL`, `REGION`, and `BOX` is
+Exactly one version header must be the first content record, and versions `1`, `2`
+and `3` are supported. At least one `MATERIAL`, `REGION`, and `BOX` is
 required. `END` is mandatory, and only blank lines or comments may follow it.
 Record order after the header has no semantic meaning, so forward references
 are allowed. IDs need not be contiguous but must be unique within their record
 type.
 
-`MATERIAL` requires a real relative permittivity `ER >= 1`. A value of one is
-valid and will represent vacuum in later solver milestones. Each `REGION`
+`MATERIAL` requires a real relative permittivity `ER >= 1`. Version 2 optionally
+adds `EI <nonnegative-loss>` or `SIGMA <nonnegative-S/m>` after ER; these are
+mutually exclusive. The exp(+i omega t) convention gives relative permittivity
+`ER - i*(EI + SIGMA/(omega*epsilon0))`. Omitted loss is zero; version 1 rejects
+loss fields. ER=1 represents vacuum only when loss is zero. See
+[M13-01-SCALAR-LOSS.md](M13-01-SCALAR-LOSS.md) for the implementation and
+acceptance status. Each `REGION`
 must reference a declared material. Each `BOX` must reference a declared
 region, uses meters in NEC's global Cartesian coordinates, and requires
 `xmin < xmax`, `ymin < ymax`, and `zmin < zmax`.
@@ -82,18 +91,23 @@ Meshing uses the highest frequency in the NEC `FR` sweep. For every active
 cell, M3 enforces
 
 ```text
-q = k0 * sqrt(ER) * longest_cell_edge <= MAX_KH.
+q = k0 * sqrt(abs(epsilon_relative)) * longest_cell_edge <= MAX_KH.
 ```
 
 `MAX_KH <= 0.5` is the recommended range. Values through `1.0` are accepted
 with an accuracy warning, while larger values are rejected. Each physical box
 is divided uniformly on each axis; the longest-axis division count is then
 increased until `MAX_ASPECT` is met. Cells are emitted in canonical box order,
-then increasing x, y, and z subdivision index. `ER=1` boxes remain in physical
-volume and region reports but do not produce volume unknowns.
+then increasing x, y, and z subdivision index. Constant `ER=1` boxes with zero
+loss remain in physical volume and region reports but do not produce volume
+unknowns. `ER=1` with positive EI or conductivity remains an active material.
 
-Overlapping box interiors are rejected. Same-material boxes may touch, but
-touching boxes with different material IDs are rejected in format version 1.
+Overlapping box interiors are rejected. Boxes of equal or different scalar
+materials may share faces, partial faces, edges or corners (M13-03). This
+extends versions 1/2/3 without new syntax. Use identical coordinates for a
+shared boundary; no overlap tolerance or coordinate snapping is applied.
+See [M13-03-TOUCHING-MATERIALS.md](M13-03-TOUCHING-MATERIALS.md) for acceptance
+status and FFT lattice restrictions.
 The report verifies numerical-volume conservation, reports per-box division
 counts and per-region bounding-box diameter, and prints the electrical region
 diameter `k0 * sqrt(ER) * D`.
@@ -116,10 +130,29 @@ clearance is deferred to the M12 contact work.
 ## Current execution behavior
 
 `DF` followed by `EN` without excitation validates, meshes, and prints the
-resource and cost reports.  A geometry-free model with an `EX` plane wave
-invokes M5's dense free-space volume solver at `RP`, `XQ`, or `EN`.  A
-free-space conductor model with either an ordinary wire voltage source or a
-type 1--3 plane-wave `EX` card invokes the self-consistent wire/patch/volume
-solver at `XQ` or `EN`; see `DIELECTRIC-WIRE-M6.md` and
-`DIELECTRIC-PATCH-M7.md`. Other explicitly excluded features fail rather than
-producing a silently uncoupled legacy result.
+resource and cost reports. With excitation, `RP`, `XQ`, `NE`/`NH` and `EN` execute
+supported dielectric solves/output requests. Geometry-free models use plane-wave
+EX types 1–3; conductor models accept ordinary wire voltage sources or plane-wave
+EX types 1–3. Successive field requests can execute the same frequency again.
+
+Revision 1 supports free space, PEC (`GN 1`, including dielectric-ground contact),
+and GN 2 real ground with wires and strictly positive ground clearances. Dense
+is the default; assembled GMRES and common-cubic-lattice FFT-backed GMRES are
+selected with `-s gmres` or `-s fft`. FFT supports cell-local scalar materials in
+free space/PEC and is excluded for GN 2. Conductor/dielectric contact, LD/NT/TL,
+NEC symmetry and other explicitly excluded modes fail rather than returning a
+silently uncoupled result. See the [revision-1 guide](DIELECTRIC-REVISION-1.md)
+for excitation, ground, field-output, clearance and solver constraints. Earlier
+M5/M6/M7 documents retain historical formulation and validation details.
+
+## Version 3 frequency tables (M13-02)
+
+Version 3 retains constant materials and adds `MATERIAL <id> TABLE` with at
+least two `SAMPLE <id> FREQ_MHZ <MHz> ER <ER> EI|SIGMA <loss>` rows. ER and
+the selected loss parameter interpolate linearly in frequency; one table must
+use a consistent loss representation. Out-of-range sweeps are rejected before
+solving. Table samples may be unordered and forward-referenced, but must have
+unique positive frequencies, passive finite values, and nonzero susceptibility.
+A conservative table-wide material bound sizes the fixed mesh. See
+[M13-02-MATERIAL-TABLES.md](M13-02-MATERIAL-TABLES.md) for the complete contract
+and current acceptance status.

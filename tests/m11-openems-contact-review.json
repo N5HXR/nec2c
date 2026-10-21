@@ -1,0 +1,404 @@
+{
+  "runs": [
+    {
+      "job_id": "pec-verify-31dfaecf7fdc",
+      "ground": "pec",
+      "epsilon_r": 3,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -46.89,
+      "engine_seconds": 14.8,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 69.78377843322045,
+          "x_ohm": -4.32959064736048,
+          "last_10_percent_sensitivity_ohm": 0.05175388166201335
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 92.35182875282952,
+          "x_ohm": 34.25722360817545,
+          "last_10_percent_sensitivity_ohm": 0.07129736852898079
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 121.33465769066511,
+          "x_ohm": 70.40317899422116,
+          "last_10_percent_sensitivity_ohm": 0.10726202733481409
+        }
+      ],
+      "decay_target_db": -60.0,
+      "final_energy_db": -60.97,
+      "final_steps": 3116
+    },
+    {
+      "job_id": "pec-verify-46ad3cbf7ee8",
+      "ground": "pec",
+      "epsilon_r": 1,
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -43.38,
+      "engine_seconds": 14.88,
+      "engine_timestep_seconds": 1.12303e-11,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 66.61396947579814,
+          "x_ohm": -6.761047528131593,
+          "last_10_percent_sensitivity_ohm": 0.0592612129636828
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 88.19590639833329,
+          "x_ohm": 33.737460533136904,
+          "last_10_percent_sensitivity_ohm": 0.08206885131065261
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 116.29276500213604,
+          "x_ohm": 72.89855516186205,
+          "last_10_percent_sensitivity_ohm": 0.1274537991817411
+        }
+      ],
+      "decay_target_db": -60.0,
+      "final_energy_db": -60.39,
+      "final_steps": 3116
+    },
+    {
+      "job_id": "pec-verify-96274c1c4ac0",
+      "ground": "pec",
+      "epsilon_r": 3,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -65.04,
+      "engine_seconds": 64.91,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 72.90548943053628,
+          "x_ohm": 11.831349852787396,
+          "last_10_percent_sensitivity_ohm": 0.03988923980530758
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 98.0832654748083,
+          "x_ohm": 52.31560287719101,
+          "last_10_percent_sensitivity_ohm": 0.06228757108332693
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 131.47510108909538,
+          "x_ohm": 90.66852011525219,
+          "last_10_percent_sensitivity_ohm": 0.10161726701774527
+        }
+      ],
+      "decay_target_db": -60.0,
+      "final_energy_db": -65.04,
+      "final_steps": 6930
+    },
+    {
+      "job_id": "pec-verify-a8eed7c504ce",
+      "ground": "pec",
+      "epsilon_r": 1,
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "wire_radius_mm": 5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "result_present": true,
+      "normal_early_stop": true,
+      "last_logged_energy_db": -64.83,
+      "engine_seconds": 64.12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "source_clipped_or_step_cap": false,
+      "status": "completed_early",
+      "impedance": [
+        {
+          "frequency_mhz": 280.0,
+          "r_ohm": 69.50877868011489,
+          "x_ohm": 9.331038110101883,
+          "last_10_percent_sensitivity_ohm": 0.04274740511655023
+        },
+        {
+          "frequency_mhz": 300.0,
+          "r_ohm": 93.61049129360413,
+          "x_ohm": 51.836587199501345,
+          "last_10_percent_sensitivity_ohm": 0.06800743664050267
+        },
+        {
+          "frequency_mhz": 320.0,
+          "r_ohm": 126.03552239525753,
+          "x_ohm": 93.60793515638103,
+          "last_10_percent_sensitivity_ohm": 0.11493270705137099
+        }
+      ],
+      "decay_target_db": -60.0,
+      "final_energy_db": -64.83,
+      "final_steps": 6930
+    }
+  ],
+  "pairs": [
+    {
+      "ground": "pec",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": 3.3967107504213914,
+      "delta_x_ohm": 2.500311742685513,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-a8eed7c504ce",
+      "loaded_job": "pec-verify-96274c1c4ac0"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": 4.472774181204173,
+      "delta_x_ohm": 0.4790156776896666,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-a8eed7c504ce",
+      "loaded_job": "pec-verify-96274c1c4ac0"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 15.0,
+      "wire_cell_mm": 2.5,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": 5.439578693837845,
+      "delta_x_ohm": -2.9394150411288393,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-a8eed7c504ce",
+      "loaded_job": "pec-verify-96274c1c4ac0"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "frequency_mhz": 280.0,
+      "delta_r_ohm": 3.1698089574223047,
+      "delta_x_ohm": 2.4314568807711128,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-46ad3cbf7ee8",
+      "loaded_job": "pec-verify-31dfaecf7fdc"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "frequency_mhz": 300.0,
+      "delta_r_ohm": 4.1559223544962265,
+      "delta_x_ohm": 0.5197630750385471,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-46ad3cbf7ee8",
+      "loaded_job": "pec-verify-31dfaecf7fdc"
+    },
+    {
+      "ground": "pec",
+      "mesh_mm": 20.0,
+      "wire_cell_mm": 5.0,
+      "domain_margin_mm": 0,
+      "feed_gap_mm": 10,
+      "cube_bottom_mm": 0.0,
+      "frequency_mhz": 320.0,
+      "delta_r_ohm": 5.0418926885290745,
+      "delta_x_ohm": -2.4953761676408845,
+      "status": "completed_pair",
+      "vacuum_job": "pec-verify-46ad3cbf7ee8",
+      "loaded_job": "pec-verify-31dfaecf7fdc"
+    }
+  ],
+  "acceptance": "All four verification runs reach normal -60 dB decay. The 25 mm NEC checkpoint passes the documented component-wise greater-of-2%-or-2-ohm delta-Z comparison; final numerical refinement/tree acceptance remains pending.",
+  "archive_sha256": "26e02106d7bfe295f4ee87ac2f69974b3d7e67b87e1e63a014515bf76234037e",
+  "comparison_rule": "For each delta R and delta X: absolute discrepancy <= max(2 ohm,0.02*abs(OpenEMS reference component)); complex-vector error is diagnostic only.",
+  "mesh_audit": [
+    {
+      "directory": "/tmp/m11-openems-review/raw/results/pec-pilot-f00895d6b08a",
+      "cells": 367500,
+      "grid_cells": [
+        70,
+        70,
+        75
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.004722455845248108,
+      "projected_120000_step_seconds": 566.694701429773,
+      "projected_pair_120000_step_seconds": 1133.389402859546,
+      "pilot_simulated_seconds": 2.67056534e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m11-openems-review/raw/results/pec-verify-31dfaecf7fdc",
+      "cells": 367500,
+      "grid_cells": [
+        70,
+        70,
+        75
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.004749679075738126,
+      "projected_120000_step_seconds": 569.9614890885751,
+      "projected_pair_120000_step_seconds": 1139.9229781771503,
+      "pilot_simulated_seconds": 3.49936148e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m11-openems-review/raw/results/pec-verify-46ad3cbf7ee8",
+      "cells": 367500,
+      "grid_cells": [
+        70,
+        70,
+        75
+      ],
+      "minimum_step_mm": [
+        5.0,
+        5.0,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.000000000000021,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 1.1118803173271735e-11,
+      "epsilon13_cfl_lower_estimate_seconds": 3.083801151001766e-12,
+      "engine_timestep_seconds": 1.12303e-11,
+      "measured_seconds_per_step": 0.004775353016688062,
+      "projected_120000_step_seconds": 573.0423620025674,
+      "projected_pair_120000_step_seconds": 1146.0847240051348,
+      "pilot_simulated_seconds": 3.49936148e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m11-openems-review/raw/results/pec-verify-96274c1c4ac0",
+      "cells": 857280,
+      "grid_cells": [
+        95,
+        94,
+        96
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.009366522366522367,
+      "projected_120000_step_seconds": 1123.982683982684,
+      "projected_pair_120000_step_seconds": 2247.965367965368,
+      "pilot_simulated_seconds": 3.8186379e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    },
+    {
+      "directory": "/tmp/m11-openems-review/raw/results/pec-verify-a8eed7c504ce",
+      "cells": 857280,
+      "grid_cells": [
+        95,
+        94,
+        96
+      ],
+      "minimum_step_mm": [
+        2.5,
+        2.5,
+        10.0
+      ],
+      "maximum_adjacent_ratio": [
+        2.0,
+        2.0,
+        1.5
+      ],
+      "vacuum_cfl_seconds": 5.8066055803077546e-12,
+      "epsilon13_cfl_lower_estimate_seconds": 1.610462627399611e-12,
+      "engine_timestep_seconds": 5.5103e-12,
+      "measured_seconds_per_step": 0.009252525252525253,
+      "projected_120000_step_seconds": 1110.3030303030305,
+      "projected_pair_120000_step_seconds": 2220.606060606061,
+      "pilot_simulated_seconds": 3.8186379e-08,
+      "source_was_clipped": false,
+      "step_cap_before_decay": false,
+      "reported_lumped_load_active_cells": 0
+    }
+  ]
+}
