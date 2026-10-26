@@ -1,5 +1,6 @@
 #include "nec2c.h"
 #include "dielectric.h"
+#include "shared.h"
 
 #include <float.h>
 #include <stdint.h>
@@ -216,21 +217,40 @@ static int evaluate_clearance(const data_t *geometry,
                               dielectric_diagnostic *diagnostic,
                               const dielectric_model *model)
 {
-  size_t cell_index;
+  size_t box_index;
   double worst_margin = DBL_MAX;
   double worst_gap = 0.0;
   double worst_required = 0.0;
+  size_t worst_box = 0;
+  int worst_conductor = 0, worst_is_patch = 0;
   mesh->has_conductors = (mesh->cell_count > 0) &&
                          ((geometry->n > 0) || (geometry->m > 0));
   mesh->minimum_conductor_gap = DBL_MAX;
   mesh->required_conductor_gap = 0.0;
   if(!mesh->has_conductors)
     return 1;
-  for(cell_index = 0; cell_index < mesh->cell_count; cell_index++)
+  /* Clearance is a geometric relationship between one conductor primitive
+     and one declared box. Evaluating every realized cell both duplicates the
+     same relationship and can make diagnostics depend on subdivision order. */
+  for(box_index = 0; box_index < mesh->box_count; box_index++)
   {
-    const dielectric_cell *cell = &mesh->cells[cell_index];
-    double cell_longest = fmax(cell->size[0], fmax(cell->size[1], cell->size[2]));
+    const dielectric_box_mesh *box_mesh = &mesh->boxes[box_index];
+    const dielectric_box *box = &model->boxes[box_index];
+    dielectric_cell envelope;
+    const dielectric_cell *first;
+    double cell_longest;
     int conductor;
+    if(box_mesh->cell_count == 0) continue;
+    first = &mesh->cells[box_mesh->cell_offset];
+    memset(&envelope,0,sizeof(envelope));
+    envelope.box_id=box_index+1;
+    envelope.center[0]=0.5*(box->minimum[0]+box->maximum[0]);
+    envelope.center[1]=0.5*(box->minimum[1]+box->maximum[1]);
+    envelope.center[2]=0.5*(box->minimum[2]+box->maximum[2]);
+    envelope.size[0]=box->maximum[0]-box->minimum[0];
+    envelope.size[1]=box->maximum[1]-box->minimum[1];
+    envelope.size[2]=box->maximum[2]-box->minimum[2];
+    cell_longest=fmax(first->size[0],fmax(first->size[1],first->size[2]));
     for(conductor = 0; conductor < geometry->n; conductor++)
     {
       double start[3], end[3];
@@ -241,7 +261,7 @@ static int evaluate_clearance(const data_t *geometry,
       end[0] = geometry->x[conductor] + 0.5 * geometry->si[conductor] * geometry->cab[conductor];
       end[1] = geometry->y[conductor] + 0.5 * geometry->si[conductor] * geometry->sab[conductor];
       end[2] = geometry->z[conductor] + 0.5 * geometry->si[conductor] * geometry->salp[conductor];
-      gap = sqrt(segment_box_distance_squared(start, end, cell)) - geometry->bi[conductor];
+      gap = sqrt(segment_box_distance_squared(start, end, &envelope)) - geometry->bi[conductor];
       if(gap < 0.0)
         gap = 0.0;
       required = fmax(cell_longest, geometry->si[conductor]);
@@ -250,6 +270,7 @@ static int evaluate_clearance(const data_t *geometry,
         worst_margin = gap - required;
         worst_gap = gap;
         worst_required = required;
+        worst_box=box_index+1;worst_conductor=conductor+1;worst_is_patch=0;
       }
       if(gap < mesh->minimum_conductor_gap)
       {
@@ -262,7 +283,7 @@ static int evaluate_clearance(const data_t *geometry,
       double point[3] = {geometry->px[conductor], geometry->py[conductor],
                          geometry->pz[conductor]};
       double patch_radius = sqrt(geometry->pbi[conductor] / PI);
-      double gap = sqrt(point_box_distance_squared(point, cell)) - patch_radius;
+      double gap = sqrt(point_box_distance_squared(point, &envelope)) - patch_radius;
       double required = fmax(cell_longest, sqrt(geometry->pbi[conductor]));
       if(gap < 0.0)
         gap = 0.0;
@@ -271,6 +292,7 @@ static int evaluate_clearance(const data_t *geometry,
         worst_margin = gap - required;
         worst_gap = gap;
         worst_required = required;
+        worst_box=box_index+1;worst_conductor=conductor+1;worst_is_patch=1;
       }
       if(gap < mesh->minimum_conductor_gap)
       {
@@ -282,7 +304,8 @@ static int evaluate_clearance(const data_t *geometry,
   if(worst_margin < -MESH_TOLERANCE)
   {
     char value[128];
-    snprintf(value, sizeof(value), "measured=%.9g required=%.9g",
+    snprintf(value, sizeof(value), "box=%zu %s=%d measured=%.9g required=%.9g",
+             worst_box,worst_is_patch?"patch":"wire",worst_conductor,
              worst_gap, worst_required);
     mesh_diagnostic(diagnostic, model, 0, "CLEARANCE", value,
                     "dielectric-to-conductor clearance is insufficient");
@@ -296,6 +319,57 @@ static int compare_doubles(const void *left, const void *right)
   double a = *(const double *)left;
   double b = *(const double *)right;
   return (a > b) - (a < b);
+}
+
+int dielectric_validate_observations(const dielectric_model *model,
+    const dielectric_mesh_result *mesh, dielectric_diagnostic *diagnostic)
+{
+  int ix,iy,iz;
+  if(fpat.near == -1) return 1;
+  if(fpat.nrx<=0 || fpat.nry<=0 || fpat.nrz<=0)
+  {
+    mesh_diagnostic(diagnostic,model,0,"NE/NH","counts",
+        "near-field counts must be positive");
+    return 0;
+  }
+  for(iz=0;iz<fpat.nrz;++iz) for(iy=0;iy<fpat.nry;++iy) for(ix=0;ix<fpat.nrx;++ix)
+  {
+    double point[3]={fpat.xnr+ix*fpat.dxnr,fpat.ynr+iy*fpat.dynr,
+                     fpat.znr+iz*fpat.dznr};
+    size_t box_index;
+    if(fpat.near!=0)
+    {
+      double r=point[0],phi=point[1]*PI/180.0,theta=point[2]*PI/180.0;
+      point[0]=r*sin(theta)*cos(phi);point[1]=r*sin(theta)*sin(phi);point[2]=r*cos(theta);
+    }
+    for(box_index=0;box_index<mesh->box_count;++box_index)
+    {
+      const dielectric_box_mesh *bm=&mesh->boxes[box_index];
+      const dielectric_box *box=&model->boxes[box_index];
+      dielectric_cell envelope;
+      double gap,longest;
+      if(!bm->cell_count) continue;
+      memset(&envelope,0,sizeof(envelope));
+      envelope.center[0]=.5*(box->minimum[0]+box->maximum[0]);
+      envelope.center[1]=.5*(box->minimum[1]+box->maximum[1]);
+      envelope.center[2]=.5*(box->minimum[2]+box->maximum[2]);
+      envelope.size[0]=box->maximum[0]-box->minimum[0];
+      envelope.size[1]=box->maximum[1]-box->minimum[1];
+      envelope.size[2]=box->maximum[2]-box->minimum[2];
+      gap=sqrt(point_box_distance_squared(point,&envelope));
+      longest=fmax(mesh->cells[bm->cell_offset].size[0],
+          fmax(mesh->cells[bm->cell_offset].size[1],mesh->cells[bm->cell_offset].size[2]));
+      if(!isfinite(gap)||gap+MESH_TOLERANCE<longest)
+      {
+        char value[128];
+        snprintf(value,sizeof(value),"box=%zu measured=%.9g required=%.9g",box_index+1,gap,longest);
+        mesh_diagnostic(diagnostic,model,0,"NE/NH",value,
+            "near-field observation clearance is insufficient");
+        return 0;
+      }
+    }
+  }
+  return 1;
 }
 
 void dielectric_mesh_init(dielectric_mesh_result *mesh)
@@ -538,6 +612,7 @@ int dielectric_mesh_build(const dielectric_model *model, double frequency_mhz,
         {
           dielectric_cell *cell = &candidate.cells[cell_index++];
           double longest, shortest;
+          cell->box_id = box_index + 1;
           cell->region_id = box_mesh->region_id;
           cell->material_id = box_mesh->material_id;
           cell->size[0] = edge[0];

@@ -5,6 +5,7 @@
 #include "vie_halfspace.h"
 #include "vie_iterative.h"
 #include "dielectric_fft.h"
+#include "result_json.h"
 
 #include <complex.h>
 #include <float.h>
@@ -381,6 +382,9 @@ int dielectric_print_near_fields(const dielectric_mesh_result *mesh,
                   "\n  X(M) Y(M) Z(M)    FX(RE,IM) FY(RE,IM) FZ(RE,IM)",
           fpat.nfeh ? "MAGNETIC" : "ELECTRIC", fpat.nfeh ? "A/M" : "V/M");
   if(fpat.nrx <= 0 || fpat.nry <= 0 || fpat.nrz <= 0) return 0;
+  result_json_near_begin((size_t)result_json_current_request(),
+      fpat.nfeh ? "H" : "E", result_json_current_excitation_kind(),
+      fpat.nfeh ? "A/m" : "V/m");
   for(iz = 0; iz < fpat.nrz; ++iz)
     for(iy = 0; iy < fpat.nry; ++iy)
       for(ix = 0; ix < fpat.nrx; ++ix)
@@ -452,6 +456,7 @@ int dielectric_print_near_fields(const dielectric_mesh_result *mesh,
         fprintf(stream, "\n %19.12E %19.12E %19.12E", point[0], point[1], point[2]);
         for(p = 0; p < 3; ++p)
           fprintf(stream, " %19.12E %19.12E", creal(field[p]), cimag(field[p]));
+        result_json_near_sample(point,field,1);
       }
   return 1;
 }
@@ -526,11 +531,14 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   double frequency_hz = frequency_mhz*1.0e6;
   double omega = 2.0*DW_PI*frequency_hz, k0 = omega/DW_C0;
   double relative_residual = 0.0, rhs_norm = 0.0;
+  clock_t started = clock();
+  vie_gmres_report report;
   double wire_to_volume_norm = 0.0, patch_to_volume_norm = 0.0;
   double volume_to_wire_norm = 0.0, volume_to_patch_norm = 0.0;
   int restored = 0, geometry_scaled = 0;
   dielectric_fft_system *accelerated = NULL;
   vie_kernel_options kernel_options;
+  memset(&report,0,sizeof(report));
   if(!dielectric_ground_validate(model,mesh,iterative,wave,pattern,diagnostic))
     return 0;
   if(gnd.ksymp != 1)
@@ -827,7 +835,6 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   memcpy(rhs0, rhs, total*sizeof(*rhs));
   if(iterative)
   {
-    vie_gmres_report report;
     memset(rhs, 0, total*sizeof(*rhs));
     int converged;
     if(accelerated) {
@@ -866,6 +873,20 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   }
   relative_residual = sqrt(relative_residual/fmax(rhs_norm, DBL_MIN));
   }
+  {
+    result_solver solver;
+    memset(&solver,0,sizeof(solver));
+    solver.requested=iterative==2?"fft":(iterative?"gmres":"dense");
+    solver.used=solver.requested;solver.iterative_fields_defined=1;
+    solver.relative_tolerance=dielectric_gmres_settings.relative_tolerance;
+    solver.maximum_iterations=dielectric_gmres_settings.maximum_iterations;
+    solver.iterations=iterative?report.iterations:0;
+    solver.reported_residual=relative_residual;solver.true_residual=relative_residual;
+    solver.converged=1;
+    solver.accounted_storage_bytes=accelerated?dielectric_fft_storage(accelerated):total*total*sizeof(complex double);
+    solver.elapsed_seconds=(double)(clock()-started)/CLOCKS_PER_SEC;
+    result_json_set_solver(&solver);result_json_add_material_evaluations(model,frequency_mhz);
+  }
   memcpy(volume_current, rhs+conductor_unknowns, nv*sizeof(*volume_current));
   memcpy(conductor_current, rhs, conductor_unknowns*sizeof(*conductor_current));
   cabc(conductor_current);
@@ -894,6 +915,10 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
     fprintf(stream, "\n %4zu %3d %10.4E %10.4E %10.4E  %19.12E %19.12E",
             row+1, data.itag[row], x[row], y[row], z[row],
             creal(current), cimag(current));
+    {
+      double center[3]={x[row],y[row],z[row]};
+      result_json_add_wire(data.itag[row],row+1,center,length[row],current);
+    }
   }
   fprintf(stream, "\n\n  COUPLED ANTENNA INPUT PARAMETERS"
                   "\n  TAG SEG       VOLTAGE(RE,IM) V          CURRENT(RE,IM) A          IMPEDANCE(RE,IM) OHM");
@@ -906,6 +931,8 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
     fprintf(stream, "\n %4d %3zu  %19.12E %19.12E  %19.12E %19.12E  %19.12E %19.12E",
             data.itag[source], source+1, creal(voltage), cimag(voltage),
             creal(current), cimag(current), creal(impedance), cimag(impedance));
+    result_json_add_feed(row,data.itag[source],source+1,voltage,current,
+        impedance,1,0.5*creal(voltage*conj(current)));
   }
   if(np != 0)
   {
@@ -918,16 +945,27 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
               row+1, creal(conductor_current[offset]), cimag(conductor_current[offset]),
               creal(conductor_current[offset+1]), cimag(conductor_current[offset+1]),
               creal(conductor_current[offset+2]), cimag(conductor_current[offset+2]));
+      {
+        double center[3]={px[row],py[row],pz[row]};
+        double t1[3]={data.t1x[row],data.t1y[row],data.t1z[row]};
+        double t2[3]={data.t2x[row],data.t2y[row],data.t2z[row]};
+        result_json_add_patch(row+1,center,parea[row],t1,t2,conductor_current+offset);
+      }
     }
   }
   fprintf(stream, "\n\n  COUPLED VOLUME POLARIZATION CURRENTS (A/M^2)"
                   "\n  CELL REGION MATERIAL          JX(RE,IM)                 JY(RE,IM)                 JZ(RE,IM)");
   for(cell = 0; cell < nc; ++cell)
+  {
     fprintf(stream, "\n %5zu %6d %8d  %19.12E %19.12E  %19.12E %19.12E  %19.12E %19.12E",
             cell+1, mesh->cells[cell].region_id, mesh->cells[cell].material_id,
             creal(volume_current[3*cell]), cimag(volume_current[3*cell]),
             creal(volume_current[3*cell+1]), cimag(volume_current[3*cell+1]),
             creal(volume_current[3*cell+2]), cimag(volume_current[3*cell+2]));
+    result_json_add_volume(cell+1,mesh->cells[cell].box_id,
+        mesh->cells[cell].region_id,mesh->cells[cell].material_id,
+        mesh->cells[cell].center,mesh->cells[cell].size,volume_current+3*cell);
+  }
 
   if(pattern != NULL && pattern->near_enabled &&
      !dielectric_print_near_fields(mesh, volume_current, k0, 1, stream))
@@ -961,8 +999,18 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
                      "\n  GROUND FLUX QUADRATURE CHANGE (W): %19.12E",
               accepted,radiated,ground_power,fabs(accepted-radiated-ground_power-absorbed)/fmax(fabs(accepted),DBL_MIN),
               fabs(radiated-coarse)/fmax(radiated,DBL_MIN),ground_delta);
+      {
+        result_power power;double defect=fabs(accepted-radiated-ground_power-absorbed);
+        memset(&power,0,sizeof(power));power.basis="driven-accepted-power";power.accepted_defined=1;
+        power.air_radiated_defined=power.lower_flux_defined=power.dielectric_absorbed_defined=power.defect_defined=1;
+        power.accepted_w=accepted;power.air_radiated_w=radiated;power.lower_flux_w=ground_power;
+        power.dielectric_absorbed_w=absorbed;power.defect_w=defect;
+        power.defect_relative=defect/fmax(fabs(accepted),DBL_MIN);power.theta_count=3896;power.phi_count=1;
+        result_json_set_power(&power);
+      }
     }
     else
+    {
     fprintf(stream, "\n\n  COUPLED DIELECTRIC POWER (W)"
                     "\n  ACCEPTED POWER: %19.12E"
                     "\n  RADIATED POWER: %19.12E"
@@ -970,6 +1018,16 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
                     "\n  ANGULAR QUADRATURE CHANGE: %19.12E",
             accepted, radiated, fabs(accepted-radiated-absorbed)/fmax(fabs(accepted), DBL_MIN),
             fabs(radiated-coarse)/fmax(radiated, DBL_MIN));
+      {
+        result_power power;double defect=fabs(accepted-radiated-absorbed);
+        memset(&power,0,sizeof(power));power.basis="driven-accepted-power";power.accepted_defined=1;
+        power.air_radiated_defined=power.dielectric_absorbed_defined=power.defect_defined=1;
+        power.accepted_w=accepted;power.air_radiated_w=radiated;power.dielectric_absorbed_w=absorbed;
+        if(gnd.ksymp!=1&&gnd.iperf==1){power.lower_flux_defined=1;power.lower_flux_w=0.0;}
+        power.defect_w=defect;power.defect_relative=defect/fmax(fabs(accepted),DBL_MIN);
+        power.theta_count=3896;power.phi_count=1;result_json_set_power(&power);
+      }
+    }
   }
   if(wave!=NULL && (gnd.ksymp==1 || gnd.iperf==1))
   {
@@ -984,6 +1042,15 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
             extinction,gnd.ksymp==1 ? "TOTAL SCATTERED POWER":"UPPER-HEMISPHERE SCATTERED POWER",
             radiated,fabs(extinction-radiated-absorbed)/fmax(fabs(extinction),DBL_MIN),
             fabs(radiated-coarse)/fmax(radiated,DBL_MIN));
+    {
+      result_power power;double defect=fabs(extinction-radiated-absorbed);
+      memset(&power,0,sizeof(power));power.basis="plane-wave-scattered-balance";
+      power.air_radiated_defined=power.dielectric_absorbed_defined=power.defect_defined=1;
+      power.air_radiated_w=radiated;power.dielectric_absorbed_w=absorbed;
+      if(gnd.ksymp!=1&&gnd.iperf==1){power.lower_flux_defined=1;power.lower_flux_w=0.0;}
+      power.defect_w=defect;power.defect_relative=defect/fmax(fabs(extinction),DBL_MIN);
+      power.theta_count=3896;power.phi_count=1;result_json_set_power(&power);
+    }
   }
   if(wave!=NULL && gnd.ksymp!=1 && gnd.iperf==2)
   {
@@ -998,6 +1065,14 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
                    "\n  RELATIVE POWER DEFECT: %19.12E"
                    "\n  GROUND FLUX QUADRATURE CHANGE (W): %19.12E",
             extinction,radiated,ground_power,fabs(extinction-radiated-ground_power-absorbed)/fmax(fabs(extinction),DBL_MIN),ground_delta);
+    {
+      result_power power;double defect=fabs(extinction-radiated-ground_power-absorbed);
+      memset(&power,0,sizeof(power));power.basis="plane-wave-scattered-balance";
+      power.air_radiated_defined=power.lower_flux_defined=power.dielectric_absorbed_defined=power.defect_defined=1;
+      power.air_radiated_w=radiated;power.lower_flux_w=ground_power;power.dielectric_absorbed_w=absorbed;
+      power.defect_w=defect;power.defect_relative=defect/fmax(fabs(extinction),DBL_MIN);
+      power.theta_count=3896;power.phi_count=1;result_json_set_power(&power);
+    }
   }
   } /* dielectric absorption in each power balance */
   if(pattern != NULL && pattern->enabled)
@@ -1005,6 +1080,8 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
     size_t it, ip;
     fprintf(stream, "\n\n  COUPLED SCATTERED FAR FIELD (R TIMES E, V)"
                     "\n  THETA      PHI          ETHETA(RE,IM)              EPHI(RE,IM)");
+    result_json_far_begin((size_t)result_json_current_request(),
+        wave ? "plane-wave-scattered" : "driven-total");
     for(ip = 0; ip < pattern->phi_count; ++ip)
       for(it = 0; it < pattern->theta_count; ++it)
       {
@@ -1015,6 +1092,7 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
                      &et, &ep);
         fprintf(stream, "\n %8.3f %8.3f %19.12E %19.12E %19.12E %19.12E",
                 td, pd, creal(et), cimag(et), creal(ep), cimag(ep));
+        result_json_far_sample(td,pd,et,ep);
       }
   }
 

@@ -25,6 +25,7 @@
 
 #include "nec2c.h"
 #include "shared.h"
+#include "result_json.h"
 
 /*-----------------------------------------------------------------------*/
 
@@ -557,6 +558,10 @@ void rdpat( void )
   double gnmn, gnv, gnh, gtot, tmp3, tmp4, da, tmp5, tmp6;
   complex double  eth, eph, erd;
 
+  if(gnd.ifar == 0)
+    result_json_far_begin((size_t)result_json_current_request(),
+        fpat.ixtyp >= 1 && fpat.ixtyp <= 3 ? "plane-wave-total" : "driven-total");
+
   /* Allocate memory to gain buffer */
   if( fpat.inor > 0 )
   {
@@ -720,12 +725,14 @@ void rdpat( void )
 		erda= cang( erd);
 	  }
 
-	  ethm2= creal( eth* conj( eth));
+		  ethm2= creal( eth* conj( eth));
 	  ethm= sqrt( ethm2);
 	  etha= cang( eth);
 	  ephm2= creal( eph* conj( eph));
 	  ephm= sqrt( ephm2);
-	  epha= cang( eph);
+		  epha= cang( eph);
+		  if(gnd.ifar == 0)
+			result_json_far_sample(thet, phi, eth*data.wlam, eph*data.wlam);
 
 	  /* elliptical polarization calc. */
 	  if( gnd.ifar != 1)
@@ -1021,4 +1028,3 @@ void rdpat( void )
 }
 
 /*-----------------------------------------------------------------------*/
-

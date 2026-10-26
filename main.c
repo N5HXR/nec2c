@@ -31,8 +31,10 @@
 #include "shared.h"
 #include "dielectric.h"
 #include "dielectric_fft.h"
+#include "result_json.h"
 
 #include <ctype.h>
+#include <getopt.h>
 
 #ifndef _WIN32
 /* signal handler */
@@ -64,9 +66,21 @@ static int run_dielectric_frequencies(const dielectric_model *model,
   double frequency = first_mhz;
   for(index = 0; index < frequency_count; ++index)
   {
+    result_json_execution_begin(frequency, "plane-wave", wave);
     if(!dielectric_solve_plane_wave(model, mesh, frequency, iterative, wave, pattern,
                                     stream, diagnostic))
+    {
+      result_json_execution_end(0);
       return 0;
+    }
+    if(!result_json_execution_end(1))
+    {
+      memset(diagnostic,0,sizeof(*diagnostic));
+      snprintf(diagnostic->resource,sizeof(diagnostic->resource),"%s",model->resource_path);
+      snprintf(diagnostic->record,sizeof(diagnostic->record),"RESULT");
+      snprintf(diagnostic->message,sizeof(diagnostic->message),"non-finite dielectric result");
+      return 0;
+    }
     if(frequency_mode == 1)
       frequency *= step;
     else
@@ -85,9 +99,22 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
   double frequency = first_mhz;
   for(index = 0; index < frequency_count; ++index)
   {
+    result_json_execution_begin(frequency,
+        wave ? "plane-wave" : "driven-voltage", wave);
     if(!dielectric_solve_conductor_coupled(model, mesh, frequency, rkh,
                                            extended_kernel, iterative, wave, pattern, stream, diagnostic))
+    {
+      result_json_execution_end(0);
       return 0;
+    }
+    if(!result_json_execution_end(1))
+    {
+      memset(diagnostic,0,sizeof(*diagnostic));
+      snprintf(diagnostic->resource,sizeof(diagnostic->resource),"%s",model->resource_path);
+      snprintf(diagnostic->record,sizeof(diagnostic->record),"RESULT");
+      snprintf(diagnostic->message,sizeof(diagnostic->message),"non-finite dielectric result");
+      return 0;
+    }
     if(frequency_mode == 1)
       frequency *= step;
     else
@@ -121,6 +148,46 @@ static int dielectric_mode_supported(int excitation_seen, int plane_wave_seen,
   return 0;
 }
 
+static int validate_dielectric_preflight(const dielectric_model *model,
+    const dielectric_mesh_result *mesh, int solver,
+    const dielectric_plane_wave *wave,
+    const dielectric_pattern_request *pattern,
+    dielectric_diagnostic *diagnostic)
+{
+  dielectric_fft_system *fft=NULL;
+  double k0=2.0*3.14159265358979323846*mesh->frequency_mhz*1.0e6/299792458.0;
+  size_t conductors=(size_t)data.n+2*(size_t)data.m;
+  int ok;
+  if(!dielectric_ground_validate(model,mesh,solver,wave,pattern,diagnostic) ||
+     !dielectric_validate_observations(model,mesh,diagnostic))
+    return 0;
+  if(solver!=2) return 1;
+  ok=(gnd.ksymp!=1&&gnd.iperf==1 ? dielectric_fft_prepare_pec:dielectric_fft_prepare)(
+      &fft,model,mesh,conductors,k0,0,diagnostic);
+  dielectric_fft_free(fft);
+  return ok;
+}
+
+static void publish_dielectric_failure(const dielectric_model *model,
+    const dielectric_diagnostic *diagnostic, const char *status)
+{
+  result_json_dielectric_diagnostic(diagnostic,"error");
+  result_json_job_end(model);
+  result_json_finish(status);
+}
+
+static void set_mode_diagnostic(const dielectric_model *model,
+    dielectric_diagnostic *diagnostic)
+{
+  memset(diagnostic,0,sizeof(*diagnostic));
+  snprintf(diagnostic->resource,sizeof(diagnostic->resource),"%s",
+      model->resource_path?model->resource_path:"<dielectric>");
+  snprintf(diagnostic->record,sizeof(diagnostic->record),"SOLVER");
+  snprintf(diagnostic->value,sizeof(diagnostic->value),"compatibility");
+  snprintf(diagnostic->message,sizeof(diagnostic->message),
+      "requested dielectric deck, excitation, ground, or output combination is unsupported");
+}
+
 /*-------------------------------------------------------------------*/
 
 int main( int argc, char **argv )
@@ -136,6 +203,9 @@ int main( int argc, char **argv )
   int dielectric_excitation_seen, dielectric_any_excitation_seen;
   int dielectric_solved;
   int dielectric_iterative = 0;
+  int capabilities_json = 0;
+  int validate_only = 0;
+  char result_path[NEC2C_PATH_MAX * 4 + 1] = "";
 
 /* input card mnemonic list */
 #define NUM_CMNDS  21
@@ -203,7 +273,14 @@ int main( int argc, char **argv )
   }
 
   /* process command line options */
-  while( (option = getopt(argc, argv, "i:o:s:r:n:hv") ) != -1 )
+  {
+    static const struct option long_options[] = {
+      {"capabilities-json", no_argument, NULL, 1000},
+      {"result-json", required_argument, NULL, 1001},
+      {"validate-only", no_argument, NULL, 1002},
+      {NULL, 0, NULL, 0}
+    };
+  while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
   {
 	switch( option )
 	{
@@ -252,13 +329,51 @@ int main( int argc, char **argv )
 		puts( PACKAGE_STRING );
 		exit(0);
 
+      case 1000:
+        capabilities_json = 1;
+        break;
+
+      case 1001:
+        if(strlen(optarg) >= sizeof(result_path))
+        {
+          fprintf(stderr, "nec2c: result JSON path is too long\n");
+          exit(EXIT_FAILURE);
+        }
+        snprintf(result_path, sizeof(result_path), "%s", optarg);
+        break;
+
+      case 1002:
+        validate_only = 1;
+        break;
+
 	  default: /* print usage and exit */
 		usage();
 		exit(-1);
 
 	} /* end of switch( option ) */
 
-  } /* while( (option = getopt(argc, argv, "i:o:s:r:n:hv") ) != -1 ) */
+	  } /* while getopt_long */
+  }
+
+  if(capabilities_json)
+  {
+    if(result_path[0] || validate_only || infile[0] || otfile[0])
+    {
+      fprintf(stderr, "nec2c: --capabilities-json cannot be combined with deck options\n");
+      exit(EXIT_FAILURE);
+    }
+    exit(result_json_write_capabilities(stdout) ? EXIT_SUCCESS : EXIT_FAILURE);
+  }
+  if(infile[0] == '\0')
+  {
+    usage();
+    exit(EXIT_FAILURE);
+  }
+  if(validate_only && result_path[0] == '\0')
+  {
+    fprintf(stderr, "nec2c: --validate-only requires --result-json FILE\n");
+    exit(EXIT_FAILURE);
+  }
 
   if( (infile[0] == '/') || (infile[0] == '\\') ||
 	  (isalpha((unsigned char)infile[0]) && (infile[1] == ':')) )
@@ -273,6 +388,16 @@ int main( int argc, char **argv )
 	strcat( deck_path, infile );
   }
 
+  if(result_path[0])
+  {
+    if(!result_json_open(result_path, deck_path))
+    {
+      fprintf(stderr, "nec2c: cannot create result JSON destination: %s\n", result_path);
+      exit(EXIT_FAILURE);
+    }
+    result_json_set_validation_only(validate_only);
+  }
+
   /*** open input file ***/
   if( (input_fp = fopen(infile, "r")) == NULL )
   {
@@ -280,6 +405,11 @@ int main( int argc, char **argv )
 
 	strcat( mesg, infile );
 	perror( mesg );
+	if(result_json_active())
+	{
+	  result_json_diagnostic("error", "INPUT_OPEN_FAILED", "unable to open input deck", "{}");
+	  result_json_finish("validation-error");
+	}
 	exit(-1);
   }
 
@@ -303,6 +433,11 @@ int main( int argc, char **argv )
 
 	strcat( mesg, otfile );
 	perror( mesg );
+	if(result_json_active())
+	{
+	  result_json_diagnostic("error", "OUTPUT_OPEN_FAILED", "unable to open human report destination", "{}");
+	  result_json_finish("validation-error");
+	}
 	exit(-1);
   }
 
@@ -365,6 +500,7 @@ int main( int argc, char **argv )
   {
 	dielectric_mesh_free( &dielectric_mesh );
 	dielectric_model_free( &dielectric );
+	result_json_job_begin();
 	ifrtmw=0;
 	ifrtmp=0;
 	dielectric_excitation_seen=0;
@@ -562,6 +698,7 @@ int main( int argc, char **argv )
             dielectric_mesh_free(&dielectric_mesh);
             dielectric_solved=0;
           }
+          result_json_invalidate_mesh();
 
 		  continue; /* continue card input loop */
 
@@ -627,6 +764,7 @@ int main( int argc, char **argv )
 		  continue; /* continue card input loop */
 
 		case 2: /* "gn" card, ground parameters under the antenna */
+		  result_json_invalidate_ground();
 
 		  iflow=4;
 
@@ -646,6 +784,7 @@ int main( int argc, char **argv )
 		  gnd.ksymp=2;
 		  save.epsr= tmp1;
 		  save.sig= tmp2;
+		  result_json_invalidate_ground();
 
 		  if( gnd.nradl != 0)
 		  {
@@ -878,9 +1017,11 @@ int main( int argc, char **argv )
 
 		  } /* if( itmp1 == 0) */
 
+		  result_json_request_xq(itmp1);
 		  break;
 
 		case 7: /* "gd" card, ground representation */
+		  result_json_invalidate_ground();
 
 		  fpat.epsr2= tmp1;
 		  fpat.sig2= tmp2;
@@ -922,10 +1063,13 @@ int main( int argc, char **argv )
 		  fpat.rfld= tmp5;
 		  fpat.gnor= tmp6;
 		  iflow=10;
+		  result_json_request_rp(gnd.ifar,fpat.nth,fpat.nph,fpat.thets,
+		      fpat.phis,fpat.dth,fpat.dph,fpat.rfld);
 
 		  break;
 
 		case 9: /* "nx" card, do next job */
+		  result_json_job_end(&dielectric);
 		  next_job = TRUE;
 		  continue; /* continue card input loop */
 
@@ -978,6 +1122,12 @@ int main( int argc, char **argv )
 		  fpat.dynr= tmp5;
 		  fpat.dznr= tmp6;
 		  iflow=8;
+		  {
+			double start[3]={fpat.xnr,fpat.ynr,fpat.znr};
+			double step[3]={fpat.dxnr,fpat.dynr,fpat.dznr};
+			result_json_request_near(ain_num == 13 ? "NH" : "NE",fpat.near,
+			    fpat.nrx,fpat.nry,fpat.nrz,start,step);
+		  }
 
 		  if( nfrq != 1)
 			continue; /* continue card input loop */
@@ -1088,6 +1238,9 @@ int main( int argc, char **argv )
 			  &dielectric_error) )
 		  {
 			dielectric_print_diagnostic( output_fp, &dielectric_error );
+			result_json_dielectric_diagnostic(&dielectric_error, "error");
+			result_json_job_end(&dielectric);
+			result_json_finish("validation-error");
 			stop(-1);
 		  }
 		  dielectric_print_summary( output_fp, &dielectric );
@@ -1108,20 +1261,52 @@ int main( int argc, char **argv )
 		  if( dielectric.loaded && ! dielectric_mesh.built )
 		  {
 			if(!dielectric_validate_sweep(&dielectric,ifrq,nfrq,save.fmhz,delfrq,&dielectric_error))
-            { dielectric_print_diagnostic(output_fp,&dielectric_error);stop(-1); }
+	            { dielectric_print_diagnostic(output_fp,&dielectric_error);publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");stop(-1); }
             double mesh_frequency = highest_requested_frequency(
 				ifrq, nfrq, save.fmhz, delfrq);
 			if( ! dielectric_mesh_build(&dielectric, mesh_frequency, &data,
 				&dielectric_mesh, &dielectric_error) )
 			{
-			  dielectric_print_diagnostic( output_fp, &dielectric_error );
-			  stop(-1);
+				  dielectric_print_diagnostic( output_fp, &dielectric_error );
+				  publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");
+				  stop(-1);
 			}
 			dielectric_print_mesh_report( output_fp, &dielectric_mesh );
+			result_json_add_mesh_state(&dielectric, &dielectric_mesh,
+			    ifrq, nfrq, save.fmhz, delfrq);
+		  }
+		  if(result_json_validation_only())
+		  {
+			dielectric_pattern_request validation_request;
+			memset(&validation_request,0,sizeof(validation_request));
+			validation_request.near_enabled=(fpat.near!=-1);
+			if(dielectric.loaded && (data.n!=0||data.m!=0) &&
+			   (dielectric_excitation_seen||dielectric_any_excitation_seen) &&
+			   !dielectric_mode_supported(dielectric_any_excitation_seen,
+			       dielectric_excitation_seen,ain_num,output_fp))
+			{
+			  set_mode_diagnostic(&dielectric,&dielectric_error);
+			  publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");
+			  stop(-1);
+			}
+			if(dielectric.loaded && !validate_dielectric_preflight(&dielectric,
+			    &dielectric_mesh,dielectric_iterative,
+			    dielectric_excitation_seen?&dielectric_wave:NULL,
+			    &validation_request,&dielectric_error))
+			{
+			  dielectric_print_diagnostic(output_fp,&dielectric_error);
+			  result_json_dielectric_diagnostic(&dielectric_error,"error");
+			  result_json_job_end(&dielectric);result_json_finish("validation-error");
+			  stop(-1);
+			}
+			result_json_job_end(&dielectric);
+			if(!result_json_finish("ok")) stop(-1);
+			stop(0);
 		  }
 		  if(dielectric.loaded && !dielectric_solved &&
 		     (dielectric_excitation_seen || dielectric_any_excitation_seen))
 		  {
+			result_json_request("EN", "{}");
             dielectric_pattern_request deferred_request;
             memset(&deferred_request, 0, sizeof(deferred_request));
             deferred_request.near_enabled = (fpat.near != -1);
@@ -1135,8 +1320,9 @@ int main( int argc, char **argv )
 			          dielectric_excitation_seen ? &dielectric_wave : NULL, &deferred_request, output_fp,
 			          &dielectric_error))
 			  {
-				dielectric_print_diagnostic(output_fp, &dielectric_error);
-				stop(-1);
+					dielectric_print_diagnostic(output_fp, &dielectric_error);
+					publish_dielectric_failure(&dielectric,&dielectric_error,"solver-error");
+					stop(-1);
 			  }
 			}
 			else
@@ -1151,8 +1337,9 @@ int main( int argc, char **argv )
 			          ifrq, nfrq, save.fmhz, delfrq, dielectric_iterative, &dielectric_wave, &deferred_request,
 			          output_fp, &dielectric_error))
 			  {
-				dielectric_print_diagnostic(output_fp, &dielectric_error);
-				stop(-1);
+					dielectric_print_diagnostic(output_fp, &dielectric_error);
+					publish_dielectric_failure(&dielectric,&dielectric_error,"solver-error");
+					stop(-1);
 			  }
 			}
 			dielectric_solved=1;
@@ -1163,6 +1350,8 @@ int main( int argc, char **argv )
 		  secnds( &tmp1 );
 		  tmp1 -= extim;
 		  fprintf( output_fp, "\n\n  TOTAL RUN TIME: %d msec", (int)tmp1 );
+		  result_json_job_end(&dielectric);
+		  if(!result_json_finish("ok")) stop(-1);
 		  stop(0);
 
 	  } /* switch( ain_num ) */
@@ -1172,19 +1361,22 @@ int main( int argc, char **argv )
 		dielectric_pattern_request request;
 		if( ! dielectric_mesh.built )
 		{
-		  if(!dielectric_validate_sweep(&dielectric,ifrq,nfrq,save.fmhz,delfrq,&dielectric_error))
-            { dielectric_print_diagnostic(output_fp,&dielectric_error);stop(-1); }
+			  if(!dielectric_validate_sweep(&dielectric,ifrq,nfrq,save.fmhz,delfrq,&dielectric_error))
+	            { dielectric_print_diagnostic(output_fp,&dielectric_error);publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");stop(-1); }
             double mesh_frequency = highest_requested_frequency(
 			  ifrq, nfrq, save.fmhz, delfrq);
 		  if( ! dielectric_mesh_build(&dielectric, mesh_frequency, &data,
 			  &dielectric_mesh, &dielectric_error) )
 		  {
-			dielectric_print_diagnostic( output_fp, &dielectric_error );
-			stop(-1);
+				dielectric_print_diagnostic( output_fp, &dielectric_error );
+				publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");
+				stop(-1);
 		  }
-		  dielectric_print_mesh_report( output_fp, &dielectric_mesh );
-		}
-        memset(&request, 0, sizeof(request));
+			  dielectric_print_mesh_report( output_fp, &dielectric_mesh );
+			  result_json_add_mesh_state(&dielectric, &dielectric_mesh,
+			      ifrq, nfrq, save.fmhz, delfrq);
+			}
+	        memset(&request, 0, sizeof(request));
         request.near_enabled = (fpat.near != -1);
         if(ain_num == 8)
         {
@@ -1194,8 +1386,29 @@ int main( int argc, char **argv )
           request.theta_start_degrees = fpat.thets;
           request.phi_start_degrees = fpat.phis;
           request.theta_step_degrees = fpat.dth;
-          request.phi_step_degrees = fpat.dph;
-        }
+	          request.phi_step_degrees = fpat.dph;
+	        }
+	        if(result_json_validation_only())
+	        {
+	          if((data.n!=0||data.m!=0) &&
+	             !dielectric_mode_supported(dielectric_any_excitation_seen,
+	                 dielectric_excitation_seen,ain_num,output_fp))
+	          {
+	            set_mode_diagnostic(&dielectric,&dielectric_error);
+	            publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");
+	            stop(-1);
+	          }
+	          if(!validate_dielectric_preflight(&dielectric,&dielectric_mesh,
+	              dielectric_iterative,dielectric_excitation_seen?&dielectric_wave:NULL,
+	              &request,&dielectric_error))
+	          {
+	            dielectric_print_diagnostic(output_fp,&dielectric_error);
+	            result_json_dielectric_diagnostic(&dielectric_error,"error");
+	            result_json_job_end(&dielectric);result_json_finish("validation-error");
+	            stop(-1);
+	          }
+	          continue;
+	        }
 		if(data.n != 0 || data.m != 0)
 		{
 		  if(!dielectric_mode_supported(dielectric_any_excitation_seen,
@@ -1206,8 +1419,9 @@ int main( int argc, char **argv )
 		          dielectric_excitation_seen ? &dielectric_wave : NULL, &request, output_fp,
 		          &dielectric_error))
 		  {
-			dielectric_print_diagnostic(output_fp, &dielectric_error);
-			stop(-1);
+				dielectric_print_diagnostic(output_fp, &dielectric_error);
+				publish_dielectric_failure(&dielectric,&dielectric_error,"solver-error");
+				stop(-1);
 		  }
 		  dielectric_solved=1;
             fpat.near=-1;
@@ -1223,15 +1437,23 @@ int main( int argc, char **argv )
 		        ifrq, nfrq, save.fmhz, delfrq, dielectric_iterative, &dielectric_wave, &request,
 		        output_fp, &dielectric_error))
 		{
-		  dielectric_print_diagnostic(output_fp, &dielectric_error);
-		  stop(-1);
+			  dielectric_print_diagnostic(output_fp, &dielectric_error);
+			  publish_dielectric_failure(&dielectric,&dielectric_error,"solver-error");
+			  stop(-1);
 		}
 		dielectric_solved=1;
             fpat.near=-1;
-		continue;
-	  }
+			continue;
+		  }
 
-	  /**************************************
+		  if(result_json_validation_only())
+		    continue;
+		  if(ain_num == 8 && gnd.ifar != 0)
+		    result_json_omit(result_json_current_request(), "RP",
+		        "UNSUPPORTED_RP_MODE",
+		        "only RP mode 0 is serialized in result schema version 1");
+
+		  /**************************************
 	   *** end of the main input section. ***
 	   *** beginning of frequency do loop ***
 	   **************************************/
@@ -1639,8 +1861,24 @@ int main( int argc, char **argv )
 			  if( (inc > 1) && (iptflg > 0) )
 				netcx.nprint=1;
 
+			  if(fpat.ixtyp >= 1 && fpat.ixtyp <= 3)
+			  {
+				dielectric_plane_wave classic_wave = dielectric_wave;
+				classic_wave.theta_degrees=xpr1;classic_wave.phi_degrees=xpr2;
+				classic_wave.eta_degrees=xpr3;classic_wave.axial_ratio=fpat.xpr6;
+				result_json_execution_begin(save.fmhz,"plane-wave",&classic_wave);
+			  }
+			  else
+				result_json_execution_begin(save.fmhz,"driven-voltage",NULL);
 			  netwk( cm, save.ip, crnt.cur );
 			  netcx.ntsol=1;
+			  {
+				result_solver solver;
+				memset(&solver,0,sizeof(solver));solver.requested="legacy-nec-direct";
+				solver.used="legacy-nec-direct";solver.iterative_fields_defined=0;
+				solver.converged=1;solver.elapsed_seconds=0.0;
+				result_json_set_solver(&solver);
+			  }
 
 			  if( iped != 0)
 			  {
@@ -1706,6 +1944,11 @@ int main( int argc, char **argv )
 				for( i = 0; i < data.n; i++ )
 				{
 				  curi= crnt.cur[i]* data.wlam;
+				  {
+					double center[3]={data.x[i]*data.wlam,data.y[i]*data.wlam,data.z[i]*data.wlam};
+					result_json_add_wire(data.itag[i],(size_t)i+1,center,
+					    data.si[i]*data.wlam,curi);
+				  }
 				  cmag= cabs( curi);
 				  ph= cang( curi);
 
@@ -1769,6 +2012,17 @@ int main( int argc, char **argv )
 				  }
 
 				} /* for( i = 0; i < n; i++ ) */
+
+				if(result_json_active())
+				  for(i=0;i<vsorc.nsant;i++)
+				  {
+					size_t source=(size_t)(vsorc.isant[i]-1);
+					complex double voltage=vsorc.vsant[i];
+					complex double current=crnt.cur[source]*data.wlam;
+					complex double impedance=cabs(current)>DBL_MIN?voltage/current:NAN+I*NAN;
+					result_json_add_feed((size_t)i,data.itag[source],source+1,
+					    voltage,current,impedance,1,0.5*creal(voltage*conj(current)));
+				  }
 
 				if( iptflq != -1)
 				{
@@ -1855,6 +2109,13 @@ int main( int argc, char **argv )
 					  i+1, data.px[itmp1], data.py[itmp1], data.pz[itmp1],
 					  ethm, etha, ephm, epha, creal(ex), cimag(ex),
 					  creal(ey), cimag(ey), creal(ez), cimag(ez) );
+				  {
+					double center[3]={data.px[itmp1]*data.wlam,data.py[itmp1]*data.wlam,data.pz[itmp1]*data.wlam};
+					double t1[3]={data.t1x[itmp1],data.t1y[itmp1],data.t1z[itmp1]};
+					double t2[3]={data.t2x[itmp1],data.t2y[itmp1],data.t2z[itmp1]};
+					complex double surface[3]={ex,ey,ez};
+					result_json_add_patch((size_t)i+1,center,data.pbi[itmp1]*data.wlam*data.wlam,t1,t2,surface);
+				  }
 
 				  if( plot.iplp1 != 1)
 					continue;
@@ -1894,6 +2155,14 @@ int main( int argc, char **argv )
 					"                               "
 					"EFFICIENCY    = %7.2f Percent",
 					netcx.pin, tmp1, fpat.ploss, netcx.pnls, tmp2 );
+				{
+				  result_power power;memset(&power,0,sizeof(power));power.basis="driven-accepted-power";
+				  power.accepted_defined=power.air_radiated_defined=1;
+				  power.structure_loss_defined=power.network_loss_defined=1;
+				  power.accepted_w=netcx.pin;power.air_radiated_w=tmp1;
+				  power.structure_loss_w=fpat.ploss;power.network_loss_w=netcx.pnls;
+				  result_json_set_power(&power);
+				}
 
 			  } /* if( (fpat.ixtyp == 0) || (fpat.ixtyp == 5) ) */
 
@@ -1954,6 +2223,7 @@ int main( int argc, char **argv )
 
 				if( nfrq == 1)
 				{
+				  result_json_execution_end(1);
 				  fprintf( output_fp, "\n\n\n" );
 				  jmp_iloop = TRUE;
 				  break; /* continue card input loop */
@@ -1971,6 +2241,7 @@ int main( int argc, char **argv )
 				fpat.pnlr= netcx.pnls;
 				rdpat();
 			  }
+			  result_json_execution_end(1);
 
 			  if( (fpat.ixtyp == 0) || (fpat.ixtyp >= 4) )
 			  {
@@ -2274,6 +2545,7 @@ void prnt( int in1, int in2, int in3, double fl1, double fl2,
 #ifndef _WIN32
 static void sig_handler( int signal )
 {
+  result_json_abandon();
   fprintf( stderr, "\n" );
   switch( signal )
   {
@@ -2303,4 +2575,3 @@ static void sig_handler( int signal )
 #endif
 
 /*------------------------------------------------------------------------*/
-

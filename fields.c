@@ -25,6 +25,7 @@
 
 #include "nec2c.h"
 #include "shared.h"
+#include "result_json.h"
 
 /*common  /tmh/ */
 static tmh_t tmh;
@@ -1314,6 +1315,10 @@ void nfpat( void )
   double zob, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, xxx;
   complex double ex, ey, ez;
 
+  result_json_near_begin((size_t)result_json_current_request(),
+      fpat.nfeh == 1 ? "H" : "E", result_json_current_excitation_kind(),
+      fpat.nfeh == 1 ? "A/m" : "V/m");
+
   if( fpat.nfeh != 1)
   {
 	fprintf( output_fp,	"\n\n\n"
@@ -1386,9 +1391,14 @@ void nfpat( void )
 		tmp5= cabs( ez);
 		tmp6= cang( ez);
 
-		fprintf( output_fp, "\n"
+			fprintf( output_fp, "\n"
 			" %9.4f %9.4f %9.4f  %11.4E %7.2f  %11.4E %7.2f  %11.4E %7.2f",
-			xob, yob, zob, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6 );
+				xob, yob, zob, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6 );
+			{
+			  double point[3] = {xob, yob, zob};
+			  complex double value[3] = {ex, ey, ez};
+			  result_json_near_sample(point, value, 1);
+			}
 
 		if( plot.iplp1 != 2)
 		  continue;
@@ -1732,4 +1742,3 @@ void unere( double xob, double yob, double zob )
 }
 
 /*-----------------------------------------------------------------------*/
-

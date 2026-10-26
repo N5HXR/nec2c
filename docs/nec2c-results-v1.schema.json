@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://n5hxr.invalid/nec2c-results-v1.schema.json",
+  "title": "NEC2C-N5HXR result document version 1",
+  "type": "object",
+  "required": ["schema", "schema_version", "producer", "input", "jobs", "diagnostics", "completion"],
+  "properties": {
+    "schema": {"const": "nec2c-results"},
+    "schema_version": {"const": 1},
+    "producer": {
+      "type": "object",
+      "required": ["program", "program_version", "dielectric_feature_revision"],
+      "properties": {
+        "program": {"const": "nec2c-n5hxr"},
+        "program_version": {"type": "string"},
+        "dielectric_feature_revision": {"const": 1},
+        "build_id": {"type": "string"}
+      }
+    },
+    "input": {
+      "type": "object",
+      "required": ["deck"],
+      "properties": {"deck": {"type": "string"}, "deck_sha256": {"type": "string"}}
+    },
+    "jobs": {"type": "array", "items": {"$ref": "#/$defs/job"}},
+    "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/diagnostic"}},
+    "completion": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {"status": {"enum": ["ok", "validation-error", "solver-error", "internal-error"]}}
+    }
+  },
+  "$defs": {
+    "complex": {
+      "type": "object",
+      "required": ["re", "im"],
+      "properties": {"re": {"type": "number"}, "im": {"type": "number"}}
+    },
+    "vector3": {
+      "type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": ["severity", "code", "message", "context"],
+      "properties": {
+        "severity": {"enum": ["warning", "error"]},
+        "code": {"type": "string"},
+        "message": {"type": "string"},
+        "context": {"type": "object"}
+      }
+    },
+    "job": {
+      "type": "object",
+      "required": ["job_index", "dielectric", "mesh_states", "ground_states", "executions", "omitted_requests"],
+      "properties": {
+        "job_index": {"type": "integer", "minimum": 0},
+        "validation": {"enum": ["classic-input-only", "dielectric-preflight"]},
+        "dielectric": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/dielectric"}]},
+        "mesh_states": {"type": "array", "items": {"$ref": "#/$defs/mesh_state"}},
+        "ground_states": {"type": "array", "items": {"$ref": "#/$defs/ground_state"}},
+        "executions": {"type": "array", "items": {"$ref": "#/$defs/execution"}},
+        "omitted_requests": {"type": "array", "items": {"$ref": "#/$defs/omission"}}
+      }
+    },
+    "dielectric": {
+      "type": "object",
+      "required": ["resource", "resource_version", "materials", "regions", "boxes"],
+      "properties": {
+        "resource": {"type": "string"},
+        "resource_version": {"enum": [1, 2, 3]},
+        "materials": {"type": "array", "items": {"type": "object"}},
+        "regions": {"type": "array", "items": {"type": "object"}},
+        "boxes": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "mesh_state": {
+      "type": "object",
+      "required": ["mesh_state_id", "realized_for", "boxes", "mesh"],
+      "properties": {
+        "mesh_state_id": {"type": "integer", "minimum": 0},
+        "realized_for": {"type": "object"},
+        "boxes": {"type": "array", "items": {"type": "object"}},
+        "mesh": {"type": "object"}
+      }
+    },
+    "ground_state": {
+      "type": "object",
+      "required": ["ground_state_id", "ground"],
+      "properties": {
+        "ground_state_id": {"type": "integer", "minimum": 0},
+        "ground": {"type": "object", "required": ["kind"]}
+      }
+    },
+    "omission": {
+      "type": "object",
+      "required": ["request_index", "kind", "code", "message"],
+      "properties": {
+        "request_index": {"type": "integer", "minimum": 0},
+        "kind": {"type": "string"},
+        "code": {"type": "string"},
+        "message": {"type": "string"}
+      }
+    },
+    "solver": {
+      "type": "object",
+      "required": ["requested", "used", "relative_tolerance", "maximum_iterations", "iterations", "reported_residual", "true_residual", "converged", "accounted_storage_bytes", "elapsed_seconds"],
+      "properties": {
+        "requested": {"enum": ["legacy-nec-direct", "dense", "gmres", "fft"]},
+        "used": {"enum": ["legacy-nec-direct", "dense", "gmres", "fft"]},
+        "relative_tolerance": {"type": ["number", "null"]},
+        "maximum_iterations": {"type": ["integer", "null"]},
+        "iterations": {"type": ["integer", "null"]},
+        "reported_residual": {"type": ["number", "null"]},
+        "true_residual": {"type": ["number", "null"]},
+        "converged": {"type": ["boolean", "null"]},
+        "accounted_storage_bytes": {"type": "integer", "minimum": 0},
+        "elapsed_seconds": {"type": ["number", "null"]}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": ["execution_index", "status", "frequency_mhz", "mesh_state_id", "ground_state_id", "excitation", "trigger", "solver"],
+      "properties": {
+        "execution_index": {"type": "integer", "minimum": 0},
+        "status": {"enum": ["ok", "failed"]},
+        "frequency_mhz": {"type": "number"},
+        "mesh_state_id": {"type": ["integer", "null"], "minimum": 0},
+        "ground_state_id": {"type": "integer", "minimum": 0},
+        "excitation": {"type": "object", "required": ["kind", "phasor_convention"]},
+        "trigger": {
+          "type": "object", "required": ["kind", "request_index", "parameters"],
+          "properties": {
+            "kind": {"enum": ["XQ", "RP", "NE", "NH", "EN"]},
+            "request_index": {"type": "integer", "minimum": 0},
+            "parameters": {"type": "object"}
+          }
+        },
+        "solver": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/solver"}]},
+        "material_evaluations": {"type": "array", "items": {"type": "object"}},
+        "feeds": {"type": "array", "items": {"type": "object"}},
+        "wire_currents": {"type": "array", "items": {"type": "object"}},
+        "patch_currents": {"$ref": "#/$defs/rows"},
+        "volume_currents": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/rows"}]},
+        "power": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/power"}]},
+        "far_fields": {"type": "array", "items": {"type": "object"}},
+        "near_fields": {"type": "array", "items": {"type": "object"}}
+      },
+      "allOf": [{
+        "if": {"properties": {"status": {"const": "ok"}}},
+        "then": {"required": ["material_evaluations", "feeds", "wire_currents", "patch_currents", "volume_currents", "power", "far_fields", "near_fields"]}
+      }]
+    },
+    "power": {
+      "type": "object",
+      "required": ["basis", "accepted_w", "air_radiated_w", "lower_halfspace_flux_w", "dielectric_absorbed_w", "structure_loss_w", "network_loss_w", "balance_defect_w", "balance_defect_relative", "angular_quadrature"],
+      "properties": {
+        "basis": {"enum": ["driven-accepted-power", "plane-wave-scattered-balance"]},
+        "accepted_w": {"type": ["number", "null"]},
+        "air_radiated_w": {"type": ["number", "null"]},
+        "lower_halfspace_flux_w": {"type": ["number", "null"]},
+        "dielectric_absorbed_w": {"type": ["number", "null"]},
+        "structure_loss_w": {"type": ["number", "null"]},
+        "network_loss_w": {"type": ["number", "null"]},
+        "balance_defect_w": {"type": ["number", "null"]},
+        "balance_defect_relative": {"type": ["number", "null"]},
+        "angular_quadrature": {
+          "type": "object", "required": ["theta_count", "phi_count"],
+          "properties": {"theta_count": {"type": "integer"}, "phi_count": {"type": "integer"}}
+        }
+      }
+    },
+    "rows": {
+      "type": "object",
+      "required": ["encoding", "columns", "rows"],
+      "properties": {
+        "encoding": {"const": "rows-v1"},
+        "units": {"type": "string"},
+        "columns": {"type": "array", "items": {"type": "string"}},
+        "rows": {"type": "array", "items": {"type": "array"}}
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@
  */
 
 #include "shared.h"
+#include "result_json.h"
 
 /*------------------------------------------------------------------------*/
 
@@ -15,6 +16,10 @@ void usage(void)
 {
   fprintf( stderr,
 	  "usage: nec2c [-i<input-file-name>] [-o<output-file-name>]"
+	  " [--result-json <file>] [--validate-only]"
+	  "\n       --capabilities-json: write machine capabilities and exit."
+	  "\n       --result-json file: atomically write result schema version 1."
+	  "\n       --validate-only: validate without solving (requires --result-json)."
 	  "\n       -s dense|gmres|fft: DF solver (default dense; FFT requires uniform cubes/material).\n       -r tolerance: GMRES relative residual target (default 1e-12).\n       -n iterations: GMRES iteration limit (default 300)."
 	  "\n       -h: print this usage information and exit."
 	  "\n       -v: print nec2c version number and exit.\n");
@@ -97,6 +102,8 @@ void secnds( double *x)
 /* Does the STOP function of fortran but with return value */
 int stop( int flag )
 {
+  if(result_json_active())
+    result_json_finish(flag == 0 ? "ok" : "internal-error");
   if( input_fp != NULL )
 	fclose( input_fp );
   if( output_fp != NULL )
@@ -225,4 +232,3 @@ void free_ptr( void **ptr )
 } /* End of void free_ptr() */
 
 /*------------------------------------------------------------------------*/
-

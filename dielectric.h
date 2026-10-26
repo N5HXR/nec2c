@@ -116,6 +116,7 @@ typedef struct
 
 typedef struct
 {
+  size_t box_id;
   int region_id;
   int material_id;
   double center[3];
@@ -210,6 +211,8 @@ int dielectric_mesh_build(const dielectric_model *model, double frequency_mhz,
                           const data_t *geometry,
                           dielectric_mesh_result *mesh,
                           dielectric_diagnostic *diagnostic);
+int dielectric_validate_observations(const dielectric_model *model,
+    const dielectric_mesh_result *mesh, dielectric_diagnostic *diagnostic);
 void dielectric_print_mesh_report(FILE *stream, const dielectric_mesh_result *mesh);
 /* Validate the supported planar-ground deck subset before any wavelength normalization. */
 int dielectric_ground_validate(const dielectric_model *model,

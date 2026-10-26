@@ -5,6 +5,7 @@
 #include "shared.h"
 #include "vie_iterative.h"
 #include "dielectric_fft.h"
+#include "result_json.h"
 
 #include <complex.h>
 #include <float.h>
@@ -225,6 +226,8 @@ static void print_pattern(const dielectric_mesh_result *mesh,
   size_t ip, it;
   if(request == NULL || !request->enabled)
     return;
+  result_json_far_begin((size_t)result_json_current_request(),
+                        "plane-wave-scattered");
   fprintf(stream, "\n\n  DIELECTRIC SCATTERED FAR FIELD (R TIMES E, V)"
                   "\n  THETA      PHI          ETHETA(RE,IM)              EPHI(RE,IM)"
                   "        BISTATIC RCS (M^2)");
@@ -246,6 +249,7 @@ static void print_pattern(const dielectric_mesh_result *mesh,
             incident_field_squared;
       fprintf(stream, "\n %8.3f %8.3f  %19.12E %19.12E  %19.12E %19.12E  %19.12E",
               td, pd, creal(at), cimag(at), creal(ap), cimag(ap), rcs);
+      result_json_far_sample(td, pd, at, ap);
     }
 }
 
@@ -264,8 +268,11 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
   complex double incident_vector[3];
   double propagation[3], frequency_hz, omega, k0, rhs_norm = 0.0, residual = 0.0;
   double pext = 0.0, psca, absorbed;
+  clock_t started = clock();
+  vie_gmres_report report;
   vie_kernel_options kernel_options;
   dielectric_fft_system *accelerated=NULL;
+  memset(&report, 0, sizeof(report));
   if(wave == NULL || stream == NULL)
   {
     solver_error(diagnostic, model, "SOLVER", "input", "missing plane wave or output stream");
@@ -284,6 +291,8 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
       "PERFECT GROUND (GN 1; DIELECTRIC Z >= 0)":"SOMMERFELD GROUND (GN 2; POSITIVE GAP)");
   if(cells == 0)
   {
+    result_solver solver;
+    result_power power;
     fprintf(stream, "\n\n  ---------- DIELECTRIC VOLUME INTEGRAL SOLUTION ----------"
                     "\n  FREQUENCY (MHZ): %12.6f"
                     "\n  VOLUME CELLS:               0"
@@ -308,6 +317,19 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
       solver_error(diagnostic, model, "OUTPUT", "NE/NH", "near-field counts must be positive");
       return 0;
     }
+    memset(&solver,0,sizeof(solver));
+    solver.requested=iterative==2?"fft":(iterative?"gmres":"dense");
+    solver.used=solver.requested;solver.iterative_fields_defined=1;
+    solver.relative_tolerance=dielectric_gmres_settings.relative_tolerance;
+    solver.maximum_iterations=dielectric_gmres_settings.maximum_iterations;
+    solver.converged=1;solver.elapsed_seconds=(double)(clock()-started)/CLOCKS_PER_SEC;
+    result_json_set_solver(&solver);
+    result_json_add_material_evaluations(model,frequency_mhz);
+    memset(&power,0,sizeof(power));power.basis="plane-wave-scattered-balance";
+    power.air_radiated_defined=power.dielectric_absorbed_defined=power.defect_defined=1;
+    power.air_radiated_w=0.0;power.dielectric_absorbed_w=0.0;
+    power.defect_w=0.0;power.defect_relative=0.0;
+    power.theta_count=974;power.phi_count=1;result_json_set_power(&power);
     return 1;
   }
   if(unknowns > SIZE_MAX/unknowns || unknowns*unknowns > SIZE_MAX/sizeof(*matrix))
@@ -397,7 +419,6 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
   memcpy(rhs_original, rhs, unknowns*sizeof(*rhs));
   if(iterative)
   {
-    vie_gmres_report report;
     memset(rhs, 0, unknowns*sizeof(*rhs));
     int converged;
     if(accelerated) {
@@ -439,6 +460,22 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
   residual = sqrt(residual / fmax(rhs_norm, DBL_MIN));
   }
 
+  {
+    result_solver solver;
+    memset(&solver,0,sizeof(solver));
+    solver.requested=iterative==2?"fft":(iterative?"gmres":"dense");
+    solver.used=solver.requested;solver.iterative_fields_defined=1;
+    solver.relative_tolerance=dielectric_gmres_settings.relative_tolerance;
+    solver.maximum_iterations=dielectric_gmres_settings.maximum_iterations;
+    solver.iterations=iterative?report.iterations:0;
+    solver.reported_residual=residual;solver.true_residual=residual;
+    solver.converged=1;
+    solver.accounted_storage_bytes=accelerated?dielectric_fft_storage(accelerated):mesh->matrix_bytes;
+    solver.elapsed_seconds=(double)(clock()-started)/CLOCKS_PER_SEC;
+    result_json_set_solver(&solver);
+    result_json_add_material_evaluations(model,frequency_mhz);
+  }
+
   fprintf(stream, "\n\n  ---------- DIELECTRIC VOLUME INTEGRAL SOLUTION ----------"
                   "\n  FREQUENCY (MHZ): %12.6f"
                   "\n  VOLUME CELLS:    %12zu"
@@ -462,6 +499,9 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
             mesh->cells[cell].center[0], mesh->cells[cell].center[1], mesh->cells[cell].center[2],
             creal(rhs[3*cell]), cimag(rhs[3*cell]), creal(rhs[3*cell+1]), cimag(rhs[3*cell+1]),
             creal(rhs[3*cell+2]), cimag(rhs[3*cell+2]));
+    result_json_add_volume(cell+1,mesh->cells[cell].box_id,
+        mesh->cells[cell].region_id,mesh->cells[cell].material_id,
+        mesh->cells[cell].center,mesh->cells[cell].size,rhs+3*cell);
   }
   fprintf(stream, "\n\n  TEST DIAGNOSTIC: CELL-AVERAGED INTERNAL ELECTRIC FIELD (V/M)"
                   "\n  CELL             EX(RE,IM)                 EY(RE,IM)                 EZ(RE,IM)");
@@ -490,8 +530,17 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
                    "\n  RELATIVE IMBALANCE: %19.12E"
                    "\n  GROUND FLUX QUADRATURE CHANGE (W): %19.12E",
             pext,psca,ground_power,fabs(pext-psca-ground_power-absorbed)/fmax(fabs(pext),DBL_MIN),ground_delta);
+    {
+      result_power power;double defect=fabs(pext-psca-ground_power-absorbed);
+      memset(&power,0,sizeof(power));power.basis="plane-wave-scattered-balance";
+      power.air_radiated_defined=power.lower_flux_defined=power.dielectric_absorbed_defined=power.defect_defined=1;
+      power.air_radiated_w=psca;power.lower_flux_w=ground_power;power.dielectric_absorbed_w=absorbed;
+      power.defect_w=defect;power.defect_relative=defect/fmax(fabs(pext),DBL_MIN);
+      power.theta_count=974;power.phi_count=1;result_json_set_power(&power);
+    }
   }
   else
+  {
   fprintf(stream, "\n\n  TOTAL ELECTRIC DIPOLE MOMENT (C M)"
                   "\n       PX(RE,IM)                 PY(RE,IM)                 PZ(RE,IM)"
                   "\n  %11.4E %11.4E  %11.4E %11.4E  %11.4E %11.4E"
@@ -503,6 +552,16 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
           creal(polarization[1]), cimag(polarization[1]),
           creal(polarization[2]), cimag(polarization[2]), pext, psca,
           fabs(pext-psca-absorbed)/fmax(fmax(fabs(pext), fabs(psca)), DBL_MIN));
+    {
+      result_power power;double defect=fabs(pext-psca-absorbed);
+      memset(&power,0,sizeof(power));power.basis="plane-wave-scattered-balance";
+      power.air_radiated_defined=power.dielectric_absorbed_defined=power.defect_defined=1;
+      power.air_radiated_w=psca;power.dielectric_absorbed_w=absorbed;
+      if(gnd.ksymp!=1&&gnd.iperf==1){power.lower_flux_defined=1;power.lower_flux_w=0.0;}
+      power.defect_w=defect;power.defect_relative=defect/fmax(fmax(fabs(pext),fabs(psca)),DBL_MIN);
+      power.theta_count=974;power.phi_count=1;result_json_set_power(&power);
+    }
+  }
   {
     double incident_squared = creal(incident_vector[0]*conj(incident_vector[0]) +
                                      incident_vector[1]*conj(incident_vector[1]) +

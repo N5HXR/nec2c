@@ -10,6 +10,8 @@ EXTRA_DIST = \
   docs/DIELECTRIC-REVISION-1.md \
   docs/DIELECTRIC-REVISION-1-RELEASE.md \
   docs/DIELECTRIC-DEFERRED-WORK.md \
+  docs/ANTENNA-TURTLE-INTEGRATION.md \
+  docs/nec2c-results-v1.schema.json \
   examples/dielectric-r1/README.md \
   examples/dielectric-r1/run.py \
   examples/dielectric-r1/reference-summary.json \
@@ -171,7 +173,8 @@ EXTRA_DIST = \
   tests/m9-fft-tree-1e-8.txt \
   tests/m9-fft-tree-1e-10.txt \
 	  tests/dielectric_wire.py \
-	  tests/dielectric_patch.py \
+  tests/dielectric_patch.py \
+  tests/result_json.py \
   tests/generate_vie_reference.py \
   tests/voxscatter-reference.csv \
 	  tests/openems-m6-n2-15mm.csv \
@@ -199,6 +202,7 @@ TESTS = tests/regression.py tests/dielectric_parser.py tests/dielectric_mesh.py 
 	tests/dielectric_iterative.py \
 	tests/dielectric_wire.py \
 	tests/dielectric_patch.py \
+	tests/result_json.py \
 	tests/vie_kernel_test \
 	tests/vie_iterative_test \
 	tests/vie_fft_test \
@@ -254,6 +258,8 @@ nec2c_SOURCES = \
   dielectric_wire.c \
   dielectric_fft.c \
   dielectric_fft.h \
+  result_json.c \
+  result_json.h \
   vie_fft.c \
   vie_fft.h \
   dielectric.h \
