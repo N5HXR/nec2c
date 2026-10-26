@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([nec2c], [1.3], [nkcyham@yahoo.com])
+AC_INIT([nec2c-n5hxr], [1.3.1], [n5hxr@thestone.zone])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([main.c])
 AC_CONFIG_HEADERS([config.h])
