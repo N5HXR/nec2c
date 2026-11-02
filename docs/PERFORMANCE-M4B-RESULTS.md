@@ -1,6 +1,14 @@
 # Milestone 4B: optional threaded FFTW backend
 
-Status: ready for user acceptance on 2026-11-02.
+Status: accepted by the user on 2026-11-02.
+
+The user's clean acceptance run passed the dense-oracle, full-solve, CLI,
+ordered-frequency, and CPU-budget checks.  Its interleaved production-tree
+benchmark measured FFTW-over-built-in speedups of 4.03x for the matvec, 4.72x
+for the solve, and 3.13x for build plus solve at one thread.  At 16 threads it
+measured 1.38x, 1.48x, and 1.20x respectively.  Relative to the one-thread
+built-in reference, the accepted 16-thread FFTW path is 6.83x faster for a
+matvec, 9.12x faster for the solve, and 4.32x faster for build plus solve.
 
 ## Delivered behavior
 
