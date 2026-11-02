@@ -66,18 +66,6 @@ const char *dense_backend_name_for_order(size_t order)
   return backend_for_order(order) == DENSE_BACKEND_LAPACK ? "lapack" : "builtin";
 }
 
-const char *dense_backend_solver_name_for_order(size_t order)
-{
-  return backend_for_order(order) == DENSE_BACKEND_LAPACK
-      ? "dense-lapack" : "dense-builtin";
-}
-
-const char *dense_backend_classic_solver_name_for_order(size_t order)
-{
-  return backend_for_order(order) == DENSE_BACKEND_LAPACK
-      ? "legacy-nec-direct-lapack" : "legacy-nec-direct-builtin";
-}
-
 size_t dense_backend_lapack_min_order(void) { return LAPACK_AUTO_MIN_ORDER; }
 
 #ifdef HAVE_LAPACK

@@ -624,12 +624,19 @@ int result_json_worker_import(FILE *stream)
   return 1;
 }
 
+static int valid_solver_name(const char *name)
+{
+  return name && (!strcmp(name,"legacy-nec-direct") || !strcmp(name,"dense") ||
+      !strcmp(name,"gmres") || !strcmp(name,"fft"));
+}
+
 void result_json_set_solver(const result_solver *solver)
 {
   if(session.active&&session.job.execution.open&&solver)
   {
     session.job.execution.solver=*solver;session.job.execution.solver_set=1;
-    if(!finite_number(solver->elapsed_seconds) ||
+    if(!valid_solver_name(solver->requested) || !valid_solver_name(solver->used) ||
+       !finite_number(solver->elapsed_seconds) ||
        (solver->iterative_fields_defined &&
         (!finite_number(solver->relative_tolerance) ||
          !finite_number(solver->reported_residual) ||

@@ -15,8 +15,6 @@ int dense_backend_set(const char *name);
 int dense_backend_lapack_available(void);
 const char *dense_backend_requested_name(void);
 const char *dense_backend_name_for_order(size_t order);
-const char *dense_backend_solver_name_for_order(size_t order);
-const char *dense_backend_classic_solver_name_for_order(size_t order);
 size_t dense_backend_lapack_min_order(void);
 
 /* Classic NEC stores the algebraic matrix transposed. LAPACK factors that

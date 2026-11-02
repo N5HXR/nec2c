@@ -60,8 +60,8 @@ with tempfile.TemporaryDirectory() as directory:
     assert job["dielectric"] is None and job["mesh_states"] == []
     execution = job["executions"][0]
     assert execution["mesh_state_id"] is None
-    assert execution["solver"]["requested"] == "auto"
-    assert execution["solver"]["used"] == "legacy-nec-direct-builtin"
+    assert execution["solver"]["requested"] == "legacy-nec-direct"
+    assert execution["solver"]["used"] == "legacy-nec-direct"
     for key in ("relative_tolerance", "maximum_iterations", "iterations",
                 "reported_residual", "true_residual", "converged"):
         assert execution["solver"][key] is None
@@ -85,7 +85,7 @@ with tempfile.TemporaryDirectory() as directory:
     execution = job["executions"][0]
     assert execution["status"] == "ok" and execution["mesh_state_id"] == 0
     assert execution["solver"]["requested"] == "dense"
-    assert execution["solver"]["used"] == "dense-builtin"
+    assert execution["solver"]["used"] == "dense"
     assert execution["power"]["basis"] == "plane-wave-scattered-balance"
     assert len(execution["volume_currents"]["rows"]) == 1
     assert execution["volume_currents"]["rows"][0][0:4] == [1, 1, 1, 1]

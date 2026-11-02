@@ -2609,8 +2609,10 @@ int main( int argc, char **argv )
 			  {
 				result_solver solver;
 				memset(&solver,0,sizeof(solver));
-				solver.requested=dense_backend_requested_name();
-				solver.used=dense_backend_classic_solver_name_for_order((size_t)netcx.npeq);
+				/* Result schema v1 identifies the solver family here.  Dense
+				   backend selection belongs to the timing artifact and report. */
+				solver.requested="legacy-nec-direct";
+				solver.used="legacy-nec-direct";
 				solver.iterative_fields_defined=0;
 				solver.converged=1;solver.elapsed_seconds=tmp1;
 				result_json_set_solver(&solver);

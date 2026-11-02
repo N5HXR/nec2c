@@ -1341,7 +1341,7 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
     result_solver solver;
     memset(&solver,0,sizeof(solver));
     solver.requested=iterative==2?"fft":(iterative?"gmres":"dense");
-    solver.used=iterative?solver.requested:dense_backend_solver_name_for_order(total);
+    solver.used=solver.requested;
     solver.iterative_fields_defined=1;
     solver.relative_tolerance=dielectric_gmres_settings.relative_tolerance;
     solver.maximum_iterations=dielectric_gmres_settings.maximum_iterations;
