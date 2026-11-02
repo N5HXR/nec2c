@@ -1,6 +1,6 @@
 # Milestone 3: automatic frequency concurrency
 
-Status: ready for user acceptance on 2026-11-02.
+Status: accepted by the user on 2026-11-02.
 
 ## Delivered behavior
 
@@ -78,6 +78,10 @@ clean-room behavioral specification rather than implementation material.
   confirming that automatic allocation honors affinity.
 
 No new system package is required for this milestone.
+
+The user returned `PASS` on 2026-11-02. Milestone 4 may proceed. Their manual
+measurement found 0.804100 s for the full classic-compatible baseline and
+0.236884 s for the new defaults, a 3.39x cumulative speedup.
 
 ## Conservative serial fallbacks
 
