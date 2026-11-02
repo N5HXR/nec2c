@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define CHECK(x) do {if(!(x)) {fprintf(stderr,"line %d: %s\n",__LINE__,#x);return 1;}} while(0)
 static int fixture(const size_t shape[3],const size_t *xyz,size_t cells,double k,complex double er)
 {
@@ -75,6 +76,10 @@ int main(void)
   vie_fft_backend_clear_last_used();
   CHECK(vie_fft_backend_last_used_name()==NULL);
   vie_fft_destroy(p);
-  CHECK(vie_fft_backend_set("auto"));CHECK(!vie_fft_backend_set("invalid"));
+  CHECK(vie_fft_backend_set("auto"));
+  CHECK(vie_fft_create(&p,one,1,zero,.25,.2,3,1000000));
+  CHECK(!strcmp(vie_fft_backend_name(p),"builtin"));
+  vie_fft_destroy(p);
+  CHECK(!vie_fft_backend_set("invalid"));
   puts("FFT operator tests passed");return 0;
 }

@@ -91,8 +91,9 @@ def corpus_summary(report_path):
         result[case["id"]] = {
             "cli_wall_seconds": cli_wall["median"],
             "solver_wall_seconds": solver_wall["median"] if solver_wall else None,
-            "solver_wall_range": ([solver_wall["minimum"], solver_wall["maximum"]]
-                                  if solver_wall else None),
+            "solver_wall_interquartile_range": (
+                [solver_wall["first_quartile"], solver_wall["third_quartile"]]
+                if solver_wall else None),
             "peak_rss_kib": rss["maximum"] if rss else None,
             "stable_numerical_result": summary["stable_numerical_result"],
         }
@@ -236,14 +237,14 @@ def main():
             continue
         auto_time = item["auto"]["solver_wall_seconds"]
         legacy_time = item["current_legacy_controls"]["solver_wall_seconds"]
-        auto_range = item["auto"]["solver_wall_range"]
-        legacy_range = item["current_legacy_controls"]["solver_wall_range"]
+        auto_range = item["auto"]["solver_wall_interquartile_range"]
+        legacy_range = item["current_legacy_controls"]["solver_wall_interquartile_range"]
         overlap = auto_range[0] <= legacy_range[1] and legacy_range[0] <= auto_range[1]
         regression = auto_time / legacy_time - 1.0
         small_auto_gates.append({
             "case": item["case"],
             "auto_over_legacy_regression": regression,
-            "sample_ranges_overlap": overlap,
+            "interquartile_ranges_overlap": overlap,
             "passed": regression <= 0.05 or overlap,
         })
     small_auto_gate_passed = (len(small_auto_gates) == len(SMALL_AUTO_CASES) and
@@ -283,7 +284,7 @@ def main():
         },
         "performance_comparison": performance_comparison,
         "small_auto_selection_gate": {
-            "limit": "no more than 5% slower unless measured ranges overlap",
+            "limit": "no more than 5% slower unless interquartile ranges overlap",
             "basis": "solver timing: automatic defaults versus current built-in single-worker controls",
             "passed": small_auto_gate_passed,
             "cases": small_auto_gates,

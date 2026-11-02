@@ -18,6 +18,11 @@ replace the user acceptance gate.
 * Automatic worker selection avoids parallel startup on tiny coupled-volume
   systems and on classic radiation work below the existing parallel-work
   threshold.  Explicit `--threads N` remains authoritative.
+* Automatic FFT selection uses the built-in implementation below a 512-point
+  padded grid and FFTW at or above it.  Explicit `--fft-backend` remains
+  authoritative.  CPU-pinned, interleaved measurements showed built-in ahead
+  by 3.3% for one cell and 1-2% for eight cells, parity at 27 cells, and FFTW
+  pulling ahead thereafter.
 * Parallel frequency workers flush inherited JSON streams before `fork()`,
   preventing duplicated buffered fragments in result documents.
 * `tools/performance_benchmark.py` can select the FFT backend, run the
@@ -42,7 +47,9 @@ an external numerical oracle; no GPL source or object code was copied into the
 project.
 
 Small-model crossover tests confirmed that automatic execution suppresses
-unproductive worker startup.  Total command startup relative to M0 remains
+unproductive worker and FFTW startup.  The release gate compares interquartile
+ranges rather than full sample ranges, preventing a lone scheduler outlier
+from excusing a median regression.  Total command startup relative to M0 remains
 separately visible because the current executable dynamically loads OpenMP,
 LAPACK, and FFTW; it is not substituted for the solver crossover gate.
 

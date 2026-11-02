@@ -118,9 +118,13 @@ def cpu_model():
 def summary(values):
     if not values:
         return None
+    quartiles = statistics.quantiles(values, n=4, method="inclusive") \
+        if len(values) > 1 else (values[0], values[0], values[0])
     return {
         "minimum": min(values),
+        "first_quartile": quartiles[0],
         "median": statistics.median(values),
+        "third_quartile": quartiles[2],
         "maximum": max(values),
     }
 

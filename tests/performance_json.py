@@ -79,6 +79,13 @@ with tempfile.TemporaryDirectory() as directory:
         "-o", temporary / "small-coupled.out")
     assert load(small_coupled_timing)["concurrency"]["threads_per_job"] == 1
 
+    small_fft_timing = temporary / "small-fft.json"
+    run("--timing-json", small_fft_timing, "-s", "fft",
+        "-i", ROOT / "tests/dielectric/m6-cube.nec",
+        "-o", temporary / "small-fft.out")
+    assert load(small_fft_timing)["fft_backend"] == {
+        "requested": "auto", "used": "builtin"}
+
     if "lapack" in capabilities["features"]["dense_backends"]:
         lapack_timing = temporary / "lapack.json"
         run("--backend", "lapack", "--timing-json", lapack_timing,

@@ -27,6 +27,7 @@ struct vie_fft_plan {
 #endif
 };
 enum {FFT_BACKEND_AUTO,FFT_BACKEND_BUILTIN,FFT_BACKEND_FFTW};
+#define FFTW_AUTO_MIN_GRIDS 512U
 static int requested_backend=FFT_BACKEND_AUTO;
 static int last_used_backend=-1;
 #ifdef HAVE_FFTW
@@ -396,8 +397,13 @@ int vie_fft_create(vie_fft_plan **out,const size_t shape[3],size_t cells,
   p=calloc(1,sizeof(*p));if(!p) return 0;
   p->cells=cells;p->grids=g;p->bytes=bytes;memcpy(p->padded,padded,sizeof(padded));
 #ifdef HAVE_FFTW
+  /* Interleaved, CPU-pinned M9 measurements put the end-to-end crossover at
+     a 512-point padded grid (27 active cells in the cubic fixture).  FFTW is
+     still available explicitly below that point, but its planning/runtime
+     setup is counterproductive for the one- and eight-cell cases. */
   p->backend=(requested_backend==FFT_BACKEND_FFTW ||
-      (requested_backend==FFT_BACKEND_AUTO && g<=(size_t)INT_MAX)) ?
+      (requested_backend==FFT_BACKEND_AUTO && g>=(size_t)FFTW_AUTO_MIN_GRIDS &&
+       g<=(size_t)INT_MAX)) ?
       FFT_BACKEND_FFTW:FFT_BACKEND_BUILTIN;
 #else
   p->backend=FFT_BACKEND_BUILTIN;

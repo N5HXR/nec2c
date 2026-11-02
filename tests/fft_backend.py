@@ -108,7 +108,9 @@ with tempfile.TemporaryDirectory(prefix="nec2c-fftw-") as temporary:
                     "--result-json", str(result), "--timing-json", str(timing),
                     "-i", str(sweep), "-o", str(output)]
         invoke(command)
-        used = "fftw" if backend == "auto" else backend
+        # This sweep has a one-cell padded grid, below the measured automatic
+        # FFTW crossover.  Explicit FFTW remains available and authoritative.
+        used = "builtin" if backend == "auto" else backend
         assert f"FFT BACKEND: {used}" in output.read_text()
         document = json.loads(result.read_text())
         for job in document["jobs"]:
@@ -123,6 +125,6 @@ with tempfile.TemporaryDirectory(prefix="nec2c-fftw-") as temporary:
         assert concurrency["threads_per_job"] == 2
         sweep_results[backend] = document
     compare(sweep_results["builtin"], sweep_results["fftw"])
-    compare(sweep_results["fftw"], sweep_results["auto"])
+    compare(sweep_results["builtin"], sweep_results["auto"])
 
 print("builtin/FFTW dense-oracle, full-solve, and CLI equivalence passed")

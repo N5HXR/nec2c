@@ -64,8 +64,10 @@ The top-level `acceptance_ready` field must be true.  Each performance corpus
 case must report a stable numerical result.  The automatic defaults must not
 regress a small corpus case by more than 5% outside measurement noise.  The
 runner enforces that gate on solver timing against the current explicitly
-selected built-in single-worker path; overlapping measured ranges count as
-noise.  It separately discloses total CLI wall time against M0, including the
+selected built-in single-worker path; overlapping interquartile ranges count
+as noise.  Minimum/maximum overlap is deliberately insufficient, so one
+scheduling outlier cannot conceal a bad median.  It separately discloses total
+CLI wall time against M0, including the
 startup/shutdown cost of today's dynamically linked OpenMP, LAPACK and FFTW
 libraries.  M0 predates timing JSON, so that CLI comparison is not silently
 substituted for the backend crossover gate.  Larger
