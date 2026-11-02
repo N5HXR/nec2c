@@ -1,6 +1,11 @@
 # Milestone 4A: parallel built-in FFT
 
-Status: ready for user acceptance on 2026-11-02.
+Status: accepted by the user on 2026-11-02.
+
+The user's clean acceptance build confirmed bit-identical results at 1, 2,
+and 4 threads.  The returned full-solve benchmark measured 0.129001 seconds at
+one thread and 0.026331 seconds at 16 threads for the FFT matvec, a 4.90x
+speedup.
 
 ## Delivered behavior
 

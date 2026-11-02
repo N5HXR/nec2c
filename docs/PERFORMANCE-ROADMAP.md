@@ -102,7 +102,9 @@ Per-frequency numerical output must match separate serial executions.
 
 ### M4A: parallel built-in FFT
 
-Status: ready for user acceptance on 2026-11-02.
+Status: accepted by the user on 2026-11-02.  The clean acceptance build
+confirmed bit-identical results at 1, 2, and 4 threads and measured a 4.90x
+matvec speedup at 16 threads on the production tree fixture.
 
 Parallelize independent FFT-line batches and tensor/grid work while preserving
 each line's arithmetic order.  Retain the serial path and size threshold.
