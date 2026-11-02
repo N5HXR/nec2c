@@ -1,6 +1,6 @@
 # Milestone 7: parallel conductor-volume coupling
 
-Status: implemented; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.
 
 ## Delivered behavior
 
@@ -92,6 +92,27 @@ processes and retains coupling parallelism. This conservative serial-job
 fallback avoids forking a process after BLAS, OpenMP, or FFTW activation.
 
 ## User acceptance
+
+The user returned a PASS on 2026-11-02. The clean acceptance run passed the
+four-regime deterministic regression and confirmed exact normalized results at
+1, 2, and 4 workers with the automatic FFT path. Two warmups and seven measured
+repetitions produced these medians:
+
+| Workers | Coupling time | Coupling speedup | Complete solve | Solve speedup |
+|---:|---:|---:|---:|---:|
+| 1 | 0.390809 s | 1.00x | 0.538325 s | 1.00x |
+| 2 | 0.301898 s | 1.29x | 0.418166 s | 1.29x |
+| 4 | 0.172332 s | 2.27x | 0.265102 s | 2.03x |
+| 8 | 0.094385 s | 4.14x | 0.179263 s | 3.00x |
+| 16 | 0.060990 s | 6.41x | 0.169977 s | 3.17x |
+| 32 | 0.046760 s | 8.36x | 0.179302 s | 3.00x |
+
+The accepted 16-worker automatic point exceeds both milestone gates. The
+32-worker point accelerates the isolated coupling phase further but is slightly
+slower end to end, validating the 16-worker automatic ceiling. The raw record
+is `/tmp/m7-coupling.json` on the acceptance host.
+
+The accepted validation procedure is retained below.
 
 Run the focused deterministic regression first:
 

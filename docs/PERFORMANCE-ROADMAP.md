@@ -147,8 +147,8 @@ networks, and loading.  Target at least 2x fill speedup on a large model.
 
 ### M7: parallel conductor-volume coupling
 
-Status: implemented; awaiting user acceptance. Development measurements reach
-6.50x for the coupling phase and 3.24x for the complete solve at the automatic
+Status: accepted by the user on 2026-11-02. Seven-run acceptance medians reach
+6.41x for the coupling phase and 3.17x for the complete solve at the automatic
 16-worker ceiling, with bit-identical normalized results across worker counts.
 
 Remove temporary global field/current mutations, pass explicit source state,
