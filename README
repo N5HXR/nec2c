@@ -13,6 +13,39 @@
 
     python3 examples/dielectric-r1/run.py --output-dir /tmp/nec2c-r1-examples
 
+  PERFORMANCE DENSE BACKEND
+
+  Configure automatically enables the LAPACK dense solver when LAPACKE headers
+  and libraries are available (Ubuntu package: liblapacke-dev). Runtime choice
+  is command-line controlled:
+
+    nec2c --backend auto|builtin|lapack -i model.nec -o model.out
+
+  `auto` is the default and retains the built-in solver for small matrices.
+  `builtin` always selects the original implementation. Configure with
+  `--with-lapack=no` for a dependency-free legacy-only build.
+
+  PERFORMANCE FFT BUILD
+
+  The built-in dielectric FFT uses OpenMP when the C compiler supports it.
+  Because generated Autotools files are not versioned, regenerate them after
+  pulling performance changes before rebuilding:
+
+    autoreconf -fi
+    ./configure --with-lapack=auto
+    make -j8
+
+  Configure should report `parallel built-in FFT: enabled with -fopenmp`.
+  `python3 tests/fft_parallel.py --require-parallel` verifies that the built
+  benchmark and the nec2c CLI actually use the threaded path.
+
+  When FFTW 3 development headers and its threads library are available,
+  configure also enables the optional threaded FFTW backend.  The validated
+  faster backend is selected automatically.  Use `--fft-backend builtin` to
+  retain the built-in transform, `--fft-backend fftw` to require FFTW, or
+  `--fft-backend auto` for the default.  Configure with `--with-fftw=no` for a
+  dependency-free build; an explicit unavailable FFTW request is rejected.
+
   The upstream README is preserved below.
 
 

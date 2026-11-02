@@ -244,6 +244,7 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
                                        const dielectric_pattern_request *pattern,
                                        FILE *stream,
                                        dielectric_diagnostic *diagnostic);
+void dielectric_coupling_configure(size_t processes, int fork_safe);
 
 int dielectric_ground_power(const dielectric_mesh_result *mesh,const complex double *current,
                              double k0,int conductor,double *power,double *delta);

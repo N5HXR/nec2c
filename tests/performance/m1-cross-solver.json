@@ -1,0 +1,73 @@
+{
+  "cases": [
+    {
+      "comparisons_to_nec2c": {
+        "aegnec2": {
+          "absolute_ohms": 0.03680591432259587,
+          "relative": 0.0004939014960551683
+        },
+        "momwire-sinusoidal": {
+          "absolute_ohms": 0.0920379579580969,
+          "relative": 0.0012350646890861064
+        }
+      },
+      "deck": "/home/josh/homebrew/nec2c/tests/performance/cross-solver-dipole.nec",
+      "passed": true,
+      "values": {
+        "aegnec2": {
+          "imaginary": -31.2509,
+          "real": 67.6397
+        },
+        "momwire-sinusoidal": {
+          "imaginary": -31.37854459617957,
+          "real": 67.62216178258981
+        },
+        "nec2c": {
+          "imaginary": -31.28735673563493,
+          "real": 67.63464215896185
+        }
+      }
+    },
+    {
+      "comparisons_to_nec2c": {
+        "aegnec2": {
+          "absolute_ohms": 0.0404848334297376,
+          "relative": 0.0006976297282804756
+        },
+        "momwire-sinusoidal": {
+          "absolute_ohms": 0.09842417046332014,
+          "relative": 0.0016960333408738018
+        }
+      },
+      "deck": "/home/josh/homebrew/nec2c/tests/performance/cross-solver-yagi.nec",
+      "passed": true,
+      "values": {
+        "aegnec2": {
+          "imaginary": 1.19817,
+          "real": 58.04
+        },
+        "momwire-sinusoidal": {
+          "imaginary": 1.0732345869717408,
+          "real": 57.97948832442711
+        },
+        "nec2c": {
+          "imaginary": 1.1627858931224133,
+          "real": 58.020328022003135
+        }
+      }
+    }
+  ],
+  "notes": [
+    "AEG is executed as a GPL external oracle; no AEG source or object code is copied.",
+    "AEG's default result file prints impedance to six significant digits, which limits comparison precision.",
+    "Momwire sinusoidal uses the NEC2 three-term basis but has an independent implementation."
+  ],
+  "observable": "complex feed impedance, ohms",
+  "passed": true,
+  "schema": "nec2c-cross-solver-comparison",
+  "schema_version": 1,
+  "tolerances": {
+    "aegnec2_relative": 0.001,
+    "momwire_sinusoidal_relative": 0.005
+  }
+}

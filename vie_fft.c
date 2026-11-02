@@ -1,15 +1,48 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include "vie_fft.h"
 #include "vie_kernel.h"
+#include <limits.h>
 #include <math.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_FFTW
+#include <fftw3.h>
+#endif
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 struct vie_fft_plan {
-  size_t cells, padded[3], grids, bytes;
+  size_t cells, padded[3], grids, bytes, threads;
+  int backend;
   size_t *map;
   complex double *data, *roots[3], self[3], *epsilon;
+#ifdef HAVE_FFTW
+  fftw_plan kernel_forward, apply_forward, apply_inverse;
+  int fftw_runtime;
+#endif
 };
+enum {FFT_BACKEND_AUTO,FFT_BACKEND_BUILTIN,FFT_BACKEND_FFTW};
+#define FFTW_AUTO_MIN_GRIDS 512U
+static int requested_backend=FFT_BACKEND_AUTO;
+static int last_used_backend=-1;
+#ifdef HAVE_FFTW
+static size_t fftw_runtime_users;
+static void fftw_release(vie_fft_plan *p)
+{
+  if(p->kernel_forward) {fftw_destroy_plan(p->kernel_forward);p->kernel_forward=NULL;}
+  if(p->apply_forward) {fftw_destroy_plan(p->apply_forward);p->apply_forward=NULL;}
+  if(p->apply_inverse) {fftw_destroy_plan(p->apply_inverse);p->apply_inverse=NULL;}
+  if(p->fftw_runtime && fftw_runtime_users) {
+    p->fftw_runtime=0;
+    if(--fftw_runtime_users==0) fftw_cleanup_threads();
+  }
+}
+#endif
 static const double pi = 3.141592653589793238462643383279502884;
 static int multiply(size_t a, size_t b, size_t *out)
 { if(b && a > SIZE_MAX/b) return 0; *out=a*b; return 1; }
@@ -19,6 +52,45 @@ static size_t index3(const vie_fft_plan *p,size_t x,size_t y,size_t z)
 { return (x*p->padded[1]+y)*p->padded[2]+z; }
 static int tensor_index(int i,int j)
 { if(i==j) return i; if(i>j) {int t=i;i=j;j=t;} return i==0 ? (j==1 ? 3:4):5; }
+static size_t configured_threads(int backend)
+{
+#ifdef _OPENMP
+  int count=omp_get_max_threads();
+  (void)backend;
+  return count>0 ? (size_t)count:1;
+#else
+  const char *text=getenv("OMP_NUM_THREADS");char *end;unsigned long count;
+  if(backend!=FFT_BACKEND_FFTW) return 1;
+  if(!text || !*text) return 1;
+  count=strtoul(text,&end,10);
+  return !*end && count>0 && count<=(unsigned long)INT_MAX ? (size_t)count:1;
+#endif
+}
+int vie_fft_backend_set(const char *name)
+{
+  if(!name || !strcmp(name,"auto")) requested_backend=FFT_BACKEND_AUTO;
+  else if(!strcmp(name,"builtin")) requested_backend=FFT_BACKEND_BUILTIN;
+  else if(!strcmp(name,"fftw")) {
+    if(!vie_fft_fftw_available()) return 0;
+    requested_backend=FFT_BACKEND_FFTW;
+  } else return 0;
+  return 1;
+}
+int vie_fft_fftw_available(void)
+{
+#ifdef HAVE_FFTW
+  return 1;
+#else
+  return 0;
+#endif
+}
+const char *vie_fft_backend_requested_name(void)
+{return requested_backend==FFT_BACKEND_BUILTIN ? "builtin":requested_backend==FFT_BACKEND_FFTW ? "fftw":"auto";}
+const char *vie_fft_backend_name(const vie_fft_plan *p)
+{return p && p->backend==FFT_BACKEND_FFTW ? "fftw":"builtin";}
+const char *vie_fft_backend_last_used_name(void)
+{return last_used_backend<0 ? NULL:last_used_backend==FFT_BACKEND_FFTW ? "fftw":"builtin";}
+void vie_fft_backend_clear_last_used(void) {last_used_backend=-1;}
 static void fft_line(complex double *a,size_t n,size_t stride,
                      const complex double *roots,int inverse)
 {
@@ -41,7 +113,8 @@ static void fft_line(complex double *a,size_t n,size_t stride,
   }
   if(inverse) for(i=0;i<n;i++) a[i*stride]/=(double)n;
 }
-static void fft3(vie_fft_plan *p,complex double *a,int inverse)
+
+static void fft3_serial(vie_fft_plan *p,complex double *a,int inverse)
 {
   size_t x,y,z,nx=p->padded[0],ny=p->padded[1],nz=p->padded[2];
   for(x=0;x<nx;x++) for(y=0;y<ny;y++)
@@ -51,22 +124,140 @@ static void fft3(vie_fft_plan *p,complex double *a,int inverse)
   for(y=0;y<ny;y++) for(z=0;z<nz;z++)
     fft_line(a+index3(p,0,y,z),nx,ny*nz,p->roots[0],inverse);
 }
+
+/* Each transform line owns disjoint elements within a phase.  Parallelizing
+   lines and tensor components therefore preserves fft_line's arithmetic order
+   exactly; the implicit phase barriers preserve the serial 3-D dependency. */
+static void fft3_batch(vie_fft_plan *p,complex double *a,size_t components,
+                       int inverse)
+{
+  size_t nx=p->padded[0],ny=p->padded[1],nz=p->padded[2];
+  size_t xy=nx*ny,xz=nx*nz,yz=ny*nz;
+  ptrdiff_t line;size_t component;
+#ifdef HAVE_FFTW
+  if(p->backend==FFT_BACKEND_FFTW) {
+    fftw_plan plan=components==6 ? p->kernel_forward:
+        (inverse ? p->apply_inverse:p->apply_forward);
+    size_t count=components*p->grids,g;
+    fftw_execute_dft(plan,(fftw_complex *)a,(fftw_complex *)a);
+    if(inverse) {
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(count >= 16384 && p->threads > 1) num_threads(p->threads)
+#endif
+      for(g=0;g<count;g++) a[g]/=(double)p->grids;
+    }
+    return;
+  }
+#endif
+  if(p->threads==1 || p->grids<16384) {
+    for(component=0;component<components;component++)
+      fft3_serial(p,a+component*p->grids,inverse);
+    return;
+  }
+#ifdef _OPENMP
+#pragma omp parallel num_threads(p->threads)
+#endif
+  {
+#ifdef _OPENMP
+#pragma omp for schedule(static)
+#endif
+    for(line=0;line<(ptrdiff_t)(components*xy);line++) {
+      size_t component=(size_t)line/xy,local=(size_t)line%xy;
+      size_t x=local/ny,y=local%ny;
+      fft_line(a+component*p->grids+index3(p,x,y,0),nz,1,
+          p->roots[2],inverse);
+    }
+#ifdef _OPENMP
+#pragma omp for schedule(static)
+#endif
+    for(line=0;line<(ptrdiff_t)(components*xz);line++) {
+      size_t component=(size_t)line/xz,local=(size_t)line%xz;
+      size_t x=local/nz,z=local%nz;
+      fft_line(a+component*p->grids+index3(p,x,0,z),ny,nz,
+          p->roots[1],inverse);
+    }
+#ifdef _OPENMP
+#pragma omp for schedule(static)
+#endif
+    for(line=0;line<(ptrdiff_t)(components*yz);line++) {
+      size_t component=(size_t)line/yz,local=(size_t)line%yz;
+      size_t y=local/nz,z=local%nz;
+      fft_line(a+component*p->grids+index3(p,0,y,z),nx,ny*nz,
+          p->roots[0],inverse);
+    }
+  }
+}
 void vie_fft_destroy(vie_fft_plan *p)
-{ if(p) {int d;for(d=0;d<3;d++) free(p->roots[d]);free(p->map);free(p->data);free(p->epsilon);free(p);} }
+{ if(p) {int d;
+#ifdef HAVE_FFTW
+  fftw_release(p);
+#endif
+  for(d=0;d<3;d++) free(p->roots[d]);
+  free(p->map);free(p->data);free(p->epsilon);free(p);
+} }
 size_t vie_fft_bytes(const vie_fft_plan *p) {return p ? p->bytes:0;}
+size_t vie_fft_threads(const vie_fft_plan *p) {return p ? p->threads:0;}
+int vie_fft_parallel_available(void)
+{
+  if(requested_backend==FFT_BACKEND_BUILTIN) {
+#ifdef _OPENMP
+    return 1;
+#else
+    return 0;
+#endif
+  }
+  if(requested_backend==FFT_BACKEND_FFTW) return vie_fft_fftw_available();
+#if defined(_OPENMP) || defined(HAVE_FFTW)
+  return 1;
+#else
+  return 0;
+#endif
+}
+#ifdef HAVE_FFTW
+static int fftw_plans(vie_fft_plan *p)
+{
+  int dimensions[3],d;
+  for(d=0;d<3;d++) {
+    if(p->padded[d]>(size_t)INT_MAX) return 0;
+    dimensions[d]=(int)p->padded[d];
+  }
+  if(fftw_runtime_users==0 && !fftw_init_threads()) return 0;
+  fftw_runtime_users++;p->fftw_runtime=1;
+  fftw_plan_with_nthreads(p->threads>(size_t)INT_MAX ? INT_MAX:(int)p->threads);
+  p->kernel_forward=fftw_plan_many_dft(3,dimensions,6,
+      (fftw_complex *)p->data,NULL,1,(int)p->grids,
+      (fftw_complex *)p->data,NULL,1,(int)p->grids,FFTW_FORWARD,FFTW_ESTIMATE);
+  p->apply_forward=fftw_plan_many_dft(3,dimensions,3,
+      (fftw_complex *)(p->data+6*p->grids),NULL,1,(int)p->grids,
+      (fftw_complex *)(p->data+6*p->grids),NULL,1,(int)p->grids,FFTW_FORWARD,FFTW_ESTIMATE);
+  p->apply_inverse=fftw_plan_many_dft(3,dimensions,3,
+      (fftw_complex *)(p->data+9*p->grids),NULL,1,(int)p->grids,
+      (fftw_complex *)(p->data+9*p->grids),NULL,1,(int)p->grids,FFTW_BACKWARD,FFTW_ESTIMATE);
+  return p->kernel_forward && p->apply_forward && p->apply_inverse;
+}
+#endif
 static int apply(void *context,const complex double *x,complex double *y)
 {
   vie_fft_plan *p=context;
   size_t c,g;int i,j;
   complex double *src=p->data+6*p->grids,*dst=p->data+9*p->grids;
   memset(src,0,6*p->grids*sizeof(*src));
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(p->cells >= 1024 && p->threads > 1) num_threads(p->threads)
+#endif
   for(c=0;c<p->cells;c++) for(i=0;i<3;i++) src[i*p->grids+p->map[c]]=x[3*c+i];
-  for(i=0;i<3;i++) fft3(p,src+i*p->grids,0);
-  for(i=0;i<3;i++) {
-    for(g=0;g<p->grids;g++) for(j=0;j<3;j++)
-      dst[i*p->grids+g]+=p->data[tensor_index(i,j)*p->grids+g]*src[j*p->grids+g];
-    fft3(p,dst+i*p->grids,1);
+  fft3_batch(p,src,3,0);
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(p->grids >= 16384 && p->threads > 1) num_threads(p->threads)
+#endif
+  for(g=0;g<3*p->grids;g++) {
+    size_t component=g/p->grids,point=g%p->grids;
+    for(j=0;j<3;j++) dst[g]+=p->data[tensor_index((int)component,j)*p->grids+point]*src[j*p->grids+point];
   }
+  fft3_batch(p,dst,3,1);
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(p->cells >= 1024 && p->threads > 1) num_threads(p->threads)
+#endif
   for(c=0;c<p->cells;c++) for(i=0;i<3;i++)
     y[3*c+i]=p->epsilon[c]*x[3*c+i]-(p->epsilon[c]-1)*dst[i*p->grids+p->map[c]];
   return 1;
@@ -74,6 +265,9 @@ static int apply(void *context,const complex double *x,complex double *y)
 static int precondition(void *context,const complex double *x,complex double *y)
 {
   vie_fft_plan *p=context;size_t c;int i;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(p->cells >= 1024 && p->threads > 1) num_threads(p->threads)
+#endif
   for(c=0;c<p->cells;c++) for(i=0;i<3;i++) y[3*c+i]=x[3*c+i]/(p->epsilon[c]-(p->epsilon[c]-1)*p->self[i]);
   return 1;
 }
@@ -178,7 +372,7 @@ static int kernels(vie_fft_plan *p,const size_t shape[3],double h,double k)
       }
     }
   }
-  for(i=0;i<6;i++) fft3(p,p->data+i*p->grids,0);
+  fft3_batch(p,p->data,6,0);
   return 1;
 }
 int vie_fft_create(vie_fft_plan **out,const size_t shape[3],size_t cells,
@@ -195,10 +389,27 @@ int vie_fft_create(vie_fft_plan **out,const size_t shape[3],size_t cells,
     while(padded[d]<2*shape[d]-1) {if(padded[d]>SIZE_MAX/2) return 0;padded[d]*=2;}
     if(!multiply(g,padded[d],&g) || !multiply(padded[d],sizeof(complex double),&tmp) || !add(root_bytes,tmp,&root_bytes)) return 0;
   }
+#ifdef HAVE_FFTW
+  if(g>(size_t)INT_MAX && requested_backend==FFT_BACKEND_FFTW) return 0;
+#endif
   if(!multiply(g,12*sizeof(complex double),&tmp) || !add(bytes,tmp,&bytes) ||
      !multiply(cells,sizeof(size_t)+sizeof(complex double),&tmp) || !add(bytes,tmp,&bytes) || !add(bytes,root_bytes,&bytes) || bytes>limit) return 0;
   p=calloc(1,sizeof(*p));if(!p) return 0;
   p->cells=cells;p->grids=g;p->bytes=bytes;memcpy(p->padded,padded,sizeof(padded));
+#ifdef HAVE_FFTW
+  /* Interleaved, CPU-pinned M9 measurements put the end-to-end crossover at
+     a 512-point padded grid (27 active cells in the cubic fixture).  FFTW is
+     still available explicitly below that point, but its planning/runtime
+     setup is counterproductive for the one- and eight-cell cases. */
+  p->backend=(requested_backend==FFT_BACKEND_FFTW ||
+      (requested_backend==FFT_BACKEND_AUTO && g>=(size_t)FFTW_AUTO_MIN_GRIDS &&
+       g<=(size_t)INT_MAX)) ?
+      FFT_BACKEND_FFTW:FFT_BACKEND_BUILTIN;
+#else
+  p->backend=FFT_BACKEND_BUILTIN;
+#endif
+  p->threads=configured_threads(p->backend);
+  if(p->threads==0) p->threads=1;
   p->map=malloc(cells*sizeof(*p->map));p->data=calloc(g,12*sizeof(*p->data));
   p->epsilon=malloc(cells*sizeof(*p->epsilon));
   if(!p->map || !p->data || !p->epsilon) goto fail;
@@ -212,13 +423,20 @@ int vie_fft_create(vie_fft_plan **out,const size_t shape[3],size_t cells,
     p->data[6*g+idx]=1;p->map[c]=idx;
   }
   memset(p->data+6*g,0,g*sizeof(*p->data));
-  for(d=0;d<3;d++) {
+#ifdef HAVE_FFTW
+  if(p->backend==FFT_BACKEND_FFTW && !fftw_plans(p)) {
+    if(requested_backend==FFT_BACKEND_FFTW) goto fail;
+    fftw_release(p);p->backend=FFT_BACKEND_BUILTIN;
+    p->threads=configured_threads(p->backend);
+  }
+#endif
+  if(p->backend==FFT_BACKEND_BUILTIN) for(d=0;d<3;d++) {
     size_t j;p->roots[d]=malloc(padded[d]*sizeof(complex double));if(!p->roots[d]) goto fail;
     for(j=0;j<padded[d];j++) p->roots[d][j]=cexp(-2*pi*I*(double)j/(double)padded[d]);
   }
   if(!kernels(p,shape,h,k)) goto fail;
   for(c=0;c<cells;c++) if(!vie_fft_set_permittivity(p,c,er)) goto fail;
-  *out=p;return 1;
+  last_used_backend=p->backend;*out=p;return 1;
 fail:vie_fft_destroy(p);return 0;
 }
 

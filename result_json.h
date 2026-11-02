@@ -74,12 +74,22 @@ int result_json_request_near(const char *kind, int coordinate_mode,
     int x_count, int y_count, int z_count, const double start[3],
     const double step[3]);
 int result_json_current_request(void);
+size_t result_json_next_execution(void);
 const char *result_json_current_excitation_kind(void);
 
 /* Execution lifecycle. A new execution finalizes the preceding successful one. */
 void result_json_execution_begin(double frequency_mhz, const char *excitation_kind,
     const dielectric_plane_wave *wave);
 int result_json_execution_end(int success);
+/* Flush the parent document before fork() so children cannot later flush a
+   duplicated stdio buffer into the shared result destination. */
+int result_json_worker_prepare(void);
+/* Frequency-worker fragment support. These calls are used only after fork():
+   the child resets its inherited execution spool, writes complete execution
+   objects to a private file, and the pristine parent imports them in order. */
+int result_json_worker_begin(size_t first_execution_index);
+int result_json_worker_export(FILE *stream);
+int result_json_worker_import(FILE *stream);
 void result_json_set_solver(const result_solver *solver);
 
 void result_json_add_feed(size_t source_index, int tag, size_t segment,

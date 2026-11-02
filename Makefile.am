@@ -11,7 +11,84 @@ EXTRA_DIST = \
   docs/DIELECTRIC-REVISION-1-RELEASE.md \
   docs/DIELECTRIC-DEFERRED-WORK.md \
   docs/ANTENNA-TURTLE-INTEGRATION.md \
+  docs/PERFORMANCE-ROADMAP.md \
+  docs/PERFORMANCE-M0-BASELINE.md \
   docs/nec2c-results-v1.schema.json \
+  docs/nec2c-timing-v1.schema.json \
+  docs/nec2c-timing-v2.schema.json \
+  docs/PERFORMANCE-M1-RESULTS.md \
+  docs/PERFORMANCE-M2-RESULTS.md \
+  docs/PERFORMANCE-M3-RESULTS.md \
+  docs/PERFORMANCE-M4A-RESULTS.md \
+  docs/PERFORMANCE-M4B-RESULTS.md \
+  docs/PERFORMANCE-M5-RESULTS.md \
+  docs/PERFORMANCE-M6-RESULTS.md \
+  docs/PERFORMANCE-M7-RESULTS.md \
+  docs/PERFORMANCE-M8-RESULTS.md \
+  docs/PERFORMANCE-M9-COMPILER.md \
+  docs/PERFORMANCE-M9-RESULTS.md \
+  docs/PERFORMANCE-M9-ACCEPTANCE.md \
+  tests/performance/models.json \
+  tests/performance/loop-yagi-438.nec \
+  tests/performance/cross-solver-dipole.nec \
+  tests/performance/cross-solver-yagi.nec \
+  tests/performance/scaling-dipole-801.nec \
+  tests/performance/scaling-dipole-801-sweep.nec \
+  tests/performance/m1-reference.json \
+  tests/performance/m1-cross-solver.json \
+  tests/performance/m1-overhead.json \
+  tests/performance/m2-dense-backend.json \
+  tests/performance/m2-cross-solver.json \
+  tests/performance/m3-frequency-jobs.json \
+  tests/performance/m4a-fft-scaling.json \
+  tests/performance/m4a-fft-full-solve.json \
+  tests/performance/m4b-builtin-scaling.json \
+  tests/performance/m4b-fftw-scaling.json \
+  tests/performance/m4b-builtin-full-solve.json \
+  tests/performance/m4b-fftw-full-solve.json \
+  tests/performance/m4b-builtin-small.json \
+  tests/performance/m4b-fftw-small.json \
+  tests/performance/m4b-full-interleaved.json \
+  tests/performance/m4b-small-interleaved.json \
+  tests/performance/m5-volume-216.nec \
+  tests/performance/m5-volume-216.diel \
+  tests/performance/m5-coupled-216.nec \
+  tests/performance/m5-coupled-216.diel \
+  tests/performance/m6-mixed-ground-651.nec \
+  tests/performance/m6-connected-patch-657.nec \
+  tests/performance/m7-connected-coupled-216.nec \
+  tests/performance/m7-ground-27.diel \
+  tests/performance/m7-pec-coupled-27.nec \
+  tests/performance/m7-real-coupled-27.nec \
+  tests/performance/m8-field-101.nec \
+  tests/performance/m8-field-801.nec \
+  tests/performance/m8-volume-field-216.nec \
+  tests/performance/m8-ground-cache.nec \
+  tests/performance/m8-ground-cache-miss.nec \
+  tests/performance/m8-network-multi-angle.nec \
+  tests/performance/m6-loaded-network-402.nec \
+  tests/performance/m6-real-ground-201.nec \
+  tests/performance/m6-symmetry-604.nec \
+  tests/performance/m6-sweep-301.nec \
+  tests/fft_parallel.py \
+  tests/classic_fill_parallel.py \
+  tests/coupling_parallel.py \
+  tests/field_parallel.py \
+  tests/network_cache.py \
+  tests/dielectric_assembly_parallel.py \
+  tests/fft_backend.py \
+  tools/performance_benchmark.py \
+  tools/dense_backend_benchmark.py \
+  tools/fft_benchmark.py \
+  tools/fft_backend_compare.py \
+  tools/m5_assembly_benchmark.py \
+  tools/m6_fill_benchmark.py \
+  tools/m7_coupling_benchmark.py \
+  tools/m8_field_benchmark.py \
+  tools/m9_release_candidate.py \
+  tools/prepare_nec_fixture.py \
+  tools/cross_solver_compare.py \
+  tools/timing_overhead.py \
   examples/dielectric-r1/README.md \
   examples/dielectric-r1/run.py \
   examples/dielectric-r1/reference-summary.json \
@@ -55,6 +132,7 @@ EXTRA_DIST = \
   tests/dielectric/m10-real-wire.nec \
   tests/dielectric/m10-real-wire.diel \
   tests/dielectric/m5-cube.nec \
+  tests/dielectric/m3-frequency-sweep.nec \
 	  tests/dielectric/m6-legacy.nec \
 	  tests/dielectric/m6-vacuum.nec \
 	  tests/dielectric/m6-vacuum.diel \
@@ -175,6 +253,10 @@ EXTRA_DIST = \
 	  tests/dielectric_wire.py \
   tests/dielectric_patch.py \
   tests/result_json.py \
+  tests/performance_json.py \
+  tests/backend_equivalence.py \
+  tests/frequency_parallel.py \
+  tests/dense_backend_test.c \
   tests/generate_vie_reference.py \
   tests/voxscatter-reference.csv \
 	  tests/openems-m6-n2-15mm.csv \
@@ -194,7 +276,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/dielectric_parser.py tests/dielectric_mesh.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -203,9 +285,13 @@ TESTS = tests/regression.py tests/dielectric_parser.py tests/dielectric_mesh.py 
 	tests/dielectric_wire.py \
 	tests/dielectric_patch.py \
 	tests/result_json.py \
+	tests/performance_json.py \
+	tests/dense_backend_test \
 	tests/vie_kernel_test \
 	tests/vie_iterative_test \
 	tests/vie_fft_test \
+	tests/fft_parallel.py \
+	tests/fft_backend.py \
 	tests/dielectric_fft_test \
 	tests/vie_ground_test \
 	tests/vie_halfspace_test \
@@ -214,6 +300,7 @@ TEST_EXTENSIONS = .py
 PY_LOG_COMPILER = $(PYTHON)
 TESTS_ENVIRONMENT = \
 	NEC2C='$(abs_top_builddir)/nec2c'; export NEC2C; \
+	FFT_BENCHMARK='$(abs_top_builddir)/tools/m9_fft_benchmark'; export FFT_BENCHMARK; \
 	TEST_SRCDIR='$(abs_top_srcdir)'; export TEST_SRCDIR;
 
 .PHONY: regression
@@ -224,10 +311,14 @@ AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	@PACKAGE_CFLAGS@
+AM_CFLAGS = @OPENMP_CFLAGS@
 
 bin_PROGRAMS = nec2c
 
-check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test
+check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test tests/concurrency_test
+tests_dense_backend_test_SOURCES = tests/dense_backend_test.c dense_backend.c dense_backend.h
+tests_dense_backend_test_LDADD = -lm
+tests_concurrency_test_SOURCES = tests/concurrency_test.c concurrency.c concurrency.h
 tests_vie_halfspace_test_SOURCES = tests/vie_halfspace_test.c vie_halfspace.c vie_halfspace.h vie_kernel.c vie_kernel.h
 tests_vie_halfspace_test_LDADD = -lm
 tests_vie_ground_test_SOURCES = tests/vie_ground_test.c vie_ground.c vie_ground.h vie_kernel.c vie_kernel.h
@@ -258,6 +349,10 @@ nec2c_SOURCES = \
   dielectric_wire.c \
   dielectric_fft.c \
   dielectric_fft.h \
+  dense_backend.c \
+  dense_backend.h \
+  concurrency.c \
+  concurrency.h \
   result_json.c \
   result_json.h \
   vie_fft.c \
@@ -273,6 +368,8 @@ nec2c_SOURCES = \
   input.c \
   matrix.c \
   network.c \
+  performance.c \
+  performance.h \
   shared.c \
   fields.c \
   ground.c \

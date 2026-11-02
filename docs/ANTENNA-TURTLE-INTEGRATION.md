@@ -175,13 +175,16 @@ Trigger parameters are interpreted values:
 
 ## 6. Solver metadata
 
-Classic NEC2C executions report both `requested` and `used` as
-`legacy-nec-direct`. Their tolerance, iteration count, residuals, and
+Classic NEC2C executions report the requested dense backend (`auto`, `builtin`,
+or `lapack`) and a used solver of `legacy-nec-direct-builtin` or
+`legacy-nec-direct-lapack`. Their tolerance, iteration count, residuals, and
 convergence flag are `null`; execution `status: "ok"` records successful
-completion.
+completion. `auto` uses the built-in implementation below the configured
+crossover and LAPACK at or above it when LAPACKE was available at build time.
 
-Dielectric executions report `dense`, `gmres`, or `fft`. The direct dielectric
-solver reports zero iterations and a computed true residual. Iterative solves
+Dielectric executions request `dense`, `gmres`, or `fft`. A direct execution
+reports `dense-builtin` or `dense-lapack` as the used solver, zero iterations,
+and a computed true residual. Iterative solves
 report the configured relative tolerance and limit, performed iterations,
 reported/true relative residual, and convergence. `accounted_storage_bytes`
 is the projected dense matrix size or the FFT solver's accounted storage.

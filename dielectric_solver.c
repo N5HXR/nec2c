@@ -6,10 +6,13 @@
 #include "vie_iterative.h"
 #include "dielectric_fft.h"
 #include "result_json.h"
+#include "dense_backend.h"
+#include "performance.h"
 
 #include <complex.h>
 #include <float.h>
 #include <math.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -118,49 +121,6 @@ static complex double background_component(const dielectric_cell *cell,
   return value;
 }
 
-static int lu_solve(complex double *a, complex double *b, size_t n)
-{
-  size_t k, i, j;
-  for(k = 0; k < n; ++k)
-  {
-    size_t pivot = k;
-    double largest = cabs(a[k*n+k]);
-    for(i = k + 1; i < n; ++i)
-    {
-      double candidate = cabs(a[i*n+k]);
-      if(candidate > largest) { largest = candidate; pivot = i; }
-    }
-    if(!(largest > 64.0 * DBL_EPSILON))
-      return 0;
-    if(pivot != k)
-    {
-      for(j = k; j < n; ++j)
-      {
-        complex double temporary = a[k*n+j];
-        a[k*n+j] = a[pivot*n+j];
-        a[pivot*n+j] = temporary;
-      }
-      { complex double temporary = b[k]; b[k] = b[pivot]; b[pivot] = temporary; }
-    }
-    for(i = k + 1; i < n; ++i)
-    {
-      complex double multiplier = a[i*n+k] / a[k*n+k];
-      a[i*n+k] = multiplier;
-      for(j = k + 1; j < n; ++j)
-        a[i*n+j] -= multiplier * a[k*n+j];
-      b[i] -= multiplier * b[k];
-    }
-  }
-  for(i = n; i-- > 0; )
-  {
-    complex double sum = b[i];
-    for(j = i + 1; j < n; ++j)
-      sum -= a[i*n+j] * b[j];
-    b[i] = sum / a[i*n+i];
-  }
-  return 1;
-}
-
 void dielectric_radiation_amplitude(const dielectric_mesh_result *mesh,
                                 const complex double *current, double k0,
                                 const double direction[3],
@@ -200,21 +160,59 @@ void dielectric_radiation_amplitude(const dielectric_mesh_result *mesh,
 static double scattered_power(const dielectric_mesh_result *mesh,
                               const complex double *current, double k0)
 {
+  double phase_started = performance_now();
   const size_t count = 974;
   const double golden = VIE_PI * (3.0 - sqrt(5.0));
   const double eta0 = sqrt(VIE_MU_0 / VIE_EPSILON_0);
+  double *samples = malloc(count * sizeof(*samples));
   double sum = 0.0;
+  int parallel_work=mesh->cell_count>0 &&
+      count>=65536/mesh->cell_count;
+  (void)parallel_work;
   size_t i;
-  for(i = 0; i < count; ++i)
+  if(samples != NULL)
   {
-    double z = 1.0 - (gnd.ksymp == 1 ? 2.0:1.0) * ((double)i + 0.5) / (double)count;
-    double radial = sqrt(fmax(0.0, 1.0 - z*z));
-    double azimuth = golden * (double)i;
-    double direction[3] = { radial*cos(azimuth), radial*sin(azimuth), z };
-    complex double a[3];
-    dielectric_radiation_amplitude(mesh, current, k0, direction, a);
-    sum += creal(a[0]*conj(a[0]) + a[1]*conj(a[1]) + a[2]*conj(a[2]));
+    double compute_started=performance_now();
+    ptrdiff_t sample;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(parallel_work)
+#endif
+    for(sample = 0; sample < (ptrdiff_t)count; ++sample)
+    {
+      size_t index = (size_t)sample;
+      double z = 1.0 - (gnd.ksymp == 1 ? 2.0:1.0) *
+                 ((double)index + 0.5) / (double)count;
+      double radial = sqrt(fmax(0.0, 1.0 - z*z));
+      double azimuth = golden * (double)index;
+      double direction[3] = { radial*cos(azimuth), radial*sin(azimuth), z };
+      complex double a[3];
+      dielectric_radiation_amplitude(mesh, current, k0, direction, a);
+      samples[index] = creal(a[0]*conj(a[0]) + a[1]*conj(a[1]) +
+                             a[2]*conj(a[2]));
+    }
+    performance_add("dielectric_power_compute",
+        performance_now()-compute_started);
+    for(i = 0; i < count; ++i)
+      sum += samples[i];
+    free(samples);
   }
+  else
+  {
+    for(i = 0; i < count; ++i)
+    {
+      double z = 1.0 - (gnd.ksymp == 1 ? 2.0:1.0) *
+                 ((double)i + 0.5) / (double)count;
+      double radial = sqrt(fmax(0.0, 1.0 - z*z));
+      double azimuth = golden * (double)i;
+      double direction[3] = { radial*cos(azimuth), radial*sin(azimuth), z };
+      complex double a[3];
+      dielectric_radiation_amplitude(mesh, current, k0, direction, a);
+      sum += creal(a[0]*conj(a[0]) + a[1]*conj(a[1]) +
+                   a[2]*conj(a[2]));
+    }
+  }
+  performance_add("dielectric_power_quadrature",
+      performance_now()-phase_started);
   return ((gnd.ksymp == 1 ? 4.0:2.0) * VIE_PI / (double)count) * sum / (2.0 * eta0);
 }
 
@@ -223,9 +221,59 @@ static void print_pattern(const dielectric_mesh_result *mesh,
                           const dielectric_pattern_request *request,
                           double incident_field_squared, FILE *stream)
 {
+  typedef struct
+  {
+    complex double theta;
+    complex double phi;
+  } pattern_sample;
+  pattern_sample *samples = NULL;
+  size_t sample_count = 0;
+  int parallel_work = 0;
+  (void)parallel_work;
   size_t ip, it;
+  double phase_started;
   if(request == NULL || !request->enabled)
     return;
+  phase_started = performance_now();
+  if(request->theta_count != 0 &&
+     request->phi_count <= SIZE_MAX / request->theta_count)
+  {
+    sample_count = request->phi_count * request->theta_count;
+    parallel_work=mesh->cell_count>0 &&
+        sample_count>=65536/mesh->cell_count;
+    if(sample_count <= (size_t)PTRDIFF_MAX &&
+       sample_count <= SIZE_MAX / sizeof(*samples))
+      samples = malloc(sample_count * sizeof(*samples));
+  }
+  if(samples != NULL)
+  {
+    double compute_started=performance_now();
+    ptrdiff_t sample;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(parallel_work)
+#endif
+    for(sample = 0; sample < (ptrdiff_t)sample_count; ++sample)
+    {
+      size_t index = (size_t)sample;
+      size_t sample_ip = index / request->theta_count;
+      size_t sample_it = index % request->theta_count;
+      double td = request->theta_start_degrees +
+                  request->theta_step_degrees*(double)sample_it;
+      double pd = request->phi_start_degrees +
+                  request->phi_step_degrees*(double)sample_ip;
+      double t = td * VIE_PI / 180.0, p = pd * VIE_PI / 180.0;
+      double direction[3] = {sin(t)*cos(p), sin(t)*sin(p), cos(t)};
+      double etheta[3] = {cos(t)*cos(p), cos(t)*sin(p), -sin(t)};
+      double ephi[3] = {-sin(p), cos(p), 0.0};
+      complex double a[3];
+      dielectric_radiation_amplitude(mesh, current, k0, direction, a);
+      samples[index].theta = a[0]*etheta[0] + a[1]*etheta[1] +
+                             a[2]*etheta[2];
+      samples[index].phi = a[0]*ephi[0] + a[1]*ephi[1] + a[2]*ephi[2];
+    }
+    performance_add("dielectric_far_field_compute",
+        performance_now()-compute_started);
+  }
   result_json_far_begin((size_t)result_json_current_request(),
                         "plane-wave-scattered");
   fprintf(stream, "\n\n  DIELECTRIC SCATTERED FAR FIELD (R TIMES E, V)"
@@ -242,15 +290,26 @@ static void print_pattern(const dielectric_mesh_result *mesh,
       double ephi[3] = {-sin(p), cos(p), 0.0};
       complex double a[3], at, ap;
       double rcs;
-      dielectric_radiation_amplitude(mesh, current, k0, direction, a);
-      at = a[0]*etheta[0] + a[1]*etheta[1] + a[2]*etheta[2];
-      ap = a[0]*ephi[0] + a[1]*ephi[1] + a[2]*ephi[2];
+      if(samples != NULL)
+      {
+        size_t index = ip*request->theta_count + it;
+        at = samples[index].theta;
+        ap = samples[index].phi;
+      }
+      else
+      {
+        dielectric_radiation_amplitude(mesh, current, k0, direction, a);
+        at = a[0]*etheta[0] + a[1]*etheta[1] + a[2]*etheta[2];
+        ap = a[0]*ephi[0] + a[1]*ephi[1] + a[2]*ephi[2];
+      }
       rcs = 4.0 * VIE_PI * (creal(at*conj(at)) + creal(ap*conj(ap))) /
             incident_field_squared;
       fprintf(stream, "\n %8.3f %8.3f  %19.12E %19.12E  %19.12E %19.12E  %19.12E",
               td, pd, creal(at), cimag(at), creal(ap), cimag(ap), rcs);
       result_json_far_sample(td, pd, at, ap);
     }
+  free(samples);
+  performance_add("dielectric_far_field",performance_now()-phase_started);
 }
 
 int dielectric_solve_plane_wave(const dielectric_model *model,
@@ -272,6 +331,7 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
   vie_gmres_report report;
   vie_kernel_options kernel_options;
   dielectric_fft_system *accelerated=NULL;
+  double assembly_started;
   memset(&report, 0, sizeof(report));
   if(wave == NULL || stream == NULL)
   {
@@ -293,6 +353,8 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
   {
     result_solver solver;
     result_power power;
+    if(iterative==2) performance_fft_backend(vie_fft_backend_requested_name(),
+        "builtin");
     fprintf(stream, "\n\n  ---------- DIELECTRIC VOLUME INTEGRAL SOLUTION ----------"
                     "\n  FREQUENCY (MHZ): %12.6f"
                     "\n  VOLUME CELLS:               0"
@@ -341,7 +403,11 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     if(!(gnd.ksymp!=1 && gnd.iperf==1 ? dielectric_fft_prepare_pec : dielectric_fft_prepare)(&accelerated,model,mesh,0,
         2.0*VIE_PI*frequency_mhz*1e6/VIE_C0,
         3*unknowns*sizeof(complex double)+cells*sizeof(double),diagnostic)) goto failure;
-    fprintf(stream,"\n\n  FFT ACCOUNTED SOLVER BYTES: %zu",dielectric_fft_storage(accelerated));
+    performance_fft_backend(vie_fft_backend_requested_name(),
+        dielectric_fft_backend(accelerated));
+    fprintf(stream,"\n\n  FFT BACKEND: %s\n  FFT ACCOUNTED APPLICATION BYTES: %zu\n  FFT THREAD BUDGET: %zu",
+        dielectric_fft_backend(accelerated),dielectric_fft_storage(accelerated),
+        dielectric_fft_threads(accelerated));
     fflush(stream);
   } else {
     matrix = calloc(unknowns*unknowns, sizeof(*matrix));
@@ -367,6 +433,7 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
      electrically larger face-adjacent pairs. */
   kernel_options.relative_tolerance = 5.0e-7;
   kernel_options.absolute_tolerance = 5.0e-10;
+  assembly_started = performance_now();
 
   for(cell = 0; cell < cells; ++cell)
   {
@@ -382,39 +449,72 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     for(component = 0; component < 3; ++component)
       if(!accelerated) matrix[(3*cell+component)*unknowns + 3*cell+component] = epsilon_r;
   }
-  for(cell = 0; !accelerated && cell < cells; ++cell)
+  if(!accelerated)
   {
-    for(column = cell; column < cells; ++column)
+    size_t *failed_columns = malloc(cells*sizeof(*failed_columns));
+    ptrdiff_t cell_index;
+    if(failed_columns == NULL)
     {
-      vie_cuboid testing, source;
-      complex double nblock[3][3];
-      size_t p, q;
-      memcpy(testing.center, mesh->cells[cell].center, sizeof(testing.center));
-      memcpy(testing.size, mesh->cells[cell].size, sizeof(testing.size));
-      memcpy(source.center, mesh->cells[column].center, sizeof(source.center));
-      memcpy(source.size, mesh->cells[column].size, sizeof(source.size));
-      if(!dielectric_background_n(&testing,&source,k0,&kernel_options,nblock))
+      performance_add("dielectric_volume_assembly",
+          performance_now()-assembly_started);
+      solver_error(diagnostic, model, "SOLVER", "memory",
+          "unable to allocate deterministic assembly status");
+      goto failure;
+    }
+    for(cell=0;cell<cells;++cell) failed_columns[cell]=SIZE_MAX;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic,1) if(cells >= 8)
+#endif
+    for(cell_index=0;cell_index<(ptrdiff_t)cells;++cell_index)
+    {
+      size_t testing_cell=(size_t)cell_index;
+      size_t source_cell;
+      for(source_cell=testing_cell;source_cell<cells;++source_cell)
+      {
+        vie_cuboid testing,source;
+        complex double nblock[3][3];
+        size_t p,q;
+        memcpy(testing.center,mesh->cells[testing_cell].center,sizeof(testing.center));
+        memcpy(testing.size,mesh->cells[testing_cell].size,sizeof(testing.size));
+        memcpy(source.center,mesh->cells[source_cell].center,sizeof(source.center));
+        memcpy(source.size,mesh->cells[source_cell].size,sizeof(source.size));
+        if(!dielectric_background_n(&testing,&source,k0,&kernel_options,nblock))
+        {
+          failed_columns[testing_cell]=source_cell;
+          break;
+        }
+        for(p=0;p<3;++p)
+          for(q=0;q<3;++q)
+          {
+            matrix[(3*testing_cell+p)*unknowns+3*source_cell+q]-=
+                chi_values[testing_cell]*nblock[p][q];
+            if(source_cell!=testing_cell)
+            {
+              double testing_volume=mesh->cells[testing_cell].size[0]*
+                  mesh->cells[testing_cell].size[1]*mesh->cells[testing_cell].size[2];
+              double source_volume=mesh->cells[source_cell].size[0]*
+                  mesh->cells[source_cell].size[1]*mesh->cells[source_cell].size[2];
+              matrix[(3*source_cell+q)*unknowns+3*testing_cell+p]-=
+                  chi_values[source_cell]*(testing_volume/source_volume)*nblock[p][q];
+            }
+          }
+      }
+    }
+    for(cell=0;cell<cells;++cell)
+      if(failed_columns[cell]!=SIZE_MAX)
       {
         char pair[192];
-        snprintf(pair, sizeof(pair),"cells=%zu,%zu k0=%.17g",cell+1,column+1,k0);
-        solver_error(diagnostic, model, "SOLVER", pair,
-                     "direct or reflected cuboid interaction quadrature failed");
+        column=failed_columns[cell];free(failed_columns);
+        performance_add("dielectric_volume_assembly",
+            performance_now()-assembly_started);
+        snprintf(pair,sizeof(pair),"cells=%zu,%zu k0=%.17g",cell+1,column+1,k0);
+        solver_error(diagnostic,model,"SOLVER",pair,
+            "direct or reflected cuboid interaction quadrature failed");
         goto failure;
       }
-      for(p = 0; p < 3; ++p)
-        for(q = 0; q < 3; ++q)
-        {
-          matrix[(3*cell+p)*unknowns + 3*column+q] -= chi_values[cell]*nblock[p][q];
-          if(column != cell)
-          {
-            double testing_volume = mesh->cells[cell].size[0]*mesh->cells[cell].size[1]*mesh->cells[cell].size[2];
-            double source_volume = mesh->cells[column].size[0]*mesh->cells[column].size[1]*mesh->cells[column].size[2];
-            matrix[(3*column+q)*unknowns + 3*cell+p] -=
-                chi_values[column]*(testing_volume/source_volume)*nblock[p][q];
-          }
-        }
-    }
+    free(failed_columns);
   }
+  performance_add("dielectric_volume_assembly",performance_now()-assembly_started);
   if(!accelerated) memcpy(original, matrix, unknowns*unknowns*sizeof(*matrix));
   memcpy(rhs_original, rhs, unknowns*sizeof(*rhs));
   if(iterative)
@@ -443,10 +543,15 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     }
   }
   else
-  if(!lu_solve(matrix, rhs, unknowns))
+  {
+  performance_dense_backend(unknowns);
+  fprintf(stream, "\n\n  DENSE BACKEND: %s (REQUESTED %s)",
+          dense_backend_name_for_order(unknowns), dense_backend_requested_name());
+  if(!dense_backend_solve_row_major(matrix, rhs, unknowns))
   {
     solver_error(diagnostic, model, "SOLVER", "matrix", "singular or numerically rank-deficient VIE system");
     goto failure;
+  }
   }
   if(!accelerated) {
   for(row = 0; row < unknowns; ++row)
@@ -464,7 +569,8 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     result_solver solver;
     memset(&solver,0,sizeof(solver));
     solver.requested=iterative==2?"fft":(iterative?"gmres":"dense");
-    solver.used=solver.requested;solver.iterative_fields_defined=1;
+    solver.used=iterative?solver.requested:dense_backend_solver_name_for_order(unknowns);
+    solver.iterative_fields_defined=1;
     solver.relative_tolerance=dielectric_gmres_settings.relative_tolerance;
     solver.maximum_iterations=dielectric_gmres_settings.maximum_iterations;
     solver.iterations=iterative?report.iterations:0;

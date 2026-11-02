@@ -203,6 +203,10 @@ static complex double tensor_integral_recursive(const reduced_integral *integral
                                                 double accumulated_weight)
 {
   complex double sum = 0.0;
+  /* Keep the array contract explicit for optimizing compilers following the
+     recursive call.  Valid callers always have one to three dimensions. */
+  if(dimension < 0 || dimension >= integral->dimensions || dimension >= 3)
+    return 0.0;
   const difference_segment *segment = &integral->segment[dimension];
   double midpoint = 0.5 * (segment->lower + segment->upper);
   double halfwidth = 0.5 * (segment->upper - segment->lower);
