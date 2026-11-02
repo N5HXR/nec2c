@@ -1,6 +1,6 @@
 # Milestone 8: reuse, batching, caching, and field outputs
 
-Status: implementation complete; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.
 
 ## Delivered behavior
 
@@ -86,6 +86,26 @@ fixture is therefore the acceptance timing gate; the loop Yagi remains the
 recommended application-level visual model.
 
 ## User acceptance
+
+The user returned a PASS on 2026-11-02.  All three deterministic regressions
+produced their expected exact-output results.  Two warmups and seven measured
+repetitions produced these medians:
+
+| Threads | Classic field phase | Phase speedup | Classic overall | Coupled power phase | Phase speedup | Coupled overall |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 0.238113 s | 1.00x | 1.00x | 0.022431 s | 1.00x | 1.00x |
+| 2 | 0.126241 s | 1.89x | 1.69x | 0.011487 s | 1.95x | 1.37x |
+| 4 | 0.078198 s | 3.05x | 2.36x | 0.005963 s | 3.76x | 2.34x |
+| 8 | 0.059401 s | 4.01x | 2.82x | 0.006457 s | 3.47x | 3.15x |
+| 16 | 0.030765 s | 7.74x | 3.22x | 0.004838 s | 4.64x | 3.53x |
+| 32 | 0.043365 s | 5.49x | 2.71x | 0.010870 s | 2.06x | 3.59x |
+
+Sixteen workers are the clear classic-field optimum on this heterogeneous
+host.  The coupled field phase also peaks at 16 workers; its 32-worker overall
+median is only fractionally better because other phases dominate the complete
+solve.  These results support retaining the 16-worker automatic CPU budget.
+
+The accepted procedure is retained below for reproducibility.
 
 Run the deterministic regressions first:
 

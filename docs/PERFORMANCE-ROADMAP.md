@@ -158,7 +158,10 @@ goal.
 
 ### M8: reuse, batching, caching, and field outputs
 
-Status: implementation complete; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.  Seven-run acceptance medians reach
+7.74x for classic field computation and 3.22x for the complete RP phase at 16
+threads.  Coupled angular work reaches 4.64x and the complete solve 3.53x, with
+all deterministic regressions passing.
 
 Reuse factorizations and solved currents, batch right-hand sides, add exact-key
 in-process setup caches, and evaluate independent field points in parallel with
