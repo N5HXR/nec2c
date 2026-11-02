@@ -28,11 +28,11 @@ def fields(output):
     return dict(re.findall(r"([a-z0-9_]+)=([^\s]+)", output))
 
 
-def sample(binary, model, threads, maximum_iterations):
+def sample(binary, model, threads, maximum_iterations, backend):
     environment = os.environ.copy()
     environment["OMP_NUM_THREADS"] = str(threads)
     completed = subprocess.run(
-        [str(binary), model, "1e-8", str(maximum_iterations)],
+        [str(binary), model, "1e-8", str(maximum_iterations), backend],
         env=environment,
         text=True,
         stdout=subprocess.PIPE,
@@ -56,6 +56,7 @@ def sample(binary, model, threads, maximum_iterations):
         "matvec_bitwise_hash",
         "residual",
         "threads",
+        "backend",
     )
     missing = [name for name in required if name not in parsed]
     if missing:
@@ -71,6 +72,10 @@ def sample(binary, model, threads, maximum_iterations):
         raise RuntimeError(
             f"requested {threads} threads, plan captured {parsed['threads']}"
         )
+    if parsed["backend"] != backend and backend != "auto":
+        raise RuntimeError(
+            f"requested {backend} backend, plan captured {parsed['backend']}"
+        )
     return {
         "build_seconds": float(parsed["build_seconds"]),
         "matvec_seconds": float(parsed["matvec_seconds"]),
@@ -82,6 +87,7 @@ def sample(binary, model, threads, maximum_iterations):
             parsed["matvec_bitwise_hash"],
             parsed["residual"],
         ],
+        "backend": parsed["backend"],
     }
 
 
@@ -93,6 +99,7 @@ def main():
     parser.add_argument("--warmup", type=int, default=2)
     parser.add_argument("--repeat", type=int, default=7)
     parser.add_argument("--max-iterations", type=int, default=1)
+    parser.add_argument("--backend", choices=("auto", "builtin", "fftw"), default="auto")
     parser.add_argument("--output", type=Path)
     arguments = parser.parse_args()
     if arguments.warmup < 0 or arguments.repeat < 1 or arguments.max_iterations < 1:
@@ -108,15 +115,16 @@ def main():
         "warmup": arguments.warmup,
         "repeat": arguments.repeat,
         "maximum_iterations": arguments.max_iterations,
+        "backend_requested": arguments.backend,
         "results": [],
     }
     reference = None
     serial_median = None
     for count in arguments.threads:
         for _ in range(arguments.warmup):
-            sample(arguments.binary, arguments.model, count, arguments.max_iterations)
+            sample(arguments.binary, arguments.model, count, arguments.max_iterations, arguments.backend)
         samples = [
-            sample(arguments.binary, arguments.model, count, arguments.max_iterations)
+            sample(arguments.binary, arguments.model, count, arguments.max_iterations, arguments.backend)
             for _ in range(arguments.repeat)
         ]
         signatures = {tuple(item["signature"]) for item in samples}

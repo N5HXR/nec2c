@@ -50,6 +50,10 @@ typedef struct
   int dense_backend_mixed;
   char dense_backend_requested[16];
   char dense_backend_used[16];
+  int fft_backend_set;
+  int fft_backend_mixed;
+  char fft_backend_requested[16];
+  char fft_backend_used[16];
   int concurrency_set;
   size_t jobs, threads, allowed_cpus;
   int jobs_automatic, threads_automatic, memory_limited;
@@ -153,7 +157,7 @@ static void write_document(void)
   cpu = process_cpu_seconds() - session.cpu_started;
   rss = peak_rss_kib();
   fprintf(session.document,
-      "{\"schema\":\"nec2c-timing\",\"schema_version\":1,"
+      "{\"schema\":\"nec2c-timing\",\"schema_version\":2,"
       "\"producer\":{\"program\":\"nec2c-n5hxr\",\"program_version\":");
   json_string(session.document, PACKAGE_VERSION);
   fputs("},\"input\":{\"deck\":", session.document);
@@ -166,6 +170,15 @@ static void write_document(void)
   if(session.dense_backend_set)
     json_string(session.document,
         session.dense_backend_mixed ? "mixed" : session.dense_backend_used);
+  else fputs("null", session.document);
+  fputs("},\"fft_backend\":{\"requested\":", session.document);
+  if(session.fft_backend_set)
+    json_string(session.document, session.fft_backend_requested);
+  else fputs("null", session.document);
+  fputs(",\"used\":", session.document);
+  if(session.fft_backend_set)
+    json_string(session.document,
+        session.fft_backend_mixed ? "mixed" : session.fft_backend_used);
   else fputs("null", session.document);
   fputs("},\"concurrency\":", session.document);
   if(session.concurrency_set)
@@ -282,6 +295,22 @@ void performance_dense_backend(size_t order)
   else if(strcmp(session.dense_backend_requested, requested) != 0 ||
           strcmp(session.dense_backend_used, used) != 0)
     session.dense_backend_mixed = 1;
+}
+
+void performance_fft_backend(const char *requested, const char *used)
+{
+  if(!session.active || session.written || !requested || !used) return;
+  if(!session.fft_backend_set)
+  {
+    snprintf(session.fft_backend_requested,
+             sizeof(session.fft_backend_requested), "%s", requested);
+    snprintf(session.fft_backend_used,
+             sizeof(session.fft_backend_used), "%s", used);
+    session.fft_backend_set = 1;
+  }
+  else if(strcmp(session.fft_backend_requested, requested) != 0 ||
+          strcmp(session.fft_backend_used, used) != 0)
+    session.fft_backend_mixed = 1;
 }
 
 void performance_concurrency(size_t jobs, size_t threads, size_t allowed_cpus,

@@ -18,11 +18,13 @@ void usage(void)
   fprintf( stderr,
 	  "usage: nec2c [-i<input-file-name>] [-o<output-file-name>]"
 	  " [--result-json <file>] [--timing-json <file>] [--backend <name>]"
+	  " [--fft-backend <name>]"
 	  " [--jobs <count>] [--threads <count>] [--validate-only]"
 	  "\n       --capabilities-json: write machine capabilities and exit."
 	  "\n       --result-json file: atomically write result schema version 1."
 	  "\n       --timing-json file: atomically write timing schema version 1."
 	  "\n       --backend auto|builtin|lapack: dense direct backend (default auto)."
+	  "\n       --fft-backend auto|builtin|fftw: FFT backend (default auto)."
 	  "\n       --jobs auto|N: concurrent frequency jobs (default auto)."
 	  "\n       --threads auto|N: numerical-library threads per job (default auto)."
 	  "\n       --validate-only: validate without solving (requires --result-json)."

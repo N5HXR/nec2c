@@ -45,6 +45,7 @@ int main(void)
   const size_t far_shape[3]={9,5,3},far_xyz[]={0,0,0,8,4,2,4,1,0};
   const size_t one[3]={1,1,1},zero[3]={0,0,0},duplicate[]={0,0,0,0,0,0};
   const size_t overflow[3]={SIZE_MAX,2,2};vie_fft_plan *p=NULL;
+  CHECK(vie_fft_backend_set("builtin"));
   CHECK(!vie_fft_create(&p,shape,6,xyz,.25,.2,3,1));CHECK(p==NULL);
   CHECK(!vie_fft_create(&p,shape,2,duplicate,.25,.2,3,1000000));CHECK(p==NULL);
   CHECK(!vie_fft_create(&p,one,6,xyz,.25,.2,3,1000000));
@@ -56,12 +57,24 @@ int main(void)
   CHECK(!fixture(one,zero,1,.2,1));
   CHECK(!fixture(one,zero,1,.2,3-.4*I));
   CHECK(!fixture(shape,xyz,6,.8,3-.4*I));
+  if(vie_fft_fftw_available()) {
+    CHECK(vie_fft_backend_set("fftw"));
+    CHECK(!fixture(one,zero,1,.2,3));
+    CHECK(!fixture(shape,xyz,6,0,3));CHECK(!fixture(shape,xyz,6,.8,3));
+    CHECK(!fixture(far_shape,far_xyz,3,4,3));
+    CHECK(!fixture(shape,xyz,6,.8,3-.4*I));
+    CHECK(vie_fft_backend_set("builtin"));
+  } else CHECK(!vie_fft_backend_set("fftw"));
   CHECK(!vie_fft_create(&p,one,1,zero,.25,.2,3+.4*I,1000000));
   CHECK(vie_fft_create(&p,one,1,zero,.25,.2,3,1000000));
   CHECK(!vie_fft_set_permittivity(p,1,2));
   CHECK(!vie_fft_set_permittivity(p,0,3+.1*I));
   CHECK(!vie_fft_set_permittivity(p,0,NAN));
   CHECK(vie_fft_set_permittivity(p,0,1-.4*I));
+  CHECK(vie_fft_backend_last_used_name()!=NULL);
+  vie_fft_backend_clear_last_used();
+  CHECK(vie_fft_backend_last_used_name()==NULL);
   vie_fft_destroy(p);
+  CHECK(vie_fft_backend_set("auto"));CHECK(!vie_fft_backend_set("invalid"));
   puts("FFT operator tests passed");return 0;
 }

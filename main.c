@@ -285,6 +285,7 @@ typedef struct
 {
   int success;
   double elapsed_seconds;
+  char fft_backend[8];
   dielectric_diagnostic diagnostic;
 } dielectric_worker_status;
 
@@ -302,14 +303,22 @@ typedef struct
 } dielectric_worker_context;
 
 static int solve_dielectric_frequency(const dielectric_worker_context *context,
-    double frequency, FILE *stream, dielectric_diagnostic *diagnostic)
+    double frequency, FILE *stream, dielectric_diagnostic *diagnostic,
+    char fft_backend[8])
 {
+  int ok;
+  if(context->iterative == 2) vie_fft_backend_clear_last_used();
   if(context->coupled)
-    return dielectric_solve_conductor_coupled(context->model, context->mesh,
+    ok=dielectric_solve_conductor_coupled(context->model, context->mesh,
         frequency, context->rkh, context->extended_kernel, context->iterative,
         context->wave, context->pattern, stream, diagnostic);
-  return dielectric_solve_plane_wave(context->model, context->mesh, frequency,
-      context->iterative, context->wave, context->pattern, stream, diagnostic);
+  else
+    ok=dielectric_solve_plane_wave(context->model, context->mesh, frequency,
+        context->iterative, context->wave, context->pattern, stream, diagnostic);
+  if(ok && context->iterative == 2)
+    snprintf(fft_backend, 8, "%s", vie_fft_backend_last_used_name() ?
+        vie_fft_backend_last_used_name():"builtin");
+  return ok;
 }
 
 #ifndef _WIN32
@@ -376,7 +385,7 @@ static int run_dielectric_frequency_workers(
         started = performance_now();
         status.success = solve_dielectric_frequency(context,
             requested_frequency(frequency_mode, first_mhz, step, (int)next),
-            slot->report, &status.diagnostic);
+            slot->report, &status.diagnostic, status.fft_backend);
         status.elapsed_seconds = performance_now() - started;
         if(!result_json_execution_end(status.success) ||
            !result_json_worker_export(slot->json)) status.success = 0;
@@ -425,6 +434,9 @@ static int run_dielectric_frequency_workers(
          !status.success || !copy_stream(stream, slots[index].report) ||
          !result_json_worker_import(slots[index].json))
       { failed = 1; break; }
+      if(context->iterative == 2 && status.fft_backend[0])
+        performance_fft_backend(vie_fft_backend_requested_name(),
+            status.fft_backend);
       performance_add("dielectric_solve", status.elapsed_seconds);
     }
   if(failed)
@@ -639,6 +651,8 @@ static int validate_dielectric_preflight(const dielectric_model *model,
   if(solver!=2) return 1;
   ok=(gnd.ksymp!=1&&gnd.iperf==1 ? dielectric_fft_prepare_pec:dielectric_fft_prepare)(
       &fft,model,mesh,conductors,k0,0,diagnostic);
+  if(ok) performance_fft_backend(vie_fft_backend_requested_name(),
+      dielectric_fft_backend(fft));
   dielectric_fft_free(fft);
   return ok;
 }
@@ -768,6 +782,7 @@ int main( int argc, char **argv )
       {"backend", required_argument, NULL, 1004},
       {"jobs", required_argument, NULL, 1005},
       {"threads", required_argument, NULL, 1006},
+      {"fft-backend", required_argument, NULL, 1007},
       {NULL, 0, NULL, 0}
     };
   while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
@@ -871,6 +886,19 @@ int main( int argc, char **argv )
         if(!concurrency_set_threads(optarg))
         {
           fprintf(stderr, "nec2c: --threads requires auto or an integer from 1 to 65536\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1007:
+        if(strcmp(optarg,"auto") && strcmp(optarg,"builtin") && strcmp(optarg,"fftw"))
+        {
+          fprintf(stderr,"nec2c: --fft-backend requires auto, builtin, or fftw\n");
+          exit(EXIT_FAILURE);
+        }
+        if(!vie_fft_backend_set(optarg))
+        {
+          fprintf(stderr,"nec2c: FFTW backend is unavailable in this build\n");
           exit(EXIT_FAILURE);
         }
         break;

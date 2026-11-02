@@ -80,6 +80,33 @@ int main(void) {
   ])
 ], [have_lapack=no])
 AC_MSG_NOTICE([optional LAPACK dense backend: $have_lapack])
+AC_ARG_WITH([fftw],
+  [AS_HELP_STRING([--with-fftw@<:@=auto/yes/no@:>@],
+    [enable the optional threaded FFTW backend (default: auto)])],
+  [], [with_fftw=auto])
+AS_IF([test "x$with_fftw" != xno], [
+  save_LIBS="$LIBS"
+  AC_SEARCH_LIBS([pthread_create], [pthread], [have_pthread=yes], [have_pthread=no])
+  fftw_base_LIBS="$LIBS"
+  AC_CHECK_HEADER([fftw3.h], [have_fftw_header=yes], [have_fftw_header=no])
+  AS_IF([test "x$have_fftw_header" = xyes && test "x$have_pthread" = xyes], [
+    AC_CHECK_LIB([fftw3], [fftw_plan_many_dft], [have_fftw_core=yes],
+      [have_fftw_core=no], [-lm])
+  ], [have_fftw_core=no])
+  AS_IF([test "x$have_fftw_core" = xyes], [
+    AC_CHECK_LIB([fftw3_threads], [fftw_init_threads], [have_fftw=yes],
+      [have_fftw=no], [-lfftw3 -lm])
+  ], [have_fftw=no])
+  AS_IF([test "x$have_fftw" = xyes], [
+    AC_DEFINE([HAVE_FFTW], [1],
+      [Define when compatible FFTW3 core and threads libraries are available.])
+    LIBS="-lfftw3_threads -lfftw3 $fftw_base_LIBS"
+  ], [LIBS="$save_LIBS"])
+  AS_IF([test "x$with_fftw" = xyes && test "x$have_fftw" != xyes], [
+    AC_MSG_ERROR([--with-fftw=yes requested, but FFTW3 headers, core library, and threads library were not found])
+  ])
+], [have_fftw=no])
+AC_MSG_NOTICE([optional threaded FFTW backend: $have_fftw])
 AS_IF([test -n "$OPENMP_CFLAGS"], [
   AC_MSG_NOTICE([parallel built-in FFT: enabled with $OPENMP_CFLAGS])
 ], [

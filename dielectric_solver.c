@@ -252,6 +252,8 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
   {
     result_solver solver;
     result_power power;
+    if(iterative==2) performance_fft_backend(vie_fft_backend_requested_name(),
+        "builtin");
     fprintf(stream, "\n\n  ---------- DIELECTRIC VOLUME INTEGRAL SOLUTION ----------"
                     "\n  FREQUENCY (MHZ): %12.6f"
                     "\n  VOLUME CELLS:               0"
@@ -300,8 +302,11 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     if(!(gnd.ksymp!=1 && gnd.iperf==1 ? dielectric_fft_prepare_pec : dielectric_fft_prepare)(&accelerated,model,mesh,0,
         2.0*VIE_PI*frequency_mhz*1e6/VIE_C0,
         3*unknowns*sizeof(complex double)+cells*sizeof(double),diagnostic)) goto failure;
-    fprintf(stream,"\n\n  FFT ACCOUNTED SOLVER BYTES: %zu\n  FFT THREAD BUDGET: %zu",
-        dielectric_fft_storage(accelerated),dielectric_fft_threads(accelerated));
+    performance_fft_backend(vie_fft_backend_requested_name(),
+        dielectric_fft_backend(accelerated));
+    fprintf(stream,"\n\n  FFT BACKEND: %s\n  FFT ACCOUNTED APPLICATION BYTES: %zu\n  FFT THREAD BUDGET: %zu",
+        dielectric_fft_backend(accelerated),dielectric_fft_storage(accelerated),
+        dielectric_fft_threads(accelerated));
     fflush(stream);
   } else {
     matrix = calloc(unknowns*unknowns, sizeof(*matrix));

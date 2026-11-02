@@ -182,17 +182,20 @@ int result_json_write_capabilities(FILE *stream)
     ",\"schema\":\"nec2c-capabilities\",\"schema_version\":1,"
     "\"features\":{\"dielectric_feature_revision\":1,"
     "\"dielectric_resource_versions\":[1,2,3],\"result_json_versions\":[1],"
-    "\"timing_json_versions\":[1],"
+    "\"timing_json_versions\":[2],"
     "\"validate_only\":true,\"legacy_result_output\":true,"
     "\"solvers\":[\"dense\",\"gmres\",\"fft\"],"
     "\"dense_backends\":[\"auto\",\"builtin\"%s],"
     "\"default_dense_backend\":\"auto\","
+    "\"fft_backends\":[\"auto\",\"builtin\"%s],"
+    "\"default_fft_backend\":\"auto\","
     "\"frequency_parallelism\":\"posix-process\","
     "\"default_jobs\":\"auto\",\"default_threads\":\"auto\","
     "\"grounds\":[\"free-space\",\"pec\",\"sommerfeld-norton\"]},"
     "\"limits\":{\"nec_card_characters\":132,\"default_max_cells\":%d,"
     "\"fft_accounted_storage_bytes\":%lu,\"lapack_auto_min_order\":%lu}}\n",
     dense_backend_lapack_available() ? ",\"lapack\"" : "",
+    vie_fft_fftw_available() ? ",\"fftw\"" : "",
     DIELECTRIC_DEFAULT_MAX_CELLS, (unsigned long)DIELECTRIC_FFT_BUDGET,
     (unsigned long)dense_backend_lapack_min_order());
   return !ferror(stream);

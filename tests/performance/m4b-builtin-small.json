@@ -1,0 +1,254 @@
+{
+  "schema": "nec2c-fft-benchmark-v1",
+  "model": "skeleton",
+  "system": {
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "processor": "x86_64",
+    "affinity_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ]
+  },
+  "warmup": 2,
+  "repeat": 7,
+  "maximum_iterations": 300,
+  "backend_requested": "builtin",
+  "results": [
+    {
+      "threads": 1,
+      "median": {
+        "build_seconds": 0.150446,
+        "matvec_seconds": 0.010895,
+        "solve_seconds": 0.154824,
+        "peak_rss_kib": 15360
+      },
+      "matvec_speedup": 1.0,
+      "samples": [
+        {
+          "build_seconds": 0.173228,
+          "matvec_seconds": 0.010895,
+          "solve_seconds": 0.15558,
+          "peak_rss_kib": 15360,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.165905,
+          "matvec_seconds": 0.017716,
+          "solve_seconds": 0.154824,
+          "peak_rss_kib": 15360,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.148131,
+          "matvec_seconds": 0.010582,
+          "solve_seconds": 0.152193,
+          "peak_rss_kib": 15616,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.149572,
+          "matvec_seconds": 0.010766,
+          "solve_seconds": 0.155777,
+          "peak_rss_kib": 15104,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.149301,
+          "matvec_seconds": 0.010941,
+          "solve_seconds": 0.154383,
+          "peak_rss_kib": 15360,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.150446,
+          "matvec_seconds": 0.010917,
+          "solve_seconds": 0.153786,
+          "peak_rss_kib": 15104,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.153005,
+          "matvec_seconds": 0.010893,
+          "solve_seconds": 0.157287,
+          "peak_rss_kib": 15360,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        }
+      ]
+    },
+    {
+      "threads": 16,
+      "median": {
+        "build_seconds": 0.150165,
+        "matvec_seconds": 0.002472,
+        "solve_seconds": 0.021475,
+        "peak_rss_kib": 13568
+      },
+      "matvec_speedup": 4.407362459546926,
+      "samples": [
+        {
+          "build_seconds": 0.146766,
+          "matvec_seconds": 0.002598,
+          "solve_seconds": 0.021138,
+          "peak_rss_kib": 13568,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.157908,
+          "matvec_seconds": 0.002546,
+          "solve_seconds": 0.023765,
+          "peak_rss_kib": 14080,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.141341,
+          "matvec_seconds": 0.002312,
+          "solve_seconds": 0.023116,
+          "peak_rss_kib": 13312,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.141432,
+          "matvec_seconds": 0.002303,
+          "solve_seconds": 0.021136,
+          "peak_rss_kib": 13568,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.15215,
+          "matvec_seconds": 0.002405,
+          "solve_seconds": 0.020903,
+          "peak_rss_kib": 13824,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.173458,
+          "matvec_seconds": 0.002472,
+          "solve_seconds": 0.021475,
+          "peak_rss_kib": 13568,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        },
+        {
+          "build_seconds": 0.150165,
+          "matvec_seconds": 0.002512,
+          "solve_seconds": 0.021925,
+          "peak_rss_kib": 13312,
+          "signature": [
+            "-0x1.0b99dcb1ed7cdp+17",
+            "0x1.0261d0c02898ep+16",
+            "4ebceedfd5e348a9",
+            "3.33556794472e-09"
+          ],
+          "backend": "builtin"
+        }
+      ]
+    }
+  ]
+}

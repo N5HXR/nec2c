@@ -27,16 +27,21 @@ def load(path):
 
 with tempfile.TemporaryDirectory() as directory:
     temporary = Path(directory)
-    schema = load(ROOT / "docs/nec2c-timing-v1.schema.json")
+    legacy_schema = load(ROOT / "docs/nec2c-timing-v1.schema.json")
+    assert legacy_schema["properties"]["schema_version"] == {"const": 1}
+    assert "fft_backend" not in legacy_schema["properties"]
+    schema = load(ROOT / "docs/nec2c-timing-v2.schema.json")
     assert schema["properties"]["schema"] == {"const": "nec2c-timing"}
-    assert schema["properties"]["schema_version"] == {"const": 1}
+    assert schema["properties"]["schema_version"] == {"const": 2}
 
     capabilities = json.loads(run("--capabilities-json").stdout)
-    assert capabilities["features"]["timing_json_versions"] == [1]
+    assert capabilities["features"]["timing_json_versions"] == [2]
     assert capabilities["features"]["default_dense_backend"] == "auto"
     assert capabilities["features"]["default_jobs"] == "auto"
     assert capabilities["features"]["default_threads"] == "auto"
     assert capabilities["features"]["dense_backends"][:2] == ["auto", "builtin"]
+    assert capabilities["features"]["fft_backends"][:2] == ["auto", "builtin"]
+    assert capabilities["features"]["default_fft_backend"] == "auto"
     assert capabilities["limits"]["lapack_auto_min_order"] >= 1
 
     deck = ROOT / "Input/EX1.nec"
@@ -44,11 +49,12 @@ with tempfile.TemporaryDirectory() as directory:
     run("--timing-json", timing, "-i", deck, "-o", temporary / "classic.out")
     artifact = load(timing)
     assert artifact["schema"] == "nec2c-timing"
-    assert artifact["schema_version"] == 1
+    assert artifact["schema_version"] == 2
     assert artifact["completion"] == {"status": "ok"}
     assert Path(artifact["input"]["deck"]) == deck
     assert artifact["clock"] == {"wall": "monotonic", "cpu": "process"}
     assert artifact["dense_backend"] == {"requested": "auto", "used": "builtin"}
+    assert artifact["fft_backend"] == {"requested": None, "used": None}
     assert artifact["process"]["wall_seconds"] >= 0.0
     assert artifact["process"]["cpu_seconds"] >= 0.0
     assert artifact["process"]["peak_rss_kib"] is None or artifact["process"]["peak_rss_kib"] >= 0

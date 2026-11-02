@@ -112,6 +112,10 @@ Target at least 1.5x on the declared large grid.
 
 ### M4B: optional threaded FFTW backend
 
+Status: ready for user acceptance on 2026-11-02.  FFTW 3.3.8 clears the
+20-percent promotion gate on the production target and is selected by `auto`
+when available; the built-in backend remains selectable and is the fallback.
+
 Add FFTW as a selectable backend and retain the built-in FFT as reference and
 fallback.  FFTW becomes automatic only if it beats the parallel built-in path
 by an agreed material margin, initially 20%, on production-scale targets.

@@ -28,7 +28,7 @@ def run(threads):
     environment = os.environ.copy()
     environment["OMP_NUM_THREADS"] = str(threads)
     completed = subprocess.run(
-        [str(BENCHMARK), "tree", "1e-8", "1"],
+        [str(BENCHMARK), "tree", "1e-8", "1", "builtin"],
         env=environment,
         text=True,
         stdout=subprocess.PIPE,
@@ -91,6 +91,7 @@ def run_cli(directory, label, jobs, threads):
         [
             str(PROGRAM),
             "-s", "fft",
+            "--fft-backend", "builtin",
             "-r", "1e-8",
             "--jobs", jobs,
             "--threads", threads,
@@ -129,6 +130,7 @@ with tempfile.TemporaryDirectory(prefix="nec2c-m4a-") as temporary:
             for value in re.findall(r"FREQUENCY \(MHZ\):\s+([0-9.]+)", report)
         ]
         assert frequencies == [90.0, 100.0, 110.0, 120.0]
+        assert "FFT ACCOUNTED APPLICATION BYTES:" in report
         assert "FFT THREAD BUDGET:" in report
     assert serial_timing["concurrency"]["jobs_used"] == 1
     assert serial_timing["concurrency"]["threads_per_job"] == 1

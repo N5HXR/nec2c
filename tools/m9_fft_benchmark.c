@@ -78,12 +78,13 @@ int main(int argc,char **argv)
   const double h=.25,k=2*3.14159265358979323846*28e6/299792458.0;
   complex double *rhs,*solution,*product,sum[3]={0,0,0},product_checksum=0;
   vie_fft_plan *plan=NULL;vie_linear_operator op;progress_context progress;vie_gmres_options options;vie_gmres_report report;struct rusage usage;
-  if(argc>4) return 2;
+  if(argc>5) return 2;
   if(argc>1 && strcmp(argv[1],"skeleton")==0) full=0;
-  else if(argc>1 && strcmp(argv[1],"tree")!=0) {fprintf(stderr,"usage: %s [tree|skeleton] [rtol] [max_iterations]\n",argv[0]);return 2;}
+  else if(argc>1 && strcmp(argv[1],"tree")!=0) {fprintf(stderr,"usage: %s [tree|skeleton] [rtol] [max_iterations] [auto|builtin|fftw]\n",argv[0]);return 2;}
   if(argc>2) {char *end;tol=strtod(argv[2],&end);if(*end || !isfinite(tol) || tol<=0 || tol>=1) return 2;}
   vie_gmres_default_options(&options);options.relative_tolerance=tol;
   if(argc>3) {char *end;unsigned long v=strtoul(argv[3],&end,10);if(*end || !v || v>10000) return 2;options.maximum_iterations=v;}
+  if(argc>4 && !vie_fft_backend_set(argv[4])) {fprintf(stderr,"FFT backend unavailable: %s\n",argv[4]);return 2;}
   nb=full ? 4:3;
   if(!full) {shape[0]=shape[1]=13;shape[2]=32;}
   for(b=0;b<nb;b++) count+=(boxes[b][3]-boxes[b][0])*(boxes[b][4]-boxes[b][1])*(boxes[b][5]-boxes[b][2]);
@@ -106,7 +107,7 @@ int main(int argc,char **argv)
   build=seconds()-start;vie_fft_operator(plan,&op);
   progress.original=op;progress.applications=0;progress.started=seconds();
   op.apply=progress_apply;op.context=&progress;
-  printf("build_seconds=%.6f plan_bytes=%zu gmres_bytes=%zu caller_bytes=%zu threads=%zu\n",build,vie_fft_bytes(plan),workspace,caller,vie_fft_threads(plan));fflush(stdout);
+  printf("build_seconds=%.6f plan_bytes=%zu gmres_bytes=%zu caller_bytes=%zu threads=%zu backend=%s\n",build,vie_fft_bytes(plan),workspace,caller,vie_fft_threads(plan),vie_fft_backend_name(plan));fflush(stdout);
   start=seconds();op.apply(op.context,rhs,product);matvec=seconds()-start;
   for(c=0;c<n;c++) product_checksum+=(double)(c+1)*product[c];
   printf("matvec_checksum_real=%a matvec_checksum_imag=%a\n",

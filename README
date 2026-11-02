@@ -39,6 +39,13 @@
   `python3 tests/fft_parallel.py --require-parallel` verifies that the built
   benchmark and the nec2c CLI actually use the threaded path.
 
+  When FFTW 3 development headers and its threads library are available,
+  configure also enables the optional threaded FFTW backend.  The validated
+  faster backend is selected automatically.  Use `--fft-backend builtin` to
+  retain the built-in transform, `--fft-backend fftw` to require FFTW, or
+  `--fft-backend auto` for the default.  Configure with `--with-fftw=no` for a
+  dependency-free build; an explicit unavailable FFTW request is rejected.
+
   The upstream README is preserved below.
 
 

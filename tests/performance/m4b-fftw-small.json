@@ -1,0 +1,254 @@
+{
+  "schema": "nec2c-fft-benchmark-v1",
+  "model": "skeleton",
+  "system": {
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "processor": "x86_64",
+    "affinity_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ]
+  },
+  "warmup": 2,
+  "repeat": 7,
+  "maximum_iterations": 300,
+  "backend_requested": "fftw",
+  "results": [
+    {
+      "threads": 1,
+      "median": {
+        "build_seconds": 0.146542,
+        "matvec_seconds": 0.003446,
+        "solve_seconds": 0.0344,
+        "peak_rss_kib": 17408
+      },
+      "matvec_speedup": 1.0,
+      "samples": [
+        {
+          "build_seconds": 0.141866,
+          "matvec_seconds": 0.003279,
+          "solve_seconds": 0.03425,
+          "peak_rss_kib": 17664,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.146053,
+          "matvec_seconds": 0.003561,
+          "solve_seconds": 0.0344,
+          "peak_rss_kib": 17408,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.146542,
+          "matvec_seconds": 0.00335,
+          "solve_seconds": 0.03386,
+          "peak_rss_kib": 17664,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.152932,
+          "matvec_seconds": 0.003446,
+          "solve_seconds": 0.034289,
+          "peak_rss_kib": 17408,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.142816,
+          "matvec_seconds": 0.003225,
+          "solve_seconds": 0.035852,
+          "peak_rss_kib": 17664,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.18305,
+          "matvec_seconds": 0.004192,
+          "solve_seconds": 0.035538,
+          "peak_rss_kib": 17408,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.172083,
+          "matvec_seconds": 0.006237,
+          "solve_seconds": 0.056431,
+          "peak_rss_kib": 16896,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        }
+      ]
+    },
+    {
+      "threads": 16,
+      "median": {
+        "build_seconds": 0.17671,
+        "matvec_seconds": 0.002594,
+        "solve_seconds": 0.011987,
+        "peak_rss_kib": 16384
+      },
+      "matvec_speedup": 1.3284502698535081,
+      "samples": [
+        {
+          "build_seconds": 0.17671,
+          "matvec_seconds": 0.002594,
+          "solve_seconds": 0.012998,
+          "peak_rss_kib": 16384,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.145984,
+          "matvec_seconds": 0.002946,
+          "solve_seconds": 0.011987,
+          "peak_rss_kib": 16128,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.152203,
+          "matvec_seconds": 0.002411,
+          "solve_seconds": 0.011627,
+          "peak_rss_kib": 16896,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.24131,
+          "matvec_seconds": 0.005321,
+          "solve_seconds": 0.01178,
+          "peak_rss_kib": 16384,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.205238,
+          "matvec_seconds": 0.003219,
+          "solve_seconds": 0.016537,
+          "peak_rss_kib": 15616,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.190829,
+          "matvec_seconds": 0.00255,
+          "solve_seconds": 0.012588,
+          "peak_rss_kib": 16128,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        },
+        {
+          "build_seconds": 0.143256,
+          "matvec_seconds": 0.002495,
+          "solve_seconds": 0.011243,
+          "peak_rss_kib": 16896,
+          "signature": [
+            "-0x1.0b99dcb1ed7ccp+17",
+            "0x1.0261d0c02898ep+16",
+            "586530c678466fac",
+            "3.33556793352e-09"
+          ],
+          "backend": "fftw"
+        }
+      ]
+    }
+  ]
+}

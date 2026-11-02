@@ -29,6 +29,8 @@ void dielectric_fft_free(dielectric_fft_system *s)
 size_t dielectric_fft_storage(const dielectric_fft_system *s) {return s ? s->bytes:0;}
 size_t dielectric_fft_threads(const dielectric_fft_system *s)
 {return s ? vie_fft_threads(s->plan):0;}
+const char *dielectric_fft_backend(const dielectric_fft_system *s)
+{return s ? vie_fft_backend_name(s->plan):"none";}
 complex double *dielectric_fft_entry(dielectric_fft_system *s,size_t row,size_t column)
 {
   size_t c=s->c,v=s->v;

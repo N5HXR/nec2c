@@ -22,4 +22,5 @@ complex double *dielectric_fft_entry(dielectric_fft_system *system,size_t row,si
 void dielectric_fft_get_operator(dielectric_fft_system *system,vie_linear_operator *op);
 size_t dielectric_fft_storage(const dielectric_fft_system *system);
 size_t dielectric_fft_threads(const dielectric_fft_system *system);
+const char *dielectric_fft_backend(const dielectric_fft_system *system);
 #endif

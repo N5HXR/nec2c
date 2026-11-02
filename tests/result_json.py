@@ -40,6 +40,8 @@ with tempfile.TemporaryDirectory() as directory:
     assert capabilities["features"]["grounds"] == ["free-space", "pec", "sommerfeld-norton"]
     assert capabilities["features"]["default_dense_backend"] == "auto"
     assert capabilities["features"]["dense_backends"][:2] == ["auto", "builtin"]
+    assert capabilities["features"]["fft_backends"][:2] == ["auto", "builtin"]
+    assert capabilities["features"]["default_fft_backend"] == "auto"
 
     deck = ROOT / "tests/decks/patch-only.nec"
     plain = temporary / "plain.out"
