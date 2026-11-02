@@ -33,6 +33,9 @@ with tempfile.TemporaryDirectory() as directory:
 
     capabilities = json.loads(run("--capabilities-json").stdout)
     assert capabilities["features"]["timing_json_versions"] == [1]
+    assert capabilities["features"]["default_dense_backend"] == "auto"
+    assert capabilities["features"]["dense_backends"][:2] == ["auto", "builtin"]
+    assert capabilities["limits"]["lapack_auto_min_order"] >= 1
 
     deck = ROOT / "Input/EX1.nec"
     timing = temporary / "timing.json"
@@ -43,6 +46,7 @@ with tempfile.TemporaryDirectory() as directory:
     assert artifact["completion"] == {"status": "ok"}
     assert Path(artifact["input"]["deck"]) == deck
     assert artifact["clock"] == {"wall": "monotonic", "cpu": "process"}
+    assert artifact["dense_backend"] == {"requested": "auto", "used": "builtin"}
     assert artifact["process"]["wall_seconds"] >= 0.0
     assert artifact["process"]["cpu_seconds"] >= 0.0
     assert artifact["process"]["peak_rss_kib"] is None or artifact["process"]["peak_rss_kib"] >= 0
@@ -51,6 +55,24 @@ with tempfile.TemporaryDirectory() as directory:
         assert phases[name]["seconds"] >= 0.0
         assert phases[name]["calls"] >= 1
     assert not list(temporary.glob("timing.json.tmp.*"))
+
+    builtin_timing = temporary / "builtin.json"
+    run("--backend", "builtin", "--timing-json", builtin_timing,
+        "-i", deck, "-o", temporary / "builtin.out")
+    assert load(builtin_timing)["dense_backend"] == {
+        "requested": "builtin", "used": "builtin"}
+    assert "DENSE BACKEND: builtin (REQUESTED builtin)" in \
+        (temporary / "builtin.out").read_text()
+
+    if "lapack" in capabilities["features"]["dense_backends"]:
+        lapack_timing = temporary / "lapack.json"
+        run("--backend", "lapack", "--timing-json", lapack_timing,
+            "-i", deck, "-o", temporary / "lapack.out")
+        assert load(lapack_timing)["dense_backend"] == {
+            "requested": "lapack", "used": "lapack"}
+
+    run("--backend", "not-a-backend", "-i", deck,
+        "-o", temporary / "invalid-backend.out", expect=1)
 
     run("--timing-json", "-", "-i", deck, "-o", temporary / "dash.out", expect=1)
     shared = temporary / "shared.json"

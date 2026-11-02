@@ -16,6 +16,7 @@ EXTRA_DIST = \
   docs/nec2c-results-v1.schema.json \
   docs/nec2c-timing-v1.schema.json \
   docs/PERFORMANCE-M1-RESULTS.md \
+  docs/PERFORMANCE-M2-RESULTS.md \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -24,7 +25,10 @@ EXTRA_DIST = \
   tests/performance/m1-reference.json \
   tests/performance/m1-cross-solver.json \
   tests/performance/m1-overhead.json \
+  tests/performance/m2-dense-backend.json \
+  tests/performance/m2-cross-solver.json \
   tools/performance_benchmark.py \
+  tools/dense_backend_benchmark.py \
   tools/prepare_nec_fixture.py \
   tools/cross_solver_compare.py \
   tools/timing_overhead.py \
@@ -192,6 +196,8 @@ EXTRA_DIST = \
   tests/dielectric_patch.py \
   tests/result_json.py \
   tests/performance_json.py \
+  tests/backend_equivalence.py \
+  tests/dense_backend_test.c \
   tests/generate_vie_reference.py \
   tests/voxscatter-reference.csv \
 	  tests/openems-m6-n2-15mm.csv \
@@ -211,7 +217,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/dielectric_parser.py tests/dielectric_mesh.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/dielectric_parser.py tests/dielectric_mesh.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -221,6 +227,7 @@ TESTS = tests/regression.py tests/dielectric_parser.py tests/dielectric_mesh.py 
 	tests/dielectric_patch.py \
 	tests/result_json.py \
 	tests/performance_json.py \
+	tests/dense_backend_test \
 	tests/vie_kernel_test \
 	tests/vie_iterative_test \
 	tests/vie_fft_test \
@@ -245,7 +252,9 @@ AM_CPPFLAGS = \
 
 bin_PROGRAMS = nec2c
 
-check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test
+check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test
+tests_dense_backend_test_SOURCES = tests/dense_backend_test.c dense_backend.c dense_backend.h
+tests_dense_backend_test_LDADD = -lm
 tests_vie_halfspace_test_SOURCES = tests/vie_halfspace_test.c vie_halfspace.c vie_halfspace.h vie_kernel.c vie_kernel.h
 tests_vie_halfspace_test_LDADD = -lm
 tests_vie_ground_test_SOURCES = tests/vie_ground_test.c vie_ground.c vie_ground.h vie_kernel.c vie_kernel.h
@@ -276,6 +285,8 @@ nec2c_SOURCES = \
   dielectric_wire.c \
   dielectric_fft.c \
   dielectric_fft.h \
+  dense_backend.c \
+  dense_backend.h \
   result_json.c \
   result_json.h \
   vie_fft.c \

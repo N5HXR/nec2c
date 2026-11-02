@@ -17,10 +17,11 @@ void usage(void)
 {
   fprintf( stderr,
 	  "usage: nec2c [-i<input-file-name>] [-o<output-file-name>]"
-	  " [--result-json <file>] [--timing-json <file>] [--validate-only]"
+	  " [--result-json <file>] [--timing-json <file>] [--backend <name>] [--validate-only]"
 	  "\n       --capabilities-json: write machine capabilities and exit."
 	  "\n       --result-json file: atomically write result schema version 1."
 	  "\n       --timing-json file: atomically write timing schema version 1."
+	  "\n       --backend auto|builtin|lapack: dense direct backend (default auto)."
 	  "\n       --validate-only: validate without solving (requires --result-json)."
 	  "\n       -s dense|gmres|fft: DF solver (default dense; FFT requires uniform cubes/material).\n       -r tolerance: GMRES relative residual target (default 1e-12).\n       -n iterations: GMRES iteration limit (default 300)."
 	  "\n       -h: print this usage information and exit."

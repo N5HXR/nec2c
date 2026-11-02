@@ -33,6 +33,7 @@
 #include "dielectric_fft.h"
 #include "result_json.h"
 #include "performance.h"
+#include "dense_backend.h"
 
 #include <ctype.h>
 #include <getopt.h>
@@ -289,6 +290,7 @@ int main( int argc, char **argv )
       {"result-json", required_argument, NULL, 1001},
       {"validate-only", no_argument, NULL, 1002},
       {"timing-json", required_argument, NULL, 1003},
+      {"backend", required_argument, NULL, 1004},
       {NULL, 0, NULL, 0}
     };
   while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
@@ -364,6 +366,20 @@ int main( int argc, char **argv )
           exit(EXIT_FAILURE);
         }
         snprintf(timing_path, sizeof(timing_path), "%s", optarg);
+        break;
+
+      case 1004:
+        if(strcmp(optarg, "auto") != 0 && strcmp(optarg, "builtin") != 0 &&
+           strcmp(optarg, "lapack") != 0)
+        {
+          fprintf(stderr, "nec2c: --backend requires auto, builtin, or lapack\n");
+          exit(EXIT_FAILURE);
+        }
+        if(!dense_backend_set(optarg))
+        {
+          fprintf(stderr, "nec2c: LAPACK backend is unavailable in this build\n");
+          exit(EXIT_FAILURE);
+        }
         break;
 
 	  default: /* print usage and exit */
@@ -1755,6 +1771,7 @@ int main( int argc, char **argv )
 			performance_add("matrix_fill", performance_now() - tmp1);
 			secnds( &tim2 );
 			tim= tim2- tim1;
+			performance_dense_backend((size_t)netcx.npeq);
 			tmp1 = performance_now();
 			factrs( netcx.npeq, netcx.neq, cm, save.ip );
 			performance_add("matrix_factor", performance_now() - tmp1);
@@ -1766,6 +1783,10 @@ int main( int argc, char **argv )
 				"                               "
 				"FILL: %d msec  FACTOR: %d msec",
 				(int)tim, (int)tim2 );
+			fprintf( output_fp, "\n                               "
+				"DENSE BACKEND: %s (REQUESTED %s)",
+				dense_backend_name_for_order((size_t)netcx.npeq),
+				dense_backend_requested_name() );
 
 			//igo=3;
 			netcx.ntsol=0;
@@ -1928,8 +1949,10 @@ int main( int argc, char **argv )
 			  netcx.ntsol=1;
 			  {
 				result_solver solver;
-				memset(&solver,0,sizeof(solver));solver.requested="legacy-nec-direct";
-				solver.used="legacy-nec-direct";solver.iterative_fields_defined=0;
+				memset(&solver,0,sizeof(solver));
+				solver.requested=dense_backend_requested_name();
+				solver.used=dense_backend_classic_solver_name_for_order((size_t)netcx.npeq);
+				solver.iterative_fields_defined=0;
 				solver.converged=1;solver.elapsed_seconds=tmp1;
 				result_json_set_solver(&solver);
 			  }

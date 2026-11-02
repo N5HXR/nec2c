@@ -5,6 +5,7 @@
 #include "result_json.h"
 #include "shared.h"
 #include "dielectric_fft.h"
+#include "dense_backend.h"
 
 #include <float.h>
 #include <stdint.h>
@@ -184,10 +185,14 @@ int result_json_write_capabilities(FILE *stream)
     "\"timing_json_versions\":[1],"
     "\"validate_only\":true,\"legacy_result_output\":true,"
     "\"solvers\":[\"dense\",\"gmres\",\"fft\"],"
+    "\"dense_backends\":[\"auto\",\"builtin\"%s],"
+    "\"default_dense_backend\":\"auto\","
     "\"grounds\":[\"free-space\",\"pec\",\"sommerfeld-norton\"]},"
     "\"limits\":{\"nec_card_characters\":132,\"default_max_cells\":%d,"
-    "\"fft_accounted_storage_bytes\":%lu}}\n",
-    DIELECTRIC_DEFAULT_MAX_CELLS, (unsigned long)DIELECTRIC_FFT_BUDGET);
+    "\"fft_accounted_storage_bytes\":%lu,\"lapack_auto_min_order\":%lu}}\n",
+    dense_backend_lapack_available() ? ",\"lapack\"" : "",
+    DIELECTRIC_DEFAULT_MAX_CELLS, (unsigned long)DIELECTRIC_FFT_BUDGET,
+    (unsigned long)dense_backend_lapack_min_order());
   return !ferror(stream);
 }
 

@@ -1,0 +1,459 @@
+{
+  "created_utc": "2026-11-02T15:58:28Z",
+  "crossover": [
+    {
+      "automatic_backend": "builtin",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 5.5523007176816463e-05,
+        "impedance_ohm": [
+          66.40462938302429,
+          -53.61138412202937
+        ],
+        "repeat": 11,
+        "solve_seconds": 2.7000991394743323e-05,
+        "threads": 1,
+        "wall_seconds": 0.002217326982645318
+      },
+      "factor_speedup": 0.27252430783471887,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.0002037359809037298,
+        "impedance_ohm": [
+          66.4046293830267,
+          -53.61138412203544
+        ],
+        "repeat": 11,
+        "solve_seconds": 6.747798761352897e-05,
+        "threads": 1,
+        "wall_seconds": 0.002392015012446791
+      },
+      "order": 31,
+      "relative_impedance_error": 7.652781207858704e-14,
+      "wall_speedup": 0.9269703455486323
+    },
+    {
+      "automatic_backend": "builtin",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 0.00037642900133505464,
+        "impedance_ohm": [
+          66.31618289727392,
+          -53.414326303564394
+        ],
+        "repeat": 11,
+        "solve_seconds": 4.7829002141952515e-05,
+        "threads": 1,
+        "wall_seconds": 0.004857035994064063
+      },
+      "factor_speedup": 0.9853053619602561,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.0003820429847110063,
+        "impedance_ohm": [
+          66.31618289727302,
+          -53.4143263035602
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.00014243199257180095,
+        "threads": 1,
+        "wall_seconds": 0.004989237000700086
+      },
+      "order": 63,
+      "relative_impedance_error": 5.0341926384946026e-14,
+      "wall_speedup": 0.9735027607192296
+    },
+    {
+      "automatic_backend": "builtin",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 0.001205921988002956,
+        "impedance_ohm": [
+          66.28711653060388,
+          -53.34342534796957
+        ],
+        "repeat": 11,
+        "solve_seconds": 7.656298112124205e-05,
+        "threads": 1,
+        "wall_seconds": 0.009180549997836351
+      },
+      "factor_speedup": 1.4923244369275275,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.0008080829866230488,
+        "impedance_ohm": [
+          66.28711653059945,
+          -53.34342534790932
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.00021648500114679337,
+        "threads": 1,
+        "wall_seconds": 0.008895164995919913
+      },
+      "order": 95,
+      "relative_impedance_error": 7.100751399827077e-13,
+      "wall_speedup": 1.0320831600141582
+    },
+    {
+      "automatic_backend": "builtin",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 0.002792538987705484,
+        "impedance_ohm": [
+          66.27238129896038,
+          -53.30497528372888
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.00012060898006893694,
+        "threads": 1,
+        "wall_seconds": 0.015398051007650793
+      },
+      "factor_speedup": 1.8005402883257884,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.0015509450167883188,
+        "impedance_ohm": [
+          66.27238129892744,
+          -53.30497528357877
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.00033586399513296783,
+        "threads": 1,
+        "wall_seconds": 0.014183585008140653
+      },
+      "order": 127,
+      "relative_impedance_error": 1.8069568257152675e-12,
+      "wall_speedup": 1.0856247555757659
+    },
+    {
+      "automatic_backend": "lapack",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 0.0029514530033338815,
+        "impedance_ohm": [
+          66.27169455718852,
+          -53.303125111067935
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.00012550901737995446,
+        "threads": 1,
+        "wall_seconds": 0.0156344760034699
+      },
+      "factor_speedup": 1.8092721458164354,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.00163129300926812,
+        "impedance_ohm": [
+          66.27169455720804,
+          -53.30312511139579
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.00034167099511250854,
+        "threads": 1,
+        "wall_seconds": 0.014671733020804822
+      },
+      "order": 129,
+      "relative_impedance_error": 3.861720963135571e-12,
+      "wall_speedup": 1.065618900050859
+    },
+    {
+      "automatic_backend": "lapack",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 0.009182808978948742,
+        "impedance_ohm": [
+          66.2572909358493,
+          -53.2626559601474
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.00022184100816957653,
+        "threads": 1,
+        "wall_seconds": 0.03245929500553757
+      },
+      "factor_speedup": 2.07498410167515,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.0044254840177018195,
+        "impedance_ohm": [
+          66.25729093586396,
+          -53.26265596021404
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.0004427710082381964,
+        "threads": 1,
+        "wall_seconds": 0.02752462399075739
+      },
+      "order": 191,
+      "relative_impedance_error": 8.026737730413921e-13,
+      "wall_speedup": 1.1792820500086472
+    },
+    {
+      "automatic_backend": "lapack",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 0.01640678901458159,
+        "impedance_ohm": [
+          66.24950159799148,
+          -53.23898739478411
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.0002633300027810037,
+        "threads": 1,
+        "wall_seconds": 0.047975908004445955
+      },
+      "factor_speedup": 4.283916887177577,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.0038298569852486253,
+        "impedance_ohm": [
+          66.24950159799148,
+          -53.23898739478411
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.00025445001665502787,
+        "threads": 1,
+        "wall_seconds": 0.022564812999917194
+      },
+      "order": 255,
+      "relative_impedance_error": 0.0,
+      "wall_speedup": 2.1261380719007956
+    },
+    {
+      "automatic_backend": "lapack",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 0.016863366996403784,
+        "impedance_ohm": [
+          66.24067841268486,
+          -53.20967807642441
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.0001828230160754174,
+        "threads": 1,
+        "wall_seconds": 0.04788058600388467
+      },
+      "factor_speedup": 2.3450949896402262,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.007190909993369132,
+        "impedance_ohm": [
+          66.24067841260883,
+          -53.20967807797697
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.0002647800138220191,
+        "threads": 1,
+        "wall_seconds": 0.030772513011470437
+      },
+      "order": 401,
+      "relative_impedance_error": 1.8294740755469267e-11,
+      "wall_speedup": 1.5559530671426547
+    },
+    {
+      "automatic_backend": "lapack",
+      "builtin": {
+        "backend_requested": "builtin",
+        "backend_used": [
+          "builtin"
+        ],
+        "factor_seconds": 0.13620467099826783,
+        "impedance_ohm": [
+          66.23241898476222,
+          -53.1777601172237
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.0012420529965311289,
+        "threads": 1,
+        "wall_seconds": 0.22153207400697283
+      },
+      "factor_speedup": 2.599024217240593,
+      "lapack": {
+        "backend_requested": "lapack",
+        "backend_used": [
+          "lapack"
+        ],
+        "factor_seconds": 0.052406079979846254,
+        "impedance_ohm": [
+          66.23241898393795,
+          -53.17776011349892
+        ],
+        "repeat": 11,
+        "solve_seconds": 0.0010844919888768345,
+        "threads": 1,
+        "wall_seconds": 0.14171841798815876
+      },
+      "order": 801,
+      "relative_impedance_error": 4.491339607549968e-11,
+      "wall_speedup": 1.563184779733308
+    }
+  ],
+  "host": {
+    "logical_cpus": 32,
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35"
+  },
+  "schema": "nec2c-dense-backend-benchmark",
+  "schema_version": 1,
+  "settings": {
+    "repeat": 11,
+    "sizes": [
+      31,
+      63,
+      95,
+      127,
+      129,
+      191,
+      255,
+      401,
+      801
+    ],
+    "threads": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "warmup": 2
+  },
+  "thread_scaling": [
+    {
+      "backend_requested": "lapack",
+      "backend_used": [
+        "lapack"
+      ],
+      "factor_seconds": 0.05243803799385205,
+      "impedance_ohm": [
+        66.23241898393795,
+        -53.17776011349892
+      ],
+      "repeat": 11,
+      "solve_seconds": 0.0010318580025341362,
+      "threads": 1,
+      "wall_seconds": 0.12870993299293332
+    },
+    {
+      "backend_requested": "lapack",
+      "backend_used": [
+        "lapack"
+      ],
+      "factor_seconds": 0.030709298996953294,
+      "impedance_ohm": [
+        66.23241898393795,
+        -53.17776011349892
+      ],
+      "repeat": 11,
+      "solve_seconds": 0.0007073720043990761,
+      "threads": 2,
+      "wall_seconds": 0.10987673400086351
+    },
+    {
+      "backend_requested": "lapack",
+      "backend_used": [
+        "lapack"
+      ],
+      "factor_seconds": 0.015445436991285533,
+      "impedance_ohm": [
+        66.2324189840557,
+        -53.177760114031024
+      ],
+      "repeat": 11,
+      "solve_seconds": 0.0006273519829846919,
+      "threads": 4,
+      "wall_seconds": 0.08792970899958163
+    },
+    {
+      "backend_requested": "lapack",
+      "backend_used": [
+        "lapack"
+      ],
+      "factor_seconds": 0.01375427798484452,
+      "impedance_ohm": [
+        66.2324189840557,
+        -53.177760114031024
+      ],
+      "repeat": 11,
+      "solve_seconds": 0.000650756002869457,
+      "threads": 8,
+      "wall_seconds": 0.0910577549948357
+    },
+    {
+      "backend_requested": "lapack",
+      "backend_used": [
+        "lapack"
+      ],
+      "factor_seconds": 0.010215680988039821,
+      "impedance_ohm": [
+        66.23241898476665,
+        -53.177760112199174
+      ],
+      "repeat": 11,
+      "solve_seconds": 0.0006661619991064072,
+      "threads": 16,
+      "wall_seconds": 0.13286199298454449
+    },
+    {
+      "backend_requested": "lapack",
+      "backend_used": [
+        "lapack"
+      ],
+      "factor_seconds": 0.04470689001027495,
+      "impedance_ohm": [
+        66.23241898393795,
+        -53.17776011349892
+      ],
+      "repeat": 11,
+      "solve_seconds": 0.0008126909960992634,
+      "threads": 32,
+      "wall_seconds": 0.1660272009903565
+    }
+  ]
+}

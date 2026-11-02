@@ -25,6 +25,7 @@
 
 #include "nec2c.h"
 #include "shared.h"
+#include "dense_backend.h"
 
 /*-------------------------------------------------------------------*/
 
@@ -1051,6 +1052,17 @@ void factr( int n, complex double *a, int *ip, int ndim)
   int r, rm1, rp1, pj, pr, iflg, k, j, jp1, i;
   double dmax, elmag;
   complex double arj, *scm = NULL;
+  int backend_result = dense_backend_factor_classic((size_t)n, a,
+                                                     (size_t)ndim, ip);
+  if(backend_result >= 0)
+  {
+    if(!backend_result)
+    {
+      fprintf(output_fp, "\n  LAPACK FACTORIZATION FAILED OR MATRIX IS SINGULAR");
+      stop(-1);
+    }
+    return;
+  }
 
   /* Allocate to scratch memory */
   size_t mreq = (size_t)data.np2m;
@@ -1250,6 +1262,17 @@ void solve( int n, complex double *a, int *ip,
 {
   int i, ip1, j, k, pia;
   complex double sum, *scm = NULL;
+  int backend_result = dense_backend_solve_classic((size_t)n, a,
+                                                    (size_t)ndim, ip, b);
+  if(backend_result >= 0)
+  {
+    if(!backend_result)
+    {
+      fprintf(output_fp, "\n  LAPACK TRIANGULAR SOLVE FAILED");
+      stop(-1);
+    }
+    return;
+  }
 
   /* Allocate to scratch memory */
   size_t mreq = (size_t)data.np2m;
@@ -1389,9 +1412,19 @@ void solves( complex double *a, int *ip, complex double *b,
   {
 	ia= kk* npeq;
 	ib= ia;
-
-	for( ic = 0; ic < nrh; ic++ )
-	  solve( npeq, &a[ib], &ip[ia], &b[ia+ic*neq], nrow );
+	{
+	  int backend_result = dense_backend_solve_classic_many(
+	      (size_t)npeq, &a[ib], (size_t)nrow, &ip[ia], &b[ia],
+	      (size_t)neq, (size_t)nrh);
+	  if(backend_result == 0)
+	  {
+		fprintf(output_fp, "\n  LAPACK BATCHED TRIANGULAR SOLVE FAILED");
+		stop(-1);
+	  }
+	  if(backend_result < 0)
+		for( ic = 0; ic < nrh; ic++ )
+		  solve( npeq, &a[ib], &ip[ia], &b[ia+ic*neq], nrow );
+	}
 
   } /* for( kk = 0; kk < smat.nop; kk++ ) */
 
@@ -1474,4 +1507,3 @@ void solves( complex double *a, int *ip, complex double *b,
 }
 
 /*-----------------------------------------------------------------------*/
-

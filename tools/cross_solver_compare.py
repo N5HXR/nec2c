@@ -24,9 +24,9 @@ def run(command, cwd=None):
     return completed
 
 
-def impedance_from_nec2c(binary, deck, directory):
+def impedance_from_nec2c(binary, deck, directory, backend):
     result = directory / "nec2c-result.json"
-    run([str(binary), "--result-json", str(result), "-i", str(deck),
+    run([str(binary), "--backend", backend, "--result-json", str(result), "-i", str(deck),
          "-o", str(directory / "nec2c.out")], cwd=ROOT)
     value = json.loads(result.read_text(encoding="utf-8"))
     feed = value["jobs"][0]["executions"][0]["feeds"][0]
@@ -79,6 +79,8 @@ def delta(reference, observed):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--nec2c", type=Path, default=ROOT / "nec2c")
+    parser.add_argument("--nec2c-backend", choices=("auto", "builtin", "lapack"),
+                        default="auto")
     parser.add_argument("--momwire-root", type=Path, default=Path.home() / "src/momwire")
     parser.add_argument("--aegnec2", type=Path, required=True,
                         help="external AEG executable; never imported into this repository")
@@ -101,7 +103,8 @@ def main():
             directory = base / str(index)
             directory.mkdir()
             values = {
-                "nec2c": impedance_from_nec2c(arguments.nec2c.resolve(), deck, directory),
+                "nec2c": impedance_from_nec2c(arguments.nec2c.resolve(), deck, directory,
+                                                arguments.nec2c_backend),
                 "aegnec2": impedance_from_aeg(arguments.aegnec2.resolve(), deck, directory),
                 "momwire-sinusoidal": impedance_from_momwire(
                     arguments.momwire_root.resolve(), deck),
@@ -126,6 +129,7 @@ def main():
         "schema": "nec2c-cross-solver-comparison",
         "schema_version": 1,
         "observable": "complex feed impedance, ohms",
+        "nec2c_backend": arguments.nec2c_backend,
         "cases": cases,
         "tolerances": {
             "aegnec2_relative": arguments.aeg_relative_tolerance,

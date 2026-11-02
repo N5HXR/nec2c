@@ -13,6 +13,18 @@
 
     python3 examples/dielectric-r1/run.py --output-dir /tmp/nec2c-r1-examples
 
+  PERFORMANCE DENSE BACKEND
+
+  Configure automatically enables the LAPACK dense solver when LAPACKE headers
+  and libraries are available (Ubuntu package: liblapacke-dev). Runtime choice
+  is command-line controlled:
+
+    nec2c --backend auto|builtin|lapack -i model.nec -o model.out
+
+  `auto` is the default and retains the built-in solver for small matrices.
+  `builtin` always selects the original implementation. Configure with
+  `--with-lapack=no` for a dependency-free legacy-only build.
+
   The upstream README is preserved below.
 
 

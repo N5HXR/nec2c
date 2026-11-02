@@ -6,6 +6,7 @@
 
 #include "performance.h"
 #include "nec2c.h"
+#include "dense_backend.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -45,6 +46,10 @@ typedef struct
   clock_t cpu_started;
   performance_phase phases[PERFORMANCE_PHASES];
   size_t phase_count;
+  int dense_backend_set;
+  int dense_backend_mixed;
+  char dense_backend_requested[16];
+  char dense_backend_used[16];
 } performance_session;
 
 static performance_session session;
@@ -129,6 +134,15 @@ static void write_document(void)
   json_string(session.document, PACKAGE_VERSION);
   fputs("},\"input\":{\"deck\":", session.document);
   json_string(session.document, session.deck);
+  fputs("},\"dense_backend\":{\"requested\":", session.document);
+  if(session.dense_backend_set)
+    json_string(session.document, session.dense_backend_requested);
+  else fputs("null", session.document);
+  fputs(",\"used\":", session.document);
+  if(session.dense_backend_set)
+    json_string(session.document,
+        session.dense_backend_mixed ? "mixed" : session.dense_backend_used);
+  else fputs("null", session.document);
   fputs("},\"clock\":{\"wall\":\"monotonic\",\"cpu\":\"process\"},"
         "\"completion\":{\"status\":", session.document);
   json_string(session.document, session.success ? "ok" : "error");
@@ -213,6 +227,25 @@ void performance_add(const char *name, double seconds)
   else phase = &session.phases[index];
   phase->seconds += seconds;
   ++phase->calls;
+}
+
+void performance_dense_backend(size_t order)
+{
+  const char *requested, *used;
+  if(!session.active || session.written) return;
+  requested = dense_backend_requested_name();
+  used = dense_backend_name_for_order(order);
+  if(!session.dense_backend_set)
+  {
+    snprintf(session.dense_backend_requested,
+             sizeof(session.dense_backend_requested), "%s", requested);
+    snprintf(session.dense_backend_used,
+             sizeof(session.dense_backend_used), "%s", used);
+    session.dense_backend_set = 1;
+  }
+  else if(strcmp(session.dense_backend_requested, requested) != 0 ||
+          strcmp(session.dense_backend_used, used) != 0)
+    session.dense_backend_mixed = 1;
 }
 
 void performance_finish(int success)

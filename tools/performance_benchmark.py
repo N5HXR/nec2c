@@ -115,21 +115,26 @@ def summarize_runs(runs):
         "external_wall_seconds": summary([run["external_wall_seconds"] for run in runs]),
         "phases": {name: summary(values) for name, values in sorted(phases.items())},
         "stable_numerical_result": len({run["numerical_sha256"] for run in runs}) == 1,
+        "dense_backends": sorted({
+            run["timing"]["dense_backend"]["used"] for run in runs
+            if run["timing"]["dense_backend"]["used"] is not None
+        }),
     }
 
 
-def execute(binary, case, root, directory, run_index, warmup):
+def execute(binary, case, root, directory, run_index, warmup, backend, environment):
     deck = (root / case["deck"]).resolve()
     prefix = "warmup" if warmup else "run"
     stem = f"{case['id']}-{prefix}-{run_index}"
     output = directory / f"{stem}.out"
     result = directory / f"{stem}-result.json"
     timing = directory / f"{stem}-timing.json"
-    command = [str(binary), *case.get("arguments", []),
+    command = [str(binary), "--backend", backend, *case.get("arguments", []),
                "--result-json", str(result), "--timing-json", str(timing),
                "-i", str(deck), "-o", str(output)]
     started = time.perf_counter()
-    completed = subprocess.run(command, cwd=root, text=True, capture_output=True)
+    completed = subprocess.run(command, cwd=root, text=True, capture_output=True,
+                               env=environment)
     external = time.perf_counter() - started
     if completed.returncode != 0:
         raise RuntimeError(json.dumps({
@@ -160,11 +165,22 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--repeat", type=int, default=5)
     parser.add_argument("--warmup", type=int, default=1)
+    parser.add_argument("--backend", choices=("auto", "builtin", "lapack"),
+                        default="auto")
+    parser.add_argument("--threads", type=int,
+                        help="set BLAS/OpenMP worker environment for child runs")
     parser.add_argument("--case", action="append", dest="cases",
                         help="run only this case ID; may be repeated")
     arguments = parser.parse_args()
-    if arguments.repeat < 1 or arguments.warmup < 0:
-        parser.error("--repeat must be positive and --warmup cannot be negative")
+    if arguments.repeat < 1 or arguments.warmup < 0 or \
+       (arguments.threads is not None and arguments.threads < 1):
+        parser.error("--repeat and --threads must be positive; --warmup cannot be negative")
+
+    child_environment = os.environ.copy()
+    if arguments.threads is not None:
+        for name in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+                     "BLIS_NUM_THREADS"):
+            child_environment[name] = str(arguments.threads)
 
     binary = arguments.binary.resolve()
     manifest_path = arguments.manifest.resolve()
@@ -209,11 +225,12 @@ def main():
             "linked_libraries": command_output(["ldd", str(binary)]),
         },
         "manifest": {"path": str(manifest_path), "sha256": sha256(manifest_path)},
-        "settings": {"repeat": arguments.repeat, "warmup": arguments.warmup},
+        "settings": {"repeat": arguments.repeat, "warmup": arguments.warmup,
+                     "backend": arguments.backend, "threads": arguments.threads},
         "execution_control": {
-            "backend": "current in-tree selection",
+            "backend": arguments.backend,
             "thread_environment": {
-                name: os.environ.get(name) for name in
+                name: child_environment.get(name) for name in
                 ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
                  "BLIS_NUM_THREADS", "FFTW_NUM_THREADS")
             },
@@ -224,9 +241,11 @@ def main():
         directory = Path(temporary)
         for case in selected:
             deck = (ROOT / case["deck"]).resolve()
-            warmup_runs = [execute(binary, case, ROOT, directory, index, True)
+            warmup_runs = [execute(binary, case, ROOT, directory, index, True,
+                                   arguments.backend, child_environment)
                            for index in range(arguments.warmup)]
-            runs = [execute(binary, case, ROOT, directory, index, False)
+            runs = [execute(binary, case, ROOT, directory, index, False,
+                            arguments.backend, child_environment)
                     for index in range(arguments.repeat)]
             report["cases"].append({
                 "id": case["id"],

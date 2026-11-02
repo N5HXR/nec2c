@@ -38,6 +38,8 @@ with tempfile.TemporaryDirectory() as directory:
     assert capabilities["features"]["dielectric_resource_versions"] == [1, 2, 3]
     assert capabilities["features"]["result_json_versions"] == [1]
     assert capabilities["features"]["grounds"] == ["free-space", "pec", "sommerfeld-norton"]
+    assert capabilities["features"]["default_dense_backend"] == "auto"
+    assert capabilities["features"]["dense_backends"][:2] == ["auto", "builtin"]
 
     deck = ROOT / "tests/decks/patch-only.nec"
     plain = temporary / "plain.out"
@@ -45,7 +47,10 @@ with tempfile.TemporaryDirectory() as directory:
     classic_json = temporary / "classic.json"
     run("-i", deck, "-o", plain)
     run("--result-json", classic_json, "-i", deck, "-o", observed)
-    normalize = lambda value: re.sub(r"TOTAL RUN TIME: \d+", "TOTAL RUN TIME: X", value)
+    def normalize(value):
+        value = re.sub(r"TOTAL RUN TIME: \d+", "TOTAL RUN TIME: X", value)
+        return re.sub(r"FILL: \d+ msec  FACTOR: \d+ msec",
+                      "FILL: X msec  FACTOR: X msec", value)
     assert normalize(plain.read_text()) == normalize(observed.read_text())
     classic = load(classic_json)
     assert classic["completion"] == {"status": "ok"}
@@ -53,7 +58,8 @@ with tempfile.TemporaryDirectory() as directory:
     assert job["dielectric"] is None and job["mesh_states"] == []
     execution = job["executions"][0]
     assert execution["mesh_state_id"] is None
-    assert execution["solver"]["used"] == "legacy-nec-direct"
+    assert execution["solver"]["requested"] == "auto"
+    assert execution["solver"]["used"] == "legacy-nec-direct-builtin"
     for key in ("relative_tolerance", "maximum_iterations", "iterations",
                 "reported_residual", "true_residual", "converged"):
         assert execution["solver"][key] is None
@@ -76,7 +82,8 @@ with tempfile.TemporaryDirectory() as directory:
     assert len(job["mesh_states"]) == 1 and len(job["executions"]) == 1
     execution = job["executions"][0]
     assert execution["status"] == "ok" and execution["mesh_state_id"] == 0
-    assert execution["solver"]["used"] == "dense"
+    assert execution["solver"]["requested"] == "dense"
+    assert execution["solver"]["used"] == "dense-builtin"
     assert execution["power"]["basis"] == "plane-wave-scattered-balance"
     assert len(execution["volume_currents"]["rows"]) == 1
     assert execution["volume_currents"]["rows"][0][0:4] == [1, 1, 1, 1]

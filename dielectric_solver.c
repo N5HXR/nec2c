@@ -6,6 +6,8 @@
 #include "vie_iterative.h"
 #include "dielectric_fft.h"
 #include "result_json.h"
+#include "dense_backend.h"
+#include "performance.h"
 
 #include <complex.h>
 #include <float.h>
@@ -116,49 +118,6 @@ static complex double background_component(const dielectric_cell *cell,
     value+=reflected_field[component]*cell_phase_average(cell,reflected,k0,-1.0);
   }
   return value;
-}
-
-static int lu_solve(complex double *a, complex double *b, size_t n)
-{
-  size_t k, i, j;
-  for(k = 0; k < n; ++k)
-  {
-    size_t pivot = k;
-    double largest = cabs(a[k*n+k]);
-    for(i = k + 1; i < n; ++i)
-    {
-      double candidate = cabs(a[i*n+k]);
-      if(candidate > largest) { largest = candidate; pivot = i; }
-    }
-    if(!(largest > 64.0 * DBL_EPSILON))
-      return 0;
-    if(pivot != k)
-    {
-      for(j = k; j < n; ++j)
-      {
-        complex double temporary = a[k*n+j];
-        a[k*n+j] = a[pivot*n+j];
-        a[pivot*n+j] = temporary;
-      }
-      { complex double temporary = b[k]; b[k] = b[pivot]; b[pivot] = temporary; }
-    }
-    for(i = k + 1; i < n; ++i)
-    {
-      complex double multiplier = a[i*n+k] / a[k*n+k];
-      a[i*n+k] = multiplier;
-      for(j = k + 1; j < n; ++j)
-        a[i*n+j] -= multiplier * a[k*n+j];
-      b[i] -= multiplier * b[k];
-    }
-  }
-  for(i = n; i-- > 0; )
-  {
-    complex double sum = b[i];
-    for(j = i + 1; j < n; ++j)
-      sum -= a[i*n+j] * b[j];
-    b[i] = sum / a[i*n+i];
-  }
-  return 1;
 }
 
 void dielectric_radiation_amplitude(const dielectric_mesh_result *mesh,
@@ -443,10 +402,15 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     }
   }
   else
-  if(!lu_solve(matrix, rhs, unknowns))
+  {
+  performance_dense_backend(unknowns);
+  fprintf(stream, "\n\n  DENSE BACKEND: %s (REQUESTED %s)",
+          dense_backend_name_for_order(unknowns), dense_backend_requested_name());
+  if(!dense_backend_solve_row_major(matrix, rhs, unknowns))
   {
     solver_error(diagnostic, model, "SOLVER", "matrix", "singular or numerically rank-deficient VIE system");
     goto failure;
+  }
   }
   if(!accelerated) {
   for(row = 0; row < unknowns; ++row)
@@ -464,7 +428,8 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     result_solver solver;
     memset(&solver,0,sizeof(solver));
     solver.requested=iterative==2?"fft":(iterative?"gmres":"dense");
-    solver.used=solver.requested;solver.iterative_fields_defined=1;
+    solver.used=iterative?solver.requested:dense_backend_solver_name_for_order(unknowns);
+    solver.iterative_fields_defined=1;
     solver.relative_tolerance=dielectric_gmres_settings.relative_tolerance;
     solver.maximum_iterations=dielectric_gmres_settings.maximum_iterations;
     solver.iterations=iterative?report.iterations:0;

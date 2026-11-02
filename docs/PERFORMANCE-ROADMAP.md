@@ -72,7 +72,7 @@ and document manual reference scenarios.  No numerical implementation changes.
 
 ### M1: benchmark and cross-solver harness
 
-Status: implementation complete; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.
 
 Add monotonic phase timers and machine-readable benchmark records.  Establish
 cold and warm runners, the Antenna Turtle fixture corpus, compatible momwire
@@ -80,6 +80,8 @@ models, compatible AEG decks, and frozen numerical tolerances.  Timing overhead
 must be below 2% when disabled and 5% when enabled.
 
 ### M2: optional LAPACK dense backend
+
+Status: implementation complete; awaiting user acceptance.
 
 Introduce a factor/solve abstraction for classic NEC, dense VIE, and dense
 coupled systems.  Preserve the built-in solver, support batched right-hand

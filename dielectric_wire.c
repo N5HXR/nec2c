@@ -6,6 +6,8 @@
 #include "vie_iterative.h"
 #include "dielectric_fft.h"
 #include "result_json.h"
+#include "dense_backend.h"
+#include "performance.h"
 
 #include <complex.h>
 #include <float.h>
@@ -38,49 +40,6 @@ static void dw_error(dielectric_diagnostic *diagnostic,
   snprintf(diagnostic->record, sizeof(diagnostic->record), "COUPLED_SOLVER");
   snprintf(diagnostic->value, sizeof(diagnostic->value), "%s", value);
   snprintf(diagnostic->message, sizeof(diagnostic->message), "%s", message);
-}
-
-static int dw_lu_solve(complex double *matrix, complex double *rhs, size_t n)
-{
-  size_t k, row, column;
-  for(k = 0; k < n; ++k)
-  {
-    size_t pivot = k;
-    double largest = cabs(matrix[k*n+k]);
-    for(row = k+1; row < n; ++row)
-    {
-      double candidate = cabs(matrix[row*n+k]);
-      if(candidate > largest) { largest = candidate; pivot = row; }
-    }
-    if(!(largest > 64.0*DBL_EPSILON))
-      return 0;
-    if(pivot != k)
-    {
-      for(column = k; column < n; ++column)
-      {
-        complex double temporary = matrix[k*n+column];
-        matrix[k*n+column] = matrix[pivot*n+column];
-        matrix[pivot*n+column] = temporary;
-      }
-      { complex double temporary = rhs[k]; rhs[k] = rhs[pivot]; rhs[pivot] = temporary; }
-    }
-    for(row = k+1; row < n; ++row)
-    {
-      complex double multiplier = matrix[row*n+k]/matrix[k*n+k];
-      matrix[row*n+k] = multiplier;
-      for(column = k+1; column < n; ++column)
-        matrix[row*n+column] -= multiplier*matrix[k*n+column];
-      rhs[row] -= multiplier*rhs[k];
-    }
-  }
-  for(row = n; row-- > 0; )
-  {
-    complex double sum = rhs[row];
-    for(column = row+1; column < n; ++column)
-      sum -= matrix[row*n+column]*rhs[column];
-    rhs[row] = sum/matrix[row*n+row];
-  }
-  return 1;
 }
 
 static int dw_gauss(int order, double *nodes, double *weights)
@@ -860,8 +819,13 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
     }
   }
   else
-  if(!dw_lu_solve(system, rhs, total))
+  {
+  performance_dense_backend(total);
+  fprintf(stream, "\n\n  DENSE BACKEND: %s (REQUESTED %s)",
+          dense_backend_name_for_order(total), dense_backend_requested_name());
+  if(!dense_backend_solve_row_major(system, rhs, total))
   { dw_error(diagnostic, model, "matrix", "singular coupled wire-volume system"); goto failure; }
+  }
   if(!accelerated) {
   for(row = 0; row < total; ++row)
   {
@@ -877,7 +841,8 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
     result_solver solver;
     memset(&solver,0,sizeof(solver));
     solver.requested=iterative==2?"fft":(iterative?"gmres":"dense");
-    solver.used=solver.requested;solver.iterative_fields_defined=1;
+    solver.used=iterative?solver.requested:dense_backend_solver_name_for_order(total);
+    solver.iterative_fields_defined=1;
     solver.relative_tolerance=dielectric_gmres_settings.relative_tolerance;
     solver.maximum_iterations=dielectric_gmres_settings.maximum_iterations;
     solver.iterations=iterative?report.iterations:0;

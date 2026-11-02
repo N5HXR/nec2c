@@ -4,7 +4,7 @@
   "title": "nec2c timing artifact version 1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema", "schema_version", "producer", "input", "clock", "completion", "process", "phases"],
+  "required": ["schema", "schema_version", "producer", "input", "dense_backend", "clock", "completion", "process", "phases"],
   "properties": {
     "schema": { "const": "nec2c-timing" },
     "schema_version": { "const": 1 },
@@ -22,6 +22,15 @@
       "additionalProperties": false,
       "required": ["deck"],
       "properties": { "deck": { "type": "string" } }
+    },
+    "dense_backend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested", "used"],
+      "properties": {
+        "requested": { "type": ["string", "null"], "enum": ["auto", "builtin", "lapack", null] },
+        "used": { "type": ["string", "null"], "enum": ["builtin", "lapack", "mixed", null] }
+      }
     },
     "clock": {
       "type": "object",
