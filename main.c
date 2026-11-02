@@ -32,6 +32,7 @@
 #include "dielectric.h"
 #include "dielectric_fft.h"
 #include "result_json.h"
+#include "performance.h"
 
 #include <ctype.h>
 #include <getopt.h>
@@ -66,13 +67,17 @@ static int run_dielectric_frequencies(const dielectric_model *model,
   double frequency = first_mhz;
   for(index = 0; index < frequency_count; ++index)
   {
+    double phase_started;
     result_json_execution_begin(frequency, "plane-wave", wave);
+    phase_started = performance_now();
     if(!dielectric_solve_plane_wave(model, mesh, frequency, iterative, wave, pattern,
                                     stream, diagnostic))
     {
+      performance_add("dielectric_solve", performance_now() - phase_started);
       result_json_execution_end(0);
       return 0;
     }
+    performance_add("dielectric_solve", performance_now() - phase_started);
     if(!result_json_execution_end(1))
     {
       memset(diagnostic,0,sizeof(*diagnostic));
@@ -99,14 +104,18 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
   double frequency = first_mhz;
   for(index = 0; index < frequency_count; ++index)
   {
+    double phase_started;
     result_json_execution_begin(frequency,
         wave ? "plane-wave" : "driven-voltage", wave);
+    phase_started = performance_now();
     if(!dielectric_solve_conductor_coupled(model, mesh, frequency, rkh,
                                            extended_kernel, iterative, wave, pattern, stream, diagnostic))
     {
+      performance_add("dielectric_solve", performance_now() - phase_started);
       result_json_execution_end(0);
       return 0;
     }
+    performance_add("dielectric_solve", performance_now() - phase_started);
     if(!result_json_execution_end(1))
     {
       memset(diagnostic,0,sizeof(*diagnostic));
@@ -206,6 +215,7 @@ int main( int argc, char **argv )
   int capabilities_json = 0;
   int validate_only = 0;
   char result_path[NEC2C_PATH_MAX * 4 + 1] = "";
+  char timing_path[NEC2C_PATH_MAX * 4 + 1] = "";
 
 /* input card mnemonic list */
 #define NUM_CMNDS  21
@@ -278,6 +288,7 @@ int main( int argc, char **argv )
       {"capabilities-json", no_argument, NULL, 1000},
       {"result-json", required_argument, NULL, 1001},
       {"validate-only", no_argument, NULL, 1002},
+      {"timing-json", required_argument, NULL, 1003},
       {NULL, 0, NULL, 0}
     };
   while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
@@ -346,6 +357,15 @@ int main( int argc, char **argv )
         validate_only = 1;
         break;
 
+      case 1003:
+        if(strlen(optarg) >= sizeof(timing_path))
+        {
+          fprintf(stderr, "nec2c: timing JSON path is too long\n");
+          exit(EXIT_FAILURE);
+        }
+        snprintf(timing_path, sizeof(timing_path), "%s", optarg);
+        break;
+
 	  default: /* print usage and exit */
 		usage();
 		exit(-1);
@@ -357,12 +377,18 @@ int main( int argc, char **argv )
 
   if(capabilities_json)
   {
-    if(result_path[0] || validate_only || infile[0] || otfile[0])
+    if(result_path[0] || timing_path[0] || validate_only || infile[0] || otfile[0])
     {
       fprintf(stderr, "nec2c: --capabilities-json cannot be combined with deck options\n");
       exit(EXIT_FAILURE);
     }
     exit(result_json_write_capabilities(stdout) ? EXIT_SUCCESS : EXIT_FAILURE);
+  }
+
+  if(result_path[0] && timing_path[0] && strcmp(result_path, timing_path) == 0)
+  {
+    fprintf(stderr, "nec2c: --result-json and --timing-json require different files\n");
+    exit(EXIT_FAILURE);
   }
   if(infile[0] == '\0')
   {
@@ -386,6 +412,15 @@ int main( int argc, char **argv )
 	  abort_on_error(-1);
 	strcat( deck_path, "/" );
 	strcat( deck_path, infile );
+  }
+
+  if(timing_path[0])
+  {
+    if(!performance_open(timing_path, deck_path))
+    {
+      fprintf(stderr, "nec2c: cannot create timing JSON destination: %s\n", timing_path);
+      exit(EXIT_FAILURE);
+    }
   }
 
   if(result_path[0])
@@ -1260,17 +1295,21 @@ int main( int argc, char **argv )
 
 		  if( dielectric.loaded && ! dielectric_mesh.built )
 		  {
+			double phase_started;
 			if(!dielectric_validate_sweep(&dielectric,ifrq,nfrq,save.fmhz,delfrq,&dielectric_error))
 	            { dielectric_print_diagnostic(output_fp,&dielectric_error);publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");stop(-1); }
             double mesh_frequency = highest_requested_frequency(
 				ifrq, nfrq, save.fmhz, delfrq);
+			phase_started = performance_now();
 			if( ! dielectric_mesh_build(&dielectric, mesh_frequency, &data,
 				&dielectric_mesh, &dielectric_error) )
 			{
+				  performance_add("dielectric_mesh", performance_now() - phase_started);
 				  dielectric_print_diagnostic( output_fp, &dielectric_error );
 				  publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");
 				  stop(-1);
 			}
+			performance_add("dielectric_mesh", performance_now() - phase_started);
 			dielectric_print_mesh_report( output_fp, &dielectric_mesh );
 			result_json_add_mesh_state(&dielectric, &dielectric_mesh,
 			    ifrq, nfrq, save.fmhz, delfrq);
@@ -1361,17 +1400,21 @@ int main( int argc, char **argv )
 		dielectric_pattern_request request;
 		if( ! dielectric_mesh.built )
 		{
+			  double phase_started;
 			  if(!dielectric_validate_sweep(&dielectric,ifrq,nfrq,save.fmhz,delfrq,&dielectric_error))
 	            { dielectric_print_diagnostic(output_fp,&dielectric_error);publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");stop(-1); }
             double mesh_frequency = highest_requested_frequency(
 			  ifrq, nfrq, save.fmhz, delfrq);
+		  phase_started = performance_now();
 		  if( ! dielectric_mesh_build(&dielectric, mesh_frequency, &data,
 			  &dielectric_mesh, &dielectric_error) )
 		  {
+				performance_add("dielectric_mesh", performance_now() - phase_started);
 				dielectric_print_diagnostic( output_fp, &dielectric_error );
 				publish_dielectric_failure(&dielectric,&dielectric_error,"validation-error");
 				stop(-1);
 		  }
+		  performance_add("dielectric_mesh", performance_now() - phase_started);
 			  dielectric_print_mesh_report( output_fp, &dielectric_mesh );
 			  result_json_add_mesh_state(&dielectric, &dielectric_mesh,
 			      ifrq, nfrq, save.fmhz, delfrq);
@@ -1662,7 +1705,9 @@ int main( int argc, char **argv )
 					  "FINITE GROUND - REFLECTION COEFFICIENT APPROXIMATION" );
 				else
 				{
+				  double phase_started = performance_now();
 				  somnec( save.epsr, save.sig, save.fmhz );
+				  performance_add("ground_table", performance_now() - phase_started);
 				  gnd.frati=( epsc-1.)/( epsc+1.);
 				  if( cabs(( ggrid.epscf- epsc)/ epsc) >= 1.0e-3 )
 				  {
@@ -1705,10 +1750,14 @@ int main( int argc, char **argv )
 			/* label 50 */
 			/* fill and factor primary interaction matrix */
 			secnds( &tim1 );
+			tmp1 = performance_now();
 			cmset( netcx.neq, cm, rkh, iexk );
+			performance_add("matrix_fill", performance_now() - tmp1);
 			secnds( &tim2 );
 			tim= tim2- tim1;
+			tmp1 = performance_now();
 			factrs( netcx.npeq, netcx.neq, cm, save.ip );
+			performance_add("matrix_factor", performance_now() - tmp1);
 			secnds( &tim1 );
 			tim2= tim1- tim2;
 			fprintf( output_fp, "\n\n\n"
@@ -1870,13 +1919,18 @@ int main( int argc, char **argv )
 			  }
 			  else
 				result_json_execution_begin(save.fmhz,"driven-voltage",NULL);
-			  netwk( cm, save.ip, crnt.cur );
+			  {
+				double solve_started = performance_now();
+				netwk( cm, save.ip, crnt.cur );
+				tmp1 = performance_now() - solve_started;
+				performance_add("matrix_solve", tmp1);
+			  }
 			  netcx.ntsol=1;
 			  {
 				result_solver solver;
 				memset(&solver,0,sizeof(solver));solver.requested="legacy-nec-direct";
 				solver.used="legacy-nec-direct";solver.iterative_fields_defined=0;
-				solver.converged=1;solver.elapsed_seconds=0.0;
+				solver.converged=1;solver.elapsed_seconds=tmp1;
 				result_json_set_solver(&solver);
 			  }
 
@@ -2216,7 +2270,9 @@ int main( int argc, char **argv )
 
 			  if( fpat.near != -1)
 			  {
+				tmp1 = performance_now();
 				nfpat();
+				performance_add("near_field", performance_now() - tmp1);
 
 				if( mhz == nfrq)
 				  fpat.near=-1;
@@ -2239,7 +2295,9 @@ int main( int argc, char **argv )
 			  {
 				fpat.pinr= netcx.pin;
 				fpat.pnlr= netcx.pnls;
+				tmp1 = performance_now();
 				rdpat();
+				performance_add("far_field", performance_now() - tmp1);
 			  }
 			  result_json_execution_end(1);
 

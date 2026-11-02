@@ -1,0 +1,55 @@
+{
+  "schema": "nec2c-performance-models",
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "classic-small",
+      "description": "Small legacy wire model with near-field output",
+      "deck": "Input/EX1.nec",
+      "arguments": [],
+      "provenance": "nec2c-n5hxr repository input corpus"
+    },
+    {
+      "id": "classic-mixed",
+      "description": "Legacy example exercising a broader command mix",
+      "deck": "Input/EX4.nec",
+      "arguments": [],
+      "provenance": "nec2c-n5hxr repository input corpus"
+    },
+    {
+      "id": "classic-medium-yagi",
+      "description": "Segment-dense 19-element 432 MHz Yagi",
+      "deck": "Input/19el_432_tonna.nec",
+      "arguments": [],
+      "provenance": "nec2c-n5hxr repository input corpus"
+    },
+    {
+      "id": "antenna-turtle-loop-yagi",
+      "description": "Nine-loop 438 MHz Yagi with 324 segments and a 5-degree full-sphere pattern",
+      "deck": "tests/performance/loop-yagi-438.nec",
+      "arguments": [],
+      "provenance": "Exported by antenna-turtle examples/loop-yagi.rkt, then given deterministic FR/RP analysis cards by tools/prepare_nec_fixture.py"
+    },
+    {
+      "id": "classic-scaling-801",
+      "description": "Synthetic 801-segment center-fed dipole for stable dense-fill/factor timing",
+      "deck": "tests/performance/scaling-dipole-801.nec",
+      "arguments": [],
+      "provenance": "Milestone 1 deterministic scaling fixture, inspired by AEG's published segment-count benchmark progression without copying source"
+    },
+    {
+      "id": "dielectric-dense",
+      "description": "Wire and dielectric cube using the dense VIE solver",
+      "deck": "tests/dielectric/m6-cube.nec",
+      "arguments": ["-s", "dense"],
+      "provenance": "nec2c-n5hxr dielectric regression corpus"
+    },
+    {
+      "id": "dielectric-fft",
+      "description": "Same wire and dielectric cube using the in-tree FFT VIE solver",
+      "deck": "tests/dielectric/m6-cube.nec",
+      "arguments": ["-s", "fft"],
+      "provenance": "nec2c-n5hxr dielectric regression corpus"
+    }
+  ]
+}

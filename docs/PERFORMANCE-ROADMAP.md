@@ -72,6 +72,8 @@ and document manual reference scenarios.  No numerical implementation changes.
 
 ### M1: benchmark and cross-solver harness
 
+Status: implementation complete; awaiting user acceptance.
+
 Add monotonic phase timers and machine-readable benchmark records.  Establish
 cold and warm runners, the Antenna Turtle fixture corpus, compatible momwire
 models, compatible AEG decks, and frozen numerical tolerances.  Timing overhead

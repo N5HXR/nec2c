@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/konradkarczewski/nec2c-n5hxr/blob/master/docs/nec2c-timing-v1.schema.json",
+  "title": "nec2c timing artifact version 1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schema_version", "producer", "input", "clock", "completion", "process", "phases"],
+  "properties": {
+    "schema": { "const": "nec2c-timing" },
+    "schema_version": { "const": 1 },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["program", "program_version"],
+      "properties": {
+        "program": { "const": "nec2c-n5hxr" },
+        "program_version": { "type": "string" }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deck"],
+      "properties": { "deck": { "type": "string" } }
+    },
+    "clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wall", "cpu"],
+      "properties": {
+        "wall": { "const": "monotonic" },
+        "cpu": { "const": "process" }
+      }
+    },
+    "completion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": { "status": { "enum": ["ok", "error"] } }
+    },
+    "process": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wall_seconds", "cpu_seconds", "peak_rss_kib"],
+      "properties": {
+        "wall_seconds": { "type": "number", "minimum": 0 },
+        "cpu_seconds": { "type": "number", "minimum": 0 },
+        "peak_rss_kib": { "type": ["integer", "null"], "minimum": 0 }
+      }
+    },
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "seconds", "calls"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "seconds": { "type": "number", "minimum": 0 },
+          "calls": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}

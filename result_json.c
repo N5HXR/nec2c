@@ -181,6 +181,7 @@ int result_json_write_capabilities(FILE *stream)
     ",\"schema\":\"nec2c-capabilities\",\"schema_version\":1,"
     "\"features\":{\"dielectric_feature_revision\":1,"
     "\"dielectric_resource_versions\":[1,2,3],\"result_json_versions\":[1],"
+    "\"timing_json_versions\":[1],"
     "\"validate_only\":true,\"legacy_result_output\":true,"
     "\"solvers\":[\"dense\",\"gmres\",\"fft\"],"
     "\"grounds\":[\"free-space\",\"pec\",\"sommerfeld-norton\"]},"

@@ -11,7 +11,23 @@ EXTRA_DIST = \
   docs/DIELECTRIC-REVISION-1-RELEASE.md \
   docs/DIELECTRIC-DEFERRED-WORK.md \
   docs/ANTENNA-TURTLE-INTEGRATION.md \
+  docs/PERFORMANCE-ROADMAP.md \
+  docs/PERFORMANCE-M0-BASELINE.md \
   docs/nec2c-results-v1.schema.json \
+  docs/nec2c-timing-v1.schema.json \
+  docs/PERFORMANCE-M1-RESULTS.md \
+  tests/performance/models.json \
+  tests/performance/loop-yagi-438.nec \
+  tests/performance/cross-solver-dipole.nec \
+  tests/performance/cross-solver-yagi.nec \
+  tests/performance/scaling-dipole-801.nec \
+  tests/performance/m1-reference.json \
+  tests/performance/m1-cross-solver.json \
+  tests/performance/m1-overhead.json \
+  tools/performance_benchmark.py \
+  tools/prepare_nec_fixture.py \
+  tools/cross_solver_compare.py \
+  tools/timing_overhead.py \
   examples/dielectric-r1/README.md \
   examples/dielectric-r1/run.py \
   examples/dielectric-r1/reference-summary.json \
@@ -175,6 +191,7 @@ EXTRA_DIST = \
 	  tests/dielectric_wire.py \
   tests/dielectric_patch.py \
   tests/result_json.py \
+  tests/performance_json.py \
   tests/generate_vie_reference.py \
   tests/voxscatter-reference.csv \
 	  tests/openems-m6-n2-15mm.csv \
@@ -203,6 +220,7 @@ TESTS = tests/regression.py tests/dielectric_parser.py tests/dielectric_mesh.py 
 	tests/dielectric_wire.py \
 	tests/dielectric_patch.py \
 	tests/result_json.py \
+	tests/performance_json.py \
 	tests/vie_kernel_test \
 	tests/vie_iterative_test \
 	tests/vie_fft_test \
@@ -273,6 +291,8 @@ nec2c_SOURCES = \
   input.c \
   matrix.c \
   network.c \
+  performance.c \
+  performance.h \
   shared.c \
   fields.c \
   ground.c \
