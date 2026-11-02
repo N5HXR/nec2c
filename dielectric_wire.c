@@ -533,7 +533,8 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   if(iterative == 2) {
     size_t reserve=sizeof(complex double)*(4*total+conductor_unknowns*conductor_unknowns+2*(nw+3*np))+sizeof(double)*(5*nw+4*np);
     if(!(gnd.ksymp!=1 && gnd.iperf==1 ? dielectric_fft_prepare_pec : dielectric_fft_prepare)(&accelerated,model,mesh,conductor_unknowns,k0,reserve,diagnostic)) goto failure;
-    fprintf(stream,"\n\n  FFT ACCOUNTED SOLVER BYTES: %zu",dielectric_fft_storage(accelerated));
+    fprintf(stream,"\n\n  FFT ACCOUNTED SOLVER BYTES: %zu\n  FFT THREAD BUDGET: %zu",
+        dielectric_fft_storage(accelerated),dielectric_fft_threads(accelerated));
     fflush(stream);
   } else {
     system = calloc(total*total, sizeof(*system));

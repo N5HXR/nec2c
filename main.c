@@ -53,10 +53,17 @@ static int copy_stream(FILE *destination, FILE *source);
 static int numerical_fork_safe = 1;
 
 static concurrency_plan plan_concurrency(size_t frequency_count,
-    size_t worker_bytes, int threaded_backend)
+    size_t worker_bytes, size_t automatic_thread_limit)
 {
   concurrency_plan plan = concurrency_plan_for(frequency_count, worker_bytes);
-  if(plan.threads_automatic && !threaded_backend) plan.threads = 1;
+  if(plan.threads_automatic)
+  {
+    size_t available = plan.allowed_cpus / plan.jobs;
+    if(available == 0) available = 1;
+    plan.threads = automatic_thread_limit < available ?
+        automatic_thread_limit : available;
+    if(plan.threads == 0) plan.threads = 1;
+  }
   return plan;
 }
 
@@ -122,7 +129,7 @@ static int start_classic_frequency_workers(int frequency_mode,
     int threaded_backend, classic_worker_state *worker)
 {
   concurrency_plan plan = plan_concurrency((size_t)*frequency_count,
-      worker_bytes, threaded_backend);
+      worker_bytes, threaded_backend ? 4 : 1);
   classic_worker_slot *slots;
   size_t child_count = (size_t)*frequency_count - 1;
   size_t base_execution = result_json_next_execution();
@@ -291,7 +298,7 @@ typedef struct
   const dielectric_plane_wave *wave;
   const dielectric_pattern_request *pattern;
   int coupled;
-  int threaded_backend;
+  size_t automatic_thread_limit;
 } dielectric_worker_context;
 
 static int solve_dielectric_frequency(const dielectric_worker_context *context,
@@ -331,7 +338,7 @@ static int run_dielectric_frequency_workers(
   if(!numerical_fork_safe) return -1;
   if(worker_bytes <= SIZE_MAX / 2) worker_bytes *= 2;
   plan = plan_concurrency((size_t)frequency_count, worker_bytes,
-      context->threaded_backend);
+      context->automatic_thread_limit);
   if(plan.jobs > (size_t)frequency_count) plan.jobs = (size_t)frequency_count;
   performance_concurrency(plan.jobs, plan.threads, plan.allowed_cpus,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
@@ -482,8 +489,10 @@ static int run_dielectric_frequencies(const dielectric_model *model,
   memset(&worker, 0, sizeof(worker));
   worker.model = model; worker.mesh = mesh; worker.iterative = iterative;
   worker.wave = wave; worker.pattern = pattern;
-  worker.threaded_backend = iterative == 0 && !strcmp(
-      dense_backend_name_for_order(mesh->total_unknowns), "lapack");
+  worker.automatic_thread_limit = iterative == 2 &&
+      vie_fft_parallel_available() ? 16 :
+      (iterative == 0 && !strcmp(
+          dense_backend_name_for_order(mesh->total_unknowns), "lapack") ? 4 : 1);
 #ifndef _WIN32
   if(frequency_count > 1)
   {
@@ -492,7 +501,8 @@ static int run_dielectric_frequencies(const dielectric_model *model,
     if(parallel >= 0) return parallel;
   }
 #endif
-  plan = plan_concurrency(1, mesh->matrix_bytes, worker.threaded_backend);
+  plan = plan_concurrency(1, mesh->matrix_bytes,
+      worker.automatic_thread_limit);
   performance_concurrency(1, plan.threads, plan.allowed_cpus,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
   if(!concurrency_apply_threads(plan.threads)) return 0;
@@ -540,8 +550,10 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
   worker.model = model; worker.mesh = mesh; worker.rkh = rkh;
   worker.extended_kernel = extended_kernel; worker.iterative = iterative;
   worker.wave = wave; worker.pattern = pattern; worker.coupled = 1;
-  worker.threaded_backend = iterative == 0 && !strcmp(
-      dense_backend_name_for_order(mesh->total_unknowns), "lapack");
+  worker.automatic_thread_limit = iterative == 2 &&
+      vie_fft_parallel_available() ? 16 :
+      (iterative == 0 && !strcmp(
+          dense_backend_name_for_order(mesh->total_unknowns), "lapack") ? 4 : 1);
 #ifndef _WIN32
   if(frequency_count > 1)
   {
@@ -550,7 +562,8 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
     if(parallel >= 0) return parallel;
   }
 #endif
-  plan = plan_concurrency(1, mesh->matrix_bytes, worker.threaded_backend);
+  plan = plan_concurrency(1, mesh->matrix_bytes,
+      worker.automatic_thread_limit);
   performance_concurrency(1, plan.threads, plan.allowed_cpus,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
   if(!concurrency_apply_threads(plan.threads)) return 0;
@@ -2093,7 +2106,7 @@ int main( int argc, char **argv )
 		  {
 			concurrency_plan plan = plan_concurrency(1, (size_t)iresrv *
 			    sizeof(complex double), !strcmp(dense_backend_name_for_order(
-			    (size_t)netcx.npeq), "lapack"));
+			    (size_t)netcx.npeq), "lapack") ? 4 : 1);
 			concurrency_apply_threads(plan.threads);
 			performance_concurrency(1, plan.threads, plan.allowed_cpus,
 			    plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
@@ -2102,7 +2115,7 @@ int main( int argc, char **argv )
 		  {
 			concurrency_plan plan = plan_concurrency(1, (size_t)iresrv *
 			    sizeof(complex double), !strcmp(dense_backend_name_for_order(
-			    (size_t)netcx.npeq), "lapack"));
+			    (size_t)netcx.npeq), "lapack") ? 4 : 1);
 			concurrency_apply_threads(plan.threads);
 			performance_concurrency(1, plan.threads, plan.allowed_cpus,
 			    plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);

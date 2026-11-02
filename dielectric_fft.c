@@ -27,6 +27,8 @@ static int error(dielectric_diagnostic *d,const char *message)
 void dielectric_fft_free(dielectric_fft_system *s)
 {if(s) {vie_fft_destroy(s->plan);free(s->blocks);free(s->image_work);free(s);}}
 size_t dielectric_fft_storage(const dielectric_fft_system *s) {return s ? s->bytes:0;}
+size_t dielectric_fft_threads(const dielectric_fft_system *s)
+{return s ? vie_fft_threads(s->plan):0;}
 complex double *dielectric_fft_entry(dielectric_fft_system *s,size_t row,size_t column)
 {
   size_t c=s->c,v=s->v;
@@ -39,14 +41,23 @@ static int apply(void *context,const complex double *x,complex double *y)
   dielectric_fft_system *s=context;size_t i,j,c=s->c,v=s->v;
   if(v && s->image_work) {
     complex double *input=s->image_work,*output=input+2*v;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(v >= 1024 && dielectric_fft_threads(s) > 1) num_threads(dielectric_fft_threads(s))
+#endif
     for(i=0;i<v;i++) {input[i]=x[c+i];input[v+i]=(i%3==2?1:-1)*x[c+i];}
     if(!s->volume.apply(s->volume.context,input,output)) return 0;
     memcpy(y+c,output,v*sizeof(*y));
   } else if(v && !s->volume.apply(s->volume.context,x+c,y+c)) return 0;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(c >= 64 && dielectric_fft_threads(s) > 1) num_threads(dielectric_fft_threads(s))
+#endif
   for(i=0;i<c;i++) {
     y[i]=0;
     for(j=0;j<c+v;j++) y[i]+=s->blocks[i*(c+v)+j]*x[j];
   }
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(v >= 1024 && dielectric_fft_threads(s) > 1) num_threads(dielectric_fft_threads(s))
+#endif
   for(i=0;i<v;i++) for(j=0;j<c;j++)
     y[c+i]+=s->blocks[c*(c+v)+i*c+j]*x[j];
   return 1;

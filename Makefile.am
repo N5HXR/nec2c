@@ -18,6 +18,7 @@ EXTRA_DIST = \
   docs/PERFORMANCE-M1-RESULTS.md \
   docs/PERFORMANCE-M2-RESULTS.md \
   docs/PERFORMANCE-M3-RESULTS.md \
+  docs/PERFORMANCE-M4A-RESULTS.md \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -30,8 +31,12 @@ EXTRA_DIST = \
   tests/performance/m2-dense-backend.json \
   tests/performance/m2-cross-solver.json \
   tests/performance/m3-frequency-jobs.json \
+  tests/performance/m4a-fft-scaling.json \
+  tests/performance/m4a-fft-full-solve.json \
+  tests/fft_parallel.py \
   tools/performance_benchmark.py \
   tools/dense_backend_benchmark.py \
+  tools/fft_benchmark.py \
   tools/prepare_nec_fixture.py \
   tools/cross_solver_compare.py \
   tools/timing_overhead.py \
@@ -236,6 +241,7 @@ TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_paralle
 	tests/vie_kernel_test \
 	tests/vie_iterative_test \
 	tests/vie_fft_test \
+	tests/fft_parallel.py \
 	tests/dielectric_fft_test \
 	tests/vie_ground_test \
 	tests/vie_halfspace_test \
@@ -244,6 +250,7 @@ TEST_EXTENSIONS = .py
 PY_LOG_COMPILER = $(PYTHON)
 TESTS_ENVIRONMENT = \
 	NEC2C='$(abs_top_builddir)/nec2c'; export NEC2C; \
+	FFT_BENCHMARK='$(abs_top_builddir)/tools/m9_fft_benchmark'; export FFT_BENCHMARK; \
 	TEST_SRCDIR='$(abs_top_srcdir)'; export TEST_SRCDIR;
 
 .PHONY: regression
@@ -254,6 +261,7 @@ AM_CPPFLAGS = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	@PACKAGE_CFLAGS@
+AM_CFLAGS = @OPENMP_CFLAGS@
 
 bin_PROGRAMS = nec2c
 

@@ -1,12 +1,16 @@
 #include "vie_fft.h"
 #include "vie_kernel.h"
 #include <math.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 struct vie_fft_plan {
-  size_t cells, padded[3], grids, bytes;
+  size_t cells, padded[3], grids, bytes, threads;
   size_t *map;
   complex double *data, *roots[3], self[3], *epsilon;
 };
@@ -41,7 +45,8 @@ static void fft_line(complex double *a,size_t n,size_t stride,
   }
   if(inverse) for(i=0;i<n;i++) a[i*stride]/=(double)n;
 }
-static void fft3(vie_fft_plan *p,complex double *a,int inverse)
+
+static void fft3_serial(vie_fft_plan *p,complex double *a,int inverse)
 {
   size_t x,y,z,nx=p->padded[0],ny=p->padded[1],nz=p->padded[2];
   for(x=0;x<nx;x++) for(y=0;y<ny;y++)
@@ -51,22 +56,88 @@ static void fft3(vie_fft_plan *p,complex double *a,int inverse)
   for(y=0;y<ny;y++) for(z=0;z<nz;z++)
     fft_line(a+index3(p,0,y,z),nx,ny*nz,p->roots[0],inverse);
 }
+
+/* Each transform line owns disjoint elements within a phase.  Parallelizing
+   lines and tensor components therefore preserves fft_line's arithmetic order
+   exactly; the implicit phase barriers preserve the serial 3-D dependency. */
+static void fft3_batch(vie_fft_plan *p,complex double *a,size_t components,
+                       int inverse)
+{
+  size_t nx=p->padded[0],ny=p->padded[1],nz=p->padded[2];
+  size_t xy=nx*ny,xz=nx*nz,yz=ny*nz;
+  ptrdiff_t line;size_t component;
+  if(p->threads==1 || p->grids<16384) {
+    for(component=0;component<components;component++)
+      fft3_serial(p,a+component*p->grids,inverse);
+    return;
+  }
+#ifdef _OPENMP
+#pragma omp parallel num_threads(p->threads)
+#endif
+  {
+#ifdef _OPENMP
+#pragma omp for schedule(static)
+#endif
+    for(line=0;line<(ptrdiff_t)(components*xy);line++) {
+      size_t component=(size_t)line/xy,local=(size_t)line%xy;
+      size_t x=local/ny,y=local%ny;
+      fft_line(a+component*p->grids+index3(p,x,y,0),nz,1,
+          p->roots[2],inverse);
+    }
+#ifdef _OPENMP
+#pragma omp for schedule(static)
+#endif
+    for(line=0;line<(ptrdiff_t)(components*xz);line++) {
+      size_t component=(size_t)line/xz,local=(size_t)line%xz;
+      size_t x=local/nz,z=local%nz;
+      fft_line(a+component*p->grids+index3(p,x,0,z),ny,nz,
+          p->roots[1],inverse);
+    }
+#ifdef _OPENMP
+#pragma omp for schedule(static)
+#endif
+    for(line=0;line<(ptrdiff_t)(components*yz);line++) {
+      size_t component=(size_t)line/yz,local=(size_t)line%yz;
+      size_t y=local/nz,z=local%nz;
+      fft_line(a+component*p->grids+index3(p,0,y,z),nx,ny*nz,
+          p->roots[0],inverse);
+    }
+  }
+}
 void vie_fft_destroy(vie_fft_plan *p)
 { if(p) {int d;for(d=0;d<3;d++) free(p->roots[d]);free(p->map);free(p->data);free(p->epsilon);free(p);} }
 size_t vie_fft_bytes(const vie_fft_plan *p) {return p ? p->bytes:0;}
+size_t vie_fft_threads(const vie_fft_plan *p) {return p ? p->threads:0;}
+int vie_fft_parallel_available(void)
+{
+#ifdef _OPENMP
+  return 1;
+#else
+  return 0;
+#endif
+}
 static int apply(void *context,const complex double *x,complex double *y)
 {
   vie_fft_plan *p=context;
   size_t c,g;int i,j;
   complex double *src=p->data+6*p->grids,*dst=p->data+9*p->grids;
   memset(src,0,6*p->grids*sizeof(*src));
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(p->cells >= 1024 && p->threads > 1) num_threads(p->threads)
+#endif
   for(c=0;c<p->cells;c++) for(i=0;i<3;i++) src[i*p->grids+p->map[c]]=x[3*c+i];
-  for(i=0;i<3;i++) fft3(p,src+i*p->grids,0);
-  for(i=0;i<3;i++) {
-    for(g=0;g<p->grids;g++) for(j=0;j<3;j++)
-      dst[i*p->grids+g]+=p->data[tensor_index(i,j)*p->grids+g]*src[j*p->grids+g];
-    fft3(p,dst+i*p->grids,1);
+  fft3_batch(p,src,3,0);
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(p->grids >= 16384 && p->threads > 1) num_threads(p->threads)
+#endif
+  for(g=0;g<3*p->grids;g++) {
+    size_t component=g/p->grids,point=g%p->grids;
+    for(j=0;j<3;j++) dst[g]+=p->data[tensor_index((int)component,j)*p->grids+point]*src[j*p->grids+point];
   }
+  fft3_batch(p,dst,3,1);
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(p->cells >= 1024 && p->threads > 1) num_threads(p->threads)
+#endif
   for(c=0;c<p->cells;c++) for(i=0;i<3;i++)
     y[3*c+i]=p->epsilon[c]*x[3*c+i]-(p->epsilon[c]-1)*dst[i*p->grids+p->map[c]];
   return 1;
@@ -74,6 +145,9 @@ static int apply(void *context,const complex double *x,complex double *y)
 static int precondition(void *context,const complex double *x,complex double *y)
 {
   vie_fft_plan *p=context;size_t c;int i;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(p->cells >= 1024 && p->threads > 1) num_threads(p->threads)
+#endif
   for(c=0;c<p->cells;c++) for(i=0;i<3;i++) y[3*c+i]=x[3*c+i]/(p->epsilon[c]-(p->epsilon[c]-1)*p->self[i]);
   return 1;
 }
@@ -178,7 +252,7 @@ static int kernels(vie_fft_plan *p,const size_t shape[3],double h,double k)
       }
     }
   }
-  for(i=0;i<6;i++) fft3(p,p->data+i*p->grids,0);
+  fft3_batch(p,p->data,6,0);
   return 1;
 }
 int vie_fft_create(vie_fft_plan **out,const size_t shape[3],size_t cells,
@@ -199,6 +273,12 @@ int vie_fft_create(vie_fft_plan **out,const size_t shape[3],size_t cells,
      !multiply(cells,sizeof(size_t)+sizeof(complex double),&tmp) || !add(bytes,tmp,&bytes) || !add(bytes,root_bytes,&bytes) || bytes>limit) return 0;
   p=calloc(1,sizeof(*p));if(!p) return 0;
   p->cells=cells;p->grids=g;p->bytes=bytes;memcpy(p->padded,padded,sizeof(padded));
+#ifdef _OPENMP
+  p->threads=(size_t)omp_get_max_threads();
+#else
+  p->threads=1;
+#endif
+  if(p->threads==0) p->threads=1;
   p->map=malloc(cells*sizeof(*p->map));p->data=calloc(g,12*sizeof(*p->data));
   p->epsilon=malloc(cells*sizeof(*p->epsilon));
   if(!p->map || !p->data || !p->epsilon) goto fail;

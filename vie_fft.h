@@ -15,5 +15,8 @@ int vie_fft_create(vie_fft_plan **out, const size_t shape[3], size_t cells,
 int vie_fft_set_permittivity(vie_fft_plan *plan, size_t cell, complex double epsilon_r);
 void vie_fft_destroy(vie_fft_plan *plan);
 size_t vie_fft_bytes(const vie_fft_plan *plan);
+/* Immutable thread budget captured when the plan is created. */
+size_t vie_fft_threads(const vie_fft_plan *plan);
+int vie_fft_parallel_available(void);
 void vie_fft_operator(vie_fft_plan *plan, vie_linear_operator *op);
 #endif

@@ -300,7 +300,8 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     if(!(gnd.ksymp!=1 && gnd.iperf==1 ? dielectric_fft_prepare_pec : dielectric_fft_prepare)(&accelerated,model,mesh,0,
         2.0*VIE_PI*frequency_mhz*1e6/VIE_C0,
         3*unknowns*sizeof(complex double)+cells*sizeof(double),diagnostic)) goto failure;
-    fprintf(stream,"\n\n  FFT ACCOUNTED SOLVER BYTES: %zu",dielectric_fft_storage(accelerated));
+    fprintf(stream,"\n\n  FFT ACCOUNTED SOLVER BYTES: %zu\n  FFT THREAD BUDGET: %zu",
+        dielectric_fft_storage(accelerated),dielectric_fft_threads(accelerated));
     fflush(stream);
   } else {
     matrix = calloc(unknowns*unknowns, sizeof(*matrix));

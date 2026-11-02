@@ -102,6 +102,8 @@ Per-frequency numerical output must match separate serial executions.
 
 ### M4A: parallel built-in FFT
 
+Status: ready for user acceptance on 2026-11-02.
+
 Parallelize independent FFT-line batches and tensor/grid work while preserving
 each line's arithmetic order.  Retain the serial path and size threshold.
 Target at least 1.5x on the declared large grid.

@@ -24,6 +24,9 @@ AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AM_PATH_PYTHON([3.6])
+AC_OPENMP
+AS_IF([test "x$OPENMP_CFLAGS" = xunsupported], [OPENMP_CFLAGS=])
+AC_SUBST([OPENMP_CFLAGS])
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [sin])
@@ -77,6 +80,11 @@ int main(void) {
   ])
 ], [have_lapack=no])
 AC_MSG_NOTICE([optional LAPACK dense backend: $have_lapack])
+AS_IF([test -n "$OPENMP_CFLAGS"], [
+  AC_MSG_NOTICE([parallel built-in FFT: enabled with $OPENMP_CFLAGS])
+], [
+  AC_MSG_NOTICE([parallel built-in FFT: unavailable; using serial fallback])
+])
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)
 
