@@ -1,0 +1,60 @@
+{
+  "schema": "nec2c-m3-frequency-jobs-evidence",
+  "schema_version": 1,
+  "created_utc": "2026-11-02T17:14:55Z",
+  "host": {
+    "cpu": "13th Gen Intel Core i9-13900K",
+    "allowed_logical_cpus": 32,
+    "kernel": "Linux 6.8.0-138-generic x86_64",
+    "compiler": "gcc 12.3.0"
+  },
+  "classic_frequency_sweep": {
+    "model": "tests/performance/scaling-dipole-801-sweep.nec",
+    "backend": "lapack",
+    "repeat": 7,
+    "warmup": 2,
+    "serial_median_wall_seconds": 0.5159917559940368,
+    "automatic_median_wall_seconds": 0.24742525300825946,
+    "speedup": 2.0854449969050335,
+    "serial_median_process_tree_rss_kib": 19624,
+    "automatic_median_process_tree_rss_kib": 57668,
+    "maximum_relative_feed_impedance_error": 2.3086760455796546e-11,
+    "maximum_relative_wire_current_error": 5.237112539477568e-11,
+    "stable_repetitions": true
+  },
+  "dielectric_frequency_sweep": {
+    "model": "tests/dielectric/m6-n2.nec",
+    "backend": "lapack",
+    "repeat": 3,
+    "warmup": 1,
+    "serial_median_wall_seconds": 13.929089043987915,
+    "automatic_median_wall_seconds": 2.8629165049933363,
+    "speedup": 4.86534938049838,
+    "serial_median_process_tree_rss_kib": 9388,
+    "automatic_median_process_tree_rss_kib": 37348,
+    "maximum_relative_feed_impedance_error": 1.0564182788312938e-14,
+    "maximum_relative_wire_current_error": 2.5992604198213078e-14,
+    "maximum_relative_volume_current_error": 2.1657023616938004e-14,
+    "stable_repetitions": true
+  },
+  "cross_solver_comparison": {
+    "status": "pass",
+    "fixtures": [
+      "tests/performance/cross-solver-dipole.nec",
+      "tests/performance/cross-solver-yagi.nec"
+    ],
+    "oracles": ["aegnec2-external", "momwire-sinusoidal"]
+  },
+  "verification": {
+    "tests_passed": 29,
+    "tests_failed": 0,
+    "distcheck": "pass",
+    "asan_ubsan_parallel_fixture": "pass",
+    "no_lapack_parallel_fixture": "pass",
+    "affinity_limited_plan": {
+      "allowed_cpus": 4,
+      "jobs_used": 4,
+      "threads_per_job": 1
+    }
+  }
+}

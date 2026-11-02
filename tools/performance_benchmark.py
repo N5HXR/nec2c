@@ -102,6 +102,29 @@ def summary(values):
     }
 
 
+def process_tree_rss_kib(root_pid):
+    """Return aggregate resident memory for a Linux process tree."""
+    total = 0
+    pending = [root_pid]
+    seen = set()
+    while pending:
+        pid = pending.pop()
+        if pid in seen:
+            continue
+        seen.add(pid)
+        try:
+            status = Path(f"/proc/{pid}/status").read_text(encoding="ascii")
+            match = re.search(r"^VmRSS:\s+(\d+)\s+kB$", status, re.MULTILINE)
+            if match:
+                total += int(match.group(1))
+            children = Path(f"/proc/{pid}/task/{pid}/children").read_text(
+                encoding="ascii")
+            pending.extend(int(value) for value in children.split())
+        except (OSError, ValueError):
+            continue
+    return total
+
+
 def summarize_runs(runs):
     phases = {}
     for run in runs:
@@ -113,6 +136,9 @@ def summarize_runs(runs):
         "peak_rss_kib": summary([run["timing"]["process"]["peak_rss_kib"] for run in runs
                                  if run["timing"]["process"]["peak_rss_kib"] is not None]),
         "external_wall_seconds": summary([run["external_wall_seconds"] for run in runs]),
+        "process_tree_peak_rss_kib": summary([
+            run["process_tree_peak_rss_kib"] for run in runs
+            if run["process_tree_peak_rss_kib"] is not None]),
         "phases": {name: summary(values) for name, values in sorted(phases.items())},
         "stable_numerical_result": len({run["numerical_sha256"] for run in runs}) == 1,
         "dense_backends": sorted({
@@ -122,25 +148,34 @@ def summarize_runs(runs):
     }
 
 
-def execute(binary, case, root, directory, run_index, warmup, backend, environment):
+def execute(binary, case, root, directory, run_index, warmup, backend, jobs,
+            threads, environment):
     deck = (root / case["deck"]).resolve()
     prefix = "warmup" if warmup else "run"
     stem = f"{case['id']}-{prefix}-{run_index}"
     output = directory / f"{stem}.out"
     result = directory / f"{stem}-result.json"
     timing = directory / f"{stem}-timing.json"
-    command = [str(binary), "--backend", backend, *case.get("arguments", []),
+    command = [str(binary), "--backend", backend, "--jobs", jobs,
+               "--threads", threads, *case.get("arguments", []),
                "--result-json", str(result), "--timing-json", str(timing),
                "-i", str(deck), "-o", str(output)]
     started = time.perf_counter()
-    completed = subprocess.run(command, cwd=root, text=True, capture_output=True,
+    process = subprocess.Popen(command, cwd=root, text=True,
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                env=environment)
+    peak_rss = 0
+    while process.poll() is None:
+        if platform.system() == "Linux":
+            peak_rss = max(peak_rss, process_tree_rss_kib(process.pid))
+        time.sleep(0.005)
+    stdout, stderr = process.communicate()
     external = time.perf_counter() - started
-    if completed.returncode != 0:
+    if process.returncode != 0:
         raise RuntimeError(json.dumps({
             "case": case["id"], "command": command,
-            "returncode": completed.returncode,
-            "stdout": completed.stdout, "stderr": completed.stderr,
+            "returncode": process.returncode,
+            "stdout": stdout, "stderr": stderr,
         }, indent=2))
     with timing.open(encoding="utf-8") as stream:
         timing_value = json.load(stream)
@@ -150,6 +185,7 @@ def execute(binary, case, root, directory, run_index, warmup, backend, environme
         "index": run_index,
         "command": command,
         "external_wall_seconds": external,
+        "process_tree_peak_rss_kib": peak_rss or None,
         "timing": timing_value,
         "numerical_sha256": numerical_hash(result),
         "result_sha256": sha256(result),
@@ -158,6 +194,17 @@ def execute(binary, case, root, directory, run_index, warmup, backend, environme
 
 
 def main():
+    def auto_or_positive(value):
+        if value == "auto":
+            return value
+        try:
+            parsed = int(value)
+        except ValueError as error:
+            raise argparse.ArgumentTypeError("requires auto or a positive integer") from error
+        if parsed < 1:
+            raise argparse.ArgumentTypeError("requires auto or a positive integer")
+        return str(parsed)
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--binary", type=Path, default=ROOT / "nec2c")
     parser.add_argument("--manifest", type=Path,
@@ -167,17 +214,18 @@ def main():
     parser.add_argument("--warmup", type=int, default=1)
     parser.add_argument("--backend", choices=("auto", "builtin", "lapack"),
                         default="auto")
-    parser.add_argument("--threads", type=int,
-                        help="set BLAS/OpenMP worker environment for child runs")
+    parser.add_argument("--jobs", type=auto_or_positive, default="auto",
+                        help="frequency workers: auto or a positive integer")
+    parser.add_argument("--threads", type=auto_or_positive, default="auto",
+                        help="numerical-library threads per worker: auto or a positive integer")
     parser.add_argument("--case", action="append", dest="cases",
                         help="run only this case ID; may be repeated")
     arguments = parser.parse_args()
-    if arguments.repeat < 1 or arguments.warmup < 0 or \
-       (arguments.threads is not None and arguments.threads < 1):
-        parser.error("--repeat and --threads must be positive; --warmup cannot be negative")
+    if arguments.repeat < 1 or arguments.warmup < 0:
+        parser.error("--repeat must be positive; --warmup cannot be negative")
 
     child_environment = os.environ.copy()
-    if arguments.threads is not None:
+    if arguments.threads != "auto":
         for name in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
                      "BLIS_NUM_THREADS"):
             child_environment[name] = str(arguments.threads)
@@ -226,7 +274,8 @@ def main():
         },
         "manifest": {"path": str(manifest_path), "sha256": sha256(manifest_path)},
         "settings": {"repeat": arguments.repeat, "warmup": arguments.warmup,
-                     "backend": arguments.backend, "threads": arguments.threads},
+                     "backend": arguments.backend, "jobs": arguments.jobs,
+                     "threads": arguments.threads},
         "execution_control": {
             "backend": arguments.backend,
             "thread_environment": {
@@ -242,10 +291,12 @@ def main():
         for case in selected:
             deck = (ROOT / case["deck"]).resolve()
             warmup_runs = [execute(binary, case, ROOT, directory, index, True,
-                                   arguments.backend, child_environment)
+                                   arguments.backend, arguments.jobs,
+                                   arguments.threads, child_environment)
                            for index in range(arguments.warmup)]
             runs = [execute(binary, case, ROOT, directory, index, False,
-                            arguments.backend, child_environment)
+                            arguments.backend, arguments.jobs,
+                            arguments.threads, child_environment)
                     for index in range(arguments.repeat)]
             report["cases"].append({
                 "id": case["id"],

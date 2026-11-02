@@ -42,6 +42,11 @@ int main(void)
   require(!plan.jobs_automatic && !plan.threads_automatic,
       "explicit request reported as automatic");
 
+  require(concurrency_set_jobs("32"), "large explicit job count rejected");
+  plan = concurrency_plan_for(2, 0);
+  require(plan.jobs == 2,
+      "explicit jobs were not limited to the available frequencies");
+
   require(concurrency_apply_threads(3), "could not apply thread environment");
   value = getenv("OPENBLAS_NUM_THREADS");
   require(value && !strcmp(value, "3"), "OpenBLAS thread environment mismatch");

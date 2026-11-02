@@ -106,9 +106,23 @@ void secnds( double *x)
 
 /*------------------------------------------------------------------------*/
 
+static int worker_process;
+
+void worker_process_enable(void)
+{
+  worker_process = 1;
+}
+
+int worker_process_active(void)
+{
+  return worker_process;
+}
+
 /* Does the STOP function of fortran but with return value */
 int stop( int flag )
 {
+  if(worker_process)
+    _Exit(flag == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
   if(result_json_active())
     result_json_finish(flag == 0 ? "ok" : "internal-error");
   performance_finish(flag == 0);

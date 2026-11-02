@@ -1,3 +1,4 @@
+#define _GNU_SOURCE 1
 #define _POSIX_C_SOURCE 200809L
 
 #ifdef HAVE_CONFIG_H
@@ -18,8 +19,36 @@
 #include <unistd.h>
 #endif
 
+#if !defined(_WIN32) && defined(__GNUC__)
+extern void openblas_set_num_threads(int) __attribute__((weak));
+extern void goto_set_num_threads(int) __attribute__((weak));
+extern void omp_set_num_threads(int) __attribute__((weak));
+extern void mkl_set_num_threads(int) __attribute__((weak));
+#endif
+
 static size_t requested_jobs;
 static size_t requested_threads;
+
+int concurrency_bootstrap(int argc, char **argv)
+{
+#ifndef _WIN32
+  static const char *names[] = {
+    "OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
+    "BLIS_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"
+  };
+  size_t name;
+  (void)argc;
+  if(getenv("NEC2C_THREAD_ENV_READY")) return 1;
+  for(name = 0; name < sizeof(names) / sizeof(names[0]); ++name)
+    if(setenv(names[name], "1", 1) != 0) return 0;
+  if(setenv("NEC2C_THREAD_ENV_READY", "1", 1) != 0) return 0;
+  execvp(argv[0], argv);
+  return 0;
+#else
+  (void)argc; (void)argv;
+  return 1;
+#endif
+}
 
 static int parse_count(const char *value, size_t *result)
 {
@@ -118,7 +147,7 @@ concurrency_plan concurrency_plan_for(size_t frequency_count,
   cpu_jobs = plan.allowed_cpus / plan.threads;
   if(cpu_jobs == 0) cpu_jobs = 1;
   if(requested_jobs)
-    plan.jobs = requested_jobs;
+    plan.jobs = minimum_size(requested_jobs, frequency_count);
   else
   {
     plan.jobs = minimum_size(frequency_count, cpu_jobs);
@@ -134,7 +163,7 @@ concurrency_plan concurrency_plan_for(size_t frequency_count,
        threads. Prefer more independent frequency workers when available. */
     plan.threads = minimum_size((size_t)4, available_per_job);
   }
-  if(requested_jobs && requested_jobs > memory_jobs)
+  if(requested_jobs && plan.jobs > memory_jobs)
     plan.memory_limited = 1;
   else if(!requested_jobs && plan.jobs == memory_jobs && memory_jobs < frequency_count)
     plan.memory_limited = 1;
@@ -154,6 +183,16 @@ int concurrency_apply_threads(size_t threads)
 #ifndef _WIN32
   for(index = 0; index < sizeof(names) / sizeof(names[0]); ++index)
     if(setenv(names[index], value, 1) != 0) return 0;
+#ifdef __GNUC__
+  /* BLAS libraries commonly inspect their environment in a constructor,
+     before main(). Weak runtime hooks make CLI control authoritative even
+     when that has already happened, without introducing a library-specific
+     link dependency. */
+  if(openblas_set_num_threads) openblas_set_num_threads((int)threads);
+  else if(goto_set_num_threads) goto_set_num_threads((int)threads);
+  if(omp_set_num_threads) omp_set_num_threads((int)threads);
+  if(mkl_set_num_threads) mkl_set_num_threads((int)threads);
+#endif
   return 1;
 #else
   (void)names; (void)index;

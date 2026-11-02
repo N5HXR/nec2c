@@ -530,6 +530,8 @@ void usage(void);
 void abort_on_error(int why);
 void secnds(double *x);
 int stop(int flag);
+void worker_process_enable(void);
+int worker_process_active(void);
 int load_line(char *buff, FILE *pfile);
 void mem_alloc(void **ptr, size_t req);
 void mem_realloc(void **ptr, size_t req);
@@ -552,4 +554,3 @@ void lambda(double t, complex double *xlam, complex double *dxlam);
 void rom1(int n, complex double *sum, int nx);
 void saoa(double t, complex double *ans);
 #endif
-

@@ -47,9 +47,193 @@
 #include <unistd.h>
 #endif
 
+static double requested_frequency(int mode, double first_mhz, double step,
+    int index);
+static int copy_stream(FILE *destination, FILE *source);
+static int numerical_fork_safe = 1;
+
+static concurrency_plan plan_concurrency(size_t frequency_count,
+    size_t worker_bytes, int threaded_backend)
+{
+  concurrency_plan plan = concurrency_plan_for(frequency_count, worker_bytes);
+  if(plan.threads_automatic && !threaded_backend) plan.threads = 1;
+  return plan;
+}
+
 #ifndef _WIN32
 /* signal handler */
 static void sig_handler( int signal );
+#endif
+
+#ifndef _WIN32
+typedef struct
+{
+  int success;
+  double impedance[4];
+  double normalization;
+  double elapsed_seconds;
+} classic_worker_status;
+
+typedef struct
+{
+  pid_t process;
+  FILE *report;
+  FILE *json;
+  FILE *status;
+} classic_worker_slot;
+
+typedef struct
+{
+  int active;
+  size_t index;
+  classic_worker_slot *slot;
+  double started;
+} classic_worker_state;
+
+static int finish_classic_worker(classic_worker_state *worker,
+    const double *fnorm, double zpnorm, int iped)
+{
+  classic_worker_status status;
+  size_t offset;
+  if(!worker->active) return 1;
+  memset(&status, 0, sizeof(status));
+  status.success = 1;
+  status.normalization = zpnorm;
+  status.elapsed_seconds = performance_now() - worker->started;
+  offset = 4 * worker->index;
+  if(iped && fnorm) memcpy(status.impedance, fnorm + offset,
+      sizeof(status.impedance));
+  if(!result_json_execution_end(1) ||
+     !result_json_worker_export(worker->slot->json)) status.success = 0;
+  if(fwrite(&status, sizeof(status), 1, worker->slot->status) != 1)
+    status.success = 0;
+  fflush(worker->slot->report); fflush(worker->slot->json);
+  fflush(worker->slot->status);
+  _exit(status.success ? 0 : 1);
+}
+
+/* Fork all but the final frequency from the pristine case-1 solver state.
+   The parent runs the final frequency normally, preserving the legacy global
+   state expected by any later cards. */
+static int start_classic_frequency_workers(int frequency_mode,
+    int *frequency_count, double first_mhz, double step, size_t worker_bytes,
+    int *frequency_index, double *current_mhz, FILE *parent_report,
+    double *fnorm, double *zpnorm, int iped,
+    int threaded_backend, classic_worker_state *worker)
+{
+  concurrency_plan plan = plan_concurrency((size_t)*frequency_count,
+      worker_bytes, threaded_backend);
+  classic_worker_slot *slots;
+  size_t child_count = (size_t)*frequency_count - 1;
+  size_t base_execution = result_json_next_execution();
+  size_t next = 0, active = 0, done = 0, index;
+  int original_count = *frequency_count;
+  if(plan.jobs > (size_t)original_count) plan.jobs = (size_t)original_count;
+  if(plan.jobs <= 1) return 0;
+  if(plan.memory_limited && concurrency_requested_jobs())
+  {
+    fprintf(stderr, "nec2c: --jobs exceeds the safe memory estimate for this sweep\n");
+    stop(-1);
+  }
+  performance_concurrency(plan.jobs, plan.threads, plan.allowed_cpus,
+      plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
+  slots = calloc(child_count, sizeof(*slots));
+  if(!slots) return 0;
+  if(result_json_active()) result_json_ground_state();
+  fflush(parent_report);
+
+  while(done < child_count)
+  {
+    while(next < child_count && active < plan.jobs)
+    {
+      classic_worker_slot *slot = &slots[next];
+      pid_t process;
+      slot->report = tmpfile(); slot->json = tmpfile(); slot->status = tmpfile();
+      if(!slot->report || !slot->json || !slot->status) goto failure;
+      process = fork();
+      if(process == 0)
+      {
+        worker_process_enable();
+        worker->active = 1; worker->index = next; worker->slot = slot;
+        worker->started = performance_now();
+        if(!concurrency_apply_threads(plan.threads)) _exit(125);
+        output_fp = slot->report;
+        *frequency_index = (int)next + 1;
+        *frequency_count = original_count;
+        *current_mhz = next == 0 ? first_mhz :
+            requested_frequency(frequency_mode, first_mhz, step,
+                (int)next - 1);
+        if(!result_json_worker_begin(base_execution + next)) _exit(125);
+        return 1;
+      }
+      if(process < 0) goto failure;
+      slot->process = process;
+      ++next; ++active;
+    }
+    {
+      int wait_status;
+      pid_t completed = waitpid(-1, &wait_status, 0);
+      if(completed < 0)
+      {
+        if(errno == EINTR) continue;
+        goto failure;
+      }
+      for(index = 0; index < next; ++index)
+        if(slots[index].process == completed)
+        {
+          slots[index].process = 0;
+          if(!WIFEXITED(wait_status) || WEXITSTATUS(wait_status) != 0)
+            goto failure;
+          break;
+        }
+      --active; ++done;
+    }
+  }
+
+  for(index = 0; index < child_count; ++index)
+  {
+    classic_worker_status status;
+    rewind(slots[index].status);
+    if(fread(&status, sizeof(status), 1, slots[index].status) != 1 ||
+       !status.success || !copy_stream(parent_report, slots[index].report) ||
+       !result_json_worker_import(slots[index].json)) goto failure;
+    if(iped && fnorm) memcpy(fnorm + 4 * index, status.impedance,
+        sizeof(status.impedance));
+    if(status.normalization > *zpnorm) *zpnorm = status.normalization;
+    performance_add("frequency_worker", status.elapsed_seconds);
+  }
+  for(index = 0; index < child_count; ++index)
+  {
+    fclose(slots[index].report); fclose(slots[index].json);
+    fclose(slots[index].status);
+  }
+  free(slots);
+  *frequency_index = original_count;
+  *frequency_count = original_count;
+  *current_mhz = requested_frequency(frequency_mode, first_mhz, step,
+      original_count - 2);
+  if(!concurrency_apply_threads(plan.threads)) return 0;
+  return 2;
+
+failure:
+  for(index = 0; index < next; ++index)
+    if(slots[index].process > 0) kill(slots[index].process, SIGTERM);
+  while(active)
+  {
+    if(waitpid(-1, NULL, 0) > 0) --active;
+    else if(errno != EINTR) break;
+  }
+  for(index = 0; index < child_count; ++index)
+  {
+    if(slots[index].report) fclose(slots[index].report);
+    if(slots[index].json) fclose(slots[index].json);
+    if(slots[index].status) fclose(slots[index].status);
+  }
+  free(slots);
+  fprintf(stderr, "nec2c: classic frequency worker failed\n");
+  stop(-1);
+  return 0;
+}
 #endif
 
 static double highest_requested_frequency(int mode, int count,
@@ -69,8 +253,14 @@ static double highest_requested_frequency(int mode, int count,
 static double requested_frequency(int mode, double first_mhz, double step,
     int index)
 {
-  return mode == 1 ? first_mhz * pow(step, (double)index) :
-      first_mhz + step * (double)index;
+  double frequency = first_mhz;
+  int current;
+  for(current = 0; current < index; ++current)
+  {
+    if(mode == 1) frequency *= step;
+    else frequency += step;
+  }
+  return frequency;
 }
 
 static int copy_stream(FILE *destination, FILE *source)
@@ -101,6 +291,7 @@ typedef struct
   const dielectric_plane_wave *wave;
   const dielectric_pattern_request *pattern;
   int coupled;
+  int threaded_backend;
 } dielectric_worker_context;
 
 static int solve_dielectric_frequency(const dielectric_worker_context *context,
@@ -122,6 +313,8 @@ typedef struct
   FILE *json;
   FILE *status;
   int complete;
+  int wait_status;
+  int waited;
 } dielectric_worker_slot;
 
 static int run_dielectric_frequency_workers(
@@ -135,8 +328,10 @@ static int run_dielectric_frequency_workers(
   size_t active = 0, next = 0, complete = 0, index;
   size_t worker_bytes = context->mesh->matrix_bytes;
   int failed = 0;
+  if(!numerical_fork_safe) return -1;
   if(worker_bytes <= SIZE_MAX / 2) worker_bytes *= 2;
-  plan = concurrency_plan_for((size_t)frequency_count, worker_bytes);
+  plan = plan_concurrency((size_t)frequency_count, worker_bytes,
+      context->threaded_backend);
   if(plan.jobs > (size_t)frequency_count) plan.jobs = (size_t)frequency_count;
   performance_concurrency(plan.jobs, plan.threads, plan.allowed_cpus,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
@@ -146,7 +341,6 @@ static int run_dielectric_frequency_workers(
     fprintf(stderr, "nec2c: --jobs exceeds the safe memory estimate for this sweep\n");
     return 0;
   }
-  if(!concurrency_apply_threads(plan.threads)) return 0;
   slots = calloc((size_t)frequency_count, sizeof(*slots));
   if(!slots) return 0;
   if(result_json_active()) result_json_ground_state();
@@ -165,8 +359,9 @@ static int run_dielectric_frequency_workers(
       {
         dielectric_worker_status status;
         double started;
+        worker_process_enable();
         memset(&status, 0, sizeof(status));
-        concurrency_apply_threads(plan.threads);
+        if(!concurrency_apply_threads(plan.threads)) _exit(125);
         if(!result_json_worker_begin(base_execution + next)) _exit(125);
         result_json_execution_begin(requested_frequency(frequency_mode,
             first_mhz, step, (int)next),
@@ -198,6 +393,8 @@ static int run_dielectric_frequency_workers(
       for(index = 0; index < next; ++index)
         if(slots[index].process == done)
         {
+          slots[index].wait_status = wait_status;
+          slots[index].waited = 1;
           slots[index].complete = WIFEXITED(wait_status) &&
               WEXITSTATUS(wait_status) == 0;
           if(!slots[index].complete) failed = 1;
@@ -224,6 +421,7 @@ static int run_dielectric_frequency_workers(
       performance_add("dielectric_solve", status.elapsed_seconds);
     }
   if(failed)
+  {
     for(index = 0; index < (size_t)frequency_count; ++index)
       if(slots[index].status)
       {
@@ -232,6 +430,33 @@ static int run_dielectric_frequency_workers(
         if(fread(&status, sizeof(status), 1, slots[index].status) == 1 &&
            !status.success) { *diagnostic = status.diagnostic; break; }
       }
+    if(!diagnostic->message[0])
+    {
+      size_t failed_index = 0;
+      for(index = 0; index < (size_t)frequency_count; ++index)
+        if(slots[index].waited && !slots[index].complete)
+        { failed_index = index; break; }
+      memset(diagnostic, 0, sizeof(*diagnostic));
+      snprintf(diagnostic->resource, sizeof(diagnostic->resource), "%s",
+          context->model->resource_path);
+      snprintf(diagnostic->record, sizeof(diagnostic->record), "WORKER");
+      snprintf(diagnostic->value, sizeof(diagnostic->value),
+          "frequency index %lu", (unsigned long)(failed_index + 1));
+      if(slots[failed_index].waited &&
+         WIFEXITED(slots[failed_index].wait_status))
+        snprintf(diagnostic->message, sizeof(diagnostic->message),
+            "frequency worker exited with status %d before publishing a diagnostic",
+            WEXITSTATUS(slots[failed_index].wait_status));
+      else if(slots[failed_index].waited &&
+              WIFSIGNALED(slots[failed_index].wait_status))
+        snprintf(diagnostic->message, sizeof(diagnostic->message),
+            "frequency worker terminated by signal %d before publishing a diagnostic",
+            WTERMSIG(slots[failed_index].wait_status));
+      else
+        snprintf(diagnostic->message, sizeof(diagnostic->message),
+            "frequency worker exited before publishing a diagnostic");
+    }
+  }
   for(index = 0; index < (size_t)frequency_count; ++index)
   {
     if(slots[index].report) fclose(slots[index].report);
@@ -257,6 +482,8 @@ static int run_dielectric_frequencies(const dielectric_model *model,
   memset(&worker, 0, sizeof(worker));
   worker.model = model; worker.mesh = mesh; worker.iterative = iterative;
   worker.wave = wave; worker.pattern = pattern;
+  worker.threaded_backend = iterative == 0 && !strcmp(
+      dense_backend_name_for_order(mesh->total_unknowns), "lapack");
 #ifndef _WIN32
   if(frequency_count > 1)
   {
@@ -265,7 +492,7 @@ static int run_dielectric_frequencies(const dielectric_model *model,
     if(parallel >= 0) return parallel;
   }
 #endif
-  plan = concurrency_plan_for(1, mesh->matrix_bytes);
+  plan = plan_concurrency(1, mesh->matrix_bytes, worker.threaded_backend);
   performance_concurrency(1, plan.threads, plan.allowed_cpus,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
   if(!concurrency_apply_threads(plan.threads)) return 0;
@@ -295,6 +522,7 @@ static int run_dielectric_frequencies(const dielectric_model *model,
     else
       frequency += step;
   }
+  numerical_fork_safe = 0;
   return 1;
 }
 
@@ -312,6 +540,8 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
   worker.model = model; worker.mesh = mesh; worker.rkh = rkh;
   worker.extended_kernel = extended_kernel; worker.iterative = iterative;
   worker.wave = wave; worker.pattern = pattern; worker.coupled = 1;
+  worker.threaded_backend = iterative == 0 && !strcmp(
+      dense_backend_name_for_order(mesh->total_unknowns), "lapack");
 #ifndef _WIN32
   if(frequency_count > 1)
   {
@@ -320,7 +550,7 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
     if(parallel >= 0) return parallel;
   }
 #endif
-  plan = concurrency_plan_for(1, mesh->matrix_bytes);
+  plan = plan_concurrency(1, mesh->matrix_bytes, worker.threaded_backend);
   performance_concurrency(1, plan.threads, plan.allowed_cpus,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
   if(!concurrency_apply_threads(plan.threads)) return 0;
@@ -351,6 +581,7 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
     else
       frequency += step;
   }
+  numerical_fork_safe = 0;
   return 1;
 }
 
@@ -423,6 +654,11 @@ static void set_mode_diagnostic(const dielectric_model *model,
 
 int main( int argc, char **argv )
 {
+  if(!concurrency_bootstrap(argc, argv))
+  {
+    perror("nec2c: unable to initialize numerical-library thread controls");
+    return EXIT_FAILURE;
+  }
   char infile[NEC2C_PATH_MAX + 1] = "";
   char deck_path[NEC2C_PATH_MAX * 4 + 1] = "";
   char otfile[NEC2C_PATH_BUFFER_SIZE] = "";
@@ -474,6 +710,11 @@ int main( int argc, char **argv )
   double zpnorm=0., thetis=0., phiss=0., extim;
   double tim1, tim, tim2, etha, fr, fr2, cmag, ph, ethm, ephm, epha;
   complex double eth, eph, curi, ex, ey, ez, epsc, *cm = NULL;
+#ifndef _WIN32
+  classic_worker_state classic_worker;
+  int classic_parallel_mode = 0;
+  memset(&classic_worker, 0, sizeof(classic_worker));
+#endif
 
   /* getopt() variables */
   int option;
@@ -1835,6 +2076,39 @@ int main( int argc, char **argv )
 		  if( matpar.imat == 0)
 			fblock( netcx.npeq, netcx.neq, iresrv, data.ipsym);
 
+#ifndef _WIN32
+		  classic_parallel_mode = 0;
+		  if(numerical_fork_safe && nfrq > 1 && fpat.ixtyp == 0 &&
+		     yparm.ncoup == 0 && plot_fp == NULL && save.sig >= 0.0 &&
+		     (gnd.ksymp == 1 || gnd.iperf == 1 || !result_json_active()))
+		  {
+			size_t worker_bytes = ((size_t)iresrv +
+			    (size_t)smat.nop * (size_t)smat.nop) * sizeof(complex double);
+			classic_parallel_mode = start_classic_frequency_workers(ifrq, &nfrq, save.fmhz,
+			    delfrq, worker_bytes, &mhz, &save.fmhz, output_fp,
+			    fnorm, &zpnorm, iped, !strcmp(dense_backend_name_for_order(
+			    (size_t)netcx.npeq), "lapack"), &classic_worker);
+		  }
+		  if(classic_parallel_mode == 0)
+		  {
+			concurrency_plan plan = plan_concurrency(1, (size_t)iresrv *
+			    sizeof(complex double), !strcmp(dense_backend_name_for_order(
+			    (size_t)netcx.npeq), "lapack"));
+			concurrency_apply_threads(plan.threads);
+			performance_concurrency(1, plan.threads, plan.allowed_cpus,
+			    plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
+		  }
+#else
+		  {
+			concurrency_plan plan = plan_concurrency(1, (size_t)iresrv *
+			    sizeof(complex double), !strcmp(dense_backend_name_for_order(
+			    (size_t)netcx.npeq), "lapack"));
+			concurrency_apply_threads(plan.threads);
+			performance_concurrency(1, plan.threads, plan.allowed_cpus,
+			    plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
+		  }
+#endif
+
 		  /* label 42 */
 		  /* frequency do loop */
 		  do
@@ -2599,6 +2873,10 @@ int main( int argc, char **argv )
 			while( TRUE );
 
 			/* jump to freq. or input loop */
+#ifndef _WIN32
+			if( classic_worker.active )
+			  break;
+#endif
 			if( jmp_iloop )
 			  break;
 
@@ -2678,6 +2956,11 @@ int main( int argc, char **argv )
 
 		  } /*** do (frequency loop) (l_42) ***/
 		  while( (++mhz <= nfrq) );
+
+#ifndef _WIN32
+		  finish_classic_worker(&classic_worker, fnorm, zpnorm, iped);
+		  numerical_fork_safe = 0;
+#endif
 
 		  /* Jump to card input loop */
 		  if( jmp_iloop )
@@ -2865,6 +3148,7 @@ void prnt( int in1, int in2, int in3, double fl1, double fl2,
 #ifndef _WIN32
 static void sig_handler( int signal )
 {
+  if(worker_process_active()) _Exit(EXIT_FAILURE);
   result_json_abandon();
   fprintf( stderr, "\n" );
   switch( signal )

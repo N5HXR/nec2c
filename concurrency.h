@@ -15,6 +15,10 @@ typedef struct
   int memory_limited;
 } concurrency_plan;
 
+/* Re-exec once with numerical-library thread variables established before
+   shared-library constructors run. Call at the beginning of main(). */
+int concurrency_bootstrap(int argc, char **argv);
+
 /* "auto" is represented by zero. */
 int concurrency_set_jobs(const char *value);
 int concurrency_set_threads(const char *value);

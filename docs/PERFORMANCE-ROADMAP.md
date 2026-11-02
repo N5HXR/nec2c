@@ -93,8 +93,8 @@ speedup on a declared large matrix without a small-case regression.
 
 ### M3: concurrency contract and frequency jobs
 
-Status: implementation in progress. Linux/POSIX process execution is the
-accepted platform contract; unsupported platforms may use a serial fallback.
+Status: ready for user acceptance on 2026-11-02. Linux/POSIX process execution
+is the accepted platform contract; unsupported platforms use a serial fallback.
 
 Implement deterministic process-parallel frequency execution and one coherent
 thread/job control model.  Prevent nested BLAS, OpenMP, and FFT oversubscription.

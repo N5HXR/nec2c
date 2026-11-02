@@ -52,7 +52,8 @@ def run_once(binary, deck, backend, threads, directory, label):
     for name in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
                  "BLIS_NUM_THREADS"):
         environment[name] = str(threads)
-    command = [str(binary), "--backend", backend,
+    command = [str(binary), "--backend", backend, "--jobs", "1",
+               "--threads", str(threads),
                "--result-json", str(result_path),
                "--timing-json", str(timing_path),
                "-i", str(deck), "-o", str(output_path)]

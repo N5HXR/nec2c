@@ -38,9 +38,23 @@
       "provenance": "Milestone 1 deterministic scaling fixture, inspired by AEG's published segment-count benchmark progression without copying source"
     },
     {
+      "id": "classic-frequency-sweep-801",
+      "description": "Four-frequency 801-segment dipole for process-parallel scaling",
+      "deck": "tests/performance/scaling-dipole-801-sweep.nec",
+      "arguments": [],
+      "provenance": "Milestone 3 frequency-sweep variant of the deterministic Milestone 1 scaling fixture"
+    },
+    {
       "id": "dielectric-dense",
       "description": "Wire and dielectric cube using the dense VIE solver",
       "deck": "tests/dielectric/m6-cube.nec",
+      "arguments": ["-s", "dense"],
+      "provenance": "nec2c-n5hxr dielectric regression corpus"
+    },
+    {
+      "id": "dielectric-frequency-sweep",
+      "description": "Five-frequency coupled wire/dielectric dense sweep",
+      "deck": "tests/dielectric/m6-n2.nec",
       "arguments": ["-s", "dense"],
       "provenance": "nec2c-n5hxr dielectric regression corpus"
     },

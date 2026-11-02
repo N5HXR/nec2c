@@ -17,16 +17,19 @@ EXTRA_DIST = \
   docs/nec2c-timing-v1.schema.json \
   docs/PERFORMANCE-M1-RESULTS.md \
   docs/PERFORMANCE-M2-RESULTS.md \
+  docs/PERFORMANCE-M3-RESULTS.md \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
   tests/performance/cross-solver-yagi.nec \
   tests/performance/scaling-dipole-801.nec \
+  tests/performance/scaling-dipole-801-sweep.nec \
   tests/performance/m1-reference.json \
   tests/performance/m1-cross-solver.json \
   tests/performance/m1-overhead.json \
   tests/performance/m2-dense-backend.json \
   tests/performance/m2-cross-solver.json \
+  tests/performance/m3-frequency-jobs.json \
   tools/performance_benchmark.py \
   tools/dense_backend_benchmark.py \
   tools/prepare_nec_fixture.py \
@@ -198,6 +201,7 @@ EXTRA_DIST = \
   tests/result_json.py \
   tests/performance_json.py \
   tests/backend_equivalence.py \
+  tests/frequency_parallel.py \
   tests/dense_backend_test.c \
   tests/generate_vie_reference.py \
   tests/voxscatter-reference.csv \
