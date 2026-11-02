@@ -43,13 +43,16 @@ typedef struct
   char deck[NEC2C_PATH_MAX * 4 + 1];
   FILE *document;
   double wall_started;
-  clock_t cpu_started;
+  double cpu_started;
   performance_phase phases[PERFORMANCE_PHASES];
   size_t phase_count;
   int dense_backend_set;
   int dense_backend_mixed;
   char dense_backend_requested[16];
   char dense_backend_used[16];
+  int concurrency_set;
+  size_t jobs, threads, allowed_cpus;
+  int jobs_automatic, threads_automatic, memory_limited;
 } performance_session;
 
 static performance_session session;
@@ -106,15 +109,36 @@ double performance_now(void)
 static long peak_rss_kib(void)
 {
 #ifndef _WIN32
-  struct rusage usage;
+  struct rusage usage, children;
+  long value;
   if(getrusage(RUSAGE_SELF, &usage) != 0) return -1;
+  value = (long)usage.ru_maxrss;
+  if(getrusage(RUSAGE_CHILDREN, &children) == 0 &&
+     (long)children.ru_maxrss > value) value = (long)children.ru_maxrss;
 #ifdef __APPLE__
-  return (long)(usage.ru_maxrss / 1024);
+  return value / 1024;
 #else
-  return (long)usage.ru_maxrss;
+  return value;
 #endif
 #else
   return -1;
+#endif
+}
+
+static double process_cpu_seconds(void)
+{
+#ifndef _WIN32
+  struct rusage self, children;
+  double value;
+  if(getrusage(RUSAGE_SELF, &self) != 0) return 0.0;
+  value = self.ru_utime.tv_sec + 1.0e-6 * self.ru_utime.tv_usec +
+      self.ru_stime.tv_sec + 1.0e-6 * self.ru_stime.tv_usec;
+  if(getrusage(RUSAGE_CHILDREN, &children) == 0)
+    value += children.ru_utime.tv_sec + 1.0e-6 * children.ru_utime.tv_usec +
+        children.ru_stime.tv_sec + 1.0e-6 * children.ru_stime.tv_usec;
+  return value;
+#else
+  return (double)clock() / (double)CLOCKS_PER_SEC;
 #endif
 }
 
@@ -126,7 +150,7 @@ static void write_document(void)
   if(!session.active || session.written) return;
   session.written = 1;
   wall = performance_now() - session.wall_started;
-  cpu = (double)(clock() - session.cpu_started) / (double)CLOCKS_PER_SEC;
+  cpu = process_cpu_seconds() - session.cpu_started;
   rss = peak_rss_kib();
   fprintf(session.document,
       "{\"schema\":\"nec2c-timing\",\"schema_version\":1,"
@@ -143,7 +167,19 @@ static void write_document(void)
     json_string(session.document,
         session.dense_backend_mixed ? "mixed" : session.dense_backend_used);
   else fputs("null", session.document);
-  fputs("},\"clock\":{\"wall\":\"monotonic\",\"cpu\":\"process\"},"
+  fputs("},\"concurrency\":", session.document);
+  if(session.concurrency_set)
+    fprintf(session.document,
+        "{\"jobs_requested\":\"%s\",\"threads_requested\":\"%s\","
+        "\"jobs_used\":%lu,\"threads_per_job\":%lu,\"allowed_cpus\":%lu,"
+        "\"memory_limited\":%s}",
+        session.jobs_automatic ? "auto" : "explicit",
+        session.threads_automatic ? "auto" : "explicit",
+        (unsigned long)session.jobs, (unsigned long)session.threads,
+        (unsigned long)session.allowed_cpus,
+        session.memory_limited ? "true" : "false");
+  else fputs("null", session.document);
+  fputs(",\"clock\":{\"wall\":\"monotonic\",\"cpu\":\"process\"},"
         "\"completion\":{\"status\":", session.document);
   json_string(session.document, session.success ? "ok" : "error");
   fputs("},\"process\":{\"wall_seconds\":", session.document);
@@ -197,7 +233,7 @@ int performance_open(const char *destination, const char *deck_path)
   if(!session.document) { memset(&session, 0, sizeof(session)); return 0; }
   session.active = 1;
   session.wall_started = performance_now();
-  session.cpu_started = clock();
+  session.cpu_started = process_cpu_seconds();
   if(atexit(write_at_exit) != 0)
   {
     fclose(session.document);
@@ -246,6 +282,18 @@ void performance_dense_backend(size_t order)
   else if(strcmp(session.dense_backend_requested, requested) != 0 ||
           strcmp(session.dense_backend_used, used) != 0)
     session.dense_backend_mixed = 1;
+}
+
+void performance_concurrency(size_t jobs, size_t threads, size_t allowed_cpus,
+    int jobs_automatic, int threads_automatic, int memory_limited)
+{
+  if(!session.active || session.written) return;
+  session.concurrency_set = 1;
+  session.jobs = jobs; session.threads = threads;
+  session.allowed_cpus = allowed_cpus;
+  session.jobs_automatic = jobs_automatic;
+  session.threads_automatic = threads_automatic;
+  session.memory_limited = memory_limited;
 }
 
 void performance_finish(int success)

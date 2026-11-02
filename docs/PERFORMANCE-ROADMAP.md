@@ -14,7 +14,9 @@ subject to explicit user acceptance at every milestone.
   implementation.
 * Configuration is exposed through command-line options.  The intended common
   controls are `--backend auto|builtin|lapack`,
-  `--fft-backend auto|builtin|fftw`, `--threads N`, and `--jobs N`.  Exact
+  `--fft-backend auto|builtin|fftw`, `--threads auto|N`, and
+  `--jobs auto|N`.  Automatic job and thread allocation is the default;
+  `--jobs 1 --threads 1` opts into serial execution. Exact
   spellings are reviewed when the corresponding milestone begins.
 * Existing numerical baselines are not regenerated merely because an optimized
   backend differs.
@@ -90,6 +92,9 @@ only above validated crossover sizes.  Target at least a 2x factorization
 speedup on a declared large matrix without a small-case regression.
 
 ### M3: concurrency contract and frequency jobs
+
+Status: implementation in progress. Linux/POSIX process execution is the
+accepted platform contract; unsupported platforms may use a serial fallback.
 
 Implement deterministic process-parallel frequency execution and one coherent
 thread/job control model.  Prevent nested BLAS, OpenMP, and FFT oversubscription.

@@ -34,6 +34,8 @@ with tempfile.TemporaryDirectory() as directory:
     capabilities = json.loads(run("--capabilities-json").stdout)
     assert capabilities["features"]["timing_json_versions"] == [1]
     assert capabilities["features"]["default_dense_backend"] == "auto"
+    assert capabilities["features"]["default_jobs"] == "auto"
+    assert capabilities["features"]["default_threads"] == "auto"
     assert capabilities["features"]["dense_backends"][:2] == ["auto", "builtin"]
     assert capabilities["limits"]["lapack_auto_min_order"] >= 1
 

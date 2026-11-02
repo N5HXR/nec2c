@@ -187,6 +187,8 @@ int result_json_write_capabilities(FILE *stream)
     "\"solvers\":[\"dense\",\"gmres\",\"fft\"],"
     "\"dense_backends\":[\"auto\",\"builtin\"%s],"
     "\"default_dense_backend\":\"auto\","
+    "\"frequency_parallelism\":\"posix-process\","
+    "\"default_jobs\":\"auto\",\"default_threads\":\"auto\","
     "\"grounds\":[\"free-space\",\"pec\",\"sommerfeld-norton\"]},"
     "\"limits\":{\"nec_card_characters\":132,\"default_max_cells\":%d,"
     "\"fft_accounted_storage_bytes\":%lu,\"lapack_auto_min_order\":%lu}}\n",
@@ -450,6 +452,9 @@ int result_json_request_near(const char *kind,int mode,int nx,int ny,int nz,
 int result_json_current_request(void)
 { return session.active ? session.job.current_request : -1; }
 
+size_t result_json_next_execution(void)
+{ return session.active ? session.job.next_execution : 0; }
+
 const char *result_json_current_excitation_kind(void)
 {
   return session.active && session.job.execution.open ?
@@ -558,6 +563,42 @@ int result_json_execution_end(int success)
     fputs(",\"far_fields\":[",f);spool_copy(f,&e->far_fields);fputs("],\"near_fields\":[",f);spool_copy(f,&e->near_fields);fputc(']',f);
   }
   fputc('}',f);execution_clear(e);return success!=0;
+}
+
+int result_json_worker_begin(size_t first_execution_index)
+{
+  result_job_state *job = &session.job;
+  if(!session.active) return 1;
+  if(!job->open || job->execution.open) return 0;
+  spool_close(&job->executions);
+  if(!spool_open(&job->executions)) return 0;
+  job->next_execution = first_execution_index;
+  return 1;
+}
+
+int result_json_worker_export(FILE *stream)
+{
+  if(!session.active) return 1;
+  if(!stream || session.job.execution.open) return 0;
+  spool_copy(stream, &session.job.executions);
+  return !ferror(stream) && fflush(stream) == 0;
+}
+
+int result_json_worker_import(FILE *stream)
+{
+  FILE *destination;
+  char buffer[8192];
+  size_t count;
+  if(!session.active) return 1;
+  if(!stream || session.job.execution.open) return 0;
+  destination = spool_row(&session.job.executions);
+  if(!destination) return 0;
+  rewind(stream);
+  while((count = fread(buffer, 1, sizeof(buffer), stream)) != 0)
+    if(fwrite(buffer, 1, count, destination) != count) return 0;
+  if(ferror(stream)) return 0;
+  ++session.job.next_execution;
+  return 1;
 }
 
 void result_json_set_solver(const result_solver *solver)

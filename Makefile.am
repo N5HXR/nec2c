@@ -75,6 +75,7 @@ EXTRA_DIST = \
   tests/dielectric/m10-real-wire.nec \
   tests/dielectric/m10-real-wire.diel \
   tests/dielectric/m5-cube.nec \
+  tests/dielectric/m3-frequency-sweep.nec \
 	  tests/dielectric/m6-legacy.nec \
 	  tests/dielectric/m6-vacuum.nec \
 	  tests/dielectric/m6-vacuum.diel \
@@ -217,7 +218,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/dielectric_parser.py tests/dielectric_mesh.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -252,9 +253,10 @@ AM_CPPFLAGS = \
 
 bin_PROGRAMS = nec2c
 
-check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test
+check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test tests/concurrency_test
 tests_dense_backend_test_SOURCES = tests/dense_backend_test.c dense_backend.c dense_backend.h
 tests_dense_backend_test_LDADD = -lm
+tests_concurrency_test_SOURCES = tests/concurrency_test.c concurrency.c concurrency.h
 tests_vie_halfspace_test_SOURCES = tests/vie_halfspace_test.c vie_halfspace.c vie_halfspace.h vie_kernel.c vie_kernel.h
 tests_vie_halfspace_test_LDADD = -lm
 tests_vie_ground_test_SOURCES = tests/vie_ground_test.c vie_ground.c vie_ground.h vie_kernel.c vie_kernel.h
@@ -287,6 +289,8 @@ nec2c_SOURCES = \
   dielectric_fft.h \
   dense_backend.c \
   dense_backend.h \
+  concurrency.c \
+  concurrency.h \
   result_json.c \
   result_json.h \
   vie_fft.c \

@@ -17,11 +17,14 @@ void usage(void)
 {
   fprintf( stderr,
 	  "usage: nec2c [-i<input-file-name>] [-o<output-file-name>]"
-	  " [--result-json <file>] [--timing-json <file>] [--backend <name>] [--validate-only]"
+	  " [--result-json <file>] [--timing-json <file>] [--backend <name>]"
+	  " [--jobs <count>] [--threads <count>] [--validate-only]"
 	  "\n       --capabilities-json: write machine capabilities and exit."
 	  "\n       --result-json file: atomically write result schema version 1."
 	  "\n       --timing-json file: atomically write timing schema version 1."
 	  "\n       --backend auto|builtin|lapack: dense direct backend (default auto)."
+	  "\n       --jobs auto|N: concurrent frequency jobs (default auto)."
+	  "\n       --threads auto|N: numerical-library threads per job (default auto)."
 	  "\n       --validate-only: validate without solving (requires --result-json)."
 	  "\n       -s dense|gmres|fft: DF solver (default dense; FFT requires uniform cubes/material).\n       -r tolerance: GMRES relative residual target (default 1e-12).\n       -n iterations: GMRES iteration limit (default 300)."
 	  "\n       -h: print this usage information and exit."
@@ -83,7 +86,7 @@ void abort_on_error( int why )
 
 /*------------------------------------------------------------------------*/
 
-/* Returns process time (user+system) BUT in _msec_ */
+/* Returns process and completed-worker time (user+system) in milliseconds. */
 void secnds( double *x)
 {
 #ifndef _WIN32
@@ -92,7 +95,8 @@ void secnds( double *x)
 
   times(&buffer);
   clk_tck = sysconf( _SC_CLK_TCK );
-  *x = 1000.0 * (double)(buffer.tms_utime + buffer.tms_stime) / clk_tck;
+  *x = 1000.0 * (double)(buffer.tms_utime + buffer.tms_stime +
+      buffer.tms_cutime + buffer.tms_cstime) / clk_tck;
 #else
   *x = 1000.0 * (double)clock() / (double)CLOCKS_PER_SEC;
 #endif

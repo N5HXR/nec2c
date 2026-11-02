@@ -10,6 +10,8 @@ int performance_active(void);
 double performance_now(void);
 void performance_add(const char *phase, double elapsed_seconds);
 void performance_dense_backend(size_t order);
+void performance_concurrency(size_t jobs, size_t threads, size_t allowed_cpus,
+    int jobs_automatic, int threads_automatic, int memory_limited);
 void performance_finish(int success);
 void performance_abandon(void);
 

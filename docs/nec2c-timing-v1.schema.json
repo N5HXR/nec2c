@@ -32,6 +32,19 @@
         "used": { "type": ["string", "null"], "enum": ["builtin", "lapack", "mixed", null] }
       }
     },
+    "concurrency": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["jobs_requested", "threads_requested", "jobs_used", "threads_per_job", "allowed_cpus", "memory_limited"],
+      "properties": {
+        "jobs_requested": { "enum": ["auto", "explicit"] },
+        "threads_requested": { "enum": ["auto", "explicit"] },
+        "jobs_used": { "type": "integer", "minimum": 1 },
+        "threads_per_job": { "type": "integer", "minimum": 1 },
+        "allowed_cpus": { "type": "integer", "minimum": 1 },
+        "memory_limited": { "type": "boolean" }
+      }
+    },
     "clock": {
       "type": "object",
       "additionalProperties": false,
