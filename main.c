@@ -51,6 +51,8 @@ static double requested_frequency(int mode, double first_mhz, double step,
     int index);
 static int copy_stream(FILE *destination, FILE *source);
 static int numerical_fork_safe = 1;
+static size_t classic_fill_processes = 1;
+static size_t classic_factor_threads = 1;
 
 static concurrency_plan plan_concurrency(size_t frequency_count,
     size_t worker_bytes, size_t automatic_thread_limit)
@@ -65,6 +67,27 @@ static concurrency_plan plan_concurrency(size_t frequency_count,
     if(plan.threads == 0) plan.threads = 1;
   }
   return plan;
+}
+
+static size_t doubled_matrix_bytes(size_t bytes)
+{
+  return bytes <= SIZE_MAX / 2 ? bytes * 2 : SIZE_MAX;
+}
+
+static void configure_classic_concurrency(concurrency_plan *plan,
+    int threaded_backend, size_t reduced_order)
+{
+  classic_fill_processes = plan->threads ? plan->threads : 1;
+  if(plan->threads_automatic && reduced_order < 256)
+    classic_fill_processes = 1;
+  if(concurrency_requested_threads())
+    classic_factor_threads = plan->threads;
+  else if(threaded_backend)
+    classic_factor_threads = plan->threads < 4 ? plan->threads : 4;
+  else
+    classic_factor_threads = 1;
+  plan->threads = classic_fill_processes > classic_factor_threads ?
+      classic_fill_processes : classic_factor_threads;
 }
 
 static size_t dielectric_automatic_thread_limit(
@@ -145,13 +168,14 @@ static int start_classic_frequency_workers(int frequency_mode,
     int threaded_backend, classic_worker_state *worker)
 {
   concurrency_plan plan = plan_concurrency((size_t)*frequency_count,
-      worker_bytes, threaded_backend ? 4 : 1);
+      worker_bytes, 16);
   classic_worker_slot *slots;
   size_t child_count = (size_t)*frequency_count - 1;
   size_t base_execution = result_json_next_execution();
   size_t next = 0, active = 0, done = 0, index;
   int original_count = *frequency_count;
   if(plan.jobs > (size_t)original_count) plan.jobs = (size_t)original_count;
+  configure_classic_concurrency(&plan, threaded_backend, (size_t)netcx.npeq);
   if(plan.jobs <= 1) return 0;
   if(plan.memory_limited && concurrency_requested_jobs())
   {
@@ -179,7 +203,6 @@ static int start_classic_frequency_workers(int frequency_mode,
         worker_process_enable();
         worker->active = 1; worker->index = next; worker->slot = slot;
         worker->started = performance_now();
-        if(!concurrency_apply_threads(plan.threads)) _exit(125);
         output_fp = slot->report;
         *frequency_index = (int)next + 1;
         *frequency_count = original_count;
@@ -235,7 +258,6 @@ static int start_classic_frequency_workers(int frequency_mode,
   *frequency_count = original_count;
   *current_mhz = requested_frequency(frequency_mode, first_mhz, step,
       original_count - 2);
-  if(!concurrency_apply_threads(plan.threads)) return 0;
   return 2;
 
 failure:
@@ -747,7 +769,7 @@ int main( int argc, char **argv )
   double rkh, tmp1, delfrq=0., tmp2, tmp3, tmp4, tmp5, tmp6;
   double xpr1=0., xpr2=0., xpr3=0., xpr4=0., xpr5=0.;
   double zpnorm=0., thetis=0., phiss=0., extim;
-  double tim1, tim, tim2, etha, fr, fr2, cmag, ph, ethm, ephm, epha;
+  double tim, tim2, etha, fr, fr2, cmag, ph, ethm, ephm, epha;
   complex double eth, eph, curi, ex, ey, ez, epsc, *cm = NULL;
 #ifndef _WIN32
   classic_worker_state classic_worker;
@@ -2137,6 +2159,7 @@ int main( int argc, char **argv )
 		  {
 			size_t worker_bytes = ((size_t)iresrv +
 			    (size_t)smat.nop * (size_t)smat.nop) * sizeof(complex double);
+			worker_bytes = doubled_matrix_bytes(worker_bytes);
 			classic_parallel_mode = start_classic_frequency_workers(ifrq, &nfrq, save.fmhz,
 			    delfrq, worker_bytes, &mhz, &save.fmhz, output_fp,
 			    fnorm, &zpnorm, iped, !strcmp(dense_backend_name_for_order(
@@ -2144,19 +2167,24 @@ int main( int argc, char **argv )
 		  }
 		  if(classic_parallel_mode == 0)
 		  {
-			concurrency_plan plan = plan_concurrency(1, (size_t)iresrv *
-			    sizeof(complex double), !strcmp(dense_backend_name_for_order(
-			    (size_t)netcx.npeq), "lapack") ? 4 : 1);
-			concurrency_apply_threads(plan.threads);
+			int threaded_backend = !strcmp(dense_backend_name_for_order(
+			    (size_t)netcx.npeq), "lapack");
+			concurrency_plan plan = plan_concurrency(1,
+			    doubled_matrix_bytes((size_t)iresrv * sizeof(complex double)), 16);
+			configure_classic_concurrency(&plan, threaded_backend,
+			    (size_t)netcx.npeq);
 			performance_concurrency(1, plan.threads, plan.allowed_cpus,
 			    plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
 		  }
 #else
 		  {
+			int threaded_backend = !strcmp(dense_backend_name_for_order(
+			    (size_t)netcx.npeq), "lapack");
 			concurrency_plan plan = plan_concurrency(1, (size_t)iresrv *
-			    sizeof(complex double), !strcmp(dense_backend_name_for_order(
-			    (size_t)netcx.npeq), "lapack") ? 4 : 1);
+			    sizeof(complex double), threaded_backend ? 4 : 1);
 			concurrency_apply_threads(plan.threads);
+			configure_classic_concurrency(&plan, threaded_backend,
+			    (size_t)netcx.npeq);
 			performance_concurrency(1, plan.threads, plan.allowed_cpus,
 			    plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
 		  }
@@ -2331,18 +2359,21 @@ int main( int argc, char **argv )
 
 			/* label 50 */
 			/* fill and factor primary interaction matrix */
-			secnds( &tim1 );
 			tmp1 = performance_now();
+			cmset_parallel_configure(classic_fill_processes, numerical_fork_safe);
 			cmset( netcx.neq, cm, rkh, iexk );
-			performance_add("matrix_fill", performance_now() - tmp1);
-			secnds( &tim2 );
-			tim= tim2- tim1;
+			tim=(performance_now() - tmp1)*1000.0;
+			performance_add("matrix_fill", tim/1000.0);
 			performance_dense_backend((size_t)netcx.npeq);
+			if(!strcmp(dense_backend_name_for_order((size_t)netcx.npeq), "lapack"))
+			{
+			  concurrency_apply_threads(classic_factor_threads);
+			  numerical_fork_safe = 0;
+			}
 			tmp1 = performance_now();
 			factrs( netcx.npeq, netcx.neq, cm, save.ip );
-			performance_add("matrix_factor", performance_now() - tmp1);
-			secnds( &tim1 );
-			tim2= tim1- tim2;
+			tim2=(performance_now() - tmp1)*1000.0;
+			performance_add("matrix_factor", tim2/1000.0);
 			fprintf( output_fp, "\n\n\n"
 				"                             "
 				"---------- MATRIX TIMING ----------\n"

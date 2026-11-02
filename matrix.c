@@ -27,10 +27,24 @@
 #include "shared.h"
 #include "dense_backend.h"
 
+#include <stdint.h>
+
+#ifndef _WIN32
+#include <errno.h>
+#include <signal.h>
+#include <sys/mman.h>
+#ifdef __linux__
+#include <sys/prctl.h>
+#endif
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
+
 /*-------------------------------------------------------------------*/
 
 /* cmset sets up the complex structure matrix in the array cm */
-void cmset( int nrow, complex double *cm, double rkhx, int iexkx )
+static void cmset_serial( int nrow, complex double *cm, double rkhx, int iexkx )
 {
   int mp2, neq, npeq, it, i, j, i1, i2, in2;
   int im1, im2, ist, ij, ipr, jss, jm1, jm2, jst, k, ka, kk;
@@ -177,6 +191,178 @@ void cmset( int nrow, complex double *cm, double rkhx, int iexkx )
   return;
 }
 
+#ifndef _WIN32
+static size_t cmset_processes=1;
+static int cmset_fork_safe;
+
+void cmset_parallel_configure(size_t processes,int fork_safe)
+{
+  cmset_processes=processes ? processes:1;
+  cmset_fork_safe=fork_safe;
+}
+
+/* Fill an exclusive half-open range of transposed output columns.  Every
+   process retains the legacy source order within its columns; process
+   isolation makes the COMMON-style field and interpolation scratch private. */
+static void cmset_columns(int nrow,complex double *cm,double rkhx,int iexkx,
+    size_t first,size_t last)
+{
+  int mp2=2*data.mp,npeq=data.np+2*data.mp;
+  int it=matpar.nlast,j,i,ij,jss,ipr;
+  int wire_first=(int)first,wire_last=(int)last;
+  int patch_first=(int)first,patch_last=(int)last;
+  complex double zaj,*scm=NULL;
+  if(wire_last>data.np) wire_last=data.np;
+  if(wire_first>wire_last) wire_first=wire_last;
+  if(patch_first<data.np) patch_first=data.np;
+  if(patch_last>it) patch_last=it;
+  if(patch_first>patch_last) patch_first=patch_last;
+  dataj.rkh=rkhx;dataj.iexk=iexkx;
+
+  if(data.n!=0)
+    for(j=1;j<=data.n;++j)
+    {
+      trio(j);
+      for(i=0;i<segj.jsno;++i)
+      {
+        ij=segj.jco[i];
+        segj.jco[i]=((ij-1)/data.np)*mp2+ij;
+      }
+      if(wire_first<wire_last)
+        cmww(j,wire_first+1,wire_last,cm+(size_t)wire_first*nrow,
+            nrow,cm,nrow,1);
+      if(patch_first<patch_last)
+        cmws(j,patch_first-data.np+1,patch_last-data.np,
+            cm+(size_t)patch_first*nrow,nrow,cm,1);
+      if(zload.nload==0 || j>data.np) continue;
+      ipr=j;
+      if(ipr<1 || ipr>it || (size_t)(ipr-1)<first || (size_t)(ipr-1)>=last)
+        continue;
+      zaj=zload.zarray[j-1];
+      for(i=0;i<segj.jsno;++i)
+      {
+        jss=segj.jco[i];
+        cm[(jss-1)+(size_t)(ipr-1)*nrow]-=(segj.ax[i]+segj.cx[i])*zaj;
+      }
+    }
+
+  if(data.m!=0)
+  {
+    int jm1=1-data.mp,jm2=0,jst=1-mp2,cell;
+    for(cell=0;cell<smat.nop;++cell)
+    {
+      jm1+=data.mp;jm2+=data.mp;jst+=npeq;
+      if(wire_first<wire_last)
+        cmsw(jm1,jm2,wire_first+1,wire_last,
+            cm+(jst-1)+(size_t)wire_first*nrow,
+            cm+(size_t)wire_first*nrow,0,nrow,1);
+      if(patch_first<patch_last)
+        cmss(jm1,jm2,patch_first-data.np+1,patch_last-data.np,
+            cm+(jst-1)+(size_t)patch_first*nrow,nrow,1);
+    }
+  }
+  if(matpar.icase==1) return;
+
+  mem_alloc((void **)&scm,(size_t)data.np2m*sizeof(*scm));
+  for(i=(int)first;i<(int)last;++i)
+  {
+    int row,k,kk,ka;
+    complex double deter;
+    for(row=0;row<npeq;++row)
+    {
+      for(k=0;k<smat.nop;++k)
+      {
+        ka=row+k*npeq;
+        scm[k]=cm[ka+(size_t)i*nrow];
+      }
+      deter=scm[0];
+      for(kk=1;kk<smat.nop;++kk) deter+=scm[kk];
+      cm[row+(size_t)i*nrow]=deter;
+      for(k=1;k<smat.nop;++k)
+      {
+        ka=row+k*npeq;deter=scm[0];
+        for(kk=1;kk<smat.nop;++kk)
+        {
+          deter+=scm[kk]*smat.ssx[k+kk*smat.nop];
+          cm[ka+(size_t)i*nrow]=deter;
+        }
+      }
+    }
+  }
+  free_ptr((void **)&scm);
+}
+
+static int cmset_parallel(int nrow,complex double *cm,double rkhx,int iexkx)
+{
+  size_t columns=(size_t)matpar.nlast,workers=cmset_processes,index,bytes;
+  complex double *shared;
+  pid_t *pids;
+  size_t started=0;
+  int failed=0;
+  if(!cmset_fork_safe || workers<2 || columns<128 || nrow<=0 ||
+     columns>SIZE_MAX/(size_t)nrow ||
+     columns*(size_t)nrow>SIZE_MAX/sizeof(*shared)) return 0;
+  if(workers>columns) workers=columns;
+  bytes=columns*(size_t)nrow*sizeof(*shared);
+  shared=mmap(NULL,bytes,PROT_READ|PROT_WRITE,
+      MAP_SHARED|MAP_ANONYMOUS,-1,0);
+  if(shared==MAP_FAILED) return 0;
+  pids=calloc(workers,sizeof(*pids));
+  if(!pids) {munmap(shared,bytes);return 0;}
+  fflush(NULL);
+  for(index=0;index<workers;++index)
+  {
+    size_t first=columns*index/workers,last=columns*(index+1)/workers;
+    pid_t child=fork();
+    if(child==0)
+    {
+      FILE *diagnostics;
+      worker_process_enable();
+#ifdef __linux__
+      if(prctl(PR_SET_PDEATHSIG,SIGTERM)<0 || getppid()==1) _exit(2);
+#endif
+      diagnostics=tmpfile();
+      if(!diagnostics) _exit(2);
+      output_fp=diagnostics;
+      cmset_columns(nrow,shared,rkhx,iexkx,first,last);
+      {
+        long count;
+        fflush(diagnostics);count=ftell(diagnostics);fclose(diagnostics);
+        if(count>0) _exit(2);
+      }
+      _exit(0);
+    }
+    if(child<0) {failed=1;break;}
+    pids[index]=child;++started;
+  }
+  for(index=0;index<started;++index)
+  {
+    int status=0;
+    pid_t waited;
+    do waited=waitpid(pids[index],&status,0); while(waited<0 && errno==EINTR);
+    pids[index]=0;
+    if(waited<0 || !WIFEXITED(status) || WEXITSTATUS(status)!=0) failed=1;
+  }
+  free(pids);
+  if(!failed) memcpy(cm,shared,bytes);
+  munmap(shared,bytes);
+  return !failed;
+}
+#else
+void cmset_parallel_configure(size_t processes,int fork_safe)
+{(void)processes;(void)fork_safe;}
+#endif
+
+void cmset(int nrow,complex double *cm,double rkhx,int iexkx)
+{
+#ifndef _WIN32
+  int npeq=data.np+2*data.mp,neq=data.n+2*data.m;
+  smat.nop=neq/npeq;
+  if(cmset_parallel(nrow,cm,rkhx,iexkx)) return;
+#endif
+  cmset_serial(nrow,cm,rkhx,iexkx);
+}
+
 /*-----------------------------------------------------------------------*/
 
 /* cmss computes matrix elements for surface-surface interactions. */
@@ -195,7 +381,8 @@ void cmss( int j1, int j2, int im1, int im2,
 	ii1=-3;
 
   /* loop over observation patches */
-  il = -1;
+  /* im1 may describe a column tile rather than the first patch. */
+  il = i1-2;
   for( i = i1; i <= i2; i++ )
   {
 	il++;

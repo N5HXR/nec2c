@@ -515,6 +515,7 @@ void Null_Pointers(void);
 void prnt(int in1, int in2, int in3, double fl1, double fl2, double fl3, double fl4, double fl5, double fl6, char *ia, int ichar);
 /* matrix.c */
 void cmset(int nrow, complex double *cm, double rkhx, int iexkx);
+void cmset_parallel_configure(size_t processes, int fork_safe);
 void cmss(int j1, int j2, int im1, int im2, complex double *cm, int nrow, int itrp);
 void cmsw(int j1, int j2, int i1, int i2, complex double *cm, complex double *cw, int ncw, int nrow, int itrp);
 void cmws(int j, int i1, int i2, complex double *cm, int nr, complex double *cw, int itrp);

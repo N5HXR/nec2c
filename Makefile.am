@@ -22,6 +22,7 @@ EXTRA_DIST = \
   docs/PERFORMANCE-M4A-RESULTS.md \
   docs/PERFORMANCE-M4B-RESULTS.md \
   docs/PERFORMANCE-M5-RESULTS.md \
+  docs/PERFORMANCE-M6-RESULTS.md \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -48,7 +49,14 @@ EXTRA_DIST = \
   tests/performance/m5-volume-216.diel \
   tests/performance/m5-coupled-216.nec \
   tests/performance/m5-coupled-216.diel \
+  tests/performance/m6-mixed-ground-651.nec \
+  tests/performance/m6-connected-patch-657.nec \
+  tests/performance/m6-loaded-network-402.nec \
+  tests/performance/m6-real-ground-201.nec \
+  tests/performance/m6-symmetry-604.nec \
+  tests/performance/m6-sweep-301.nec \
   tests/fft_parallel.py \
+  tests/classic_fill_parallel.py \
   tests/dielectric_assembly_parallel.py \
   tests/fft_backend.py \
   tools/performance_benchmark.py \
@@ -56,6 +64,7 @@ EXTRA_DIST = \
   tools/fft_benchmark.py \
   tools/fft_backend_compare.py \
   tools/m5_assembly_benchmark.py \
+  tools/m6_fill_benchmark.py \
   tools/prepare_nec_fixture.py \
   tools/cross_solver_compare.py \
   tools/timing_overhead.py \
@@ -246,7 +255,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \

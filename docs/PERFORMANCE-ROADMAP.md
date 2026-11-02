@@ -135,6 +135,8 @@ Target at least 2x on the selected assembly workload.
 
 ### M6: reentrant classic NEC fill
 
+Status: implementation complete; awaiting user acceptance.
+
 Move mutable interaction scratch into worker-local contexts and parallelize
 source columns or tiles without changing per-entry summation order.  Cover
 free-space, perfect and real ground, extended kernels, patches, symmetry,
