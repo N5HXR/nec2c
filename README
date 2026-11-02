@@ -25,6 +25,20 @@
   `builtin` always selects the original implementation. Configure with
   `--with-lapack=no` for a dependency-free legacy-only build.
 
+  PERFORMANCE FFT BUILD
+
+  The built-in dielectric FFT uses OpenMP when the C compiler supports it.
+  Because generated Autotools files are not versioned, regenerate them after
+  pulling performance changes before rebuilding:
+
+    autoreconf -fi
+    ./configure --with-lapack=auto
+    make -j8
+
+  Configure should report `parallel built-in FFT: enabled with -fopenmp`.
+  `python3 tests/fft_parallel.py --require-parallel` verifies that the built
+  benchmark and the nec2c CLI actually use the threaded path.
+
   The upstream README is preserved below.
 
 

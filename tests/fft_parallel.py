@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Require bit-identical built-in FFT products across thread counts."""
 
+import argparse
 import os
 import json
 import re
@@ -13,6 +14,14 @@ ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK = Path(os.environ.get("FFT_BENCHMARK", ROOT / "tools/m9_fft_benchmark"))
 PROGRAM = Path(os.environ.get("NEC2C", ROOT / "nec2c"))
 DECK = ROOT / "tests/dielectric/m3-frequency-sweep.nec"
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--require-parallel",
+    action="store_true",
+    help="fail when the benchmark was built without OpenMP",
+)
+arguments = parser.parse_args()
 
 
 def run(threads):
@@ -65,6 +74,12 @@ for count in (2, 4):
 if parallel_available:
     print("parallel built-in FFT is bit-identical at 1, 2, and 4 threads")
 else:
+    if arguments.require_parallel:
+        raise SystemExit(
+            "parallel FFT support is unavailable in this build; run "
+            "`autoreconf -fi && ./configure --with-lapack=auto && make -j8`, "
+            "and verify configure reports `parallel built-in FFT: enabled`"
+        )
     print("OpenMP unavailable: built-in FFT serial fallback is bit-identical")
 
 

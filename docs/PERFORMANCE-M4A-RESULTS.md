@@ -83,12 +83,22 @@ dense-equivalence validation; no source was copied from either project.
 
 ## Manual acceptance
 
+Generated Autotools files are intentionally not versioned.  After checking out
+or pulling this milestone, regenerate and reconfigure before building; a plain
+`make` against an older Makefile will retain its old compiler flags.
+
 Build and run the exact serial/parallel regression:
 
 ```sh
+autoreconf -fi
+./configure --with-lapack=auto
 make -j8
-python3 tests/fft_parallel.py
+python3 tests/fft_parallel.py --require-parallel
 ```
+
+The configure output must include
+`parallel built-in FFT: enabled with -fopenmp`.  The acceptance test now fails
+with a rebuild instruction if it detects a serial-only benchmark binary.
 
 Reproduce the scaling evidence:
 

@@ -60,7 +60,14 @@ def sample(binary, model, threads, maximum_iterations):
     missing = [name for name in required if name not in parsed]
     if missing:
         raise RuntimeError(f"missing {missing}: {completed.stdout}")
-    if int(parsed["threads"]) != threads:
+    captured_threads = int(parsed["threads"])
+    if threads > 1 and captured_threads == 1:
+        raise RuntimeError(
+            "the FFT benchmark was built without OpenMP; run "
+            "`autoreconf -fi && ./configure --with-lapack=auto && make -j8`, "
+            "and verify configure reports `parallel built-in FFT: enabled`"
+        )
+    if captured_threads != threads:
         raise RuntimeError(
             f"requested {threads} threads, plan captured {parsed['threads']}"
         )
