@@ -12,6 +12,7 @@
 #include <complex.h>
 #include <float.h>
 #include <math.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -485,6 +486,8 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   complex double *system = NULL, *original = NULL, *rhs = NULL, *rhs0 = NULL;
   complex double *conductor_matrix = NULL, *unit = NULL, *volume_current = NULL;
   complex double *conductor_current = NULL, *wire_background_basis = NULL;
+  complex double *volume_chi = NULL;
+  double *volume_size = NULL;
   double *x = NULL, *y = NULL, *z = NULL, *length = NULL, *radius = NULL;
   double *px = NULL, *py = NULL, *pz = NULL, *parea = NULL;
   double frequency_hz = frequency_mhz*1.0e6;
@@ -553,9 +556,11 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   radius = calloc(nw ? nw : 1, sizeof(*radius));
   px = calloc(np ? np : 1, sizeof(*px)); py = calloc(np ? np : 1, sizeof(*py));
   pz = calloc(np ? np : 1, sizeof(*pz)); parea = calloc(np ? np : 1, sizeof(*parea));
+  volume_chi = calloc(nc ? nc : 1, sizeof(*volume_chi));
+  volume_size = calloc(nc ? nc : 1, sizeof(*volume_size));
   if((!accelerated && (!system || !original)) || !rhs || !rhs0 || !conductor_matrix || !unit ||
      !conductor_current || !volume_current || !x || !y || !z || !length ||
-     !radius || !px || !py || !pz || !parea)
+     !radius || !px || !py || !pz || !parea || !volume_chi || !volume_size)
   {
     dw_error(diagnostic, model, "memory", "unable to allocate coupled dense system");
     goto failure;
@@ -603,16 +608,23 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   vie_kernel_default_options(&kernel_options);
   kernel_options.relative_tolerance = 5.0e-7;
   kernel_options.absolute_tolerance = 5.0e-10;
-  for(cell = 0; cell < nc; ++cell)
   {
-    const dielectric_material *material = dw_material(model, mesh->cells[cell].material_id);
-    complex double epsilon_r, chi;
-    int component;
-    if(material == NULL) { dw_error(diagnostic, model, "material", "unknown mesh material"); goto failure; }
-    epsilon_r = dielectric_material_epsilon(material,k0); chi = epsilon_r-1.0;
-    for(component = 0; component < 3; ++component)
+    double phase_started=performance_now();
+    for(cell = 0; cell < nc; ++cell)
     {
       complex double incident[3] = {0.0, 0.0, 0.0};
+      const dielectric_material *material=dw_material(model,mesh->cells[cell].material_id);
+      complex double epsilon_r;
+      int component;
+      if(material==NULL)
+      {
+        performance_add("dielectric_volume_assembly",performance_now()-phase_started);
+        dw_error(diagnostic,model,"material","unknown mesh material");goto failure;
+      }
+      epsilon_r=dielectric_material_epsilon(material,k0);
+      volume_chi[cell]=epsilon_r-1.0;
+      volume_size[cell]=mesh->cells[cell].size[0]*mesh->cells[cell].size[1]*
+          mesh->cells[cell].size[2];
       if(wave != NULL)
       {
         double theta = wave->theta_degrees*DW_PI/180.0;
@@ -654,37 +666,64 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
         if(!accelerated) (*dw_entry(system,accelerated,total,(conductor_unknowns+3*cell+component)*total+
                conductor_unknowns+3*cell+component)) = epsilon_r;
         rhs[conductor_unknowns+3*cell+component] =
-            I*omega*DW_EPSILON_0*chi*incident[component];
+            I*omega*DW_EPSILON_0*volume_chi[cell]*incident[component];
       }
     }
-    for(column = cell; !accelerated && column < nc; ++column)
+    if(!accelerated)
     {
-      vie_cuboid testing, source;
-      complex double block[3][3];
-      double vt, vs;
-      int p, q;
-      memcpy(testing.center, mesh->cells[cell].center, sizeof(testing.center));
-      memcpy(testing.size, mesh->cells[cell].size, sizeof(testing.size));
-      memcpy(source.center, mesh->cells[column].center, sizeof(source.center));
-      memcpy(source.size, mesh->cells[column].size, sizeof(source.size));
-      if(!dielectric_background_n(&testing,&source,k0,&kernel_options,block))
-      { dw_error(diagnostic, model, "kernel", "volume-volume interaction failed"); goto failure; }
-      vt = testing.size[0]*testing.size[1]*testing.size[2];
-      vs = source.size[0]*source.size[1]*source.size[2];
-      for(p = 0; p < 3; ++p)
-        for(q = 0; q < 3; ++q)
+      size_t *failed_columns=malloc(nc*sizeof(*failed_columns));
+      ptrdiff_t cell_index;
+      if(failed_columns==NULL)
+      {
+        performance_add("dielectric_volume_assembly",performance_now()-phase_started);
+        dw_error(diagnostic,model,"memory","unable to allocate deterministic assembly status");
+        goto failure;
+      }
+      for(cell=0;cell<nc;++cell) failed_columns[cell]=SIZE_MAX;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic,1) if(nc >= 8)
+#endif
+      for(cell_index=0;cell_index<(ptrdiff_t)nc;++cell_index)
+      {
+        size_t testing_cell=(size_t)cell_index;
+        size_t source_cell;
+        for(source_cell=testing_cell;source_cell<nc;++source_cell)
         {
-          (*dw_entry(system,accelerated,total,(conductor_unknowns+3*cell+p)*total+
-                 conductor_unknowns+3*column+q)) -= chi*block[p][q];
-          if(column != cell)
+          vie_cuboid testing,source;
+          complex double block[3][3];
+          int p,q;
+          memcpy(testing.center,mesh->cells[testing_cell].center,sizeof(testing.center));
+          memcpy(testing.size,mesh->cells[testing_cell].size,sizeof(testing.size));
+          memcpy(source.center,mesh->cells[source_cell].center,sizeof(source.center));
+          memcpy(source.size,mesh->cells[source_cell].size,sizeof(source.size));
+          if(!dielectric_background_n(&testing,&source,k0,&kernel_options,block))
           {
-            const dielectric_material *other = dw_material(model, mesh->cells[column].material_id);
-            (*dw_entry(system,accelerated,total,(conductor_unknowns+3*column+q)*total+
-                   conductor_unknowns+3*cell+p)) -=
-                (dielectric_material_epsilon(other,k0)-1.0)*(vt/vs)*block[p][q];
+            failed_columns[testing_cell]=source_cell;break;
+          }
+          for(p=0;p<3;++p) for(q=0;q<3;++q)
+          {
+            (*dw_entry(system,accelerated,total,
+                (conductor_unknowns+3*testing_cell+p)*total+
+                conductor_unknowns+3*source_cell+q))-=volume_chi[testing_cell]*block[p][q];
+            if(source_cell!=testing_cell)
+              (*dw_entry(system,accelerated,total,
+                  (conductor_unknowns+3*source_cell+q)*total+
+                  conductor_unknowns+3*testing_cell+p))-=
+                  volume_chi[source_cell]*(volume_size[testing_cell]/volume_size[source_cell])*block[p][q];
           }
         }
+      }
+      for(cell=0;cell<nc;++cell) if(failed_columns[cell]!=SIZE_MAX)
+      {
+        char value[96];column=failed_columns[cell];free(failed_columns);
+        performance_add("dielectric_volume_assembly",performance_now()-phase_started);
+        snprintf(value,sizeof(value),"volume cells %zu,%zu",cell+1,column+1);
+        dw_error(diagnostic,model,value,"volume-volume interaction failed");
+        goto failure;
+      }
+      free(failed_columns);
     }
+    performance_add("dielectric_volume_assembly",performance_now()-phase_started);
   }
 
   /* Bound the optional cache at 16 MiB; retain the same uncached operator if
@@ -709,8 +748,6 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
         memcpy(crnt.cur+nw, unit+nw, 3*np*sizeof(*unit));
       for(cell = 0; cell < nc; ++cell)
       {
-        const dielectric_material *material = dw_material(model, mesh->cells[cell].material_id);
-        complex double chi = dielectric_material_epsilon(material,k0)-1.0;
         complex double field[3];
         int component;
         if(!dw_average_wire_field(&mesh->cells[cell],k0,
@@ -718,58 +755,116 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
         { dw_error(diagnostic,model,"cross-kernel","wire-to-volume reflected interaction failed"); goto failure; }
         for(component = 0; component < 3; ++component)
           (*dw_entry(system,accelerated,total,(conductor_unknowns+3*cell+component)*total+column)) =
-              -I*omega*DW_EPSILON_0*chi*field[component];
+              -I*omega*DW_EPSILON_0*volume_chi[cell]*field[component];
       }
     }
 
   /* Wire rows: point-tested field of each constant cuboid current. */
-  for(row = 0; row < nw; ++row)
   {
-    double observation[3] = {x[row], y[row], z[row]};
-    double tangent[3] = {data.cab[row], data.sab[row], data.salp[row]};
-    for(cell = 0; cell < nc; ++cell)
+    double phase_started=performance_now();
+    size_t tasks;
+    if(nc && nw>SIZE_MAX/nc)
     {
+      performance_add("dielectric_volume_to_wire_assembly",performance_now()-phase_started);
+      dw_error(diagnostic,model,"size","wire-row task count overflow");goto failure;
+    }
+    tasks=nw*nc;
+    unsigned char *failed=tasks ? calloc(tasks,sizeof(*failed)):NULL;
+    ptrdiff_t task;
+    if(tasks && failed==NULL)
+    {
+      performance_add("dielectric_volume_to_wire_assembly",performance_now()-phase_started);
+      dw_error(diagnostic,model,"memory","unable to allocate deterministic wire-row status");
+      goto failure;
+    }
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic,1) if(tasks >= 8)
+#endif
+    for(task=0;task<(ptrdiff_t)tasks;++task)
+    {
+      size_t wire=(size_t)task/nc,source_cell=(size_t)task%nc;
+      double observation[3]={x[wire],y[wire],z[wire]};
+      double tangent[3]={data.cab[wire],data.sab[wire],data.salp[wire]};
       complex double block[3][3];
-      int p, q;
-      if(!dw_point_cuboid_n(observation, &mesh->cells[cell], k0, block))
-      { dw_error(diagnostic, model, "cross-kernel", "volume-to-wire interaction failed"); goto failure; }
-      for(q = 0; q < 3; ++q)
+      int p,q;
+      if(!dw_point_cuboid_n(observation,&mesh->cells[source_cell],k0,block))
+      {failed[task]=1;continue;}
+      for(q=0;q<3;++q)
       {
-        complex double tested = 0.0;
-        for(p = 0; p < 3; ++p) tested += tangent[p]*block[p][q];
-        (*dw_entry(system,accelerated,total,row*total+conductor_unknowns+3*cell+q)) =
+        complex double tested=0.0;
+        for(p=0;p<3;++p) tested+=tangent[p]*block[p][q];
+        (*dw_entry(system,accelerated,total,wire*total+
+            conductor_unknowns+3*source_cell+q))=
             tested/(I*omega*DW_EPSILON_0);
       }
     }
+    for(task=0;task<(ptrdiff_t)tasks;++task) if(failed[task])
+    {
+      char value[96];size_t wire=(size_t)task/nc,source_cell=(size_t)task%nc;
+      free(failed);
+      performance_add("dielectric_volume_to_wire_assembly",performance_now()-phase_started);
+      snprintf(value,sizeof(value),"wire %zu, volume cell %zu",wire+1,source_cell+1);
+      dw_error(diagnostic,model,value,"volume-to-wire interaction failed");goto failure;
+    }
+    free(failed);
+    performance_add("dielectric_volume_to_wire_assembly",performance_now()-phase_started);
   }
 
   /* Patch MFIE rows: point-tested H = integral grad(G) x Jp dv.  NEC's
      first and second patch equations test -t2.H and -t1.H respectively. */
-  for(row = 0; row < np; ++row)
   {
-    double observation[3] = {px[row], py[row], pz[row]};
-    double t1[3] = {data.t1x[row], data.t1y[row], data.t1z[row]};
-    double t2[3] = {data.t2x[row], data.t2y[row], data.t2z[row]};
-    for(cell = 0; cell < nc; ++cell)
+    double phase_started=performance_now();
+    size_t tasks;
+    if(nc && np>SIZE_MAX/nc)
     {
+      performance_add("dielectric_volume_to_patch_assembly",performance_now()-phase_started);
+      dw_error(diagnostic,model,"size","patch-row task count overflow");goto failure;
+    }
+    tasks=np*nc;
+    unsigned char *failed=tasks ? calloc(tasks,sizeof(*failed)):NULL;
+    ptrdiff_t task;
+    if(tasks && failed==NULL)
+    {
+      performance_add("dielectric_volume_to_patch_assembly",performance_now()-phase_started);
+      dw_error(diagnostic,model,"memory","unable to allocate deterministic patch-row status");
+      goto failure;
+    }
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic,1) if(tasks >= 8)
+#endif
+    for(task=0;task<(ptrdiff_t)tasks;++task)
+    {
+      size_t patch=(size_t)task/nc,source_cell=(size_t)task%nc;
+      double observation[3]={px[patch],py[patch],pz[patch]};
+      double t1[3]={data.t1x[patch],data.t1y[patch],data.t1z[patch]};
+      double t2[3]={data.t2x[patch],data.t2y[patch],data.t2z[patch]};
       complex double block[3][3];
-      int p, q;
-      if(!dw_point_cuboid_h(observation, &mesh->cells[cell], k0, block))
-      { dw_error(diagnostic, model, "cross-kernel", "volume-to-patch interaction failed"); goto failure; }
-      for(q = 0; q < 3; ++q)
+      int p,q;
+      if(!dw_point_cuboid_h(observation,&mesh->cells[source_cell],k0,block))
+      {failed[task]=1;continue;}
+      for(q=0;q<3;++q)
       {
-        complex double tested_t1=0.0, tested_t2=0.0;
-        for(p = 0; p < 3; ++p)
+        complex double tested_t1=0.0,tested_t2=0.0;
+        for(p=0;p<3;++p)
         {
-          tested_t1 += t1[p]*block[p][q];
-          tested_t2 += t2[p]*block[p][q];
+          tested_t1+=t1[p]*block[p][q];tested_t2+=t2[p]*block[p][q];
         }
-        (*dw_entry(system,accelerated,total,(nw+2*row)*total+conductor_unknowns+3*cell+q)) =
-            -data.psalp[row]*tested_t2;
-        (*dw_entry(system,accelerated,total,(nw+2*row+1)*total+conductor_unknowns+3*cell+q)) =
-            -data.psalp[row]*tested_t1;
+        (*dw_entry(system,accelerated,total,(nw+2*patch)*total+
+            conductor_unknowns+3*source_cell+q))=-data.psalp[patch]*tested_t2;
+        (*dw_entry(system,accelerated,total,(nw+2*patch+1)*total+
+            conductor_unknowns+3*source_cell+q))=-data.psalp[patch]*tested_t1;
       }
     }
+    for(task=0;task<(ptrdiff_t)tasks;++task) if(failed[task])
+    {
+      char value[96];size_t patch=(size_t)task/nc,source_cell=(size_t)task%nc;
+      free(failed);
+      performance_add("dielectric_volume_to_patch_assembly",performance_now()-phase_started);
+      snprintf(value,sizeof(value),"patch %zu, volume cell %zu",patch+1,source_cell+1);
+      dw_error(diagnostic,model,value,"volume-to-patch interaction failed");goto failure;
+    }
+    free(failed);
+    performance_add("dielectric_volume_to_patch_assembly",performance_now()-phase_started);
   }
 
   for(row = conductor_unknowns; row < total; ++row)
@@ -1069,6 +1164,7 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   dw_restore_patches(px, py, pz, parea); restored = 1;
   free(parea); free(pz); free(py); free(px);
   free(radius); free(length); free(z); free(y); free(x); free(volume_current);
+  free(volume_size); free(volume_chi);
   free(wire_background_basis);
   free(conductor_current); free(unit); free(conductor_matrix);
   dielectric_fft_free(accelerated);
@@ -1082,6 +1178,7 @@ failure:
     dw_restore_patches(px, py, pz, parea);
   free(parea); free(pz); free(py); free(px);
   free(radius); free(length); free(z); free(y); free(x); free(volume_current);
+  free(volume_size); free(volume_chi);
   free(wire_background_basis);
   free(conductor_current); free(unit); free(conductor_matrix);
   dielectric_fft_free(accelerated);

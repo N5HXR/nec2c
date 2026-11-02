@@ -67,6 +67,22 @@ static concurrency_plan plan_concurrency(size_t frequency_count,
   return plan;
 }
 
+static size_t dielectric_automatic_thread_limit(
+    const dielectric_mesh_result *mesh, int iterative)
+{
+  if(iterative == 2 && vie_fft_parallel_available()) return 16;
+  if(iterative == 0 && !strcmp(
+      dense_backend_name_for_order(mesh->total_unknowns), "lapack")) return 4;
+#ifdef _OPENMP
+  /* Dense assembly has deterministic, disjoint OpenMP ownership.  Preserve
+     the accepted LAPACK cap above, but let assembly-bound builtin and GMRES
+     runs use the same measured ceiling as the FFT path. */
+  return 16;
+#else
+  return 1;
+#endif
+}
+
 #ifndef _WIN32
 /* signal handler */
 static void sig_handler( int signal );
@@ -501,10 +517,8 @@ static int run_dielectric_frequencies(const dielectric_model *model,
   memset(&worker, 0, sizeof(worker));
   worker.model = model; worker.mesh = mesh; worker.iterative = iterative;
   worker.wave = wave; worker.pattern = pattern;
-  worker.automatic_thread_limit = iterative == 2 &&
-      vie_fft_parallel_available() ? 16 :
-      (iterative == 0 && !strcmp(
-          dense_backend_name_for_order(mesh->total_unknowns), "lapack") ? 4 : 1);
+  worker.automatic_thread_limit =
+      dielectric_automatic_thread_limit(mesh, iterative);
 #ifndef _WIN32
   if(frequency_count > 1)
   {
@@ -562,10 +576,8 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
   worker.model = model; worker.mesh = mesh; worker.rkh = rkh;
   worker.extended_kernel = extended_kernel; worker.iterative = iterative;
   worker.wave = wave; worker.pattern = pattern; worker.coupled = 1;
-  worker.automatic_thread_limit = iterative == 2 &&
-      vie_fft_parallel_available() ? 16 :
-      (iterative == 0 && !strcmp(
-          dense_backend_name_for_order(mesh->total_unknowns), "lapack") ? 4 : 1);
+  worker.automatic_thread_limit =
+      dielectric_automatic_thread_limit(mesh, iterative);
 #ifndef _WIN32
   if(frequency_count > 1)
   {

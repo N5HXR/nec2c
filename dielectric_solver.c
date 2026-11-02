@@ -12,6 +12,7 @@
 #include <complex.h>
 #include <float.h>
 #include <math.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -231,6 +232,7 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
   vie_gmres_report report;
   vie_kernel_options kernel_options;
   dielectric_fft_system *accelerated=NULL;
+  double assembly_started;
   memset(&report, 0, sizeof(report));
   if(wave == NULL || stream == NULL)
   {
@@ -332,6 +334,7 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
      electrically larger face-adjacent pairs. */
   kernel_options.relative_tolerance = 5.0e-7;
   kernel_options.absolute_tolerance = 5.0e-10;
+  assembly_started = performance_now();
 
   for(cell = 0; cell < cells; ++cell)
   {
@@ -347,39 +350,72 @@ int dielectric_solve_plane_wave(const dielectric_model *model,
     for(component = 0; component < 3; ++component)
       if(!accelerated) matrix[(3*cell+component)*unknowns + 3*cell+component] = epsilon_r;
   }
-  for(cell = 0; !accelerated && cell < cells; ++cell)
+  if(!accelerated)
   {
-    for(column = cell; column < cells; ++column)
+    size_t *failed_columns = malloc(cells*sizeof(*failed_columns));
+    ptrdiff_t cell_index;
+    if(failed_columns == NULL)
     {
-      vie_cuboid testing, source;
-      complex double nblock[3][3];
-      size_t p, q;
-      memcpy(testing.center, mesh->cells[cell].center, sizeof(testing.center));
-      memcpy(testing.size, mesh->cells[cell].size, sizeof(testing.size));
-      memcpy(source.center, mesh->cells[column].center, sizeof(source.center));
-      memcpy(source.size, mesh->cells[column].size, sizeof(source.size));
-      if(!dielectric_background_n(&testing,&source,k0,&kernel_options,nblock))
+      performance_add("dielectric_volume_assembly",
+          performance_now()-assembly_started);
+      solver_error(diagnostic, model, "SOLVER", "memory",
+          "unable to allocate deterministic assembly status");
+      goto failure;
+    }
+    for(cell=0;cell<cells;++cell) failed_columns[cell]=SIZE_MAX;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic,1) if(cells >= 8)
+#endif
+    for(cell_index=0;cell_index<(ptrdiff_t)cells;++cell_index)
+    {
+      size_t testing_cell=(size_t)cell_index;
+      size_t source_cell;
+      for(source_cell=testing_cell;source_cell<cells;++source_cell)
+      {
+        vie_cuboid testing,source;
+        complex double nblock[3][3];
+        size_t p,q;
+        memcpy(testing.center,mesh->cells[testing_cell].center,sizeof(testing.center));
+        memcpy(testing.size,mesh->cells[testing_cell].size,sizeof(testing.size));
+        memcpy(source.center,mesh->cells[source_cell].center,sizeof(source.center));
+        memcpy(source.size,mesh->cells[source_cell].size,sizeof(source.size));
+        if(!dielectric_background_n(&testing,&source,k0,&kernel_options,nblock))
+        {
+          failed_columns[testing_cell]=source_cell;
+          break;
+        }
+        for(p=0;p<3;++p)
+          for(q=0;q<3;++q)
+          {
+            matrix[(3*testing_cell+p)*unknowns+3*source_cell+q]-=
+                chi_values[testing_cell]*nblock[p][q];
+            if(source_cell!=testing_cell)
+            {
+              double testing_volume=mesh->cells[testing_cell].size[0]*
+                  mesh->cells[testing_cell].size[1]*mesh->cells[testing_cell].size[2];
+              double source_volume=mesh->cells[source_cell].size[0]*
+                  mesh->cells[source_cell].size[1]*mesh->cells[source_cell].size[2];
+              matrix[(3*source_cell+q)*unknowns+3*testing_cell+p]-=
+                  chi_values[source_cell]*(testing_volume/source_volume)*nblock[p][q];
+            }
+          }
+      }
+    }
+    for(cell=0;cell<cells;++cell)
+      if(failed_columns[cell]!=SIZE_MAX)
       {
         char pair[192];
-        snprintf(pair, sizeof(pair),"cells=%zu,%zu k0=%.17g",cell+1,column+1,k0);
-        solver_error(diagnostic, model, "SOLVER", pair,
-                     "direct or reflected cuboid interaction quadrature failed");
+        column=failed_columns[cell];free(failed_columns);
+        performance_add("dielectric_volume_assembly",
+            performance_now()-assembly_started);
+        snprintf(pair,sizeof(pair),"cells=%zu,%zu k0=%.17g",cell+1,column+1,k0);
+        solver_error(diagnostic,model,"SOLVER",pair,
+            "direct or reflected cuboid interaction quadrature failed");
         goto failure;
       }
-      for(p = 0; p < 3; ++p)
-        for(q = 0; q < 3; ++q)
-        {
-          matrix[(3*cell+p)*unknowns + 3*column+q] -= chi_values[cell]*nblock[p][q];
-          if(column != cell)
-          {
-            double testing_volume = mesh->cells[cell].size[0]*mesh->cells[cell].size[1]*mesh->cells[cell].size[2];
-            double source_volume = mesh->cells[column].size[0]*mesh->cells[column].size[1]*mesh->cells[column].size[2];
-            matrix[(3*column+q)*unknowns + 3*cell+p] -=
-                chi_values[column]*(testing_volume/source_volume)*nblock[p][q];
-          }
-        }
-    }
+    free(failed_columns);
   }
+  performance_add("dielectric_volume_assembly",performance_now()-assembly_started);
   if(!accelerated) memcpy(original, matrix, unknowns*unknowns*sizeof(*matrix));
   memcpy(rhs_original, rhs, unknowns*sizeof(*rhs));
   if(iterative)

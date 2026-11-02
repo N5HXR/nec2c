@@ -124,6 +124,10 @@ by an agreed material margin, initially 20%, on production-scale targets.
 
 ### M5: parallel dielectric assembly
 
+Status: implemented on 2026-11-02; awaiting user acceptance.  Repeated local
+medians reached 11.91x volume-pair and 10.52x mixed-row assembly speedups at
+the 16-thread automatic ceiling, with bit-identical normalized results.
+
 Parallelize cell-pair and reentrant volume, wire-row, and patch-row block
 assembly using disjoint output ownership and deterministic failure reporting.
 Target at least 2x on the selected assembly workload.
