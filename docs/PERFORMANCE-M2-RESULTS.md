@@ -1,6 +1,6 @@
 # Milestone 2: optional LAPACK dense backend
 
-Status: implementation complete; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.
 
 Date: 2026-11-02
 
@@ -188,5 +188,4 @@ python3 tools/dense_backend_benchmark.py --repeat 7 --warmup 2 \
   --output /tmp/m2-dense-backend.json
 ```
 
-Return `PASS`, `FAIL`, or `PASS WITH CHANGES`. Milestone 3 does not begin until
-that verdict is received.
+The user returned `PASS` on 2026-11-02. Milestone 3 may proceed.

@@ -81,7 +81,7 @@ must be below 2% when disabled and 5% when enabled.
 
 ### M2: optional LAPACK dense backend
 
-Status: implementation complete; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.
 
 Introduce a factor/solve abstraction for classic NEC, dense VIE, and dense
 coupled systems.  Preserve the built-in solver, support batched right-hand
