@@ -81,6 +81,9 @@ const char *result_json_current_excitation_kind(void);
 void result_json_execution_begin(double frequency_mhz, const char *excitation_kind,
     const dielectric_plane_wave *wave);
 int result_json_execution_end(int success);
+/* Flush the parent document before fork() so children cannot later flush a
+   duplicated stdio buffer into the shared result destination. */
+int result_json_worker_prepare(void);
 /* Frequency-worker fragment support. These calls are used only after fork():
    the child resets its inherited execution spool, writes complete execution
    objects to a private file, and the pristine parent imports them in order. */

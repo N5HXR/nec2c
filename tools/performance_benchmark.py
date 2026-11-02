@@ -8,9 +8,11 @@ import os
 from pathlib import Path
 import platform
 import re
+import resource
 import statistics
 import subprocess
 import tempfile
+import threading
 import time
 
 
@@ -48,6 +50,27 @@ def numerical_hash(path):
     with path.open(encoding="utf-8") as stream:
         value = scrub_elapsed(json.load(stream))
     canonical = json.dumps(value, sort_keys=True, separators=(",", ":"),
+                           allow_nan=False).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
+def physics_hash(path):
+    """Hash result values while ignoring backend identity and accounting."""
+    with path.open(encoding="utf-8") as stream:
+        value = json.load(stream)
+
+    def scrub(item, parent=None):
+        if isinstance(item, dict):
+            ignored = {"elapsed_seconds"}
+            if parent == "solver":
+                ignored.update(("requested", "used", "accounted_storage_bytes"))
+            return {key: scrub(child, key) for key, child in item.items()
+                    if key not in ignored}
+        if isinstance(item, list):
+            return [scrub(child, parent) for child in item]
+        return item
+
+    canonical = json.dumps(scrub(value), sort_keys=True, separators=(",", ":"),
                            allow_nan=False).encode("utf-8")
     return hashlib.sha256(canonical).hexdigest()
 
@@ -128,14 +151,19 @@ def process_tree_rss_kib(root_pid):
 def summarize_runs(runs):
     phases = {}
     for run in runs:
-        for phase in run["timing"]["phases"]:
+        for phase in (run["timing"] or {}).get("phases", []):
             phases.setdefault(phase["name"], []).append(phase["seconds"])
+    timed = [run for run in runs if run["timing"] is not None]
     return {
-        "wall_seconds": summary([run["timing"]["process"]["wall_seconds"] for run in runs]),
-        "cpu_seconds": summary([run["timing"]["process"]["cpu_seconds"] for run in runs]),
-        "peak_rss_kib": summary([run["timing"]["process"]["peak_rss_kib"] for run in runs
+        "wall_seconds": summary([run["timing"]["process"]["wall_seconds"]
+                                 for run in timed]),
+        "cpu_seconds": summary([run["timing"]["process"]["cpu_seconds"]
+                                for run in timed]),
+        "peak_rss_kib": summary([run["timing"]["process"]["peak_rss_kib"]
+                                 for run in timed
                                  if run["timing"]["process"]["peak_rss_kib"] is not None]),
         "external_wall_seconds": summary([run["external_wall_seconds"] for run in runs]),
+        "external_cpu_seconds": summary([run["external_cpu_seconds"] for run in runs]),
         "process_tree_peak_rss_kib": summary([
             run["process_tree_peak_rss_kib"] for run in runs
             if run["process_tree_peak_rss_kib"] is not None]),
@@ -143,51 +171,73 @@ def summarize_runs(runs):
         "stable_numerical_result": len({run["numerical_sha256"] for run in runs}) == 1,
         "dense_backends": sorted({
             run["timing"]["dense_backend"]["used"] for run in runs
-            if run["timing"]["dense_backend"]["used"] is not None
+            if run["timing"] is not None and
+            run["timing"]["dense_backend"]["used"] is not None
         }),
     }
 
 
 def execute(binary, case, root, directory, run_index, warmup, backend, jobs,
-            threads, environment):
+            threads, fft_backend, environment, legacy_cli):
     deck = (root / case["deck"]).resolve()
     prefix = "warmup" if warmup else "run"
     stem = f"{case['id']}-{prefix}-{run_index}"
     output = directory / f"{stem}.out"
     result = directory / f"{stem}-result.json"
     timing = directory / f"{stem}-timing.json"
-    command = [str(binary), "--backend", backend, "--jobs", jobs,
-               "--threads", threads, *case.get("arguments", []),
-               "--result-json", str(result), "--timing-json", str(timing),
+    controls = [] if legacy_cli else [
+        "--backend", backend, "--fft-backend", fft_backend,
+        "--jobs", jobs, "--threads", threads,
+    ]
+    timing_arguments = [] if legacy_cli else ["--timing-json", str(timing)]
+    command = [str(binary), *controls, *case.get("arguments", []),
+               "--result-json", str(result), *timing_arguments,
                "-i", str(deck), "-o", str(output)]
+    usage_before = resource.getrusage(resource.RUSAGE_CHILDREN)
     started = time.perf_counter()
     process = subprocess.Popen(command, cwd=root, text=True,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                env=environment)
+    completed = {}
+
+    def wait_for_process():
+        completed["stdout"], completed["stderr"] = process.communicate()
+        completed["ended"] = time.perf_counter()
+
+    waiter = threading.Thread(target=wait_for_process)
+    waiter.start()
     peak_rss = 0
-    while process.poll() is None:
+    while waiter.is_alive():
         if platform.system() == "Linux":
             peak_rss = max(peak_rss, process_tree_rss_kib(process.pid))
         time.sleep(0.005)
-    stdout, stderr = process.communicate()
-    external = time.perf_counter() - started
+    waiter.join()
+    stdout, stderr = completed["stdout"], completed["stderr"]
+    external = completed["ended"] - started
+    usage_after = resource.getrusage(resource.RUSAGE_CHILDREN)
+    external_cpu = ((usage_after.ru_utime + usage_after.ru_stime) -
+                    (usage_before.ru_utime + usage_before.ru_stime))
     if process.returncode != 0:
         raise RuntimeError(json.dumps({
             "case": case["id"], "command": command,
             "returncode": process.returncode,
             "stdout": stdout, "stderr": stderr,
         }, indent=2))
-    with timing.open(encoding="utf-8") as stream:
-        timing_value = json.load(stream)
-    if timing_value["completion"]["status"] != "ok":
+    timing_value = None
+    if not legacy_cli:
+        with timing.open(encoding="utf-8") as stream:
+            timing_value = json.load(stream)
+    if timing_value is not None and timing_value["completion"]["status"] != "ok":
         raise RuntimeError(f"case {case['id']} emitted an unsuccessful timing artifact")
     return {
         "index": run_index,
         "command": command,
         "external_wall_seconds": external,
+        "external_cpu_seconds": external_cpu,
         "process_tree_peak_rss_kib": peak_rss or None,
         "timing": timing_value,
         "numerical_sha256": numerical_hash(result),
+        "physics_sha256": physics_hash(result),
         "result_sha256": sha256(result),
         "output_sha256": sha256(output),
     }
@@ -214,12 +264,16 @@ def main():
     parser.add_argument("--warmup", type=int, default=1)
     parser.add_argument("--backend", choices=("auto", "builtin", "lapack"),
                         default="auto")
+    parser.add_argument("--fft-backend", choices=("auto", "builtin", "fftw"),
+                        default="auto")
     parser.add_argument("--jobs", type=auto_or_positive, default="auto",
                         help="frequency workers: auto or a positive integer")
     parser.add_argument("--threads", type=auto_or_positive, default="auto",
                         help="numerical-library threads per worker: auto or a positive integer")
     parser.add_argument("--case", action="append", dest="cases",
                         help="run only this case ID; may be repeated")
+    parser.add_argument("--legacy-cli", action="store_true",
+                        help="omit post-M0 backend/thread/timing options; use when benchmarking the preserved reference binary")
     arguments = parser.parse_args()
     if arguments.repeat < 1 or arguments.warmup < 0:
         parser.error("--repeat must be positive; --warmup cannot be negative")
@@ -275,9 +329,13 @@ def main():
         "manifest": {"path": str(manifest_path), "sha256": sha256(manifest_path)},
         "settings": {"repeat": arguments.repeat, "warmup": arguments.warmup,
                      "backend": arguments.backend, "jobs": arguments.jobs,
-                     "threads": arguments.threads},
+                     "threads": arguments.threads,
+                     "fft_backend": arguments.fft_backend,
+                     "legacy_cli": arguments.legacy_cli},
         "execution_control": {
             "backend": arguments.backend,
+            "fft_backend": arguments.fft_backend,
+            "legacy_cli": arguments.legacy_cli,
             "thread_environment": {
                 name: child_environment.get(name) for name in
                 ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
@@ -292,11 +350,13 @@ def main():
             deck = (ROOT / case["deck"]).resolve()
             warmup_runs = [execute(binary, case, ROOT, directory, index, True,
                                    arguments.backend, arguments.jobs,
-                                   arguments.threads, child_environment)
+                                   arguments.threads, arguments.fft_backend,
+                                   child_environment, arguments.legacy_cli)
                            for index in range(arguments.warmup)]
             runs = [execute(binary, case, ROOT, directory, index, False,
                             arguments.backend, arguments.jobs,
-                            arguments.threads, child_environment)
+                            arguments.threads, arguments.fft_backend,
+                            child_environment, arguments.legacy_cli)
                     for index in range(arguments.repeat)]
             report["cases"].append({
                 "id": case["id"],
@@ -311,7 +371,9 @@ def main():
             })
     atomic_json(arguments.output.resolve(), report)
     for case in report["cases"]:
-        median = case["summary"]["wall_seconds"]["median"]
+        wall = (case["summary"]["wall_seconds"] or
+                case["summary"]["external_wall_seconds"])
+        median = wall["median"]
         stable = "stable" if case["summary"]["stable_numerical_result"] else "CHANGED"
         print(f"{case['id']}: median {median:.6f}s, numerical result {stable}")
     print(arguments.output.resolve())

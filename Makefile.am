@@ -25,6 +25,9 @@ EXTRA_DIST = \
   docs/PERFORMANCE-M6-RESULTS.md \
   docs/PERFORMANCE-M7-RESULTS.md \
   docs/PERFORMANCE-M8-RESULTS.md \
+  docs/PERFORMANCE-M9-COMPILER.md \
+  docs/PERFORMANCE-M9-RESULTS.md \
+  docs/PERFORMANCE-M9-ACCEPTANCE.md \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -82,6 +85,7 @@ EXTRA_DIST = \
   tools/m6_fill_benchmark.py \
   tools/m7_coupling_benchmark.py \
   tools/m8_field_benchmark.py \
+  tools/m9_release_candidate.py \
   tools/prepare_nec_fixture.py \
   tools/cross_solver_compare.py \
   tools/timing_overhead.py \

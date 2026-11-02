@@ -157,6 +157,11 @@ static void spool_copy(FILE *out, json_spool *spool)
     fwrite(buffer, 1, count, out);
 }
 
+static int spool_flush(json_spool *spool)
+{
+  return !spool->file || fflush(spool->file) == 0;
+}
+
 static void spool_close(json_spool *spool)
 {
   if(spool->file) fclose(spool->file);
@@ -566,6 +571,21 @@ int result_json_execution_end(int success)
     fputs(",\"far_fields\":[",f);spool_copy(f,&e->far_fields);fputs("],\"near_fields\":[",f);spool_copy(f,&e->near_fields);fputc(']',f);
   }
   fputc('}',f);execution_clear(e);return success!=0;
+}
+
+int result_json_worker_prepare(void)
+{
+  if(!session.active) return 1;
+  if(!session.document || session.job.execution.open) return 0;
+  /* Every buffered stream is inherited by fork().  Flush the parent's bytes
+     before the fork so a child-side fclose()/tmpfile() cannot append a second
+     copy through the shared open-file description. */
+  return fflush(session.document) == 0 &&
+      spool_flush(&session.diagnostics) &&
+      spool_flush(&session.job.meshes) &&
+      spool_flush(&session.job.grounds) &&
+      spool_flush(&session.job.executions) &&
+      spool_flush(&session.job.omissions);
 }
 
 int result_json_worker_begin(size_t first_execution_index)

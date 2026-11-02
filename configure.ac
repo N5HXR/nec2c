@@ -16,7 +16,11 @@ else
    enable_cflags_setting=yes
 fi
 AC_MSG_RESULT($enable_cflags_setting)
-test "x$enable_cflags_setting" = xyes && CFLAGS="-Wall -O2"
+# GCC and Clang retain their normal floating-point semantics at -O3.  In
+# particular, do not add -ffast-math or host-specific -march flags here: NEC's
+# numerical reproducibility and distributable binaries are more important than
+# those machine-specific gains.  As before, an explicit CFLAGS always wins.
+test "x$enable_cflags_setting" = xyes && CFLAGS="-Wall -O3"
 
 # Checks for programs.
 AC_PROG_CXX

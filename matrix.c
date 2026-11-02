@@ -1444,27 +1444,11 @@ void fblock( int nrow, int ncol, int imax, int ipsym )
 /* lower triangular matrix and u is an upper triangular matrix both */
 /* of which are stored in a.  the rhs vector b is input and the */
 /* solution is returned through vector b.   (matrix transposed. */
-void solve( int n, complex double *a, int *ip,
-	complex double *b, int ndim )
+static void solve_builtin( int n, complex double *a, int *ip,
+	complex double *b, int ndim, complex double *scm )
 {
   int i, ip1, j, k, pia;
-  complex double sum, *scm = NULL;
-  int backend_result = dense_backend_solve_classic((size_t)n, a,
-                                                    (size_t)ndim, ip, b);
-  if(backend_result >= 0)
-  {
-    if(!backend_result)
-    {
-      fprintf(output_fp, "\n  LAPACK TRIANGULAR SOLVE FAILED");
-      stop(-1);
-    }
-    return;
-  }
-
-  /* Allocate to scratch memory */
-  size_t mreq = (size_t)data.np2m;
-  mreq *= sizeof(complex double);
-  mem_alloc( (void *)&scm, mreq );
+  complex double sum;
 
   /* forward substitution */
   for( i = 0; i < n; i++ )
@@ -1492,7 +1476,29 @@ void solve( int n, complex double *a, int *ip,
 
 	b[i]=( scm[i]- sum)/ a[i+i*ndim];
   }
+}
 
+void solve( int n, complex double *a, int *ip,
+	complex double *b, int ndim )
+{
+  complex double *scm = NULL;
+  int backend_result = dense_backend_solve_classic((size_t)n, a,
+                                                    (size_t)ndim, ip, b);
+  if(backend_result >= 0)
+  {
+    if(!backend_result)
+    {
+      fprintf(output_fp, "\n  LAPACK TRIANGULAR SOLVE FAILED");
+      stop(-1);
+    }
+    return;
+  }
+
+  /* Allocate to scratch memory */
+  size_t mreq = (size_t)data.np2m;
+  mreq *= sizeof(complex double);
+  mem_alloc( (void *)&scm, mreq );
+  solve_builtin(n, a, ip, b, ndim, scm);
   free_ptr( (void *)&scm );
 
   return;
@@ -1516,13 +1522,11 @@ void solves( complex double *a, int *ip, complex double *b,
   fnorm=1./ fnop;
   nrow= neq;
 
-  /* Allocate to scratch memory */
-  size_t mreq = (size_t)data.np2m;
-  mreq *= sizeof(complex double);
-  mem_alloc( (void *)&scm, mreq );
-
   if( smat.nop != 1)
   {
+	/* Symmetry transforms and the built-in solver share this workspace. */
+	size_t mreq = (size_t)data.np2m*sizeof(complex double);
+	mem_alloc( (void *)&scm, mreq );
 	for( ic = 0; ic < nrh; ic++ )
 	{
 	  if( (n != 0) && (m != 0) )
@@ -1609,15 +1613,23 @@ void solves( complex double *a, int *ip, complex double *b,
 		stop(-1);
 	  }
 	  if(backend_result < 0)
+	  {
+		if(scm == NULL)
+		{
+		  size_t mreq = (size_t)data.np2m*sizeof(complex double);
+		  mem_alloc( (void *)&scm, mreq );
+		}
 		for( ic = 0; ic < nrh; ic++ )
-		  solve( npeq, &a[ib], &ip[ia], &b[ia+ic*neq], nrow );
+		  solve_builtin( npeq, &a[ib], &ip[ia], &b[ia+ic*neq], nrow,
+		                 scm );
+	  }
 	}
 
   } /* for( kk = 0; kk < smat.nop; kk++ ) */
 
   if( smat.nop == 1)
   {
-	free_ptr( (void *)&scm );
+	if(scm != NULL) free_ptr( (void *)&scm );
 	return;
   }
 

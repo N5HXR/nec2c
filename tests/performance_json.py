@@ -51,6 +51,7 @@ with tempfile.TemporaryDirectory() as directory:
     assert artifact["schema"] == "nec2c-timing"
     assert artifact["schema_version"] == 2
     assert artifact["completion"] == {"status": "ok"}
+    assert artifact["concurrency"]["threads_per_job"] == 1
     assert Path(artifact["input"]["deck"]) == deck
     assert artifact["clock"] == {"wall": "monotonic", "cpu": "process"}
     assert artifact["dense_backend"] == {"requested": "auto", "used": "builtin"}
@@ -71,6 +72,12 @@ with tempfile.TemporaryDirectory() as directory:
         "requested": "builtin", "used": "builtin"}
     assert "DENSE BACKEND: builtin (REQUESTED builtin)" in \
         (temporary / "builtin.out").read_text()
+
+    small_coupled_timing = temporary / "small-coupled.json"
+    run("--timing-json", small_coupled_timing, "-s", "dense",
+        "-i", ROOT / "tests/dielectric/m6-cube.nec",
+        "-o", temporary / "small-coupled.out")
+    assert load(small_coupled_timing)["concurrency"]["threads_per_job"] == 1
 
     if "lapack" in capabilities["features"]["dense_backends"]:
         lapack_timing = temporary / "lapack.json"

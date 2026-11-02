@@ -20,6 +20,7 @@ def run(directory: pathlib.Path, label: str, deck: pathlib.Path, jobs: str):
     result = directory / f"{label}-jobs-{jobs}.json"
     subprocess.run(
         [str(PROGRAM), "--jobs", jobs, "--threads", "1", "--backend", "builtin",
+         "--fft-backend", "auto",
          "-i", str(deck), "-o", str(report), "--result-json", str(result)],
         cwd=ROOT, check=True,
     )

@@ -79,8 +79,21 @@ static void configure_classic_concurrency(concurrency_plan *plan,
     int threaded_backend, size_t reduced_order)
 {
   classic_field_threads = plan->threads ? plan->threads : 1;
-  if(plan->threads_automatic && classic_field_threads > 4)
-    classic_field_threads = 4;
+  if(plan->threads_automatic)
+  {
+    size_t sources = (size_t)(data.n + data.m);
+    size_t field_count = 0;
+    if(gnd.ifar == 0 && fpat.nth > 0 && fpat.nph > 0 &&
+       (size_t)fpat.nth <= SIZE_MAX / (size_t)fpat.nph)
+      field_count = (size_t)fpat.nth * (size_t)fpat.nph;
+    /* Match radiation.c's work crossover.  Merely entering a four-worker
+       OpenMP region made tiny patterns several times slower even when the
+       loop's own if-clause correctly selected serial execution. */
+    if(sources == 0 || field_count < 65536 / sources)
+      classic_field_threads = 1;
+    else if(classic_field_threads > 4)
+      classic_field_threads = 4;
+  }
   classic_fill_processes = plan->threads ? plan->threads : 1;
   if(plan->threads_automatic && reduced_order < 256)
     classic_fill_processes = 1;
@@ -99,6 +112,12 @@ static void configure_classic_concurrency(concurrency_plan *plan,
 static size_t dielectric_automatic_thread_limit(
     const dielectric_mesh_result *mesh, int iterative)
 {
+  /* The eight-cell regression fixture is faster with two workers; starting
+     sixteen OpenMP/FFTW workers costs several times more than its complete
+     solve.  Preserve explicit --threads requests, but keep automatic startup
+     proportional for these genuinely small meshes. */
+  if(mesh->cell_count < 8) return 1;
+  if(mesh->cell_count == 8) return 2;
   if(iterative == 2 && vie_fft_parallel_available()) return 16;
   if(iterative == 0 && !strcmp(
       dense_backend_name_for_order(mesh->total_unknowns), "lapack")) return 4;
@@ -202,7 +221,8 @@ static int start_classic_frequency_workers(int frequency_mode,
       classic_worker_slot *slot = &slots[next];
       pid_t process;
       slot->report = tmpfile(); slot->json = tmpfile(); slot->status = tmpfile();
-      if(!slot->report || !slot->json || !slot->status) goto failure;
+      if(!slot->report || !slot->json || !slot->status ||
+         !result_json_worker_prepare()) goto failure;
       process = fork();
       if(process == 0)
       {
@@ -445,7 +465,8 @@ static int run_dielectric_frequency_workers(
       dielectric_worker_slot *slot = &slots[next];
       pid_t process;
       slot->report = tmpfile(); slot->json = tmpfile(); slot->status = tmpfile();
-      if(!slot->report || !slot->json || !slot->status) { failed = 1; break; }
+      if(!slot->report || !slot->json || !slot->status ||
+         !result_json_worker_prepare()) { failed = 1; break; }
       process = fork();
       if(process == 0)
       {
@@ -638,7 +659,8 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
   worker.model = model; worker.mesh = mesh; worker.rkh = rkh;
   worker.extended_kernel = extended_kernel; worker.iterative = iterative;
   worker.wave = wave; worker.pattern = pattern; worker.coupled = 1;
-  worker.automatic_thread_limit = 16;
+  worker.automatic_thread_limit = mesh->cell_count < 8 ? 1 :
+      (mesh->cell_count == 8 ? 2 : 16);
 #ifndef _WIN32
   if(frequency_count > 1)
   {
