@@ -135,7 +135,10 @@ Target at least 2x on the selected assembly workload.
 
 ### M6: reentrant classic NEC fill
 
-Status: implementation complete; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.  Seven-run medians reached 4.84x
+and 3.63x fill speedups at the 16-worker automatic ceiling on the wire and
+mixed-interaction fixtures.  Explicit 32-worker execution reached 5.57x and
+5.79x respectively, with identical normalized numerical results.
 
 Move mutable interaction scratch into worker-local contexts and parallelize
 source columns or tiles without changing per-entry summation order.  Cover

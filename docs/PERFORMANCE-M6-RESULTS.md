@@ -1,6 +1,6 @@
 # Milestone 6: parallel classic NEC matrix fill
 
-Status: implementation complete; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.
 
 ## Delivered behavior
 
@@ -46,7 +46,7 @@ and four workers and requires byte-identical hashes.  Its fixtures cover:
 * extended thin-wire kernels;
 * wire/patch, patch/wire, and patch/patch interactions;
 * a wire endpoint's secondary connected-patch correction;
-* lumped loading and two-port networks; and
+* lumped loading and two-port networks;
 * fourfold rotational symmetry and symmetry-mode combination; and
 * repeated fills in a three-frequency built-in serial-job sweep.
 
@@ -63,34 +63,38 @@ leak detection is disabled because it cannot initialize under the host's
 tracing mode.  A complete distribution build, test, install, uninstall, and
 archive check passes.
 
-## Local performance evidence
+## Acceptance performance evidence
 
-The development host is the 32-logical-CPU Intel Core i9-13900K acceptance
-machine.  The table contains one warmup and five measured repetitions.  Times
-are medians of the `matrix_fill` phase; numerical result hashes are identical
-at every worker count.
+The acceptance host is the 32-logical-CPU Intel Core i9-13900K.  The table
+contains two warmups and seven measured repetitions.  Times are medians of the
+`matrix_fill` phase; numerical result hashes are identical at every worker
+count.
 
 | Workers | Wire 801 time | Speedup | Mixed 651 time | Speedup |
 |---:|---:|---:|---:|---:|
-| 1 | 0.086005 s | 1.00x | 0.040952 s | 1.00x |
-| 2 | 0.061290 s | 1.40x | 0.032284 s | 1.27x |
-| 4 | 0.042538 s | 2.02x | 0.024426 s | 1.68x |
-| 8 | 0.026606 s | 3.23x | 0.013743 s | 2.98x |
-| 16 | 0.019111 s | 4.50x | 0.008746 s | 4.68x |
-| 32 | 0.014155 s | 6.08x | 0.005661 s | 7.23x |
+| 1 | 0.075420 s | 1.00x | 0.037390 s | 1.00x |
+| 2 | 0.058879 s | 1.28x | 0.036181 s | 1.03x |
+| 4 | 0.044206 s | 1.71x | 0.026122 s | 1.43x |
+| 8 | 0.023761 s | 3.17x | 0.015545 s | 2.41x |
+| 16 | 0.015590 s | 4.84x | 0.010312 s | 3.63x |
+| 32 | 0.013540 s | 5.57x | 0.006458 s | 5.79x |
 
 The automatic 16-worker point exceeds the milestone's 2x fill target on both
-fixtures.  The extra 32-worker gain remains available explicitly but increases
-process CPU substantially and slightly regresses whole-process wall time on
-these short fixtures.  Automatic selection therefore retains the measured
-16-worker ceiling.  The reported maximum single-process RSS rose from 18 MiB
-serial to approximately 26 MiB for the wire fixture and 19 MiB for the mixed
-fixture.  This metric is not aggregate process-tree RSS; the planner separately
-accounts for the parent matrix plus one shared temporary matrix.
+fixtures.  Explicit 32-worker execution improves the fill phase further, but
+the automatic ceiling remains 16 to avoid consuming every logical CPU for the
+smaller incremental gain.  The reported RSS metric is maximum single-process
+RSS rather than aggregate process-tree RSS; the planner separately accounts
+for the parent matrix plus one shared temporary matrix.
 
 ## User acceptance
 
-First run the deterministic focused regression:
+The user returned a PASS on 2026-11-02.  The seven-repeat benchmark exceeded
+the 2x target on both fixtures at the automatic ceiling, preserved identical
+normalized numerical hashes at every worker count, and wrote the raw record to
+`/tmp/m6-fill.json` on the acceptance host.
+
+The accepted validation procedure begins with the deterministic focused
+regression:
 
 ```sh
 python3 tests/classic_fill_parallel.py
