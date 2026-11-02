@@ -147,6 +147,10 @@ networks, and loading.  Target at least 2x fill speedup on a large model.
 
 ### M7: parallel conductor-volume coupling
 
+Status: implemented; awaiting user acceptance. Development measurements reach
+6.50x for the coupling phase and 3.24x for the complete solve at the automatic
+16-worker ceiling, with bit-identical normalized results across worker counts.
+
 Remove temporary global field/current mutations, pass explicit source state,
 and parallelize disjoint source/cell blocks.  Require a material end-to-end
 improvement on the coupled dielectric target as well as a 2x coupling-phase

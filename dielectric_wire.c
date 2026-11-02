@@ -8,6 +8,7 @@
 #include "result_json.h"
 #include "dense_backend.h"
 #include "performance.h"
+#include "concurrency.h"
 
 #include <complex.h>
 #include <float.h>
@@ -17,9 +18,32 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef _WIN32
+#include <errno.h>
+#include <signal.h>
+#include <sys/mman.h>
+#ifdef __linux__
+#include <sys/prctl.h>
+#endif
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
+
 #define DW_EPSILON_0 8.8541878128e-12
 #define DW_C0 299792458.0
 #define DW_PI 3.141592653589793238462643383279502884
+
+static size_t dw_coupling_processes = 1;
+static int dw_coupling_fork_safe;
+static complex double *dw_entry(complex double *dense,
+    dielectric_fft_system *fft,size_t order,size_t index);
+
+void dielectric_coupling_configure(size_t processes, int fork_safe)
+{
+  dw_coupling_processes = processes ? processes : 1;
+  dw_coupling_fork_safe = fork_safe;
+}
 
 static const dielectric_material *dw_material(const dielectric_model *model,
                                                int id)
@@ -329,6 +353,217 @@ static int dw_average_wire_field(const dielectric_cell *cell, double k0,
   return 1;
 }
 
+/* Freeze each conductor unknown into explicit NEC basis coefficients before
+   parallel work begins.  Workers install only their process-private copy. */
+static int dw_prepare_conductor_sources(size_t nw,size_t np,size_t count,
+                                        complex double *unit,
+                                        complex double *sources)
+{
+  size_t column,segment,stride=3*nw+3*np;
+  for(column=0;column<count;++column)
+  {
+    complex double *source=sources+column*stride;
+    memset(unit,0,(nw+3*np)*sizeof(*unit));unit[column]=1.0;
+    cabc(unit);
+    for(segment=0;segment<nw;++segment)
+    {
+      source[3*segment]=crnt.air[segment]+I*crnt.aii[segment];
+      source[3*segment+1]=crnt.bir[segment]+I*crnt.bii[segment];
+      source[3*segment+2]=crnt.cir[segment]+I*crnt.cii[segment];
+    }
+    if(np) memcpy(source+3*nw,unit+nw,3*np*sizeof(*source));
+  }
+  return 1;
+}
+
+static void dw_install_conductor_source(size_t nw,size_t np,
+                                         const complex double *source)
+{
+  size_t segment;
+  for(segment=0;segment<nw;++segment)
+  {
+    crnt.air[segment]=creal(source[3*segment]);
+    crnt.aii[segment]=cimag(source[3*segment]);
+    crnt.bir[segment]=creal(source[3*segment+1]);
+    crnt.bii[segment]=cimag(source[3*segment+1]);
+    crnt.cir[segment]=creal(source[3*segment+2]);
+    crnt.cii[segment]=cimag(source[3*segment+2]);
+  }
+  if(np) memcpy(crnt.cur+nw,source+3*nw,3*np*sizeof(*source));
+}
+
+static int dw_wire_to_volume_range(const dielectric_mesh_result *mesh,
+    size_t nw,size_t np,size_t conductor_unknowns,const complex double *sources,
+    const complex double *wire_background_basis,const complex double *volume_chi,
+    double k0,double omega,size_t first,size_t last,complex double *coupling)
+{
+  size_t task,current_column=SIZE_MAX,stride=3*nw+3*np,nv=3*mesh->cell_count;
+  for(task=first;task<last;++task)
+  {
+    size_t column=task/mesh->cell_count,cell=task%mesh->cell_count;
+    complex double field[3];int component;
+    if(column!=current_column)
+    {
+      dw_install_conductor_source(nw,np,sources+column*stride);
+      current_column=column;
+    }
+    if(!dw_average_wire_field(&mesh->cells[cell],k0,
+         wire_background_basis ? wire_background_basis+9*nw*cell:NULL,field))
+      return 0;
+    for(component=0;component<3;++component)
+      coupling[column*nv+3*cell+component]=
+          -I*omega*DW_EPSILON_0*volume_chi[cell]*field[component];
+  }
+  (void)conductor_unknowns;
+  return 1;
+}
+
+static int dw_assemble_wire_to_volume(const dielectric_mesh_result *mesh,
+    size_t nw,size_t np,size_t conductor_unknowns,const complex double *sources,
+    const complex double *wire_background_basis,const complex double *volume_chi,
+    double k0,double omega,complex double **result,int *result_mapped,
+    size_t *workers_used,int *fell_back)
+{
+  size_t nv=3*mesh->cell_count,tasks,values,bytes,index;
+  complex double *coupling=NULL;
+  int mapped=0,parallel=0,attempted=0;
+  *workers_used=1;
+  *fell_back=0;
+  if(mesh->cell_count && conductor_unknowns>SIZE_MAX/mesh->cell_count) return 0;
+  tasks=conductor_unknowns*mesh->cell_count;
+  if(conductor_unknowns && nv>SIZE_MAX/conductor_unknowns) return 0;
+  values=conductor_unknowns*nv;
+  if(values>SIZE_MAX/sizeof(*coupling)) return 0;
+  bytes=values*sizeof(*coupling);
+#ifndef _WIN32
+  if(dw_coupling_fork_safe && dw_coupling_processes>1 && tasks>=128 && bytes)
+  {
+    attempted=1;
+    coupling=mmap(NULL,bytes,PROT_READ|PROT_WRITE,MAP_SHARED|MAP_ANONYMOUS,-1,0);
+    if(coupling!=MAP_FAILED) {mapped=1;parallel=1;}
+    else coupling=NULL;
+  }
+#endif
+  if(!coupling) coupling=calloc(values ? values:1,sizeof(*coupling));
+  if(!coupling) return 0;
+#ifndef _WIN32
+  if(parallel)
+  {
+    size_t workers=dw_coupling_processes,started=0;
+    pid_t *pids;
+    int failed=0;
+    if(workers>tasks) workers=tasks;
+    pids=calloc(workers,sizeof(*pids));
+    if(!pids) failed=1;
+    for(index=0;!failed && index<workers;++index)
+    {
+      size_t quotient=tasks/workers,remainder=tasks%workers;
+      size_t first=quotient*index+(index<remainder ? index:remainder);
+      size_t last=first+quotient+(index<remainder ? 1:0);
+      pid_t child=fork();
+      if(child==0)
+      {
+        worker_process_enable();
+#ifdef __linux__
+        if(prctl(PR_SET_PDEATHSIG,SIGTERM)<0 || getppid()==1) _exit(2);
+#endif
+        _exit(dw_wire_to_volume_range(mesh,nw,np,conductor_unknowns,sources,
+            wire_background_basis,volume_chi,k0,omega,first,last,coupling) ? 0:1);
+      }
+      if(child<0) {failed=1;break;}
+      pids[index]=child;++started;
+    }
+    for(index=0;index<started;++index)
+    {
+      int status=0;pid_t waited;
+      do waited=waitpid(pids[index],&status,0); while(waited<0 && errno==EINTR);
+      if(waited<0 || !WIFEXITED(status) || WEXITSTATUS(status)!=0) failed=1;
+    }
+    free(pids);
+    if(failed)
+    {
+      memset(coupling,0,bytes);
+      parallel=0;
+      *fell_back=1;
+    }
+    else *workers_used=workers;
+  }
+#endif
+  if(attempted && !parallel) *fell_back=1;
+  if(!parallel && !dw_wire_to_volume_range(mesh,nw,np,conductor_unknowns,sources,
+       wire_background_basis,volume_chi,k0,omega,0,tasks,coupling))
+  {
+#ifndef _WIN32
+    if(mapped)
+      munmap(coupling,bytes);
+    else
+#endif
+      free(coupling);
+    return 0;
+  }
+  *result=coupling;
+  *result_mapped=mapped;
+  return 1;
+}
+
+static void dw_free_coupling(complex double *coupling,size_t values,int mapped)
+{
+  if(!coupling) return;
+#ifndef _WIN32
+  if(mapped)
+    munmap(coupling,values*sizeof(*coupling));
+  else
+#else
+  (void)values;(void)mapped;
+#endif
+    free(coupling);
+}
+
+static int dw_assemble_volume_pairs(const dielectric_mesh_result *mesh,
+    double k0,const vie_kernel_options *options,const complex double *volume_chi,
+    const double *volume_size,complex double *system,size_t total,
+    size_t conductor_unknowns,size_t *failed_testing,size_t *failed_source)
+{
+  size_t nc=mesh->cell_count,cell;
+  size_t *failed_columns=malloc(nc*sizeof(*failed_columns));
+  ptrdiff_t cell_index;
+  if(!failed_columns) return 0;
+  for(cell=0;cell<nc;++cell) failed_columns[cell]=SIZE_MAX;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(dynamic,1) if(nc >= 8)
+#endif
+  for(cell_index=0;cell_index<(ptrdiff_t)nc;++cell_index)
+  {
+    size_t testing_cell=(size_t)cell_index,source_cell;
+    for(source_cell=testing_cell;source_cell<nc;++source_cell)
+    {
+      vie_cuboid testing,source;
+      complex double block[3][3];int p,q;
+      memcpy(testing.center,mesh->cells[testing_cell].center,sizeof(testing.center));
+      memcpy(testing.size,mesh->cells[testing_cell].size,sizeof(testing.size));
+      memcpy(source.center,mesh->cells[source_cell].center,sizeof(source.center));
+      memcpy(source.size,mesh->cells[source_cell].size,sizeof(source.size));
+      if(!dielectric_background_n(&testing,&source,k0,options,block))
+      {failed_columns[testing_cell]=source_cell;break;}
+      for(p=0;p<3;++p) for(q=0;q<3;++q)
+      {
+        *dw_entry(system,NULL,total,(conductor_unknowns+3*testing_cell+p)*total+
+            conductor_unknowns+3*source_cell+q)-=volume_chi[testing_cell]*block[p][q];
+        if(source_cell!=testing_cell)
+          *dw_entry(system,NULL,total,(conductor_unknowns+3*source_cell+q)*total+
+              conductor_unknowns+3*testing_cell+p)-=
+              volume_chi[source_cell]*(volume_size[testing_cell]/volume_size[source_cell])*block[p][q];
+      }
+    }
+  }
+  for(cell=0;cell<nc;++cell) if(failed_columns[cell]!=SIZE_MAX)
+  {
+    *failed_testing=cell;*failed_source=failed_columns[cell];free(failed_columns);
+    return 0;
+  }
+  free(failed_columns);return 1;
+}
+
 /* Exterior scattered fields only. The separated-cell rule also bounds
    observation quadrature error; internal/interface sampling needs a different
    singular integration and must never silently use this evaluator. */
@@ -482,11 +717,12 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
 {
   size_t nw = (size_t)data.n, np = (size_t)data.m;
   size_t conductor_unknowns = nw+2*np, nc = mesh->cell_count, nv = 3*nc;
-  size_t total = conductor_unknowns+nv, row, column, cell;
+  size_t total = conductor_unknowns+nv, row, column, cell, source_stride;
   complex double *system = NULL, *original = NULL, *rhs = NULL, *rhs0 = NULL;
   complex double *conductor_matrix = NULL, *unit = NULL, *volume_current = NULL;
   complex double *conductor_current = NULL, *wire_background_basis = NULL;
-  complex double *volume_chi = NULL;
+  complex double *volume_chi = NULL, *conductor_sources = NULL;
+  complex double *wire_to_volume = NULL;
   double *volume_size = NULL;
   double *x = NULL, *y = NULL, *z = NULL, *length = NULL, *radius = NULL;
   double *px = NULL, *py = NULL, *pz = NULL, *parea = NULL;
@@ -497,7 +733,9 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   vie_gmres_report report;
   double wire_to_volume_norm = 0.0, patch_to_volume_norm = 0.0;
   double volume_to_wire_norm = 0.0, volume_to_patch_norm = 0.0;
-  int restored = 0, geometry_scaled = 0;
+  int restored = 0, geometry_scaled = 0, wire_to_volume_mapped = 0;
+  int coupling_fell_back = 0;
+  size_t coupling_workers_used = 1;
   dielectric_fft_system *accelerated = NULL;
   vie_kernel_options kernel_options;
   memset(&report,0,sizeof(report));
@@ -533,16 +771,7 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
     dw_error(diagnostic,model,"memory","FFT coupling/caller storage exceeds 512 MiB budget");
     return 0;
   }
-  if(iterative == 2) {
-    size_t reserve=sizeof(complex double)*(4*total+conductor_unknowns*conductor_unknowns+2*(nw+3*np))+sizeof(double)*(5*nw+4*np);
-    if(!(gnd.ksymp!=1 && gnd.iperf==1 ? dielectric_fft_prepare_pec : dielectric_fft_prepare)(&accelerated,model,mesh,conductor_unknowns,k0,reserve,diagnostic)) goto failure;
-    performance_fft_backend(vie_fft_backend_requested_name(),
-        dielectric_fft_backend(accelerated));
-    fprintf(stream,"\n\n  FFT BACKEND: %s\n  FFT ACCOUNTED APPLICATION BYTES: %zu\n  FFT THREAD BUDGET: %zu",
-        dielectric_fft_backend(accelerated),dielectric_fft_storage(accelerated),
-        dielectric_fft_threads(accelerated));
-    fflush(stream);
-  } else {
+  if(iterative != 2) {
     system = calloc(total*total, sizeof(*system));
     original = calloc(total*total, sizeof(*original));
   }
@@ -558,9 +787,23 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   pz = calloc(np ? np : 1, sizeof(*pz)); parea = calloc(np ? np : 1, sizeof(*parea));
   volume_chi = calloc(nc ? nc : 1, sizeof(*volume_chi));
   volume_size = calloc(nc ? nc : 1, sizeof(*volume_size));
-  if((!accelerated && (!system || !original)) || !rhs || !rhs0 || !conductor_matrix || !unit ||
+  if(nw>SIZE_MAX-np || nw+np>SIZE_MAX/3)
+  {
+    dw_error(diagnostic,model,"size","conductor source stride overflow");
+    goto failure;
+  }
+  source_stride=3*(nw+np);
+  if(conductor_unknowns && source_stride>SIZE_MAX/conductor_unknowns)
+  {
+    dw_error(diagnostic,model,"size","conductor source state size overflow");
+    goto failure;
+  }
+  conductor_sources=calloc(conductor_unknowns ?
+      conductor_unknowns*source_stride:1,sizeof(*conductor_sources));
+  if((iterative != 2 && (!system || !original)) || !rhs || !rhs0 || !conductor_matrix || !unit ||
      !conductor_current || !volume_current || !x || !y || !z || !length ||
-     !radius || !px || !py || !pz || !parea || !volume_chi || !volume_size)
+     !radius || !px || !py || !pz || !parea || !volume_chi || !volume_size ||
+     !conductor_sources)
   {
     dw_error(diagnostic, model, "memory", "unable to allocate coupled dense system");
     goto failure;
@@ -600,10 +843,11 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
           wave->type, rhs);
   gnd.ksymp=background;
   }
-  for(row = 0; row < conductor_unknowns; ++row)
-    for(column = 0; column < conductor_unknowns; ++column)
-      /* NEC's factorizer transposes cmset() output before elimination. */
-      (*dw_entry(system,accelerated,total,row*total+column)) = conductor_matrix[column+row*conductor_unknowns];
+  if(system)
+    for(row = 0; row < conductor_unknowns; ++row)
+      for(column = 0; column < conductor_unknowns; ++column)
+        /* NEC's factorizer transposes cmset() output before elimination. */
+        system[row*total+column] = conductor_matrix[column+row*conductor_unknowns];
 
   vie_kernel_default_options(&kernel_options);
   kernel_options.relative_tolerance = 5.0e-7;
@@ -663,65 +907,11 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
       }
       for(component = 0; component < 3; ++component)
       {
-        if(!accelerated) (*dw_entry(system,accelerated,total,(conductor_unknowns+3*cell+component)*total+
-               conductor_unknowns+3*cell+component)) = epsilon_r;
+        if(system) system[(conductor_unknowns+3*cell+component)*total+
+               conductor_unknowns+3*cell+component] = epsilon_r;
         rhs[conductor_unknowns+3*cell+component] =
             I*omega*DW_EPSILON_0*volume_chi[cell]*incident[component];
       }
-    }
-    if(!accelerated)
-    {
-      size_t *failed_columns=malloc(nc*sizeof(*failed_columns));
-      ptrdiff_t cell_index;
-      if(failed_columns==NULL)
-      {
-        performance_add("dielectric_volume_assembly",performance_now()-phase_started);
-        dw_error(diagnostic,model,"memory","unable to allocate deterministic assembly status");
-        goto failure;
-      }
-      for(cell=0;cell<nc;++cell) failed_columns[cell]=SIZE_MAX;
-#ifdef _OPENMP
-#pragma omp parallel for schedule(dynamic,1) if(nc >= 8)
-#endif
-      for(cell_index=0;cell_index<(ptrdiff_t)nc;++cell_index)
-      {
-        size_t testing_cell=(size_t)cell_index;
-        size_t source_cell;
-        for(source_cell=testing_cell;source_cell<nc;++source_cell)
-        {
-          vie_cuboid testing,source;
-          complex double block[3][3];
-          int p,q;
-          memcpy(testing.center,mesh->cells[testing_cell].center,sizeof(testing.center));
-          memcpy(testing.size,mesh->cells[testing_cell].size,sizeof(testing.size));
-          memcpy(source.center,mesh->cells[source_cell].center,sizeof(source.center));
-          memcpy(source.size,mesh->cells[source_cell].size,sizeof(source.size));
-          if(!dielectric_background_n(&testing,&source,k0,&kernel_options,block))
-          {
-            failed_columns[testing_cell]=source_cell;break;
-          }
-          for(p=0;p<3;++p) for(q=0;q<3;++q)
-          {
-            (*dw_entry(system,accelerated,total,
-                (conductor_unknowns+3*testing_cell+p)*total+
-                conductor_unknowns+3*source_cell+q))-=volume_chi[testing_cell]*block[p][q];
-            if(source_cell!=testing_cell)
-              (*dw_entry(system,accelerated,total,
-                  (conductor_unknowns+3*source_cell+q)*total+
-                  conductor_unknowns+3*testing_cell+p))-=
-                  volume_chi[source_cell]*(volume_size[testing_cell]/volume_size[source_cell])*block[p][q];
-          }
-        }
-      }
-      for(cell=0;cell<nc;++cell) if(failed_columns[cell]!=SIZE_MAX)
-      {
-        char value[96];column=failed_columns[cell];free(failed_columns);
-        performance_add("dielectric_volume_assembly",performance_now()-phase_started);
-        snprintf(value,sizeof(value),"volume cells %zu,%zu",cell+1,column+1);
-        dw_error(diagnostic,model,value,"volume-volume interaction failed");
-        goto failure;
-      }
-      free(failed_columns);
     }
     performance_add("dielectric_volume_assembly",performance_now()-phase_started);
   }
@@ -738,26 +928,99 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
         { dw_error(diagnostic,model,"cross-kernel","reflected wire basis evaluation failed"); goto failure; }
   }
 
-  /* Volume rows: averaged NEC wire field produced by each wire unknown. */
-  if(nc != 0)
-    for(column = 0; column < conductor_unknowns; ++column)
+  /* Volume rows: averaged NEC field produced by each explicit conductor
+     source state. Processes own disjoint source/cell result blocks. */
+  {
+    double phase_started=performance_now();
+    if(!dw_prepare_conductor_sources(nw,np,conductor_unknowns,unit,conductor_sources) ||
+       !dw_assemble_wire_to_volume(mesh,nw,np,conductor_unknowns,
+          conductor_sources,wire_background_basis,volume_chi,k0,omega,
+          &wire_to_volume,&wire_to_volume_mapped,&coupling_workers_used,
+          &coupling_fell_back))
     {
-      memset(unit, 0, (nw+3*np)*sizeof(*unit)); unit[column] = 1.0;
-      cabc(unit);
-      if(np != 0)
-        memcpy(crnt.cur+nw, unit+nw, 3*np*sizeof(*unit));
-      for(cell = 0; cell < nc; ++cell)
-      {
-        complex double field[3];
-        int component;
-        if(!dw_average_wire_field(&mesh->cells[cell],k0,
-             wire_background_basis ? wire_background_basis+9*nw*cell:NULL,field))
-        { dw_error(diagnostic,model,"cross-kernel","wire-to-volume reflected interaction failed"); goto failure; }
-        for(component = 0; component < 3; ++component)
-          (*dw_entry(system,accelerated,total,(conductor_unknowns+3*cell+component)*total+column)) =
-              -I*omega*DW_EPSILON_0*volume_chi[cell]*field[component];
-      }
+      performance_add("dielectric_wire_to_volume_assembly",
+          performance_now()-phase_started);
+      dw_error(diagnostic,model,"cross-kernel",
+          "wire-to-volume interaction failed");
+      goto failure;
     }
+    performance_add("dielectric_wire_to_volume_assembly",
+        performance_now()-phase_started);
+  }
+  free(conductor_sources);
+  conductor_sources=NULL;
+  fprintf(stream,"\n\n  CONDUCTOR-VOLUME COUPLING WORKERS: %zu%s",
+      coupling_workers_used,coupling_fell_back ? " (SERIAL FALLBACK)":"");
+
+  /* Fork-based coupling must finish before OpenMP/BLAS runtimes start. */
+  {
+    size_t numerical_threads=dw_coupling_processes;
+    if(!concurrency_requested_threads() && !iterative &&
+       !strcmp(dense_backend_name_for_order(total),"lapack") &&
+       numerical_threads>4) numerical_threads=4;
+    if(!concurrency_apply_threads(numerical_threads))
+    {
+      dw_error(diagnostic,model,"threads","unable to apply numerical thread budget");
+      goto failure;
+    }
+  }
+
+  /* FFTW may initialize a threaded runtime while creating its plans. Keep
+     that work after all fork-based coupling workers have exited. */
+  if(iterative == 2)
+  {
+    size_t reserve=sizeof(complex double)*(4*total+
+        conductor_unknowns*conductor_unknowns+2*(nw+3*np))+
+        sizeof(double)*(5*nw+4*np);
+    size_t coupling_bytes=conductor_unknowns*nv*sizeof(complex double);
+    if(reserve>SIZE_MAX-coupling_bytes)
+    {
+      dw_error(diagnostic,model,"memory","FFT application reserve overflow");
+      goto failure;
+    }
+    reserve+=coupling_bytes;
+    if(!(gnd.ksymp!=1 && gnd.iperf==1 ? dielectric_fft_prepare_pec :
+         dielectric_fft_prepare)(&accelerated,model,mesh,conductor_unknowns,k0,
+            reserve,diagnostic)) goto failure;
+    performance_fft_backend(vie_fft_backend_requested_name(),
+        dielectric_fft_backend(accelerated));
+    fprintf(stream,"\n\n  FFT BACKEND: %s\n  FFT ACCOUNTED APPLICATION BYTES: %zu\n  FFT THREAD BUDGET: %zu",
+        dielectric_fft_backend(accelerated),dielectric_fft_storage(accelerated),
+        dielectric_fft_threads(accelerated));
+    fflush(stream);
+    for(row=0;row<conductor_unknowns;++row)
+      for(column=0;column<conductor_unknowns;++column)
+        *dw_entry(NULL,accelerated,total,row*total+column)=
+            conductor_matrix[column+row*conductor_unknowns];
+  }
+  for(column=0;column<conductor_unknowns;++column)
+    for(row=0;row<nv;++row)
+      *dw_entry(system,accelerated,total,
+          (conductor_unknowns+row)*total+column)=wire_to_volume[column*nv+row];
+  dw_free_coupling(wire_to_volume,conductor_unknowns*nv,wire_to_volume_mapped);
+  wire_to_volume=NULL;
+
+  if(!accelerated)
+  {
+    double phase_started=performance_now();
+    size_t failed_testing=SIZE_MAX,failed_source=SIZE_MAX;
+    if(!dw_assemble_volume_pairs(mesh,k0,&kernel_options,volume_chi,volume_size,
+         system,total,conductor_unknowns,&failed_testing,&failed_source))
+    {
+      char value[96];
+      performance_add("dielectric_volume_assembly",performance_now()-phase_started);
+      if(failed_testing==SIZE_MAX)
+        dw_error(diagnostic,model,"memory","unable to allocate deterministic assembly status");
+      else
+      {
+        snprintf(value,sizeof(value),"volume cells %zu,%zu",
+            failed_testing+1,failed_source+1);
+        dw_error(diagnostic,model,value,"volume-volume interaction failed");
+      }
+      goto failure;
+    }
+    performance_add("dielectric_volume_assembly",performance_now()-phase_started);
+  }
 
   /* Wire rows: point-tested field of each constant cuboid current. */
   {
@@ -1165,6 +1428,8 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   free(parea); free(pz); free(py); free(px);
   free(radius); free(length); free(z); free(y); free(x); free(volume_current);
   free(volume_size); free(volume_chi);
+  dw_free_coupling(wire_to_volume,conductor_unknowns*nv,wire_to_volume_mapped);
+  free(conductor_sources);
   free(wire_background_basis);
   free(conductor_current); free(unit); free(conductor_matrix);
   dielectric_fft_free(accelerated);
@@ -1179,6 +1444,8 @@ failure:
   free(parea); free(pz); free(py); free(px);
   free(radius); free(length); free(z); free(y); free(x); free(volume_current);
   free(volume_size); free(volume_chi);
+  dw_free_coupling(wire_to_volume,conductor_unknowns*nv,wire_to_volume_mapped);
+  free(conductor_sources);
   free(wire_background_basis);
   free(conductor_current); free(unit); free(conductor_matrix);
   dielectric_fft_free(accelerated);

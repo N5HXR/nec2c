@@ -371,6 +371,19 @@ typedef struct
   int waited;
 } dielectric_worker_slot;
 
+static int worker_memory_add(size_t *bytes,size_t left,size_t right,
+                             size_t element_bytes)
+{
+  size_t values,addition;
+  if(left && right>SIZE_MAX/left) return 0;
+  values=left*right;
+  if(values && element_bytes>SIZE_MAX/values) return 0;
+  addition=values*element_bytes;
+  if(*bytes>SIZE_MAX-addition) return 0;
+  *bytes+=addition;
+  return 1;
+}
+
 static int run_dielectric_frequency_workers(
     const dielectric_worker_context *context, int frequency_mode,
     int frequency_count, double first_mhz, double step, FILE *stream,
@@ -384,6 +397,25 @@ static int run_dielectric_frequency_workers(
   int failed = 0;
   if(!numerical_fork_safe) return -1;
   if(worker_bytes <= SIZE_MAX / 2) worker_bytes *= 2;
+  else worker_bytes=SIZE_MAX;
+  if(context->coupled && worker_bytes!=SIZE_MAX)
+  {
+    size_t nw=(size_t)data.n,np=(size_t)data.m,conductors,source_stride;
+    if(np>(SIZE_MAX-nw)/2 || nw>SIZE_MAX-np || nw+np>SIZE_MAX/3 ||
+       context->mesh->cell_count>SIZE_MAX/3)
+      worker_bytes=SIZE_MAX;
+    else
+    {
+      conductors=nw+2*np;
+      source_stride=3*(nw+np);
+      if(!worker_memory_add(&worker_bytes,conductors,source_stride,
+             sizeof(complex double)) ||
+         !worker_memory_add(&worker_bytes,conductors,3*context->mesh->cell_count,
+             sizeof(complex double)) ||
+         !worker_memory_add(&worker_bytes,conductors,conductors,
+             sizeof(complex double))) worker_bytes=SIZE_MAX;
+    }
+  }
   plan = plan_concurrency((size_t)frequency_count, worker_bytes,
       context->automatic_thread_limit);
   if(plan.jobs > (size_t)frequency_count) plan.jobs = (size_t)frequency_count;
@@ -415,7 +447,9 @@ static int run_dielectric_frequency_workers(
         double started;
         worker_process_enable();
         memset(&status, 0, sizeof(status));
-        if(!concurrency_apply_threads(plan.threads)) _exit(125);
+        if(context->coupled)
+          dielectric_coupling_configure(plan.threads,numerical_fork_safe);
+        else if(!concurrency_apply_threads(plan.threads)) _exit(125);
         if(!result_json_worker_begin(base_execution + next)) _exit(125);
         result_json_execution_begin(requested_frequency(frequency_mode,
             first_mhz, step, (int)next),
@@ -598,8 +632,7 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
   worker.model = model; worker.mesh = mesh; worker.rkh = rkh;
   worker.extended_kernel = extended_kernel; worker.iterative = iterative;
   worker.wave = wave; worker.pattern = pattern; worker.coupled = 1;
-  worker.automatic_thread_limit =
-      dielectric_automatic_thread_limit(mesh, iterative);
+  worker.automatic_thread_limit = 16;
 #ifndef _WIN32
   if(frequency_count > 1)
   {
@@ -612,10 +645,10 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
       worker.automatic_thread_limit);
   performance_concurrency(1, plan.threads, plan.allowed_cpus,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
-  if(!concurrency_apply_threads(plan.threads)) return 0;
   for(index = 0; index < frequency_count; ++index)
   {
     double phase_started;
+    dielectric_coupling_configure(plan.threads,numerical_fork_safe);
     result_json_execution_begin(frequency,
         wave ? "plane-wave" : "driven-voltage", wave);
     phase_started = performance_now();
@@ -626,6 +659,7 @@ static int run_dielectric_wire_frequencies(const dielectric_model *model,
       result_json_execution_end(0);
       return 0;
     }
+    numerical_fork_safe = 0;
     performance_add("dielectric_solve", performance_now() - phase_started);
     if(!result_json_execution_end(1))
     {
