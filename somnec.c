@@ -19,6 +19,8 @@
 
 #include "nec2c.h"
 #include "shared.h"
+#include "performance.h"
+#include <string.h>
 
 /* common /evlcom/ */
 static int jh;
@@ -33,6 +35,8 @@ static complex double a, b;
 /* This is the "main" of somnec */
 void somnec( double epr, double sig, double fmhz )
 {
+  static int cached = 0;
+  static complex double cached_epscf;
   int k, nth, ith, irs, ir, nr;
   double tim, wlam, tst, dr, dth=0.0, r, rk, thet, tfac1, tfac2;
   complex double erv, ezv, erh, eph, cl1, cl2, con;
@@ -40,10 +44,23 @@ void somnec( double epr, double sig, double fmhz )
   if(sig >= 0.)
   {
 	wlam=CVEL/fmhz;
-	ggrid.epscf=cmplx(epr,-sig*wlam*59.96);
+	con=cmplx(epr,-sig*wlam*59.96);
   }
   else
-	ggrid.epscf=cmplx(epr,sig);
+	con=cmplx(epr,sig);
+
+  /* The interpolation grid is wavelength-normalized and is therefore an
+     exact function of the complex relative permittivity. Repeated output
+     requests at the same ground state can reuse it without changing any
+     downstream arithmetic. */
+  if(cached && memcmp(&con,&cached_epscf,sizeof(con)) == 0)
+  {
+	ggrid.epscf=con;
+	performance_add("ground_table_cache_hit",0.0);
+	return;
+  }
+  performance_add("ground_table_cache_miss",0.0);
+  ggrid.epscf=con;
 
   secnds(&tst);
   ck2=TP;
@@ -165,6 +182,9 @@ void somnec( double epr, double sig, double fmhz )
 	ggrid.ar1[0+ith*11+220]=erh;
 	ggrid.ar1[0+ith*11+330]=eph;
   }
+
+  cached_epscf=ggrid.epscf;
+  cached=1;
 
   secnds(&tim);
   tim -= tst;

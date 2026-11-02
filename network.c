@@ -25,6 +25,40 @@
 
 #include "nec2c.h"
 #include "shared.h"
+#include "performance.h"
+#include <stdint.h>
+
+/*-------------------------------------------------------------------*/
+
+typedef struct
+{
+  int *ipnt, *nteqa, *ntsca;
+  complex double *vsrc, *rhs, *cmn, *rhnt, *rhnx;
+  int nteq, ntsc, ndimn, nonet, nsant, neqt;
+  int valid;
+} network_prepared_cache;
+
+static network_prepared_cache prepared_network;
+static int prepared_network_cleanup_registered;
+
+static void reset_prepared_network( void )
+{
+  free_ptr( (void *)&prepared_network.ipnt );
+  free_ptr( (void *)&prepared_network.nteqa );
+  free_ptr( (void *)&prepared_network.ntsca );
+  free_ptr( (void *)&prepared_network.vsrc );
+  free_ptr( (void *)&prepared_network.rhs );
+  free_ptr( (void *)&prepared_network.cmn );
+  free_ptr( (void *)&prepared_network.rhnt );
+  free_ptr( (void *)&prepared_network.rhnx );
+  prepared_network.nteq=0;
+  prepared_network.ntsc=0;
+  prepared_network.ndimn=0;
+  prepared_network.nonet=0;
+  prepared_network.nsant=0;
+  prepared_network.neqt=0;
+  prepared_network.valid=0;
+}
 
 /*-------------------------------------------------------------------*/
 
@@ -33,54 +67,82 @@
 /* present. */
 void netwk( complex double *cm, int *ip, complex double *einc )
 {
-  int *ipnt = NULL, *nteqa = NULL, *ntsca = NULL;
+  int *ipnt, *nteqa, *ntsca;
   int nteq=0, ntsc=0, irow2=0, j, ndimn;
   int neqt, irow1=0, i, isc1=0;
   size_t mreq;
   double pwr;
-  complex double *vsrc = NULL, *rhs = NULL, *cmn = NULL;
-  complex double *rhnt = NULL, *rhnx = NULL, ymit, vlt, cux=CPLX_00;
+  complex double *vsrc, *rhs, *cmn;
+  complex double *rhnt, *rhnx, ymit, vlt, cux=CPLX_00;
 
   netcx.pin=0.;
   netcx.pnls=0.;
   neqt= netcx.neq+ netcx.neq2;
   ndimn = j = (2*netcx.nonet + vsorc.nsant);
 
-  /* Allocate network buffers */
-  if( netcx.nonet != 0 )
+  if( ! prepared_network_cleanup_registered )
   {
-	mreq = (size_t)data.np3m;
-	mreq *= sizeof(complex double);
-	mem_alloc( (void *)&rhs, mreq );
-
-	mreq = (size_t)j;
-	mreq *= sizeof(complex double);
-	mem_alloc( (void *)&rhnt, mreq );
-	mem_alloc( (void *)&rhnx, mreq );
-	mreq *= (size_t)j;
-	mem_alloc( (void *)&cmn, mreq );
-
-	mreq = (size_t)j;
-	mreq *= sizeof(int);
-	mem_alloc( (void *)&ntsca, mreq );
-	mem_alloc( (void *)&nteqa, mreq );
-	mem_alloc( (void *)&ipnt, mreq );
-
-	mreq = (size_t)vsorc.nsant;
-	mreq *= sizeof(complex double);
-	mem_alloc( (void *)&vsrc, mreq );
+	atexit( reset_prepared_network );
+	prepared_network_cleanup_registered=1;
   }
-  else
-	if( netcx.masym != 0)
-	{
-	  mreq = (size_t)j;
-	  mreq *= sizeof(int);
-	  mem_alloc( (void *)&ipnt, mreq );
-	}
 
-  if( netcx.ntsol == 0)
+  if( (netcx.ntsol == 0) || ! prepared_network.valid ||
+      (prepared_network.nonet != netcx.nonet) ||
+      (prepared_network.nsant != vsorc.nsant) ||
+      (prepared_network.neqt != neqt) )
   {
 	int nseg1;
+	double prepare_started=performance_now();
+	if(netcx.nonet != 0) performance_add("network_cache_miss",0.0);
+
+	reset_prepared_network();
+	prepared_network.ndimn=ndimn;
+	prepared_network.nonet=netcx.nonet;
+	prepared_network.nsant=vsorc.nsant;
+	prepared_network.neqt=neqt;
+
+	/* Allocate buffers that remain valid for this matrix factorization. */
+	if( netcx.nonet != 0 )
+	{
+	  mreq = (size_t)data.np3m;
+	  mreq *= sizeof(complex double);
+	  mem_alloc( (void *)&prepared_network.rhs, mreq );
+
+	  mreq = (size_t)ndimn;
+	  mreq *= sizeof(complex double);
+	  mem_alloc( (void *)&prepared_network.rhnt, mreq );
+	  mem_alloc( (void *)&prepared_network.rhnx, mreq );
+	  mreq *= (size_t)ndimn;
+	  mem_alloc( (void *)&prepared_network.cmn, mreq );
+
+	  mreq = (size_t)ndimn;
+	  mreq *= sizeof(int);
+	  mem_alloc( (void *)&prepared_network.ntsca, mreq );
+	  mem_alloc( (void *)&prepared_network.nteqa, mreq );
+	  mem_alloc( (void *)&prepared_network.ipnt, mreq );
+
+	  if( vsorc.nsant != 0 )
+	  {
+		mreq = (size_t)vsorc.nsant;
+		mreq *= sizeof(complex double);
+		mem_alloc( (void *)&prepared_network.vsrc, mreq );
+	  }
+	}
+	else if( (netcx.masym != 0) && (ndimn != 0) )
+	{
+	  mreq = (size_t)ndimn;
+	  mreq *= sizeof(int);
+	  mem_alloc( (void *)&prepared_network.ipnt, mreq );
+	}
+
+	ipnt=prepared_network.ipnt;
+	nteqa=prepared_network.nteqa;
+	ntsca=prepared_network.ntsca;
+	vsrc=prepared_network.vsrc;
+	rhs=prepared_network.rhs;
+	cmn=prepared_network.cmn;
+	rhnt=prepared_network.rhnt;
+	rhnx=prepared_network.rhnx;
 	/* compute relative matrix asymmetry */
 	if( netcx.masym != 0)
 	{
@@ -407,30 +469,66 @@ void netwk( complex double *cm, int *ip, complex double *einc )
 
 	  /* add interaction matrix admittance */
 	  /* elements to network equation matrix */
-	  for( i = 0; i < nteq; i++ )
+	  if( nteq != 0 )
 	  {
-		for( j = 0; j < neqt; j++ )
-		  rhs[j] = CPLX_00;
-
-		irow1= nteqa[i]-1;
-		rhs[irow1]=CPLX_10;
-		solves( cm, ip, rhs, netcx.neq, 1, data.np, data.n, data.mp, data.m);
-		cabc( rhs);
-
-		for( j = 0; j < nteq; j++ )
+		complex double *batched_rhs=NULL;
+		double batch_started=performance_now();
+		if((size_t)netcx.neq>SIZE_MAX/(size_t)nteq ||
+		   (size_t)netcx.neq*(size_t)nteq>SIZE_MAX/sizeof(*batched_rhs))
 		{
-		  irow1= nteqa[j]-1;
-		  cmn[i+j*ndimn] += rhs[irow1];
+		  fprintf(output_fp,"\n  NETWORK RIGHT-HAND-SIDE BATCH SIZE OVERFLOW");
+		  stop(-1);
 		}
-
-	  } /* for( i = 0; i < nteq; i++ ) */
+		mreq=(size_t)netcx.neq*(size_t)nteq*sizeof(*batched_rhs);
+		mem_alloc((void *)&batched_rhs,mreq);
+		memset(batched_rhs,0,mreq);
+		for(i=0;i<nteq;++i)
+		  batched_rhs[(size_t)i*(size_t)netcx.neq+(size_t)(nteqa[i]-1)]=CPLX_10;
+		solves(cm,ip,batched_rhs,netcx.neq,nteq,
+		       data.np,data.n,data.mp,data.m);
+		for(i=0;i<nteq;++i)
+		{
+		  memcpy(rhs,batched_rhs+(size_t)i*(size_t)netcx.neq,
+		         (size_t)netcx.neq*sizeof(*rhs));
+		  cabc(rhs);
+		  for(j=0;j<nteq;++j)
+		  {
+			irow1=nteqa[j]-1;
+			cmn[i+j*ndimn]+=rhs[irow1];
+		  }
+		}
+		free_ptr((void *)&batched_rhs);
+		performance_add("network_rhs_batch",performance_now()-batch_started);
+	  }
 
 	  /* factor network equation matrix */
 	  factr( nteq, cmn, ipnt, ndimn);
 
 	} /* if( netcx.nonet != 0) */
 
+	prepared_network.nteq=nteq;
+	prepared_network.ntsc=ntsc;
+	prepared_network.valid=1;
+	if(netcx.nonet != 0)
+	  performance_add("network_prepare",performance_now()-prepare_started);
+
   } /* if( netcx.ntsol != 0) */
+  else
+  {
+	if(netcx.nonet != 0) performance_add("network_cache_hit",0.0);
+	ndimn=prepared_network.ndimn;
+	nteq=prepared_network.nteq;
+	ntsc=prepared_network.ntsc;
+  }
+
+  ipnt=prepared_network.ipnt;
+  nteqa=prepared_network.nteqa;
+  ntsca=prepared_network.ntsca;
+  vsrc=prepared_network.vsrc;
+  rhs=prepared_network.rhs;
+  cmn=prepared_network.cmn;
+  rhnt=prepared_network.rhnt;
+  rhnx=prepared_network.rhnx;
 
   if( netcx.nonet != 0)
   {
@@ -528,10 +626,7 @@ void netwk( complex double *cm, int *ip, complex double *einc )
   }
 
   if( (vsorc.nsant+vsorc.nvqd) == 0)
-  {
-	free_ptr( (void *)&ipnt );
 	return;
-  }
 
   fprintf( output_fp, "\n\n\n"
 	  "                        "
@@ -615,18 +710,7 @@ void netwk( complex double *cm, int *ip, complex double *einc )
 
 	} /* for( i = 0; i < vsorc.nvqd; i++ ) */
 
-  /* Free network buffers */
-  free_ptr( (void *)&ipnt );
-  free_ptr( (void *)&nteqa );
-  free_ptr( (void *)&ntsca );
-  free_ptr( (void *)&vsrc );
-  free_ptr( (void *)&rhs );
-  free_ptr( (void *)&cmn );
-  free_ptr( (void *)&rhnt );
-  free_ptr( (void *)&rhnx );
-
   return;
 }
 
 /*-----------------------------------------------------------------------*/
-

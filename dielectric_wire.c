@@ -580,6 +580,112 @@ int dielectric_print_near_fields(const dielectric_mesh_result *mesh,
   result_json_near_begin((size_t)result_json_current_request(),
       fpat.nfeh ? "H" : "E", result_json_current_excitation_kind(),
       fpat.nfeh ? "A/m" : "V/m");
+#ifdef _OPENMP
+  /* The volume evaluator is reentrant, but the legacy conductor near-field
+     routines below use shared scratch storage.  Compute only volume-only
+     grids in parallel, then retain the legacy output and JSON order. */
+  if(!conductor)
+  {
+    size_t nx=(size_t)fpat.nrx,ny=(size_t)fpat.nry,nz=(size_t)fpat.nrz;
+    size_t count=0;
+    double (*points)[3]=NULL;
+    complex double (*fields)[3]=NULL;
+    unsigned char *valid=NULL;
+    if(nx<=SIZE_MAX/ny && nx*ny<=SIZE_MAX/nz)
+    {
+      count=nx*ny*nz;
+      if(count>=64 && count<=(size_t)PTRDIFF_MAX &&
+         count<=SIZE_MAX/sizeof(*points) &&
+         count<=SIZE_MAX/sizeof(*fields))
+      {
+        points=malloc(count*sizeof(*points));
+        fields=malloc(count*sizeof(*fields));
+        valid=malloc(count*sizeof(*valid));
+      }
+    }
+    if(points && fields && valid)
+    {
+      ptrdiff_t sample;
+#pragma omp parallel for schedule(static)
+      for(sample=0;sample<(ptrdiff_t)count;++sample)
+      {
+        size_t index=(size_t)sample;
+        size_t sample_ix=index%nx;
+        size_t sample_iy=(index/nx)%ny;
+        size_t sample_iz=index/(nx*ny);
+        double *point=points[index];
+        complex double *field=fields[index];
+        size_t cell;
+        int p,q;
+        int ok=1;
+        point[0]=fpat.xnr+sample_ix*fpat.dxnr;
+        point[1]=fpat.ynr+sample_iy*fpat.dynr;
+        point[2]=fpat.znr+sample_iz*fpat.dznr;
+        field[0]=field[1]=field[2]=0.0;
+        if(fpat.near != 0)
+        {
+          double r=point[0],phi=point[1]*DW_PI/180.0;
+          double theta=point[2]*DW_PI/180.0;
+          point[0]=r*sin(theta)*cos(phi);
+          point[1]=r*sin(theta)*sin(phi);
+          point[2]=r*cos(theta);
+        }
+        if(gnd.ksymp != 1 && (!isfinite(point[2]) || point[2] < 0.0))
+          ok=0;
+        for(cell=0;ok && cell<mesh->cell_count;++cell)
+        {
+          double gap2=0.0,longest=0.0;
+          complex double block[3][3];
+          for(p=0;p<3;++p)
+          {
+            double gap=fmax(0.0,fabs(point[p]-mesh->cells[cell].center[p])-
+                                  0.5*mesh->cells[cell].size[p]);
+            gap2+=gap*gap;
+            longest=fmax(longest,mesh->cells[cell].size[p]);
+          }
+          if(!isfinite(gap2) || gap2<longest*longest)
+          { ok=0; break; }
+          if(fpat.nfeh)
+          {
+            if(!dw_point_cuboid_h(point,&mesh->cells[cell],k0,block))
+            { ok=0; break; }
+          }
+          else
+          {
+            if(!dw_point_cuboid_n(point,&mesh->cells[cell],k0,block))
+            { ok=0; break; }
+            for(p=0;p<3;++p)
+              for(q=0;q<3;++q)
+                block[p][q]/=I*omega*DW_EPSILON_0;
+          }
+          for(p=0;p<3;++p)
+            for(q=0;q<3;++q)
+              field[p]+=block[p][q]*current[3*cell+q];
+        }
+        valid[index]=(unsigned char)ok;
+      }
+      for(sample=0;sample<(ptrdiff_t)count;++sample)
+      {
+        size_t index=(size_t)sample;
+        int p;
+        if(!valid[index])
+        {
+          free(valid);free(fields);free(points);
+          return 0;
+        }
+        fprintf(stream,"\n %19.12E %19.12E %19.12E",
+                points[index][0],points[index][1],points[index][2]);
+        for(p=0;p<3;++p)
+          fprintf(stream," %19.12E %19.12E",
+                  creal(fields[index][p]),cimag(fields[index][p]));
+        result_json_near_sample(points[index],fields[index],1);
+      }
+      free(valid);free(fields);free(points);
+      return 1;
+    }
+    free(valid);free(fields);free(points);
+  }
+#endif
   for(iz = 0; iz < fpat.nrz; ++iz)
     for(iy = 0; iy < fpat.nry; ++iy)
       for(ix = 0; ix < fpat.nrx; ++ix)
@@ -687,16 +793,48 @@ static double dw_radiated_power(const dielectric_mesh_result *mesh,
                                  const complex double *current, double k0,
                                  size_t count)
 {
+  double phase_started=performance_now();
+  double *samples=NULL;
+  size_t sources=(size_t)data.n+(size_t)data.m+mesh->cell_count;
+  int parallel_work=sources>0 && count>=65536/sources;
+  (void)parallel_work;
   size_t i;
   double sum = 0.0;
-  for(i = 0; i < count; ++i)
+  if(count<=SIZE_MAX/sizeof(*samples) && count<=(size_t)PTRDIFF_MAX &&
+     !(gnd.ksymp!=1 && gnd.iperf==2 && gnd.zrati==1.0))
+    samples=malloc(count*sizeof(*samples));
+  if(samples)
   {
-    double z = 1.0-(gnd.ksymp == 1 ? 2.0:1.0)*((double)i+0.5)/(double)count;
-    double phi = DW_PI*(3.0-sqrt(5.0))*(double)i;
-    complex double et, ep;
-    dw_far_field(mesh, current, k0, acos(z), phi, &et, &ep);
-    sum += creal(et*conj(et)+ep*conj(ep));
+    double compute_started=performance_now();
+    ptrdiff_t sample;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(parallel_work)
+#endif
+    for(sample=0;sample<(ptrdiff_t)count;++sample)
+    {
+      size_t index=(size_t)sample;
+      double z=1.0-(gnd.ksymp==1?2.0:1.0)*((double)index+0.5)/(double)count;
+      double phi=DW_PI*(3.0-sqrt(5.0))*(double)index;
+      complex double et,ep;
+      dw_far_field(mesh,current,k0,acos(z),phi,&et,&ep);
+      samples[index]=creal(et*conj(et)+ep*conj(ep));
+    }
+    performance_add("dielectric_power_compute",performance_now()-compute_started);
+    for(i=0;i<count;++i) sum+=samples[i];
+    free(samples);
   }
+  else
+  {
+    for(i = 0; i < count; ++i)
+    {
+      double z = 1.0-(gnd.ksymp == 1 ? 2.0:1.0)*((double)i+0.5)/(double)count;
+      double phi = DW_PI*(3.0-sqrt(5.0))*(double)i;
+      complex double et, ep;
+      dw_far_field(mesh, current, k0, acos(z), phi, &et, &ep);
+      sum += creal(et*conj(et)+ep*conj(ep));
+    }
+  }
+  performance_add("dielectric_power_quadrature",performance_now()-phase_started);
   return sum*((gnd.ksymp == 1 ? 4.0:2.0)*DW_PI/(double)count)/(2.0*ETA);
 }
 
@@ -1404,7 +1542,46 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
   } /* dielectric absorption in each power balance */
   if(pattern != NULL && pattern->enabled)
   {
+    typedef struct { complex double et,ep; } dw_pattern_sample;
+    dw_pattern_sample *samples=NULL;
+    size_t sample_count=0;
+    size_t sources=(size_t)data.n+(size_t)data.m+mesh->cell_count;
+    int parallel_work=0;
+    (void)parallel_work;
     size_t it, ip;
+    double phase_started=performance_now();
+    if(pattern->theta_count &&
+       pattern->phi_count<=SIZE_MAX/pattern->theta_count)
+    {
+      sample_count=pattern->theta_count*pattern->phi_count;
+      parallel_work=sources>0 && sample_count>=65536/sources;
+      if(sample_count<=SIZE_MAX/sizeof(*samples) &&
+         sample_count<=(size_t)PTRDIFF_MAX &&
+         !(gnd.ksymp!=1 && gnd.iperf==2 && gnd.zrati==1.0))
+        samples=malloc(sample_count*sizeof(*samples));
+    }
+    if(samples)
+    {
+      double compute_started=performance_now();
+      ptrdiff_t sample;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(parallel_work)
+#endif
+      for(sample=0;sample<(ptrdiff_t)sample_count;++sample)
+      {
+        size_t index=(size_t)sample;
+        size_t sample_ip=index/pattern->theta_count;
+        size_t sample_it=index%pattern->theta_count;
+        double td=pattern->theta_start_degrees+
+            sample_it*pattern->theta_step_degrees;
+        double pd=pattern->phi_start_degrees+
+            sample_ip*pattern->phi_step_degrees;
+        dw_far_field(mesh,volume_current,k0,td*DW_PI/180.0,pd*DW_PI/180.0,
+                     &samples[index].et,&samples[index].ep);
+      }
+      performance_add("dielectric_far_field_compute",
+          performance_now()-compute_started);
+    }
     fprintf(stream, "\n\n  COUPLED SCATTERED FAR FIELD (R TIMES E, V)"
                     "\n  THETA      PHI          ETHETA(RE,IM)              EPHI(RE,IM)");
     result_json_far_begin((size_t)result_json_current_request(),
@@ -1415,12 +1592,20 @@ int dielectric_solve_conductor_coupled(const dielectric_model *model,
         double td = pattern->theta_start_degrees+it*pattern->theta_step_degrees;
         double pd = pattern->phi_start_degrees+ip*pattern->phi_step_degrees;
         complex double et, ep;
-        dw_far_field(mesh, volume_current, k0, td*DW_PI/180.0, pd*DW_PI/180.0,
-                     &et, &ep);
+        if(samples)
+        {
+          size_t index=ip*pattern->theta_count+it;
+          et=samples[index].et;ep=samples[index].ep;
+        }
+        else
+          dw_far_field(mesh, volume_current, k0, td*DW_PI/180.0, pd*DW_PI/180.0,
+                       &et, &ep);
         fprintf(stream, "\n %8.3f %8.3f %19.12E %19.12E %19.12E %19.12E",
                 td, pd, creal(et), cimag(et), creal(ep), cimag(ep));
         result_json_far_sample(td,pd,et,ep);
       }
+    free(samples);
+    performance_add("dielectric_far_field",performance_now()-phase_started);
   }
 
   dw_restore_geometry(x, y, z, length, radius);

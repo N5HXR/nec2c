@@ -53,6 +53,7 @@ static int copy_stream(FILE *destination, FILE *source);
 static int numerical_fork_safe = 1;
 static size_t classic_fill_processes = 1;
 static size_t classic_factor_threads = 1;
+static size_t classic_field_threads = 1;
 
 static concurrency_plan plan_concurrency(size_t frequency_count,
     size_t worker_bytes, size_t automatic_thread_limit)
@@ -77,6 +78,9 @@ static size_t doubled_matrix_bytes(size_t bytes)
 static void configure_classic_concurrency(concurrency_plan *plan,
     int threaded_backend, size_t reduced_order)
 {
+  classic_field_threads = plan->threads ? plan->threads : 1;
+  if(plan->threads_automatic && classic_field_threads > 4)
+    classic_field_threads = 4;
   classic_fill_processes = plan->threads ? plan->threads : 1;
   if(plan->threads_automatic && reduced_order < 256)
     classic_fill_processes = 1;
@@ -88,6 +92,8 @@ static void configure_classic_concurrency(concurrency_plan *plan,
     classic_factor_threads = 1;
   plan->threads = classic_fill_processes > classic_factor_threads ?
       classic_fill_processes : classic_factor_threads;
+  if(classic_field_threads > plan->threads)
+    plan->threads = classic_field_threads;
 }
 
 static size_t dielectric_automatic_thread_limit(
@@ -2949,6 +2955,7 @@ int main( int argc, char **argv )
 			  {
 				fpat.pinr= netcx.pin;
 				fpat.pnlr= netcx.pnls;
+				concurrency_apply_threads(classic_field_threads);
 				tmp1 = performance_now();
 				rdpat();
 				performance_add("far_field", performance_now() - tmp1);

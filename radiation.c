@@ -26,6 +26,8 @@
 #include "nec2c.h"
 #include "shared.h"
 #include "result_json.h"
+#include "performance.h"
+#include <stdint.h>
 
 /*-----------------------------------------------------------------------*/
 
@@ -557,6 +559,10 @@ void rdpat( void )
   double dfaz, dfaz2, cdfaz, tstor1=0., tstor2, stilta, gnmj;
   double gnmn, gnv, gnh, gtot, tmp3, tmp4, da, tmp5, tmp6;
   complex double  eth, eph, erd;
+  complex double *parallel_eth=NULL, *parallel_eph=NULL;
+  size_t field_count=0;
+  int parallel_field_work=0;
+  (void)parallel_field_work;
 
   if(gnd.ifar == 0)
     result_json_far_begin((size_t)result_json_current_request(),
@@ -695,6 +701,40 @@ void rdpat( void )
 	  gcop= gcon;
 	}
 
+  /* Standard far-field samples are independent and ffld only reads the
+     frozen geometry/current state. Compute them in parallel, then retain the
+     historical serial reduction and output order below. */
+  if(gnd.ifar==0 && fpat.nth>0 && fpat.nph>0 &&
+     (size_t)fpat.nth<=SIZE_MAX/(size_t)fpat.nph)
+  {
+    ptrdiff_t point;
+    field_count=(size_t)fpat.nth*(size_t)fpat.nph;
+    parallel_field_work=(size_t)(data.n+data.m)>0 &&
+        field_count>=65536/(size_t)(data.n+data.m);
+    parallel_eth=calloc(field_count,sizeof(*parallel_eth));
+    parallel_eph=calloc(field_count,sizeof(*parallel_eph));
+    if(!parallel_eth || !parallel_eph || field_count>(size_t)PTRDIFF_MAX)
+    {
+      free(parallel_eth);free(parallel_eph);
+      parallel_eth=parallel_eph=NULL;field_count=0;
+    }
+    tmp1=performance_now();
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(parallel_field_work)
+#endif
+    for(point=0;point<(ptrdiff_t)field_count;++point)
+    {
+      size_t kth0=(size_t)point%(size_t)fpat.nth;
+      double point_theta=fpat.thets+(double)kth0*fpat.dth;
+      double point_phi=fpat.phis+
+          (double)((size_t)point/(size_t)fpat.nth)*fpat.dph;
+      if((gnd.ksymp==2) && (point_theta>90.01)) continue;
+      ffld(point_theta*TA,point_phi*TA,
+          &parallel_eth[point],&parallel_eph[point]);
+    }
+    performance_add("far_field_compute",performance_now()-tmp1);
+  }
+
   i=0;
   gmax=-1.e+10;
   pint=0.;
@@ -716,7 +756,14 @@ void rdpat( void )
 
 	  tha= thet* TA;
 	  if( gnd.ifar != 1)
-		ffld( tha, pha, &eth, &eph);
+        {
+          size_t point=(size_t)(kph-1)*(size_t)fpat.nth+(size_t)(kth-1);
+          if(parallel_eth && point<field_count)
+          {
+            eth=parallel_eth[point];eph=parallel_eph[point];
+          }
+          else ffld( tha, pha, &eth, &eph);
+        }
 	  else
 	  {
 		gfld( fpat.rfld/data.wlam, pha, thet/data.wlam,
@@ -1001,6 +1048,7 @@ void rdpat( void )
 			  " %9.2f %9.2f %9.2f   %9.2f %9.2f %9.2f   ",
 			  tmp1, tmp2, tstor1, tmp3, tmp4, tstor2 );
 		  free_ptr( (void *)&gain );
+          free(parallel_eth);free(parallel_eph);
 		  return;
 		}
 
@@ -1008,6 +1056,7 @@ void rdpat( void )
 			" %9.2f %9.2f %9.2f   ",
 			tmp1, tmp2, tstor1 );
 		free_ptr( (void *)&gain );
+        free(parallel_eth);free(parallel_eph);
 		return;
 
 	  } /* if( ((i+1) == itmp1) && (itmp2 != 0) ) */
@@ -1023,6 +1072,7 @@ void rdpat( void )
   }
 
   free_ptr( (void *)&gain );
+  free(parallel_eth);free(parallel_eph);
 
   return;
 }

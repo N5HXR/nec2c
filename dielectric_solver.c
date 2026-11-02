@@ -160,21 +160,59 @@ void dielectric_radiation_amplitude(const dielectric_mesh_result *mesh,
 static double scattered_power(const dielectric_mesh_result *mesh,
                               const complex double *current, double k0)
 {
+  double phase_started = performance_now();
   const size_t count = 974;
   const double golden = VIE_PI * (3.0 - sqrt(5.0));
   const double eta0 = sqrt(VIE_MU_0 / VIE_EPSILON_0);
+  double *samples = malloc(count * sizeof(*samples));
   double sum = 0.0;
+  int parallel_work=mesh->cell_count>0 &&
+      count>=65536/mesh->cell_count;
+  (void)parallel_work;
   size_t i;
-  for(i = 0; i < count; ++i)
+  if(samples != NULL)
   {
-    double z = 1.0 - (gnd.ksymp == 1 ? 2.0:1.0) * ((double)i + 0.5) / (double)count;
-    double radial = sqrt(fmax(0.0, 1.0 - z*z));
-    double azimuth = golden * (double)i;
-    double direction[3] = { radial*cos(azimuth), radial*sin(azimuth), z };
-    complex double a[3];
-    dielectric_radiation_amplitude(mesh, current, k0, direction, a);
-    sum += creal(a[0]*conj(a[0]) + a[1]*conj(a[1]) + a[2]*conj(a[2]));
+    double compute_started=performance_now();
+    ptrdiff_t sample;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(parallel_work)
+#endif
+    for(sample = 0; sample < (ptrdiff_t)count; ++sample)
+    {
+      size_t index = (size_t)sample;
+      double z = 1.0 - (gnd.ksymp == 1 ? 2.0:1.0) *
+                 ((double)index + 0.5) / (double)count;
+      double radial = sqrt(fmax(0.0, 1.0 - z*z));
+      double azimuth = golden * (double)index;
+      double direction[3] = { radial*cos(azimuth), radial*sin(azimuth), z };
+      complex double a[3];
+      dielectric_radiation_amplitude(mesh, current, k0, direction, a);
+      samples[index] = creal(a[0]*conj(a[0]) + a[1]*conj(a[1]) +
+                             a[2]*conj(a[2]));
+    }
+    performance_add("dielectric_power_compute",
+        performance_now()-compute_started);
+    for(i = 0; i < count; ++i)
+      sum += samples[i];
+    free(samples);
   }
+  else
+  {
+    for(i = 0; i < count; ++i)
+    {
+      double z = 1.0 - (gnd.ksymp == 1 ? 2.0:1.0) *
+                 ((double)i + 0.5) / (double)count;
+      double radial = sqrt(fmax(0.0, 1.0 - z*z));
+      double azimuth = golden * (double)i;
+      double direction[3] = { radial*cos(azimuth), radial*sin(azimuth), z };
+      complex double a[3];
+      dielectric_radiation_amplitude(mesh, current, k0, direction, a);
+      sum += creal(a[0]*conj(a[0]) + a[1]*conj(a[1]) +
+                   a[2]*conj(a[2]));
+    }
+  }
+  performance_add("dielectric_power_quadrature",
+      performance_now()-phase_started);
   return ((gnd.ksymp == 1 ? 4.0:2.0) * VIE_PI / (double)count) * sum / (2.0 * eta0);
 }
 
@@ -183,9 +221,59 @@ static void print_pattern(const dielectric_mesh_result *mesh,
                           const dielectric_pattern_request *request,
                           double incident_field_squared, FILE *stream)
 {
+  typedef struct
+  {
+    complex double theta;
+    complex double phi;
+  } pattern_sample;
+  pattern_sample *samples = NULL;
+  size_t sample_count = 0;
+  int parallel_work = 0;
+  (void)parallel_work;
   size_t ip, it;
+  double phase_started;
   if(request == NULL || !request->enabled)
     return;
+  phase_started = performance_now();
+  if(request->theta_count != 0 &&
+     request->phi_count <= SIZE_MAX / request->theta_count)
+  {
+    sample_count = request->phi_count * request->theta_count;
+    parallel_work=mesh->cell_count>0 &&
+        sample_count>=65536/mesh->cell_count;
+    if(sample_count <= (size_t)PTRDIFF_MAX &&
+       sample_count <= SIZE_MAX / sizeof(*samples))
+      samples = malloc(sample_count * sizeof(*samples));
+  }
+  if(samples != NULL)
+  {
+    double compute_started=performance_now();
+    ptrdiff_t sample;
+#ifdef _OPENMP
+#pragma omp parallel for schedule(static) if(parallel_work)
+#endif
+    for(sample = 0; sample < (ptrdiff_t)sample_count; ++sample)
+    {
+      size_t index = (size_t)sample;
+      size_t sample_ip = index / request->theta_count;
+      size_t sample_it = index % request->theta_count;
+      double td = request->theta_start_degrees +
+                  request->theta_step_degrees*(double)sample_it;
+      double pd = request->phi_start_degrees +
+                  request->phi_step_degrees*(double)sample_ip;
+      double t = td * VIE_PI / 180.0, p = pd * VIE_PI / 180.0;
+      double direction[3] = {sin(t)*cos(p), sin(t)*sin(p), cos(t)};
+      double etheta[3] = {cos(t)*cos(p), cos(t)*sin(p), -sin(t)};
+      double ephi[3] = {-sin(p), cos(p), 0.0};
+      complex double a[3];
+      dielectric_radiation_amplitude(mesh, current, k0, direction, a);
+      samples[index].theta = a[0]*etheta[0] + a[1]*etheta[1] +
+                             a[2]*etheta[2];
+      samples[index].phi = a[0]*ephi[0] + a[1]*ephi[1] + a[2]*ephi[2];
+    }
+    performance_add("dielectric_far_field_compute",
+        performance_now()-compute_started);
+  }
   result_json_far_begin((size_t)result_json_current_request(),
                         "plane-wave-scattered");
   fprintf(stream, "\n\n  DIELECTRIC SCATTERED FAR FIELD (R TIMES E, V)"
@@ -202,15 +290,26 @@ static void print_pattern(const dielectric_mesh_result *mesh,
       double ephi[3] = {-sin(p), cos(p), 0.0};
       complex double a[3], at, ap;
       double rcs;
-      dielectric_radiation_amplitude(mesh, current, k0, direction, a);
-      at = a[0]*etheta[0] + a[1]*etheta[1] + a[2]*etheta[2];
-      ap = a[0]*ephi[0] + a[1]*ephi[1] + a[2]*ephi[2];
+      if(samples != NULL)
+      {
+        size_t index = ip*request->theta_count + it;
+        at = samples[index].theta;
+        ap = samples[index].phi;
+      }
+      else
+      {
+        dielectric_radiation_amplitude(mesh, current, k0, direction, a);
+        at = a[0]*etheta[0] + a[1]*etheta[1] + a[2]*etheta[2];
+        ap = a[0]*ephi[0] + a[1]*ephi[1] + a[2]*ephi[2];
+      }
       rcs = 4.0 * VIE_PI * (creal(at*conj(at)) + creal(ap*conj(ap))) /
             incident_field_squared;
       fprintf(stream, "\n %8.3f %8.3f  %19.12E %19.12E  %19.12E %19.12E  %19.12E",
               td, pd, creal(at), cimag(at), creal(ap), cimag(ap), rcs);
       result_json_far_sample(td, pd, at, ap);
     }
+  free(samples);
+  performance_add("dielectric_far_field",performance_now()-phase_started);
 }
 
 int dielectric_solve_plane_wave(const dielectric_model *model,

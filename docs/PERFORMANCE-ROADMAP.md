@@ -158,6 +158,8 @@ goal.
 
 ### M8: reuse, batching, caching, and field outputs
 
+Status: implementation complete; awaiting user acceptance.
+
 Reuse factorizations and solved currents, batch right-hand sides, add exact-key
 in-process setup caches, and evaluate independent field points in parallel with
 deterministic serialized reductions and output.  A persistent cache requires a

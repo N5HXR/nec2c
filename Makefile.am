@@ -24,6 +24,7 @@ EXTRA_DIST = \
   docs/PERFORMANCE-M5-RESULTS.md \
   docs/PERFORMANCE-M6-RESULTS.md \
   docs/PERFORMANCE-M7-RESULTS.md \
+  docs/PERFORMANCE-M8-RESULTS.md \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -56,6 +57,12 @@ EXTRA_DIST = \
   tests/performance/m7-ground-27.diel \
   tests/performance/m7-pec-coupled-27.nec \
   tests/performance/m7-real-coupled-27.nec \
+  tests/performance/m8-field-101.nec \
+  tests/performance/m8-field-801.nec \
+  tests/performance/m8-volume-field-216.nec \
+  tests/performance/m8-ground-cache.nec \
+  tests/performance/m8-ground-cache-miss.nec \
+  tests/performance/m8-network-multi-angle.nec \
   tests/performance/m6-loaded-network-402.nec \
   tests/performance/m6-real-ground-201.nec \
   tests/performance/m6-symmetry-604.nec \
@@ -63,6 +70,8 @@ EXTRA_DIST = \
   tests/fft_parallel.py \
   tests/classic_fill_parallel.py \
   tests/coupling_parallel.py \
+  tests/field_parallel.py \
+  tests/network_cache.py \
   tests/dielectric_assembly_parallel.py \
   tests/fft_backend.py \
   tools/performance_benchmark.py \
@@ -72,6 +81,7 @@ EXTRA_DIST = \
   tools/m5_assembly_benchmark.py \
   tools/m6_fill_benchmark.py \
   tools/m7_coupling_benchmark.py \
+  tools/m8_field_benchmark.py \
   tools/prepare_nec_fixture.py \
   tools/cross_solver_compare.py \
   tools/timing_overhead.py \
@@ -262,7 +272,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
