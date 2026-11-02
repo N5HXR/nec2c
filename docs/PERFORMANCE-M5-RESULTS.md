@@ -1,6 +1,6 @@
 # Milestone 5: parallel dielectric assembly
 
-Status: implemented; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.
 
 ## Delivered behavior
 
@@ -31,19 +31,19 @@ Timing JSON exposes these phases:
 
 ## Performance
 
-The development host is an Intel Core i9-13900K with 32 logical CPUs.  Warm
-medians below use one warmup and three measured repetitions.  The 216-cell
+The acceptance host is an Intel Core i9-13900K with 32 logical CPUs.  Warm
+medians below use two warmups and seven measured repetitions.  The 216-cell
 volume fixture has 648 volume unknowns.  The coupled fixture has the same 648
 volume unknowns plus 11 wire and 8 patch unknowns.
 
 | Threads | Volume assembly | Speedup | Coupled row assembly | Speedup |
 |---:|---:|---:|---:|---:|
-| 1 | 18.021853 s | 1.00x | 0.089256 s | 1.00x |
-| 2 | 9.020507 s | 2.00x | 0.046094 s | 1.94x |
-| 4 | 4.509922 s | 4.00x | 0.032448 s | 2.75x |
-| 8 | 2.291416 s | 7.86x | 0.018345 s | 4.87x |
-| 16 | 1.512987 s | 11.91x | 0.008485 s | 10.52x |
-| 32 | 1.067452 s | 16.88x | 0.006313 s | 14.14x |
+| 1 | 17.950317 s | 1.00x | 0.087957 s | 1.00x |
+| 2 | 9.005230 s | 1.99x | 0.049451 s | 1.78x |
+| 4 | 4.502528 s | 3.99x | 0.035325 s | 2.49x |
+| 8 | 2.253306 s | 7.97x | 0.020866 s | 4.22x |
+| 16 | 1.484636 s | 12.09x | 0.008484 s | 10.37x |
+| 32 | 1.077175 s | 16.66x | 0.006351 s | 13.85x |
 
 The automatic ceiling is 16 rather than 32 because the extra logical-thread
 gain is smaller and leaves no CPU headroom.  Explicit `--threads 32` remains
@@ -77,7 +77,12 @@ installs, uninstalls, and passes `make distcheck`.
 
 ## User acceptance
 
-Rebuild from the feature branch, then run:
+The user returned a PASS on 2026-11-02.  The seven-repeat benchmark exceeded
+the 2x milestone target for both selected workloads, preserved identical
+normalized result hashes at every thread count, and wrote its complete raw
+record to `/tmp/m5-assembly.json` on the acceptance host.
+
+The accepted commands were:
 
 ```sh
 python3 tests/dielectric_assembly_parallel.py
