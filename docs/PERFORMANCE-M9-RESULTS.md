@@ -1,6 +1,6 @@
 # Performance Milestone 9 results
 
-Status: implementation complete on 2026-11-02; awaiting user acceptance.
+Status: accepted by the user on 2026-11-02.
 
 Milestone 9 turns the previously accepted performance work into a portable,
 measurable release candidate.  It does not merge the performance branch or
@@ -62,3 +62,18 @@ The complete reproducible command, required gates, and four manual scenarios
 are in `docs/PERFORMANCE-M9-ACCEPTANCE.md`.  The top-level
 `acceptance_ready` value in its generated JSON bundle must be true before the
 milestone can be accepted.
+
+The full user-run release bundle reported `acceptance_ready: true`, with all
+commands passing, complete evidence present, stable automatic and legacy
+results, and exact built-in single-worker physics hashes against M0.  A final
+CPU-pinned 15-run check after tuning the small-grid FFT crossover measured:
+
+| Case | Automatic median | Built-in single-worker median |
+| --- | ---: | ---: |
+| dielectric dense | 0.007283 s | 0.007287 s |
+| dielectric FFT | 0.007355 s | 0.007330 s |
+
+Both numerical results were stable.  The dense difference was effectively
+zero, and the FFT automatic path was approximately 0.34% slower, comfortably
+inside the 5% acceptance limit and normal measurement noise.  The user
+returned PASS after reviewing these results.

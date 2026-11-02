@@ -170,13 +170,12 @@ separate design review.
 
 ### M9: compiler, memory, and release candidate
 
-Status: implementation complete on 2026-11-02; awaiting user acceptance.  The
-release candidate uses portable `-O3` defaults without fast-math or
-architecture-specific instructions, removes avoidable solve scratch
-allocations, tunes automatic worker crossovers for small models, and includes
-a complete release runner covering the immutable M0 executable, legacy
-controls, current defaults, AEG/momwire witnesses, and the accepted M4B-M8
-scaling matrices.
+Status: accepted by the user on 2026-11-02.  The release candidate uses
+portable `-O3` defaults without fast-math or architecture-specific
+instructions, removes avoidable solve scratch allocations, tunes automatic
+worker and FFT crossovers for small models, and includes a complete release
+runner covering the immutable M0 executable, legacy controls, current
+defaults, AEG/momwire witnesses, and the accepted M4B-M8 scaling matrices.
 
 Evaluate conservative optimization and CPU dispatch without fast-math, remove
 avoidable copies and allocations, tune crossover thresholds and worker waiting,

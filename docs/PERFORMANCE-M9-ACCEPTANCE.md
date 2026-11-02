@@ -1,7 +1,6 @@
 # Performance Milestone 9 acceptance bundle
 
-Status: implementation and developer validation complete; awaiting user
-acceptance.
+Status: accepted by the user on 2026-11-02.
 
 This is the final gate for the `codex/performance` branch.  It measures the
 optimized defaults, the selectable built-in single-worker behavior, and an
