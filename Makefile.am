@@ -28,6 +28,20 @@ EXTRA_DIST = \
   docs/PERFORMANCE-M9-COMPILER.md \
   docs/PERFORMANCE-M9-RESULTS.md \
   docs/PERFORMANCE-M9-ACCEPTANCE.md \
+  docs/COATED-WIRE-PLAN.md \
+  docs/COATED-WIRE-M1-OPENEMS.md \
+  tests/coated-wire/README.md \
+  tests/coated-wire/m0-bare-dipole.nec \
+  tests/coated-wire/m0-baseline.json \
+  tests/coated-wire/m0_baseline.py \
+  tests/coated-wire/m1_harness.py \
+  tests/coated-wire/m1-openems-caps.json \
+  tests/coated-wire/m1-openems-caps-impedance.png \
+  tests/coated-wire/m1-openems-caps-convergence.png \
+  tests/coated-wire/m1-openems-caps-caps.png \
+  tests/coated-wire/m1-openems-audits.json \
+  tests/coated-wire/m1-openems-audits-impedance.png \
+  tests/coated-wire/m1-openems-audits-convergence.png \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -89,6 +103,8 @@ EXTRA_DIST = \
   tools/prepare_nec_fixture.py \
   tools/cross_solver_compare.py \
   tools/timing_overhead.py \
+  tools/coated_wire_openems.py \
+  tools/coated_wire_m1_analyze.py \
   examples/dielectric-r1/README.md \
   examples/dielectric-r1/run.py \
   examples/dielectric-r1/reference-summary.json \

@@ -30,3 +30,19 @@ To inspect a fresh result manually:
   -i tests/coated-wire/m0-bare-dipole.nec \
   -o /tmp/coated-wire-m0.out
 ```
+
+Run the dependency-free M1 harness checks with:
+
+```sh
+python3 tests/coated-wire/m1_harness.py
+```
+
+The full M1 simulations require the separately installed OpenEMS Python
+environment. The milestone report records exact commands and compact versioned
+results; the multi-gigabyte transient field dumps are deliberately not stored
+in this repository. See [the M1 OpenEMS qualification report](../../docs/COATED-WIRE-M1-OPENEMS.md)
+for the geometry convention, convergence criteria, and manual acceptance run.
+
+The `m1-openems-caps*` artifacts contain the endpoint and mesh-refinement
+results. The `m1-openems-audits*` artifacts contain the feed, gap, and transient
+decay checks. JSON is the machine-readable record; PNG files are review plots.

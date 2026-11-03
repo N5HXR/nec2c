@@ -1,6 +1,6 @@
 # Coated-wire project plan and M0 contract
 
-Status: M0 implementation complete; awaiting user acceptance.
+Status: M0 and M1 accepted; M2 in progress.
 
 Date: 2026-11-03  
 Branch: `codex/coated-wire`  
@@ -196,12 +196,31 @@ center excitation analogue and a two-arm finite-gap differential port where
 the solvers permit it.  Sweep radial/axial mesh, PML distance, domain size,
 time-step/end criteria, feed gap and port de-embedding.  Compare cylindrical
 and Cartesian OpenEMS meshes and explicitly audit the cylindrical-axis
-singularity.
+singularity.  The normative coated geometry has a solid, concentric dielectric
+annulus with flat ends flush with the conductor ends and feed-gap faces.  An
+endpoint sensitivity audit compares that convention with a flat dielectric
+overhang of one outer coating radius, a hemispherical dielectric termination,
+and bare conductor protruding beyond the dielectric.  These variants are
+reference geometries, not additional NEC card syntax.
+
+The flat variants must place their boundaries on mesh planes.  Because a
+cylindrical Yee grid still staircases a hemisphere in the `rho,z` meridian,
+qualify the hemispherical result with its own axial and radial shape-refinement
+pair rather than inferring its uncertainty from either flat geometry.
+
+Resolve the coating itself with at least four radial cells, analogous to the
+through-thickness requirement for an FDTD PCB substrate, and confirm the
+selected result with eight cells through the coating.  For later thick sleeves,
+cell placement should follow the expected radial gradient rather than relying
+only on a uniform whole-domain pitch.
 
 Metrics: successive-refinement change below 0.25% in resonance frequency,
 0.5 ohm in each feed-impedance component near resonance, and 0.05 dB in sampled
 far-field magnitude.  If those targets cannot be reached, report the achieved
-uncertainty and do not promote the reference.
+uncertainty and do not promote the reference.  Report resonance, impedance and
+pattern deltas caused by each endpoint treatment separately from numerical
+mesh uncertainty; retain flat/flush as the reduced model's convention unless
+the audit demonstrates that an endpoint correction is necessary.
 
 User acceptance: review convergence plots and run one supplied OpenEMS case.
 
@@ -271,10 +290,50 @@ User acceptance: approve the supported topology matrix and warning/error UX.
 Goal: quantify how far the reduced operator can extend into 6–12 mm solid
 housings while all coatings remain electrically thin.
 
+Research note for the point where the reduced radial-field operator ceases to
+meet its error budget: do not assume that `t/a = 1` is a sharp physical
+boundary.  Test whether increasing thickness makes axial dielectric field and
+radial field variation material, then verify two possible extensions against
+the later coated-wire literature:
+
+1. A coupled thin-wire/VIE formulation in which the conductor retains its 1-D
+   current basis while the dielectric sleeve carries volume-polarization
+   unknowns.  Concentric `rho,z` shells may remain economical for the straight,
+   axisymmetric validation article; arbitrary NEC wire orientation, bends,
+   junctions and mutual coupling do not generally preserve a global `m=0`
+   reduction.
+2. A multilayer cylindrical Green-function or modified-kernel formulation that
+   analytically satisfies the transverse layered boundary conditions and keeps
+   unknowns on the wire.  Evaluate numerical stability and cost of its
+   Bessel/Hankel or spectral integrals, and treat finite endpoints, feed gaps
+   and coating transitions as separate validation problems rather than
+   consequences of the infinite-cylinder kernel.
+
+   As a specific M7 research candidate, formulate each concentric layer as a
+   two-port radial field-transfer operator and cascade those operators from the
+   PEC core to the outer boundary.  Track the dimensional convention carefully:
+   conventional surface impedance is `E_z/H_phi` (ohms), whereas `E_z/I_z`
+   carries ohms per metre when `I_z = 2*pi*rho*H_phi`.  The layer transformation
+   will generally depend on axial spectral wavenumber as well as frequency, so
+   it is a nonlocal longitudinal operator after inverse transformation.  Verify
+   whether it can be incorporated efficiently into the full interaction kernel;
+   do not presume that replacing only segment self-impedances captures mutual
+   coupling, endpoints, bends, junctions, or coating transitions.  Compare the
+   resulting one-, two-, and three-layer kernels with OpenEMS before claiming
+   that the cascade removes the thick-coating limit.
+
+These are design hypotheses, not yet accepted implementation requirements.
+M2's literature review must identify the governing papers and applicability
+limits before either path is selected.
+
 Metrics: sweep `b/a`, `k0*b`, `ER`, loss and distance from ends/feed.  Publish
 error surfaces for resonance, complex impedance, efficiency and pattern.  The
 validated envelope is the largest connected region meeting the M3/M4 budgets;
-outside it the requested warning-and-continue policy applies.
+outside it the requested warning-and-continue policy applies.  Include
+flat/flush and representative printed-housing endpoint treatments so the
+published envelope distinguishes reduced-operator error from physical end-cap
+capacitance.  Archive enough geometric detail to reproduce a future printed
+article and VNA/range comparison.
 
 User acceptance: review the envelope and manually exercise a representative
 printed-housing model inside and outside it.
