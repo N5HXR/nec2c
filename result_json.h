@@ -107,6 +107,8 @@ void result_json_add_volume(size_t cell_id, size_t box_id, int region_id,
     const complex double current_a_per_m2[3]);
 void result_json_add_material_evaluations(const dielectric_model *model,
     double frequency_mhz);
+void result_json_add_coated_evaluations(const coated_wire_model *model,
+    double frequency_mhz);
 void result_json_set_power(const result_power *power);
 
 void result_json_far_begin(size_t request_index, const char *kind);

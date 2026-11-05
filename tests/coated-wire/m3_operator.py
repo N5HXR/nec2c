@@ -74,7 +74,7 @@ def expect_error(directory, name, text, code):
 def without_timing(value):
     if isinstance(value, dict):
         return {key: without_timing(item) for key, item in value.items()
-                if key != "elapsed_seconds"}
+                if key not in {"elapsed_seconds", "material_evaluations"}}
     if isinstance(value, list):
         return [without_timing(item) for item in value]
     return value
@@ -256,9 +256,6 @@ def main():
         if abs(directivity-reference["far_field"]["directivity_db"]) > 0.1:
             raise AssertionError("coated directivity misses OpenEMS by over 0.1 dB")
 
-        expect_error(root, "loss", dipole(er=3.2).replace(
-            "3.2000000000000002 0.0040000000000000001 0 0",
-            "3.2 0.004 0.01 0"), "COATED_WIRE_LOSS_UNAVAILABLE")
         bent = """CM M3 BEND REJECTION
 CE
 GW 1 5 0 0 -0.25 0 0 0 0.001
@@ -270,7 +267,7 @@ EX 0 1 3 0 1 0
 XQ
 EN
 """
-        expect_error(root, "bend", bent, "COATED_WIRE_M3_GEOMETRY_UNSUPPORTED")
+        expect_error(root, "bend", bent, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED")
         grounded = """CM M3 GROUND REJECTION
 CE
 GW 1 11 0 0 0.1 0.5 0 0.1 0.001
@@ -283,7 +280,7 @@ XQ
 EN
 """
         expect_error(root, "ground", grounded,
-                     "COATED_WIRE_M3_GROUND_UNSUPPORTED")
+                     "COATED_WIRE_M4_GROUND_UNSUPPORTED")
 
         shift = 100*(coated_resonance/bare_resonance-1)
         print("M3 null limits, backend/process identity, and reciprocity passed")
@@ -295,7 +292,7 @@ EN
               f"shift {shift:.3f}%")
         print(f"M3 pattern: {pattern_error:.6f} dB maximum error above -40 dB, "
               f"{directivity:.6f} dBi sampled directivity")
-        print("M3 loss, bend, and ground gates passed")
+        print("M3 bend and ground gates passed")
 
 
 if __name__ == "__main__":

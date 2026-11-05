@@ -98,3 +98,28 @@ python3 tools/coated_wire_m3_acceptance.py \
 
 See `docs/COATED-WIRE-M3-RESULTS.md` for the numerical comparison and M3
 scope boundary.
+
+Run the M4 loss, material-evaluation, and power checks with:
+
+```sh
+python3 tests/coated-wire/m4_loss.py
+```
+
+The manual low-loss and lossy 50-ohm VSWR sweeps are:
+
+```sh
+./nec2c --result-json /tmp/m4-low-loss.json \
+  -i tests/coated-wire/m4-low-loss-sweep.nec -o /tmp/m4-low-loss.out
+./nec2c --result-json /tmp/m4-lossy.json \
+  -i tests/coated-wire/m4-lossy-sweep.nec -o /tmp/m4-lossy.out
+```
+
+Regenerate the M4 acceptance record and figures with:
+
+```sh
+python3 tools/coated_wire_m4_acceptance.py \
+  --output-dir tests/coated-wire
+```
+
+See `docs/COATED-WIRE-M4-RESULTS.md` for the per-frequency material semantics,
+power derivation, OpenEMS comparison, and acceptance metrics.

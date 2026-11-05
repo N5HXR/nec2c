@@ -341,7 +341,10 @@ void result_json_job_end(const dielectric_model *model)
   {
     const coated_wire_model *coated = job->coated_wires;
     fprintf(f, ",\"coated_wires\":{\"operator_status\":\"%s\",\"domains\":[",
-        coated->lossless_operator_enabled ? "lossless-isolated" : "validation-only");
+        coated->operator_enabled ?
+        (coated->domains[0].loss_tangent != 0.0 ||
+         coated->domains[0].conductivity_s_per_m != 0.0 ?
+         "lossy-isolated" : "lossless-isolated") : "validation-only");
     for(i = 0; i < coated->domain_count; ++i)
     {
       const coated_wire_domain *domain = &coated->domains[i];
@@ -738,6 +741,30 @@ void result_json_add_material_evaluations(const dielectric_model *model,double f
     fputs(",\"loss_kind\":",f);json_string(f,mat->samples[hi-1].conductivity_kind?"sigma":"epsilon-loss");
     fputs(",\"loss_value\":",f);json_number(f,(1-t)*mat->samples[hi-1].loss+t*mat->samples[hi].loss);
     fputs(",\"complex_relative_permittivity\":",f);json_complex(f,er);fputc('}',f);
+  }
+}
+
+void result_json_add_coated_evaluations(const coated_wire_model *model,
+    double frequency)
+{
+  size_t d;
+  if(!session.active || !session.job.execution.open || !model ||
+      !model->operator_enabled) return;
+  for(d = 0; d < model->domain_count; ++d)
+  {
+    const coated_wire_domain *domain = &model->domains[d];
+    complex double epsilon = coated_wire_relative_permittivity(domain, frequency);
+    FILE *f = spool_row(&session.job.execution.materials);
+    if(!f) return;
+    fputs("{\"kind\":\"coated-wire\",\"tag\":", f);
+    fprintf(f, "%d,\"frequency_mhz\":", domain->tag); json_number(f, frequency);
+    fputs(",\"er\":", f); json_number(f, domain->epsilon_r);
+    fputs(",\"tan_delta\":", f); json_number(f, domain->loss_tangent);
+    fputs(",\"sigma_dc_s_per_m\":", f);
+    json_number(f, domain->conductivity_s_per_m);
+    fputs(",\"complex_relative_permittivity\":", f);
+    json_complex(f, epsilon);
+    fputc('}', f);
   }
 }
 

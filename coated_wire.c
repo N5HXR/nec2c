@@ -251,7 +251,7 @@ int coated_wire_finalize(coated_wire_model *model, const data_t *geometry,
   return 1;
 }
 
-int coated_wire_validate_lossless_isolated(coated_wire_model *model,
+int coated_wire_validate_isolated(coated_wire_model *model,
     const data_t *geometry, coated_wire_diagnostic *diagnostic)
 {
   const coated_wire_domain *domain;
@@ -263,15 +263,12 @@ int coated_wire_validate_lossless_isolated(coated_wire_model *model,
         "coated-wire geometry has not been finalized");
   if(model->domain_count != 1 || model->segment_count != (size_t)geometry->n ||
       !model->segment_domain || geometry->m != 0 || geometry->ipsym != 0)
-    return fail(diagnostic, "COATED_WIRE_M3_GEOMETRY_UNSUPPORTED", 0, 0,
-        "M3 requires one unsymmetrized isolated coating domain covering every wire segment and no surface patches");
+    return fail(diagnostic, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED", 0, 0,
+        "M4 requires one unsymmetrized isolated coating domain covering every wire segment and no surface patches");
   domain = &model->domains[0];
-  if(domain->loss_tangent != 0.0 || domain->conductivity_s_per_m != 0.0)
-    return fail(diagnostic, "COATED_WIRE_LOSS_UNAVAILABLE", domain->tag, 0,
-        "M3 supports lossless coatings only; TAN_DELTA and SIGMA_DC require M4");
   if(geometry->n < 1)
-    return fail(diagnostic, "COATED_WIRE_M3_GEOMETRY_UNSUPPORTED", domain->tag, 0,
-        "M3 requires at least one coated wire segment");
+    return fail(diagnostic, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED", domain->tag, 0,
+        "M4 requires at least one coated wire segment");
 
   ux = geometry->cab[0];
   uy = geometry->sab[0];
@@ -290,9 +287,9 @@ int coated_wire_validate_lossless_isolated(coated_wire_model *model,
     int endpoint;
     if(geometry->si[i] > scale) scale = geometry->si[i];
     if(fabs(fabs(dot)-1.0) > 1.0e-10 || radial > scale*1.0e-9)
-      return fail(diagnostic, "COATED_WIRE_M3_GEOMETRY_UNSUPPORTED",
+      return fail(diagnostic, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED",
           domain->tag, i+1,
-          "M3 supports one straight collinear coated wire; bends are deferred");
+          "M4 supports one straight collinear coated wire; bends are deferred");
     for(endpoint = 0; endpoint < 2; ++endpoint)
     {
       int connection = endpoint ? geometry->icon2[i] : geometry->icon1[i];
@@ -300,18 +297,39 @@ int coated_wire_validate_lossless_isolated(coated_wire_model *model,
     }
   }
   if(open_ends != 2)
-    return fail(diagnostic, "COATED_WIRE_M3_GEOMETRY_UNSUPPORTED",
+    return fail(diagnostic, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED",
         domain->tag, 0,
-        "M3 requires one connected coated wire with exactly two free ends");
-  model->lossless_operator_enabled = 1;
+        "M4 requires one connected coated wire with exactly two free ends");
+  model->operator_enabled = 1;
   return 1;
 }
 
 void coated_wire_activate(const coated_wire_model *model, double wavelength_m)
 {
   active_model = model && model->finalized && model->domain_count &&
-      model->lossless_operator_enabled ? model : NULL;
+      model->operator_enabled ? model : NULL;
   active_wavelength_m = wavelength_m;
+}
+
+complex double coated_wire_relative_permittivity(
+    const coated_wire_domain *domain, double frequency_mhz)
+{
+  const double epsilon0 = 8.8541878128e-12;
+  double loss;
+  if(!domain || frequency_mhz <= 0.0) return NAN + I*NAN;
+  loss = domain->epsilon_r*domain->loss_tangent +
+      domain->conductivity_s_per_m/
+      (TP*frequency_mhz*1.0e6*epsilon0);
+  return cmplx(domain->epsilon_r, -loss);
+}
+
+int coated_wire_has_loss(void)
+{
+  const coated_wire_domain *domain;
+  if(!active_model || active_model->domain_count != 1) return 0;
+  domain = &active_model->domains[0];
+  return domain->loss_tangent != 0.0 ||
+      domain->conductivity_s_per_m != 0.0;
 }
 
 int coated_wire_segment_active(int segment)
@@ -398,7 +416,8 @@ void coated_wire_field_correction(int source_segment, int observation_segment,
 {
   const coated_wire_domain *domain;
   coating_integral integral;
-  double alpha, inner_radius, outer_radius, half_length;
+  complex double epsilon, alpha;
+  double inner_radius, outer_radius, half_length, frequency_mhz;
   int source = source_segment-1, observation = observation_segment-1;
 
   if(!active_model || !sine_field || !cosine_field || source < 0 ||
@@ -407,10 +426,12 @@ void coated_wire_field_correction(int source_segment, int observation_segment,
       active_model->segment_domain[source] < 0 || active_wavelength_m <= 0.0)
     return;
   domain = &active_model->domains[active_model->segment_domain[source]];
-  alpha = 1.0-1.0/domain->epsilon_r;
+  frequency_mhz = CVEL/active_wavelength_m;
+  epsilon = coated_wire_relative_permittivity(domain, frequency_mhz);
+  alpha = 1.0-1.0/epsilon;
   inner_radius = data.bi[source];
   outer_radius = domain->outer_radius_m/active_wavelength_m;
-  if(alpha == 0.0 ||
+  if(alpha == CPLX_00 ||
       domain->outer_radius_m == domain->conductor_radius_m ||
       outer_radius == inner_radius) return;
   half_length = 0.5*data.si[source];
@@ -418,6 +439,62 @@ void coated_wire_field_correction(int source_segment, int observation_segment,
       -half_length, half_length, 0);
   *sine_field += alpha*CONST3*integral.cosine_charge;
   *cosine_field -= alpha*CONST3*integral.sine_charge;
+}
+
+double coated_wire_absorbed_power(void)
+{
+  const double epsilon0 = 8.8541878128e-12;
+  double frequency_mhz, frequency_hz, omega, total = 0.0;
+  size_t segment;
+  if(!coated_wire_has_loss() || active_wavelength_m <= 0.0) return 0.0;
+  frequency_mhz = CVEL/active_wavelength_m;
+  frequency_hz = frequency_mhz*1.0e6;
+  omega = TP*frequency_hz;
+  for(segment = 0; segment < active_model->segment_count; ++segment)
+  {
+    int domain_index = active_model->segment_domain[segment];
+    const coated_wire_domain *domain;
+    complex double epsilon, b, c;
+    double half, oscillatory, cosine_norm, sine_norm, charge_integral;
+    if(domain_index < 0) continue;
+    domain = &active_model->domains[domain_index];
+    epsilon = coated_wire_relative_permittivity(domain, frequency_mhz);
+    if(cimag(epsilon) == 0.0 ||
+        domain->outer_radius_m == domain->conductor_radius_m) continue;
+    b = cmplx(crnt.bir[segment], crnt.bii[segment]);
+    c = cmplx(crnt.cir[segment], crnt.cii[segment]);
+    half = 0.5*data.si[segment];
+    oscillatory = sin(2.0*TP*half)/(2.0*TP);
+    cosine_norm = half+oscillatory;
+    sine_norm = half-oscillatory;
+    charge_integral = active_wavelength_m/(frequency_hz*frequency_hz)*
+        (creal(b*conj(b))*cosine_norm + creal(c*conj(c))*sine_norm);
+    total += omega*(-cimag(epsilon))*charge_integral*
+        log(domain->outer_radius_m/domain->conductor_radius_m)/
+        (4.0*PI*epsilon0*creal(epsilon*conj(epsilon)));
+  }
+  return total;
+}
+
+double coated_wire_radiated_power(size_t sample_count)
+{
+  double sum = 0.0;
+  size_t sample;
+  if(!active_model || sample_count == 0) return NAN;
+#ifdef _OPENMP
+#pragma omp parallel for reduction(+:sum) schedule(static) if(sample_count >= 1024)
+#endif
+  for(sample = 0; sample < sample_count; ++sample)
+  {
+    double z = 1.0-2.0*((double)sample+0.5)/(double)sample_count;
+    double phi = PI*(3.0-sqrt(5.0))*(double)sample;
+    complex double et, ep;
+    ffld(acos(z), phi, &et, &ep);
+    et *= active_wavelength_m;
+    ep *= active_wavelength_m;
+    sum += creal(et*conj(et)+ep*conj(ep));
+  }
+  return sum*(4.0*PI/(double)sample_count)/(2.0*ETA);
 }
 
 void coated_wire_print_summary(FILE *stream, const coated_wire_model *model)
@@ -436,7 +513,7 @@ void coated_wire_print_summary(FILE *stream, const coated_wire_model *model)
         d->conductor_radius_m, d->outer_radius_m, d->epsilon_r,
         d->loss_tangent, d->conductivity_s_per_m);
   }
-  fprintf(stream, "  STATUS: VALIDATED; LOSSLESS STRAIGHT-WIRE OPERATOR ENABLED\n");
+  fprintf(stream, "  STATUS: VALIDATED; STRAIGHT-WIRE COATING OPERATOR ENABLED\n");
 }
 
 void coated_wire_print_diagnostic(FILE *stream,

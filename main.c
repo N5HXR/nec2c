@@ -1378,7 +1378,7 @@ int main( int argc, char **argv )
 	     (ain_num == 6 || ain_num == 8 || ain_num == 12 ||
 	      ain_num == 13 || ain_num == 18))
 	  {
-		if(!coated_wire_validate_lossless_isolated(&coated_wires, &data,
+		if(!coated_wire_validate_isolated(&coated_wires, &data,
 		    &coated_error))
 		{
 		  publish_coated_failure(&dielectric, &coated_error);
@@ -1387,9 +1387,9 @@ int main( int argc, char **argv )
 		if(gnd.ksymp != 1)
 		{
 		  memset(&coated_error, 0, sizeof(coated_error));
-		  coated_error.code = "COATED_WIRE_M3_GROUND_UNSUPPORTED";
+		  coated_error.code = "COATED_WIRE_M4_GROUND_UNSUPPORTED";
 		  snprintf(coated_error.message, sizeof(coated_error.message),
-		      "M3 supports the lossless coated-wire operator in free space only");
+		      "M4 supports the coated-wire operator in free space only");
 		  publish_coated_failure(&dielectric, &coated_error);
 		  stop(-1);
 		}
@@ -2670,6 +2670,7 @@ int main( int argc, char **argv )
 			  }
 			  else
 				result_json_execution_begin(save.fmhz,"driven-voltage",NULL);
+			  result_json_add_coated_evaluations(&coated_wires, save.fmhz);
 			  {
 				double solve_started = performance_now();
 				netwk( cm, save.ip, crnt.cur );
@@ -2947,10 +2948,39 @@ int main( int argc, char **argv )
 
 			  if( (fpat.ixtyp == 0) || (fpat.ixtyp == 5) )
 			  {
-				tmp1= netcx.pin- netcx.pnls- fpat.ploss;
+				double coating_loss = 0.0, balance_defect = 0.0;
+				int coating_loss_enabled = coated_wire_has_loss();
+				if(coating_loss_enabled)
+				{
+				  coating_loss = coated_wire_absorbed_power();
+				  tmp1 = coated_wire_radiated_power(3896);
+				  balance_defect = fabs(netcx.pin-tmp1-coating_loss-
+				      fpat.ploss-netcx.pnls);
+				}
+				else
+				  tmp1= netcx.pin- netcx.pnls- fpat.ploss;
 				tmp2= 100.* tmp1/ netcx.pin;
 
-				fprintf( output_fp, "\n\n\n"
+				if(coating_loss_enabled)
+				  fprintf( output_fp, "\n\n\n"
+					"                               "
+					"---------- POWER BUDGET ---------\n"
+					"                               "
+					"INPUT POWER   = %11.4E Watts\n"
+					"                               "
+					"RADIATED POWER= %11.4E Watts\n"
+					"                               "
+					"STRUCTURE LOSS= %11.4E Watts\n"
+					"                               "
+					"NETWORK LOSS  = %11.4E Watts\n"
+					"                               "
+					"DIELECTRIC LOSS= %11.4E Watts\n"
+					"                               "
+					"EFFICIENCY    = %7.2f Percent",
+					netcx.pin, tmp1, fpat.ploss, netcx.pnls,
+					coating_loss, tmp2 );
+				else
+				  fprintf( output_fp, "\n\n\n"
 					"                               "
 					"---------- POWER BUDGET ---------\n"
 					"                               "
@@ -2970,6 +3000,14 @@ int main( int argc, char **argv )
 				  power.structure_loss_defined=power.network_loss_defined=1;
 				  power.accepted_w=netcx.pin;power.air_radiated_w=tmp1;
 				  power.structure_loss_w=fpat.ploss;power.network_loss_w=netcx.pnls;
+				  if(coating_loss_enabled)
+				  {
+				    power.dielectric_absorbed_defined=1;
+				    power.dielectric_absorbed_w=coating_loss;
+				    power.defect_defined=1;power.defect_w=balance_defect;
+				    power.defect_relative=balance_defect/fmax(fabs(netcx.pin),DBL_MIN);
+				    power.theta_count=3896;power.phi_count=1;
+				  }
 				  result_json_set_power(&power);
 				}
 
