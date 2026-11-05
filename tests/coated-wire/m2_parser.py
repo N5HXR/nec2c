@@ -135,12 +135,13 @@ def main():
         for name, text, code in invalid:
             expect_error(root, name, text, code)
 
-        # M2 deliberately refuses to produce bare-wire answers for an LD 7 deck.
+        # M3 must still reject M2's lossy parser witness rather than silently
+        # producing a lossless answer; loss is introduced in M4.
         execution_dir = root / "execution-gate"
         execution_dir.mkdir()
         status, result, output = invoke(execution_dir, valid[0][1], validate=False)
         assert status != 0
-        assert result["diagnostics"][0]["code"] == "COATED_WIRE_OPERATOR_UNAVAILABLE"
+        assert result["diagnostics"][0]["code"] == "COATED_WIRE_LOSS_UNAVAILABLE"
 
         # Every legacy LD type still reaches the classic load implementation.
         legacy_cards = {
@@ -162,7 +163,7 @@ def main():
 
     print("M2 LD 7 parser: 4 valid topology/metadata cases passed")
     print("M2 LD 7 parser: 17 invalid card/topology diagnostics passed")
-    print("M2 LD 7 execution gate and LD 0-5 regression cases passed")
+    print("M2 LD 7 loss gate and LD 0-5 regression cases passed")
     return 0
 
 

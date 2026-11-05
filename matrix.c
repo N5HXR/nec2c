@@ -25,6 +25,7 @@
 
 #include "nec2c.h"
 #include "shared.h"
+#include "coated_wire.h"
 #include "dense_backend.h"
 
 #include <stdint.h>
@@ -718,7 +719,7 @@ void cmws( int j, int i1, int i2, complex double *cm,
 void cmww( int j, int i1, int i2, complex double *cm,
 	int nr, complex double *cw, int nw, int itrp)
 {
-  int ipr, iprx, i, ij, jx;
+  int ipr, iprx, i, ij, jx, coating_active;
   double xi, yi, zi, ai, cabi, sabi, salpi;
   complex double etk, ets, etc;
 
@@ -733,6 +734,7 @@ void cmww( int j, int i1, int i2, complex double *cm,
   dataj.cabj= data.cab[j];
   dataj.sabj= data.sab[j];
   dataj.salpj= data.salp[j];
+  coating_active=coated_wire_segment_active(jx);
 
   /* decide whether ext. t.w. approx. can be used */
   if( dataj.iexk != 0)
@@ -861,6 +863,8 @@ void cmww( int j, int i1, int i2, complex double *cm,
 	etk= dataj.exk* cabi+ dataj.eyk* sabi+ dataj.ezk* salpi;
 	ets= dataj.exs* cabi+ dataj.eys* sabi+ dataj.ezs* salpi;
 	etc= dataj.exc* cabi+ dataj.eyc* sabi+ dataj.ezc* salpi;
+	if(coating_active)
+	  coated_wire_field_correction(j+1, i+1, &ets, &etc);
 
 	/* fill matrix elements. element locations */
 	/* determined by connection data. */

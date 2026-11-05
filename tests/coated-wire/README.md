@@ -65,4 +65,36 @@ python3 -m json.tool /tmp/coated-m2.json
 `m2-junction-mismatch.nec` deliberately joins two unequal coatings. The same
 command should exit nonzero and emit `COATED_WIRE_JUNCTION_MISMATCH` in the
 machine-readable diagnostic. Ordinary execution of either coated deck is
-deliberately gated until M3 rather than silently returning a bare-wire answer.
+accepted only when it fits the M3 lossless isolated straight-wire envelope.
+Lossy or unsupported geometry is rejected rather than silently returning a
+bare-wire answer.
+
+Run the complete M3 numerical acceptance test with:
+
+```sh
+python3 tests/coated-wire/m3_operator.py
+```
+
+The supplied manual pair and resonance sweeps are:
+
+```sh
+./nec2c --result-json /tmp/m3-bare.json \
+  -i tests/coated-wire/m3-bare-dipole.nec -o /tmp/m3-bare.out
+./nec2c --result-json /tmp/m3-coated.json \
+  -i tests/coated-wire/m3-coated-dipole.nec -o /tmp/m3-coated.out
+
+./nec2c --result-json /tmp/m3-bare-sweep.json \
+  -i tests/coated-wire/m3-bare-sweep.nec -o /tmp/m3-bare-sweep.out
+./nec2c --result-json /tmp/m3-coated-sweep.json \
+  -i tests/coated-wire/m3-coated-sweep.nec -o /tmp/m3-coated-sweep.out
+```
+
+Regenerate the compact acceptance record and overlays with:
+
+```sh
+python3 tools/coated_wire_m3_acceptance.py \
+  --output-dir tests/coated-wire
+```
+
+See `docs/COATED-WIRE-M3-RESULTS.md` for the numerical comparison and M3
+scope boundary.

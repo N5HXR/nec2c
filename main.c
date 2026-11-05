@@ -1378,12 +1378,21 @@ int main( int argc, char **argv )
 	     (ain_num == 6 || ain_num == 8 || ain_num == 12 ||
 	      ain_num == 13 || ain_num == 18))
 	  {
-		memset(&coated_error, 0, sizeof(coated_error));
-		coated_error.code = "COATED_WIRE_OPERATOR_UNAVAILABLE";
-		snprintf(coated_error.message, sizeof(coated_error.message),
-		    "LD 7 execution is not enabled until the M3 numerical operator; use --validate-only for M2 decks");
-		publish_coated_failure(&dielectric, &coated_error);
-		stop(-1);
+		if(!coated_wire_validate_lossless_isolated(&coated_wires, &data,
+		    &coated_error))
+		{
+		  publish_coated_failure(&dielectric, &coated_error);
+		  stop(-1);
+		}
+		if(gnd.ksymp != 1)
+		{
+		  memset(&coated_error, 0, sizeof(coated_error));
+		  coated_error.code = "COATED_WIRE_M3_GROUND_UNSUPPORTED";
+		  snprintf(coated_error.message, sizeof(coated_error.message),
+		      "M3 supports the lossless coated-wire operator in free space only");
+		  publish_coated_failure(&dielectric, &coated_error);
+		  stop(-1);
+		}
 	  }
 	  switch( ain_num )
 	  {
@@ -2483,6 +2492,7 @@ int main( int argc, char **argv )
 			/* label 50 */
 			/* fill and factor primary interaction matrix */
 			tmp1 = performance_now();
+			coated_wire_activate(&coated_wires, data.wlam);
 			cmset_parallel_configure(classic_fill_processes, numerical_fork_safe);
 			cmset( netcx.neq, cm, rkh, iexk );
 			tim=(performance_now() - tmp1)*1000.0;

@@ -32,6 +32,7 @@ EXTRA_DIST = \
   docs/COATED-WIRE-PLAN.md \
   docs/COATED-WIRE-M1-OPENEMS.md \
   docs/COATED-WIRE-M2-DERIVATION.md \
+  docs/COATED-WIRE-M3-RESULTS.md \
   tests/coated-wire/README.md \
   tests/coated-wire/m0-bare-dipole.nec \
   tests/coated-wire/m0-baseline.json \
@@ -47,6 +48,15 @@ EXTRA_DIST = \
   tests/coated-wire/m2-valid.nec \
   tests/coated-wire/m2-junction-mismatch.nec \
   tests/coated-wire/m2_parser.py \
+  tests/coated-wire/m3-bare-dipole.nec \
+  tests/coated-wire/m3-coated-dipole.nec \
+  tests/coated-wire/m3-bare-sweep.nec \
+  tests/coated-wire/m3-coated-sweep.nec \
+  tests/coated-wire/m3_operator.py \
+  tests/coated-wire/m3-acceptance.json \
+  tests/coated-wire/m3-impedance.png \
+  tests/coated-wire/m3-current.png \
+  tests/coated-wire/m3-pattern.png \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -109,6 +119,7 @@ EXTRA_DIST = \
   tools/cross_solver_compare.py \
   tools/timing_overhead.py \
   tools/coated_wire_openems.py \
+  tools/coated_wire_m3_acceptance.py \
   tools/coated_wire_m1_analyze.py \
   examples/dielectric-r1/README.md \
   examples/dielectric-r1/run.py \
@@ -297,7 +308,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m2_parser.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \

@@ -26,6 +26,7 @@ typedef struct
   int *segment_domain;
   size_t segment_count;
   int finalized;
+  int lossless_operator_enabled;
 } coated_wire_model;
 
 typedef struct
@@ -45,8 +46,14 @@ int coated_wire_add(coated_wire_model *model, int tag, int first, int last,
     double conductivity_s_per_m, coated_wire_diagnostic *diagnostic);
 int coated_wire_finalize(coated_wire_model *model, const data_t *geometry,
     coated_wire_diagnostic *diagnostic);
+int coated_wire_validate_lossless_isolated(coated_wire_model *model,
+    const data_t *geometry, coated_wire_diagnostic *diagnostic);
 int coated_wire_domain_equal(const coated_wire_domain *left,
     const coated_wire_domain *right);
+void coated_wire_activate(const coated_wire_model *model, double wavelength_m);
+int coated_wire_segment_active(int segment);
+void coated_wire_field_correction(int source_segment, int observation_segment,
+    complex double *sine_field, complex double *cosine_field);
 void coated_wire_print_summary(FILE *stream, const coated_wire_model *model);
 void coated_wire_print_diagnostic(FILE *stream,
     const coated_wire_diagnostic *diagnostic);

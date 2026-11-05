@@ -78,7 +78,7 @@
       "type": "object",
       "required": ["operator_status", "domains"],
       "properties": {
-        "operator_status": {"const": "validation-only"},
+        "operator_status": {"enum": ["validation-only", "lossless-isolated"]},
         "domains": {
           "type": "array",
           "items": {

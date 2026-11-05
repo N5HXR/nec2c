@@ -340,7 +340,8 @@ void result_json_job_end(const dielectric_model *model)
      job->coated_wires->finalized)
   {
     const coated_wire_model *coated = job->coated_wires;
-    fprintf(f, ",\"coated_wires\":{\"operator_status\":\"validation-only\",\"domains\":[");
+    fprintf(f, ",\"coated_wires\":{\"operator_status\":\"%s\",\"domains\":[",
+        coated->lossless_operator_enabled ? "lossless-isolated" : "validation-only");
     for(i = 0; i < coated->domain_count; ++i)
     {
       const coated_wire_domain *domain = &coated->domains[i];
