@@ -32,6 +32,7 @@
 #include "dielectric.h"
 #include "dielectric_fft.h"
 #include "result_json.h"
+#include "coated_wire.h"
 #include "performance.h"
 #include "dense_backend.h"
 #include "concurrency.h"
@@ -773,6 +774,15 @@ static void set_mode_diagnostic(const dielectric_model *model,
       "requested dielectric deck, excitation, ground, or output combination is unsupported");
 }
 
+static void publish_coated_failure(const dielectric_model *dielectric,
+    const coated_wire_diagnostic *diagnostic)
+{
+  coated_wire_print_diagnostic(output_fp, diagnostic);
+  result_json_coated_wire_diagnostic(diagnostic, "error");
+  result_json_job_end(dielectric);
+  result_json_finish("validation-error");
+}
+
 /*-------------------------------------------------------------------*/
 
 int main( int argc, char **argv )
@@ -790,6 +800,8 @@ int main( int argc, char **argv )
   dielectric_mesh_result dielectric_mesh;
   dielectric_diagnostic dielectric_error;
   dielectric_plane_wave dielectric_wave;
+  coated_wire_model coated_wires;
+  coated_wire_diagnostic coated_error;
   int dielectric_excitation_seen, dielectric_any_excitation_seen;
   int dielectric_solved;
   int dielectric_iterative = 0;
@@ -1127,6 +1139,7 @@ int main( int argc, char **argv )
   Null_Pointers();
   dielectric_model_init( &dielectric );
   dielectric_mesh_init( &dielectric_mesh );
+  coated_wire_model_init( &coated_wires );
 
   /* Allocate some buffers */
   mreq = sizeof(complex double) * 11 * 10 * 4;
@@ -1168,6 +1181,7 @@ int main( int argc, char **argv )
   {
 	dielectric_mesh_free( &dielectric_mesh );
 	dielectric_model_free( &dielectric );
+	coated_wire_model_clear( &coated_wires );
 	result_json_job_begin();
 	ifrtmw=0;
 	ifrtmp=0;
@@ -1347,6 +1361,30 @@ int main( int argc, char **argv )
 		  break;
 
 	  /* take action according to card id mnemonic */
+	  if(coated_wires.domain_count && !coated_wires.finalized &&
+	     (ain_num == 6 || ain_num == 8 || ain_num == 9 ||
+	      ain_num == 12 || ain_num == 13 || ain_num == 18))
+	  {
+		if(!coated_wire_finalize(&coated_wires, &data, &coated_error))
+		{
+		  result_json_set_coated_wires(&coated_wires);
+		  publish_coated_failure(&dielectric, &coated_error);
+		  stop(-1);
+		}
+		result_json_set_coated_wires(&coated_wires);
+		coated_wire_print_summary(output_fp, &coated_wires);
+	  }
+	  if(coated_wires.domain_count && !result_json_validation_only() &&
+	     (ain_num == 6 || ain_num == 8 || ain_num == 12 ||
+	      ain_num == 13 || ain_num == 18))
+	  {
+		memset(&coated_error, 0, sizeof(coated_error));
+		coated_error.code = "COATED_WIRE_OPERATOR_UNAVAILABLE";
+		snprintf(coated_error.message, sizeof(coated_error.message),
+		    "LD 7 execution is not enabled until the M3 numerical operator; use --validate-only for M2 decks");
+		publish_coated_failure(&dielectric, &coated_error);
+		stop(-1);
+	  }
 	  switch( ain_num )
 	  {
 		case 0: /* "fr" card, frequency parameters */
@@ -1379,6 +1417,7 @@ int main( int argc, char **argv )
 			  iflow=3;
 			  /* Free loading buffers */
 			  zload.nload=0;
+			  coated_wire_model_clear(&coated_wires);
 			  free_ptr( (void *)&ldtyp );
 			  free_ptr( (void *)&ldtag );
 			  free_ptr( (void *)&ldtagf );
@@ -1391,6 +1430,28 @@ int main( int argc, char **argv )
 				igo=2;
 			  if( itmp1 == -1 )
 				continue; /* continue card input loop */
+			}
+
+			if(itmp1 == 7)
+			{
+			  if(tmp5 != 0.0 || tmp6 != 0.0)
+			  {
+				memset(&coated_error, 0, sizeof(coated_error));
+				coated_error.code = "COATED_WIRE_RESERVED_FIELD_NONZERO";
+				coated_error.tag = itmp2;
+				snprintf(coated_error.message, sizeof(coated_error.message),
+				    "LD 7 floating fields 5 and 6 are reserved and must be zero");
+				publish_coated_failure(&dielectric, &coated_error);
+				stop(-1);
+			  }
+			  if(!coated_wire_add(&coated_wires, itmp2, itmp3, itmp4,
+			      tmp1, tmp2, tmp3, tmp4, &coated_error))
+			  {
+				result_json_set_coated_wires(&coated_wires);
+				publish_coated_failure(&dielectric, &coated_error);
+				stop(-1);
+			  }
+			  continue;
 			}
 
 			/* Reallocate loading buffers */

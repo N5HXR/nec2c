@@ -5,6 +5,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 EXTRA_DIST = \
   .gitattributes \
   autogen.sh \
+  circular-mesh-center-junction-segfault.nec \
   NEC2-bug.txt \
   docs/DIELECTRIC-VOLUME-DESIGN.md \
   docs/DIELECTRIC-REVISION-1.md \
@@ -30,6 +31,7 @@ EXTRA_DIST = \
   docs/PERFORMANCE-M9-ACCEPTANCE.md \
   docs/COATED-WIRE-PLAN.md \
   docs/COATED-WIRE-M1-OPENEMS.md \
+  docs/COATED-WIRE-M2-DERIVATION.md \
   tests/coated-wire/README.md \
   tests/coated-wire/m0-bare-dipole.nec \
   tests/coated-wire/m0-baseline.json \
@@ -42,6 +44,9 @@ EXTRA_DIST = \
   tests/coated-wire/m1-openems-audits.json \
   tests/coated-wire/m1-openems-audits-impedance.png \
   tests/coated-wire/m1-openems-audits-convergence.png \
+  tests/coated-wire/m2-valid.nec \
+  tests/coated-wire/m2-junction-mismatch.nec \
+  tests/coated-wire/m2_parser.py \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -292,7 +297,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m2_parser.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -356,6 +361,8 @@ tests_vie_iterative_test_LDADD = -lm
 
 nec2c_SOURCES = \
   calculations.c \
+  coated_wire.c \
+  coated_wire.h \
   dielectric_io.c \
   dielectric_mesh.c \
   dielectric_solver.c \

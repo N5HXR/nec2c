@@ -46,3 +46,23 @@ for the geometry convention, convergence criteria, and manual acceptance run.
 The `m1-openems-caps*` artifacts contain the endpoint and mesh-refinement
 results. The `m1-openems-audits*` artifacts contain the feed, gap, and transient
 decay checks. JSON is the machine-readable record; PNG files are review plots.
+
+M2 adds parser and topology validation without enabling a numerical coated-wire
+solve. Run its complete acceptance test with:
+
+```sh
+python3 tests/coated-wire/m2_parser.py
+```
+
+For manual inspection, `m2-valid.nec` resolves one whole 11-segment tag:
+
+```sh
+./nec2c --validate-only --result-json /tmp/coated-m2.json \
+  -i tests/coated-wire/m2-valid.nec -o /tmp/coated-m2.out
+python3 -m json.tool /tmp/coated-m2.json
+```
+
+`m2-junction-mismatch.nec` deliberately joins two unequal coatings. The same
+command should exit nonzero and emit `COATED_WIRE_JUNCTION_MISMATCH` in the
+machine-readable diagnostic. Ordinary execution of either coated deck is
+deliberately gated until M3 rather than silently returning a bare-wire answer.

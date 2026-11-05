@@ -28,6 +28,30 @@
 
 /*-----------------------------------------------------------------------*/
 
+/* Ensure the COMMON-style basis-function scratch arrays can hold count
+   entries.  Geometry setup sizes these arrays for the largest individual
+   junction, but a basis function can span the junctions at both ends of a
+   segment.  Serial matrix assembly historically enlarged the arrays as an
+   incidental side effect of trio(); process-parallel assembly performs that
+   work in children, so consumers in the parent must not depend on it. */
+static void segj_reserve( size_t count )
+{
+  size_t mreq;
+
+  if( count <= (size_t)segj.maxcon )
+	return;
+
+  segj.maxcon=(int)count;
+  mreq=count*sizeof(int);
+  mem_realloc( (void *)&segj.jco, mreq );
+  mreq=count*sizeof(double);
+  mem_realloc( (void *)&segj.ax, mreq );
+  mem_realloc( (void *)&segj.bx, mreq );
+  mem_realloc( (void *)&segj.cx, mreq );
+}
+
+/*-----------------------------------------------------------------------*/
+
 /* cabc computes coefficients of the constant (a), sine (b), and */
 /* cosine (c) terms in the current interpolation functions for the */
 /* current vector cur. */
@@ -1126,6 +1150,7 @@ void tbf( int i, int icap )
 	  }
 
 	  jcoxx = jcox-1;
+	  segj_reserve( (size_t)segj.jsno+1 );
 	  segj.jsno++;
 	  jsnox = segj.jsno-1;
 	  segj.jco[jsnox]= jcox;
@@ -1192,6 +1217,7 @@ void tbf( int i, int icap )
 
   njun2= segj.jsno- njun1;
   jsnop= segj.jsno;
+  segj_reserve( (size_t)jsnop+1 );
   segj.jco[jsnop]= i;
   d= PI* data.si[ix];
   sdh= sin( d);
