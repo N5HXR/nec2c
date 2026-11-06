@@ -58,6 +58,8 @@ def parser():
     p.add_argument("--axisymmetric-nf2ff-samples", type=int, default=512,
                    help="postprocess m=0 near fields on this many azimuths; "
                         "zero disables symmetry enforcement")
+    p.add_argument("--current-samples", type=int, default=0,
+                   help="axial current probes per dipole arm; zero disables")
     p.add_argument("--end-criteria", type=float, default=1.0e-5)
     p.add_argument("--timesteps", type=int, default=720000)
     p.add_argument("--threads", type=int, default=16)
@@ -82,6 +84,8 @@ def validate(a, p):
         p.error("material must be passive with epsilon-r >= 1")
     if a.length_mm <= 2 * a.gap_mm:
         p.error("dipole is too short for its feed gap")
+    if a.current_samples < 0:
+        p.error("current samples must be nonnegative")
     if (a.nf2ff_radius_mm >= a.domain_radius_mm or
             a.nf2ff_half_height_mm >= a.domain_half_height_mm):
         p.error("NF2FF surface must be inside the simulation domain")
@@ -104,6 +108,15 @@ def evenly_spaced(lo, hi, pitch):
     import numpy as np
     count = max(1, int(math.ceil((hi - lo) / pitch)))
     return np.linspace(lo, hi, count + 1)
+
+
+def axial_current_positions(gap, half, pitch, count):
+    """Return symmetric sample planes that stay clear of feed and end cells."""
+    import numpy as np
+    if not count:
+        return np.array([], dtype=float)
+    positive = np.linspace(gap/2 + pitch, half - pitch, count)
+    return np.concatenate((-positive[::-1], positive))
 
 
 def build(a):
@@ -174,10 +187,12 @@ def build(a):
     if a.coating_end == "hemisphere":
         cap_planes.extend(evenly_spaced(half, half + b0, a.mesh_mm))
         cap_planes.extend(evenly_spaced(-half - b0, -half, a.mesh_mm))
+    current_planes = axial_current_positions(
+        gap, half, a.mesh_mm, a.current_samples)
     axial = np.r_[evenly_spaced(-half, half, a.mesh_mm),
                    -a.nf2ff_half_height_mm,
                    -half, -gap/2, 0, gap/2, half,
-                   cap_planes,
+                   cap_planes, current_planes,
                    a.nf2ff_half_height_mm,
                    -a.domain_half_height_mm, a.domain_half_height_mm]
     grid.AddLine("z", axial)
@@ -288,6 +303,16 @@ def build(a):
         port.axis_probe_radius_m = probe_dual_r * 1e-3
         port.axis_probe_z_mm = probe_z
         port.I_filenames = [axis_current_name]
+        port.axial_current_probes = []
+        if len(current_planes):
+            for index, position in enumerate(current_planes):
+                name = f"axis_current_z_{index:03d}"
+                probe = csx.AddProbe(name, p_type=1,
+                                     weight=a.angular_cells/2, norm_dir=2)
+                probe.AddBox([0, alpha[0], float(position)],
+                             [probe_r, alpha[2], float(position)],
+                             priority=100)
+                port.axial_current_probes.append((name, float(position)))
     else:
         # The stock lumped-port current face snaps asymmetrically when its
         # requested edge lies on a primary Yee line.  Place an explicit square
@@ -383,6 +408,7 @@ def specification(a, mesh):
             "axisymmetric_nf2ff_samples":
                 (a.axisymmetric_nf2ff_samples
                  if a.coordinates == "cylindrical" else None),
+            "current_samples_per_arm": a.current_samples,
             "coating_radial_cells":
                 (max(4, int(math.ceil(
                     (a.coating_radius_mm - a.conductor_radius_mm) /
@@ -486,6 +512,15 @@ def main():
     fdtd, csx, port, nf2ff = build(a)
     mesh = mesh_record(csx, a.pml_cells)
     spec = specification(a, mesh)
+    if hasattr(port, "axis_probe_z_mm"):
+        spec["port_measurement"] = {
+            "voltage_reference": "centered finite gap",
+            "current_contour_z_mm": port.axis_probe_z_mm,
+            "deembedding_distance_mm": 0.0,
+            "deembedding_note": (
+                "The adjacent Yee-cell contour is the lumped terminal-current "
+                "measurement, not a transmission-line reference plane."),
+        }
     spec["environment"] = {
         "python": platform.python_version(),
         "openems_module": str(Path(openems_package.__file__).resolve()),
@@ -496,6 +531,10 @@ def main():
         return
     output = a.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=True)
+    if a.mode == "postprocess" and (output / "spec.json").exists():
+        previous = json.loads((output / "spec.json").read_text())
+        if "wall_seconds" in previous:
+            spec["wall_seconds"] = previous["wall_seconds"]
     (output / "spec.json").write_text(json.dumps(spec, indent=2,
                                                   sort_keys=True) + "\n")
     csx.Write2XML(str(output / "geometry.xml"))
@@ -534,6 +573,27 @@ def main():
                                "construction is shorted or unobservable")
         resonance_mhz = resonance_from_rows(rows)
         if resonance_mhz is not None:
+            if getattr(port, "axial_current_probes", None):
+                from openEMS.ports import UI_data
+                current_rows = []
+                peak = 0.0
+                for name, position in port.axial_current_probes:
+                    probe = UI_data(name, str(output / "solver"),
+                                    resonance_mhz*1e6)
+                    value = complex(probe.ui_f_val[0][0])
+                    magnitude = abs(value)
+                    peak = max(peak, magnitude)
+                    current_rows.append({
+                        "z_mm": position,
+                        "current_a": {"re": value.real, "im": value.imag},
+                        "magnitude_a": magnitude,
+                    })
+                for row in current_rows:
+                    row["relative_magnitude"] = (
+                        row["magnitude_a"]/peak if peak else 0.0)
+                (output / "axial-current.json").write_text(
+                    json.dumps({"frequency_mhz": resonance_mhz,
+                                "samples": current_rows}, indent=2)+"\n")
             theta = np.linspace(0, 180, 37)
             phi = np.array([0.0, 90.0])
             solver = output / "solver"

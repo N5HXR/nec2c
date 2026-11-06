@@ -1,6 +1,6 @@
 # Coated-wire project plan and M0 contract
 
-Status: M0 through M4 accepted; M5 is next.
+Status: M0 through M5 accepted; M6 is next.
 
 Date: 2026-11-03  
 Branch: `codex/coated-wire`  
@@ -285,7 +285,29 @@ budgets.
 
 User acceptance: approve the supported topology matrix and warning/error UX.
 
-### M7 — thickness/permittivity validity map
+### M7 — general geometry and mutual coupling
+
+Goal: promote coated-wire use beyond the single straight dipole without
+conflating geometric interactions with coating-transition policy.
+
+Test progressively: a uniformly coated V/inverted-V dipole to isolate a bend;
+two disconnected coated elements to isolate mutual coupling; a two-element
+Yagi as a directional multi-element witness; a folded dipole or rectangular
+loop to exercise close parallel conductors and closed topology; and one simple
+three-dimensional bent-wire article.  Cartesian OpenEMS references are
+required wherever global cylindrical symmetry is lost.
+
+Metrics: segmentation convergence, matrix reciprocity, power balance, complex
+feed impedance, resonance, current distribution and radiation pattern against
+bare-wire null limits and OpenEMS.  Disconnected-domain mutual coupling, bends,
+and closed loops are promoted independently so a successful case does not
+silently authorize the others.  Each promoted family must meet the M3/M4
+accuracy budgets over at least one lossless and one lossy coating.
+
+User acceptance: review the topology support matrix and manually run a coated
+multi-element example, preferably a small Yagi exported by Antenna Turtle.
+
+### M8 — thickness/permittivity validity map
 
 Goal: quantify how far the reduced operator can extend into 6–12 mm solid
 housings while all coatings remain electrically thin.
@@ -309,7 +331,7 @@ the later coated-wire literature:
    and coating transitions as separate validation problems rather than
    consequences of the infinite-cylinder kernel.
 
-   As a specific M7 research candidate, formulate each concentric layer as a
+   As a specific M8 research candidate, formulate each concentric layer as a
    two-port radial field-transfer operator and cascade those operators from the
    PEC core to the outer boundary.  Track the dimensional convention carefully:
    conventional surface impedance is `E_z/H_phi` (ohms), whereas `E_z/I_z`
@@ -338,7 +360,7 @@ article and VNA/range comparison.
 User acceptance: review the envelope and manually exercise a representative
 printed-housing model inside and outside it.
 
-### M8 — integration and release
+### M9 — integration and release
 
 Goal: complete documentation, Antenna Turtle-facing examples, performance
 checks and backward-compatibility certification.

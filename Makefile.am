@@ -34,6 +34,7 @@ EXTRA_DIST = \
   docs/COATED-WIRE-M2-DERIVATION.md \
   docs/COATED-WIRE-M3-RESULTS.md \
   docs/COATED-WIRE-M4-RESULTS.md \
+  docs/COATED-WIRE-M5-RESULTS.md \
   tests/coated-wire/README.md \
   tests/coated-wire/m0-bare-dipole.nec \
   tests/coated-wire/m0-baseline.json \
@@ -67,6 +68,12 @@ EXTRA_DIST = \
   tests/coated-wire/m4-vswr.png \
   tests/coated-wire/m4-power.png \
   tests/coated-wire/m4-openems.png \
+  tests/coated-wire/m5-continuous-source.nec \
+  tests/coated-wire/m5_feed.py \
+  tests/coated-wire/m5-acceptance.json \
+  tests/coated-wire/m5-impedance.png \
+  tests/coated-wire/m5-current.png \
+  tests/coated-wire/m5-pattern.png \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -131,6 +138,7 @@ EXTRA_DIST = \
   tools/coated_wire_openems.py \
   tools/coated_wire_m3_acceptance.py \
   tools/coated_wire_m4_acceptance.py \
+  tools/coated_wire_m5_acceptance.py \
   tools/coated_wire_m1_analyze.py \
   examples/dielectric-r1/README.md \
   examples/dielectric-r1/run.py \
@@ -319,7 +327,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \

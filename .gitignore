@@ -30,10 +30,15 @@
 /tests/*.log
 /tests/*.trs
 /tests/__pycache__/
+/tests/**/*.log
+/tests/**/*.trs
+/tests/**/__pycache__/
 /tests/.deps/
 /tests/.dirstamp
 /tests/*.o
 /tests/vie_kernel_test
+/tests/dense_backend_test
+/tests/concurrency_test
 
 /tests/vie_iterative_test
 /tools/__pycache__/

@@ -123,3 +123,22 @@ python3 tools/coated_wire_m4_acceptance.py \
 
 See `docs/COATED-WIRE-M4-RESULTS.md` for the per-frequency material semantics,
 power derivation, OpenEMS comparison, and acceptance metrics.
+
+Run the M5 feed-model decision checks with:
+
+```sh
+python3 tests/coated-wire/m5_feed.py
+```
+
+The manual witness uses the certified continuous center-segment source:
+
+```sh
+./nec2c --backend builtin --jobs 1 --threads 1 \
+  --result-json /tmp/m5-continuous.json \
+  -i tests/coated-wire/m5-continuous-source.nec \
+  -o /tmp/m5-continuous.out
+```
+
+See `docs/COATED-WIRE-M5-RESULTS.md` for the 1--2 mm physical-gap convergence,
+zero-distance reference-plane decision, current and pattern overlays, and the
+scope boundary carried into M6.
