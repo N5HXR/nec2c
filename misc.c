@@ -20,6 +20,7 @@ void usage(void)
 	  " [--result-json <file>] [--timing-json <file>] [--backend <name>]"
 	  " [--fft-backend <name>]"
 	  " [--jobs <count>] [--threads <count>] [--validate-only]"
+	  " [--coated-wire-junctions <policy>]"
 	  "\n       --capabilities-json: write machine capabilities and exit."
 	  "\n       --result-json file: atomically write result schema version 1."
 	  "\n       --timing-json file: atomically write timing schema version 1."
@@ -28,6 +29,7 @@ void usage(void)
 	  "\n       --jobs auto|N: concurrent frequency jobs (default auto)."
 	  "\n       --threads auto|N: numerical-library threads per job (default auto)."
 	  "\n       --validate-only: validate without solving (requires --result-json)."
+	  "\n       --coated-wire-junctions strict|experimental: junction policy (default strict)."
 	  "\n       -s dense|gmres|fft: DF solver (default dense; FFT requires uniform cubes/material).\n       -r tolerance: GMRES relative residual target (default 1e-12).\n       -n iterations: GMRES iteration limit (default 300)."
 	  "\n       -h: print this usage information and exit."
 	  "\n       -v: print nec2c version number and exit.\n");

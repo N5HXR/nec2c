@@ -340,11 +340,19 @@ void result_json_job_end(const dielectric_model *model)
      job->coated_wires->finalized)
   {
     const coated_wire_model *coated = job->coated_wires;
+    int coating_has_loss = 0;
+    for(i = 0; i < coated->domain_count; ++i)
+      if(coated->domains[i].loss_tangent != 0.0 ||
+         coated->domains[i].conductivity_s_per_m != 0.0)
+        coating_has_loss = 1;
     fprintf(f, ",\"coated_wires\":{\"operator_status\":\"%s\",\"domains\":[",
         coated->operator_enabled ?
-        (coated->domains[0].loss_tangent != 0.0 ||
-         coated->domains[0].conductivity_s_per_m != 0.0 ?
-         "lossy-isolated" : "lossless-isolated") : "validation-only");
+        (coated->experimental_junction_count ? "experimental-junction" :
+         coating_has_loss ?
+         (coated->domain_count == 1 ? "lossy-isolated" :
+          "lossy-uniform-junction") :
+         (coated->domain_count == 1 ? "lossless-isolated" :
+          "lossless-uniform-junction")) : "validation-only");
     for(i = 0; i < coated->domain_count; ++i)
     {
       const coated_wire_domain *domain = &coated->domains[i];

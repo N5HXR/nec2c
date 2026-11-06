@@ -53,8 +53,12 @@ def main():
     source = TOOL.read_text()
     assert 'source.SetWeightFunction(["0", "0"' in source
     assert "directions=[False, True, False, False, True, True]" in source
-    assert "(b0 - a0) / 4" in source
+    assert "(arm_radius - a0) / 4" in source
     assert "axisymmetric_nf2ff_data" in source
+    positions = tool.axial_current_positions(2.0, 237.5, 0.5, 12)
+    assert all(abs((position + 237.5) / 0.5 -
+                   round((position + 237.5) / 0.5)) < 1e-12
+               for position in positions)
     print("M1 OpenEMS harness invariants passed")
 
 

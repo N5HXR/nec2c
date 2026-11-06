@@ -1,6 +1,6 @@
 # Coated-wire project plan and M0 contract
 
-Status: M0 through M5 accepted; M6 is next.
+Status: M0 through M6 accepted; M7 is in progress.
 
 Date: 2026-11-03  
 Branch: `codex/coated-wire`  

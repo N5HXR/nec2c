@@ -27,6 +27,8 @@ typedef struct
   size_t segment_count;
   int finalized;
   int operator_enabled;
+  int experimental_junctions_enabled;
+  int experimental_junction_count;
 } coated_wire_model;
 
 typedef struct
@@ -41,6 +43,8 @@ typedef struct
 
 void coated_wire_model_init(coated_wire_model *model);
 void coated_wire_model_clear(coated_wire_model *model);
+void coated_wire_allow_experimental_junctions(coated_wire_model *model,
+    int enabled);
 int coated_wire_add(coated_wire_model *model, int tag, int first, int last,
     double epsilon_r, double outer_radius_m, double loss_tangent,
     double conductivity_s_per_m, coated_wire_diagnostic *diagnostic);

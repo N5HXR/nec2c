@@ -142,3 +142,35 @@ The manual witness uses the certified continuous center-segment source:
 See `docs/COATED-WIRE-M5-RESULTS.md` for the 1--2 mm physical-gap convergence,
 zero-distance reference-plane decision, current and pattern overlays, and the
 scope boundary carried into M6.
+
+Run the M6 junction-policy checks with:
+
+```sh
+python3 tests/coated-wire/m6_junctions.py
+```
+
+The production witness splits one physically uniform coated wire across two
+tags. Both tags must designate exactly equal conductor radius, coating radius,
+permittivity, loss tangent, and conductivity:
+
+```sh
+./nec2c --result-json /tmp/m6-uniform.json \
+  -i tests/coated-wire/m6-uniform-junction.nec \
+  -o /tmp/m6-uniform.out
+```
+
+Coated/bare and unequal-coating contacts remain errors in the default `strict`
+policy. The research-only candidate can be exercised explicitly; its result is
+stamped `experimental-junction` and includes a
+`COATED_WIRE_EXPERIMENTAL_JUNCTION` warning:
+
+```sh
+./nec2c --coated-wire-junctions experimental \
+  --result-json /tmp/m6-experimental.json \
+  -i tests/coated-wire/m6-coated-bare-experimental.nec \
+  -o /tmp/m6-experimental.out
+```
+
+This escape hatch is not a claim of validity. See
+`docs/COATED-WIRE-M6-RESULTS.md` for the reciprocity evidence, asymmetric
+OpenEMS references, supported-topology matrix, and M6 acceptance decision.

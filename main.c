@@ -807,6 +807,7 @@ int main( int argc, char **argv )
   int dielectric_iterative = 0;
   int capabilities_json = 0;
   int validate_only = 0;
+  int coated_wire_experimental_junctions = 0;
   char result_path[NEC2C_PATH_MAX * 4 + 1] = "";
   char timing_path[NEC2C_PATH_MAX * 4 + 1] = "";
 
@@ -891,6 +892,7 @@ int main( int argc, char **argv )
       {"jobs", required_argument, NULL, 1005},
       {"threads", required_argument, NULL, 1006},
       {"fft-backend", required_argument, NULL, 1007},
+      {"coated-wire-junctions", required_argument, NULL, 1008},
       {NULL, 0, NULL, 0}
     };
   while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
@@ -1007,6 +1009,17 @@ int main( int argc, char **argv )
         if(!vie_fft_backend_set(optarg))
         {
           fprintf(stderr,"nec2c: FFTW backend is unavailable in this build\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1008:
+        if(!strcmp(optarg, "strict")) coated_wire_experimental_junctions = 0;
+        else if(!strcmp(optarg, "experimental"))
+          coated_wire_experimental_junctions = 1;
+        else
+        {
+          fprintf(stderr, "nec2c: --coated-wire-junctions requires strict or experimental\n");
           exit(EXIT_FAILURE);
         }
         break;
@@ -1140,6 +1153,8 @@ int main( int argc, char **argv )
   dielectric_model_init( &dielectric );
   dielectric_mesh_init( &dielectric_mesh );
   coated_wire_model_init( &coated_wires );
+  coated_wire_allow_experimental_junctions(&coated_wires,
+      coated_wire_experimental_junctions);
 
   /* Allocate some buffers */
   mreq = sizeof(complex double) * 11 * 10 * 4;
@@ -1372,6 +1387,16 @@ int main( int argc, char **argv )
 		  stop(-1);
 		}
 		result_json_set_coated_wires(&coated_wires);
+		if(coated_wires.experimental_junction_count)
+		{
+		  memset(&coated_error, 0, sizeof(coated_error));
+		  coated_error.code = "COATED_WIRE_EXPERIMENTAL_JUNCTION";
+		  snprintf(coated_error.message, sizeof(coated_error.message),
+		      "%d coated/bare or unequal-coating junction%s use an unvalidated source-domain approximation",
+		      coated_wires.experimental_junction_count,
+		      coated_wires.experimental_junction_count == 1 ? "" : "s");
+		  result_json_coated_wire_diagnostic(&coated_error, "warning");
+		}
 		coated_wire_print_summary(output_fp, &coated_wires);
 	  }
 	  if(coated_wires.domain_count && !result_json_validation_only() &&

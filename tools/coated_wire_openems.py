@@ -28,6 +28,9 @@ def parser():
     p.add_argument("--coordinates", choices=("cylindrical", "cartesian"),
                    default="cylindrical")
     p.add_argument("--material", choices=("bare", "coated"), default="bare")
+    p.add_argument("--negative-arm-material",
+                   choices=("same", "bare", "coated"), default="same",
+                   help="override material on the negative-z arm")
     p.add_argument("--feed", choices=("embedded", "split"), default="split")
     p.add_argument("--cylindrical-source",
                    choices=("axis", "ring-voltage"),
@@ -43,6 +46,12 @@ def parser():
     p.add_argument("--coating-radius-mm", type=float, default=4.0)
     p.add_argument("--epsilon-r", type=float, default=3.2)
     p.add_argument("--tan-delta", type=float, default=0.0)
+    p.add_argument("--negative-arm-coating-radius-mm", type=float,
+                   help="negative-arm coating radius; defaults to the common value")
+    p.add_argument("--negative-arm-epsilon-r", type=float,
+                   help="negative-arm relative permittivity; defaults to the common value")
+    p.add_argument("--negative-arm-tan-delta", type=float,
+                   help="negative-arm loss tangent; defaults to the common value")
     p.add_argument("--coating-end",
                    choices=("flush", "flat-overhang", "hemisphere",
                             "recessed"),
@@ -71,6 +80,13 @@ def parser():
 
 
 def validate(a, p):
+    negative_radius = (a.negative_arm_coating_radius_mm
+                       if a.negative_arm_coating_radius_mm is not None
+                       else a.coating_radius_mm)
+    negative_er = (a.negative_arm_epsilon_r
+                   if a.negative_arm_epsilon_r is not None else a.epsilon_r)
+    negative_loss = (a.negative_arm_tan_delta
+                     if a.negative_arm_tan_delta is not None else a.tan_delta)
     positive = ("mesh_mm", "radial_mesh_mm", "gap_mm", "length_mm",
                 "conductor_radius_mm", "coating_radius_mm", "air_mesh_mm",
                 "domain_radius_mm", "domain_half_height_mm",
@@ -80,8 +96,12 @@ def validate(a, p):
             p.error(f"--{name.replace('_', '-')} must be positive")
     if a.coating_radius_mm < a.conductor_radius_mm:
         p.error("coating radius must not be smaller than conductor radius")
+    if negative_radius < a.conductor_radius_mm:
+        p.error("negative-arm coating radius must not be smaller than conductor radius")
     if a.epsilon_r < 1 or a.tan_delta < 0:
         p.error("material must be passive with epsilon-r >= 1")
+    if negative_er < 1 or negative_loss < 0:
+        p.error("negative-arm material must be passive with epsilon-r >= 1")
     if a.length_mm <= 2 * a.gap_mm:
         p.error("dipole is too short for its feed gap")
     if a.current_samples < 0:
@@ -98,6 +118,10 @@ def validate(a, p):
                 "four no smaller than --angular-cells")
     if a.material != "coated" and a.coating_end != "flush":
         p.error("--coating-end variants require --material coated")
+    if a.negative_arm_material != "same" and a.coating_end != "flush":
+        p.error("asymmetric arms currently require --coating-end flush")
+    if a.negative_arm_material != "same" and a.feed != "split":
+        p.error("asymmetric arms require --feed split")
     if a.frequency_count < 3 or a.frequency_min_mhz >= a.frequency_max_mhz:
         p.error("invalid frequency sweep")
     if a.timesteps < 100 or a.threads < 1 or a.pml_cells < 4:
@@ -116,6 +140,11 @@ def axial_current_positions(gap, half, pitch, count):
     if not count:
         return np.array([], dtype=float)
     positive = np.linspace(gap/2 + pitch, half - pitch, count)
+    # Probe planes are observations, not mesh-refinement requests. Snap them
+    # to the existing uniform antenna lattice so a convenient sample count
+    # cannot introduce pathological sliver cells or change the FDTD solution.
+    positive = np.round((positive + half) / pitch) * pitch - half
+    positive = np.unique(positive)
     return np.concatenate((-positive[::-1], positive))
 
 
@@ -146,19 +175,37 @@ def build(a):
     grid.SetDeltaUnit(1e-3)
 
     a0 = a.conductor_radius_mm
-    b0 = a.coating_radius_mm
+    negative_material = (a.material if a.negative_arm_material == "same"
+                         else a.negative_arm_material)
+    negative_b0 = (a.negative_arm_coating_radius_mm
+                   if a.negative_arm_coating_radius_mm is not None
+                   else a.coating_radius_mm)
+    negative_er = (a.negative_arm_epsilon_r
+                   if a.negative_arm_epsilon_r is not None else a.epsilon_r)
+    negative_loss = (a.negative_arm_tan_delta
+                     if a.negative_arm_tan_delta is not None else a.tan_delta)
+    positive_b0 = a.coating_radius_mm
+    b0 = max(a0, positive_b0 if a.material == "coated" else a0,
+             negative_b0 if negative_material == "coated" else a0)
     gap = a.gap_mm
     half = a.length_mm / 2
 
     if cylindrical:
         radial_local = evenly_spaced(0, max(3*b0, 12.0), a.radial_mesh_mm)
         coating_radial = np.array([], dtype=float)
-        if a.material == "coated" and b0 > a0:
+        coating_boundaries = []
+        for arm_material, arm_radius in ((a.material, positive_b0),
+                                         (negative_material, negative_b0)):
+            if arm_material != "coated" or arm_radius <= a0:
+                continue
             # As with a PCB substrate, a dielectric layer needs several cells
             # through its thickness.  Treat the requested radial pitch as a
             # maximum and guarantee four coating cells for the reference.
-            coating_pitch = min(a.radial_mesh_mm, (b0 - a0) / 4)
-            coating_radial = evenly_spaced(a0, b0, coating_pitch)
+            coating_pitch = min(a.radial_mesh_mm, (arm_radius - a0) / 4)
+            coating_boundaries.extend(evenly_spaced(a0, arm_radius,
+                                                     coating_pitch))
+        if coating_boundaries:
+            coating_radial = np.asarray(coating_boundaries)
         # Keep the cylindrical Huygens surface on an actual Yee-grid plane.
         # Otherwise a nominal surface-radius study is confounded by the dump
         # machinery selecting a neighbouring radial plane.
@@ -210,17 +257,32 @@ def build(a):
 
     split = a.feed == "split"
     intervals = [(-half, -gap/2), (gap/2, half)] if split else [(-half, half)]
-    if a.material == "coated":
-        kappa = (2 * math.pi * center_hz * 8.8541878128e-12 *
-                 a.epsilon_r * a.tan_delta)
-        coating = csx.AddMaterial("coating", epsilon=a.epsilon_r, kappa=kappa)
-        for z0, z1 in intervals:
+    arm_intervals = [
+        ("negative", negative_material, negative_b0, negative_er,
+         negative_loss, -half, -gap/2),
+        ("positive", a.material, positive_b0, a.epsilon_r, a.tan_delta,
+         gap/2, half),
+    ] if split else [
+        ("common", a.material, positive_b0, a.epsilon_r, a.tan_delta,
+         -half, half),
+    ]
+    coatings = []
+    for name, arm_material, arm_radius, arm_er, arm_loss, z0, z1 in arm_intervals:
+        if arm_material == "coated":
+            kappa = (2 * math.pi * center_hz * 8.8541878128e-12 *
+                     arm_er * arm_loss)
+            coating = csx.AddMaterial(f"coating_{name}", epsilon=arm_er,
+                                      kappa=kappa)
             if cylindrical:
-                coating.AddBox([a0, -math.pi, z0], [b0, math.pi, z1],
+                coating.AddBox([a0, -math.pi, z0],
+                               [arm_radius, math.pi, z1],
                                priority=5)
             else:
-                box(coating, 0, b0, z0, z1, 5)
+                box(coating, 0, arm_radius, z0, z1, 5)
+            coatings.append(coating)
 
+    if a.material == "coated" and a.negative_arm_material == "same":
+        coating = coatings[0]
         # Only the two free antenna ends vary in this audit.  The dielectric
         # remains flush at the feed faces so cap effects are not conflated with
         # feed-gap filling.  Metal has higher priority than every cap primitive.
@@ -379,7 +441,7 @@ def mesh_record(csx, pml_cells):
 
 
 def specification(a, mesh):
-    return {
+    record = {
         "schema": "nec2c-coated-wire-openems-case",
         "schema_version": 1,
         "coordinates": a.coordinates,
@@ -424,6 +486,24 @@ def specification(a, mesh):
                       "end_criteria": a.end_criteria, "threads": a.threads},
         "mesh": mesh,
     }
+    if a.negative_arm_material != "same":
+        negative_is_coated = a.negative_arm_material == "coated"
+        record["negative_arm"] = {
+            "material": a.negative_arm_material,
+            "coating_radius_mm": ((a.negative_arm_coating_radius_mm
+                                    if a.negative_arm_coating_radius_mm is not None
+                                    else a.coating_radius_mm)
+                                   if negative_is_coated else None),
+            "epsilon_r": ((a.negative_arm_epsilon_r
+                            if a.negative_arm_epsilon_r is not None
+                            else a.epsilon_r)
+                           if negative_is_coated else 1.0),
+            "tan_delta": ((a.negative_arm_tan_delta
+                            if a.negative_arm_tan_delta is not None
+                            else a.tan_delta)
+                           if negative_is_coated else 0.0),
+        }
+    return record
 
 
 def resonance_from_rows(rows):
