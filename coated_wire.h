@@ -31,6 +31,7 @@ typedef struct
   int experimental_junction_count;
   int experimental_geometry;
   int experimental_geometry_warning_emitted;
+  int validity_warning_emitted;
   int qualified_bend_count;
   double qualified_bend_maximum_turn_deg;
   double qualified_bend_minimum_chord_ratio;
@@ -62,6 +63,11 @@ int coated_wire_domain_equal(const coated_wire_domain *left,
 void coated_wire_activate(const coated_wire_model *model, double wavelength_m);
 complex double coated_wire_relative_permittivity(
     const coated_wire_domain *domain, double frequency_mhz);
+double coated_wire_validity_metric(const coated_wire_domain *domain,
+    double frequency_mhz);
+double coated_wire_validity_warning_threshold(void);
+int coated_wire_check_validity(coated_wire_model *model, double frequency_mhz,
+    coated_wire_diagnostic *diagnostic);
 int coated_wire_has_loss(void);
 double coated_wire_absorbed_power(void);
 double coated_wire_radiated_power(size_t sample_count);

@@ -1,0 +1,3302 @@
+{
+  "schema": "nec2c-coated-wire-m8-geometry-analysis",
+  "method": "Paired bare/coated comparisons separate ordinary geometry and feed error from coating-model error.",
+  "cases": [
+    {
+      "name": "dogleg-b6",
+      "bare": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 251.50379838872573,
+            "resistance_ohm": 65.84308282865007
+          },
+          "directivity_dbi": 2.124115920793413,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "center-negative-near",
+              "point_mm": [
+                0,
+                0,
+                -8.78048780487803
+              ],
+              "magnitude_a": 0.015178058357495961,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-negative",
+              "point_mm": [
+                0,
+                0,
+                -29.268292682926806
+              ],
+              "magnitude_a": 0.01503568108057472,
+              "relative_magnitude": 0.99061953290943
+            },
+            {
+              "name": "center-negative-far",
+              "point_mm": [
+                0,
+                0,
+                -49.75609756097559
+              ],
+              "magnitude_a": 0.014730271915990243,
+              "relative_magnitude": 0.9704977783746253
+            },
+            {
+              "name": "center-positive-near",
+              "point_mm": [
+                0,
+                0,
+                8.780487804878067
+              ],
+              "magnitude_a": 0.015178058357478999,
+              "relative_magnitude": 0.9999999999988824
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                0,
+                0,
+                29.26829268292684
+              ],
+              "magnitude_a": 0.015035681080574693,
+              "relative_magnitude": 0.9906195329094283
+            },
+            {
+              "name": "center-positive-far",
+              "point_mm": [
+                0,
+                0,
+                49.75609756097564
+              ],
+              "magnitude_a": 0.014730271915964852,
+              "relative_magnitude": 0.9704977783729524
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 245.13057966942293,
+            "resistance_ohm": 63.264082657708826
+          },
+          "directivity_dbi": 2.1111545692222284,
+          "radiation_efficiency": 0.9939943136345205,
+          "current": [
+            {
+              "name": "center-negative-near",
+              "point_mm": [
+                0,
+                0,
+                -10
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.430756380034966e-14,
+                "im": -9.605863502116435e-15
+              },
+              "magnitude_a": 4.5336881493364186e-14,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-negative",
+              "point_mm": [
+                0,
+                0,
+                -30
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.4009907648426534e-14,
+                "im": -8.844368087934324e-15
+              },
+              "magnitude_a": 4.488980750791769e-14,
+              "relative_magnitude": 0.9901388456655993
+            },
+            {
+              "name": "center-negative-far",
+              "point_mm": [
+                0,
+                0,
+                -50
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.325888606795338e-14,
+                "im": -8.10900382791706e-15
+              },
+              "magnitude_a": 4.401235243566679e-14,
+              "relative_magnitude": 0.9707847338840175
+            },
+            {
+              "name": "center-positive-near",
+              "point_mm": [
+                0,
+                0,
+                10
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.430756194512324e-14,
+                "im": -9.605863872663211e-15
+              },
+              "magnitude_a": 4.53368797587689e-14,
+              "relative_magnitude": 0.9999999617398633
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                0,
+                0,
+                30
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.400990823197939e-14,
+                "im": -8.844369172406497e-15
+              },
+              "magnitude_a": 4.488980829369916e-14,
+              "relative_magnitude": 0.9901388629976575
+            },
+            {
+              "name": "center-positive-far",
+              "point_mm": [
+                0,
+                0,
+                50
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.3258886778713164e-14,
+                "im": -8.109001961437749e-15
+              },
+              "magnitude_a": 4.401235279037154e-14,
+              "relative_magnitude": 0.9707847417077747
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              261,
+              111,
+              318
+            ],
+            "cell_counts": [
+              260,
+              110,
+              317
+            ],
+            "total_cells": 9066200,
+            "minimum_steps_mm": [
+              2.0,
+              2.0,
+              2.0
+            ],
+            "maximum_steps_mm": [
+              29.62962962962979,
+              29.62962962962979,
+              29.62962962962979
+            ]
+          },
+          "mesh_pitch_mm": 2.0,
+          "wall_seconds": 508.541764196998,
+          "geometry": {
+            "points_mm": [
+              [
+                -159.09902576697317,
+                0,
+                -219.09902576697317
+              ],
+              [
+                0,
+                0,
+                -60.0
+              ],
+              [
+                0,
+                0,
+                60.0
+              ],
+              [
+                159.09902576697317,
+                0,
+                219.09902576697317
+              ]
+            ],
+            "conductors_mm": [
+              [
+                [
+                  -159.09902576697317,
+                  0,
+                  -219.09902576697317
+                ],
+                [
+                  0,
+                  0,
+                  -60.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  -60.0
+                ],
+                [
+                  0,
+                  0,
+                  -1.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  1.0
+                ],
+                [
+                  0,
+                  0,
+                  60.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  60.0
+                ],
+                [
+                  159.09902576697317,
+                  0,
+                  219.09902576697317
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              0,
+              0,
+              -1.0
+            ],
+            "feed_stop_mm": [
+              0,
+              0,
+              1.0
+            ],
+            "feed_direction": "z",
+            "maximum_turn_deg": 45.0,
+            "minimum_chord_outer_radius_ratio": 20.0,
+            "experimental_topology": false,
+            "current_samples": [
+              {
+                "name": "center-negative-near",
+                "point_mm": [
+                  0,
+                  0,
+                  -10
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-negative",
+                "point_mm": [
+                  0,
+                  0,
+                  -30
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-negative-far",
+                "point_mm": [
+                  0,
+                  0,
+                  -50
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive-near",
+                "point_mm": [
+                  0,
+                  0,
+                  10
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive",
+                "point_mm": [
+                  0,
+                  0,
+                  30
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive-far",
+                "point_mm": [
+                  0,
+                  0,
+                  50
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "coated": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 226.53323910414161,
+            "resistance_ohm": 55.37480430202762
+          },
+          "directivity_dbi": 2.0617970989798504,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "center-negative-near",
+              "point_mm": [
+                0,
+                0,
+                -8.78048780487803
+              ],
+              "magnitude_a": 0.018062904988627875,
+              "relative_magnitude": 0.9999999999958339
+            },
+            {
+              "name": "center-negative",
+              "point_mm": [
+                0,
+                0,
+                -29.268292682926806
+              ],
+              "magnitude_a": 0.017907943129706394,
+              "relative_magnitude": 0.9914209890882087
+            },
+            {
+              "name": "center-negative-far",
+              "point_mm": [
+                0,
+                0,
+                -49.7560975609756
+              ],
+              "magnitude_a": 0.01756268670853673,
+              "relative_magnitude": 0.9723068753071976
+            },
+            {
+              "name": "center-positive-near",
+              "point_mm": [
+                0,
+                0,
+                8.780487804878067
+              ],
+              "magnitude_a": 0.018062904988703127,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                0,
+                0,
+                29.26829268292684
+              ],
+              "magnitude_a": 0.017907943129706474,
+              "relative_magnitude": 0.9914209890882131
+            },
+            {
+              "name": "center-positive-far",
+              "point_mm": [
+                0,
+                0,
+                49.75609756097565
+              ],
+              "magnitude_a": 0.01756268670851779,
+              "relative_magnitude": 0.9723068753061491
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 220.50083523048062,
+            "resistance_ohm": 53.06220486492828
+          },
+          "directivity_dbi": 2.046336521907681,
+          "radiation_efficiency": 0.9913854239650882,
+          "current": [
+            {
+              "name": "center-negative-near",
+              "point_mm": [
+                0,
+                0,
+                -10
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -2.04236646167112e-14,
+                "im": -4.363699189787454e-14
+              },
+              "magnitude_a": 4.818000766159205e-14,
+              "relative_magnitude": 0.9999999936611731
+            },
+            {
+              "name": "center-negative",
+              "point_mm": [
+                0,
+                0,
+                -30
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -2.0928745588943415e-14,
+                "im": -4.288437443498692e-14
+              },
+              "magnitude_a": 4.7718779978189696e-14,
+              "relative_magnitude": 0.9904269839655687
+            },
+            {
+              "name": "center-negative-far",
+              "point_mm": [
+                0,
+                0,
+                -50
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -2.107441438748301e-14,
+                "im": -4.1802884089923656e-14
+              },
+              "magnitude_a": 4.681465646580079e-14,
+              "relative_magnitude": 0.9716614513195752
+            },
+            {
+              "name": "center-positive-near",
+              "point_mm": [
+                0,
+                0,
+                10
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -2.0423663757413643e-14,
+                "im": -4.363699263725654e-14
+              },
+              "magnitude_a": 4.818000796699678e-14,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                0,
+                0,
+                30
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -2.0928745304957244e-14,
+                "im": -4.288437378770325e-14
+              },
+              "magnitude_a": 4.7718779271930454e-14,
+              "relative_magnitude": 0.9904269693068074
+            },
+            {
+              "name": "center-positive-far",
+              "point_mm": [
+                0,
+                0,
+                50
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -2.1074415570016242e-14,
+                "im": -4.1802882152381725e-14
+              },
+              "magnitude_a": 4.681465526802112e-14,
+              "relative_magnitude": 0.9716614264590632
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              261,
+              111,
+              318
+            ],
+            "cell_counts": [
+              260,
+              110,
+              317
+            ],
+            "total_cells": 9066200,
+            "minimum_steps_mm": [
+              2.0,
+              2.0,
+              2.0
+            ],
+            "maximum_steps_mm": [
+              29.62962962962979,
+              29.62962962962979,
+              29.62962962962979
+            ]
+          },
+          "mesh_pitch_mm": 2.0,
+          "wall_seconds": 525.8549515499908,
+          "geometry": {
+            "points_mm": [
+              [
+                -159.09902576697317,
+                0,
+                -219.09902576697317
+              ],
+              [
+                0,
+                0,
+                -60.0
+              ],
+              [
+                0,
+                0,
+                60.0
+              ],
+              [
+                159.09902576697317,
+                0,
+                219.09902576697317
+              ]
+            ],
+            "conductors_mm": [
+              [
+                [
+                  -159.09902576697317,
+                  0,
+                  -219.09902576697317
+                ],
+                [
+                  0,
+                  0,
+                  -60.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  -60.0
+                ],
+                [
+                  0,
+                  0,
+                  -1.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  1.0
+                ],
+                [
+                  0,
+                  0,
+                  60.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  60.0
+                ],
+                [
+                  159.09902576697317,
+                  0,
+                  219.09902576697317
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              0,
+              0,
+              -1.0
+            ],
+            "feed_stop_mm": [
+              0,
+              0,
+              1.0
+            ],
+            "feed_direction": "z",
+            "maximum_turn_deg": 45.0,
+            "minimum_chord_outer_radius_ratio": 20.0,
+            "experimental_topology": false,
+            "current_samples": [
+              {
+                "name": "center-negative-near",
+                "point_mm": [
+                  0,
+                  0,
+                  -10
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-negative",
+                "point_mm": [
+                  0,
+                  0,
+                  -30
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-negative-far",
+                "point_mm": [
+                  0,
+                  0,
+                  -50
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive-near",
+                "point_mm": [
+                  0,
+                  0,
+                  10
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive",
+                "point_mm": [
+                  0,
+                  0,
+                  30
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive-far",
+                "point_mm": [
+                  0,
+                  0,
+                  50
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "sqrt_er_k0_b": 0.04960159521132816,
+      "direct_errors": {
+        "bare": {
+          "resonance_error_percent": 2.599928057893708,
+          "resistance_error_percent": 4.076562976333586,
+          "resistance_error_ohm": 2.5790001709412422,
+          "directivity_error_db": 0.012961351571184387,
+          "efficiency_error_percentage_points": 0.600568636547949,
+          "pattern_maximum_db_above_minus_40": 0.8497429305669826,
+          "current_maximum_normalized_delta": 0.00048068724383065753
+        },
+        "coated": {
+          "resonance_error_percent": 2.7357737068685273,
+          "resistance_error_percent": 4.358279952719912,
+          "resistance_error_ohm": 2.312599437099337,
+          "directivity_error_db": 0.015460577072169635,
+          "efficiency_error_percentage_points": 0.8614576034911781,
+          "pattern_maximum_db_above_minus_40": 1.0754769262030024,
+          "current_maximum_normalized_delta": 0.000994019781405675
+        }
+      },
+      "coating_effect": {
+        "nec": {
+          "resonance_shift_percent": -9.928501853474781,
+          "resistance_change_ohm": -10.468278526622449,
+          "directivity_change_db": -0.06231882181356241,
+          "efficiency_change_percentage_points": 0.0,
+          "pattern_change_db": 4.1708997340743394,
+          "current_change": 0.0018090969331967521
+        },
+        "openems": {
+          "resonance_shift_percent": -10.047601760725811,
+          "resistance_change_ohm": -10.201877792780543,
+          "directivity_change_db": -0.06481804731454766,
+          "efficiency_change_percentage_points": -0.26088896694322905,
+          "pattern_change_db": 4.396663193980288,
+          "current_change": 0.0008767174355576168
+        },
+        "resonance_shift_error_percentage_points": 0.11909990725103015,
+        "resistance_change_error_ohm": -0.26640073384190543,
+        "directivity_change_error_db": 0.002499225500985247,
+        "efficiency_change_error_percentage_points": 0.26088896694322905,
+        "pattern_change_error_db": 0.2257634599059486,
+        "current_change_error": 0.0009323794976391353
+      }
+    },
+    {
+      "name": "dogleg-b12",
+      "bare": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 251.50379838872573,
+            "resistance_ohm": 65.84308282865007
+          },
+          "directivity_dbi": 2.124115920793413,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "center-negative-near",
+              "point_mm": [
+                0,
+                0,
+                -8.78048780487803
+              ],
+              "magnitude_a": 0.015178058357495961,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-negative",
+              "point_mm": [
+                0,
+                0,
+                -29.268292682926806
+              ],
+              "magnitude_a": 0.01503568108057472,
+              "relative_magnitude": 0.99061953290943
+            },
+            {
+              "name": "center-negative-far",
+              "point_mm": [
+                0,
+                0,
+                -49.75609756097559
+              ],
+              "magnitude_a": 0.014730271915990243,
+              "relative_magnitude": 0.9704977783746253
+            },
+            {
+              "name": "center-positive-near",
+              "point_mm": [
+                0,
+                0,
+                8.780487804878067
+              ],
+              "magnitude_a": 0.015178058357478999,
+              "relative_magnitude": 0.9999999999988824
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                0,
+                0,
+                29.26829268292684
+              ],
+              "magnitude_a": 0.015035681080574693,
+              "relative_magnitude": 0.9906195329094283
+            },
+            {
+              "name": "center-positive-far",
+              "point_mm": [
+                0,
+                0,
+                49.75609756097564
+              ],
+              "magnitude_a": 0.014730271915964852,
+              "relative_magnitude": 0.9704977783729524
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 245.03251495241432,
+            "resistance_ohm": 63.19899534612705
+          },
+          "directivity_dbi": 2.1174514416125456,
+          "radiation_efficiency": 0.9942583607050239,
+          "current": [
+            {
+              "name": "center-negative-near",
+              "point_mm": [
+                0,
+                0,
+                -10
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.4297351178607444e-14,
+                "im": -9.71298844846481e-15
+              },
+              "magnitude_a": 4.534972399079056e-14,
+              "relative_magnitude": 0.999999962172613
+            },
+            {
+              "name": "center-negative",
+              "point_mm": [
+                0,
+                0,
+                -30
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.3972678146891004e-14,
+                "im": -9.075984048017162e-15
+              },
+              "magnitude_a": 4.489955355958373e-14,
+              "relative_magnitude": 0.9900733215105997
+            },
+            {
+              "name": "center-negative-far",
+              "point_mm": [
+                0,
+                0,
+                -50
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.320928909069641e-14,
+                "im": -8.366460626705874e-15
+              },
+              "magnitude_a": 4.4011820311611695e-14,
+              "relative_magnitude": 0.9704980488017364
+            },
+            {
+              "name": "center-positive-near",
+              "point_mm": [
+                0,
+                0,
+                10
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.429735308053246e-14,
+                "im": -9.71298778393921e-15
+              },
+              "magnitude_a": 4.534972570625219e-14,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                0,
+                0,
+                30
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.3972678388579104e-14,
+                "im": -9.075985146025859e-15
+              },
+              "magnitude_a": 4.489955401823379e-14,
+              "relative_magnitude": 0.9900733316242233
+            },
+            {
+              "name": "center-positive-far",
+              "point_mm": [
+                0,
+                0,
+                50
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.3209290080797805e-14,
+                "im": -8.366460880675392e-15
+              },
+              "magnitude_a": 4.401182133193766e-14,
+              "relative_magnitude": 0.9704980713007912
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              277,
+              129,
+              334
+            ],
+            "cell_counts": [
+              276,
+              128,
+              333
+            ],
+            "total_cells": 11764224,
+            "minimum_steps_mm": [
+              2.0,
+              2.0,
+              2.0
+            ],
+            "maximum_steps_mm": [
+              29.62962962962979,
+              29.62962962962979,
+              29.84364702951484
+            ]
+          },
+          "mesh_pitch_mm": 2.0,
+          "wall_seconds": 643.7426621819905,
+          "geometry": {
+            "points_mm": [
+              [
+                -159.09902576697317,
+                0,
+                -219.09902576697317
+              ],
+              [
+                0,
+                0,
+                -60.0
+              ],
+              [
+                0,
+                0,
+                60.0
+              ],
+              [
+                159.09902576697317,
+                0,
+                219.09902576697317
+              ]
+            ],
+            "conductors_mm": [
+              [
+                [
+                  -159.09902576697317,
+                  0,
+                  -219.09902576697317
+                ],
+                [
+                  0,
+                  0,
+                  -60.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  -60.0
+                ],
+                [
+                  0,
+                  0,
+                  -1.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  1.0
+                ],
+                [
+                  0,
+                  0,
+                  60.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  60.0
+                ],
+                [
+                  159.09902576697317,
+                  0,
+                  219.09902576697317
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              0,
+              0,
+              -1.0
+            ],
+            "feed_stop_mm": [
+              0,
+              0,
+              1.0
+            ],
+            "feed_direction": "z",
+            "maximum_turn_deg": 45.0,
+            "minimum_chord_outer_radius_ratio": 10.0,
+            "experimental_topology": false,
+            "current_samples": [
+              {
+                "name": "center-negative-near",
+                "point_mm": [
+                  0,
+                  0,
+                  -10
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-negative",
+                "point_mm": [
+                  0,
+                  0,
+                  -30
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-negative-far",
+                "point_mm": [
+                  0,
+                  0,
+                  -50
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive-near",
+                "point_mm": [
+                  0,
+                  0,
+                  10
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive",
+                "point_mm": [
+                  0,
+                  0,
+                  30
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive-far",
+                "point_mm": [
+                  0,
+                  0,
+                  50
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "coated": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 209.6366216754501,
+            "resistance_ohm": 48.43475067015294
+          },
+          "directivity_dbi": 2.021896611515153,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "center-negative-near",
+              "point_mm": [
+                0,
+                0,
+                -8.78048780487803
+              ],
+              "magnitude_a": 0.020651768608801975,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-negative",
+              "point_mm": [
+                0,
+                0,
+                -29.268292682926802
+              ],
+              "magnitude_a": 0.020482324142531372,
+              "relative_magnitude": 0.9917951595584708
+            },
+            {
+              "name": "center-negative-far",
+              "point_mm": [
+                0,
+                0,
+                -49.7560975609756
+              ],
+              "magnitude_a": 0.020099906963953116,
+              "relative_magnitude": 0.9732777538184477
+            },
+            {
+              "name": "center-positive-near",
+              "point_mm": [
+                0,
+                0,
+                8.780487804878067
+              ],
+              "magnitude_a": 0.020651768608781863,
+              "relative_magnitude": 0.9999999999990261
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                0,
+                0,
+                29.268292682926838
+              ],
+              "magnitude_a": 0.02048232414273526,
+              "relative_magnitude": 0.9917951595683434
+            },
+            {
+              "name": "center-positive-far",
+              "point_mm": [
+                0,
+                0,
+                49.75609756097564
+              ],
+              "magnitude_a": 0.020099906963973693,
+              "relative_magnitude": 0.9732777538194441
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 204.45189687548415,
+            "resistance_ohm": 46.64556118129868
+          },
+          "directivity_dbi": 2.008004999150613,
+          "radiation_efficiency": 0.9938264138464877,
+          "current": [
+            {
+              "name": "center-negative-near",
+              "point_mm": [
+                0,
+                0,
+                -10
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 7.829257387051053e-15,
+                "im": -4.828845477240771e-14
+              },
+              "magnitude_a": 4.891903653527488e-14,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-negative",
+              "point_mm": [
+                0,
+                0,
+                -30
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 7.119349578068953e-15,
+                "im": -4.7928653377264896e-14
+              },
+              "magnitude_a": 4.8454524587212247e-14,
+              "relative_magnitude": 0.9905044747206401
+            },
+            {
+              "name": "center-negative-far",
+              "point_mm": [
+                0,
+                0,
+                -50
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 6.413103898809113e-15,
+                "im": -4.7116280888321756e-14
+              },
+              "magnitude_a": 4.7550728978262305e-14,
+              "relative_magnitude": 0.9720291392896524
+            },
+            {
+              "name": "center-positive-near",
+              "point_mm": [
+                0,
+                0,
+                10
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 7.829257705478534e-15,
+                "im": -4.8288454529789785e-14
+              },
+              "magnitude_a": 4.8919036346747166e-14,
+              "relative_magnitude": 0.9999999961461278
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                0,
+                0,
+                30
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 7.119351061250493e-15,
+                "im": -4.792865632089063e-14
+              },
+              "magnitude_a": 4.845452771681278e-14,
+              "relative_magnitude": 0.9905045386957457
+            },
+            {
+              "name": "center-positive-far",
+              "point_mm": [
+                0,
+                0,
+                50
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 6.413104944576736e-15,
+                "im": -4.711628093540452e-14
+              },
+              "magnitude_a": 4.755072916595621e-14,
+              "relative_magnitude": 0.9720291431264799
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              277,
+              129,
+              334
+            ],
+            "cell_counts": [
+              276,
+              128,
+              333
+            ],
+            "total_cells": 11764224,
+            "minimum_steps_mm": [
+              2.0,
+              2.0,
+              2.0
+            ],
+            "maximum_steps_mm": [
+              29.62962962962979,
+              29.62962962962979,
+              29.84364702951484
+            ]
+          },
+          "mesh_pitch_mm": 2.0,
+          "wall_seconds": 687.7973364499921,
+          "geometry": {
+            "points_mm": [
+              [
+                -159.09902576697317,
+                0,
+                -219.09902576697317
+              ],
+              [
+                0,
+                0,
+                -60.0
+              ],
+              [
+                0,
+                0,
+                60.0
+              ],
+              [
+                159.09902576697317,
+                0,
+                219.09902576697317
+              ]
+            ],
+            "conductors_mm": [
+              [
+                [
+                  -159.09902576697317,
+                  0,
+                  -219.09902576697317
+                ],
+                [
+                  0,
+                  0,
+                  -60.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  -60.0
+                ],
+                [
+                  0,
+                  0,
+                  -1.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  1.0
+                ],
+                [
+                  0,
+                  0,
+                  60.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  60.0
+                ],
+                [
+                  159.09902576697317,
+                  0,
+                  219.09902576697317
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              0,
+              0,
+              -1.0
+            ],
+            "feed_stop_mm": [
+              0,
+              0,
+              1.0
+            ],
+            "feed_direction": "z",
+            "maximum_turn_deg": 45.0,
+            "minimum_chord_outer_radius_ratio": 10.0,
+            "experimental_topology": false,
+            "current_samples": [
+              {
+                "name": "center-negative-near",
+                "point_mm": [
+                  0,
+                  0,
+                  -10
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-negative",
+                "point_mm": [
+                  0,
+                  0,
+                  -30
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-negative-far",
+                "point_mm": [
+                  0,
+                  0,
+                  -50
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive-near",
+                "point_mm": [
+                  0,
+                  0,
+                  10
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive",
+                "point_mm": [
+                  0,
+                  0,
+                  30
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "center-positive-far",
+                "point_mm": [
+                  0,
+                  0,
+                  50
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "sqrt_er_k0_b": 0.09198278290788194,
+      "direct_errors": {
+        "bare": {
+          "resonance_error_percent": 2.6409896815400735,
+          "resistance_error_percent": 4.18374923215461,
+          "resistance_error_ohm": 2.6440874825230196,
+          "directivity_error_db": 0.006664479180867211,
+          "efficiency_error_percentage_points": 0.5741639294976064,
+          "pattern_maximum_db_above_minus_40": 0.7664400674846803,
+          "current_maximum_normalized_delta": 0.0005462113988302653
+        },
+        "coated": {
+          "resonance_error_percent": 2.535914256214289,
+          "resistance_error_percent": 3.8357122168605873,
+          "resistance_error_ohm": 1.7891894888542552,
+          "directivity_error_db": 0.013891612364540062,
+          "efficiency_error_percentage_points": 0.6173586153512267,
+          "pattern_maximum_db_above_minus_40": 0.11472006322098594,
+          "current_maximum_normalized_delta": 0.0012906848378306801
+        }
+      },
+      "coating_effect": {
+        "nec": {
+          "resonance_shift_percent": -16.646737338163565,
+          "resistance_change_ohm": -17.40833215849713,
+          "directivity_change_db": -0.10221930927825973,
+          "efficiency_change_percentage_points": 0.0,
+          "pattern_change_db": 7.251849440367714,
+          "current_change": 0.002779975446491778
+        },
+        "openems": {
+          "resonance_shift_percent": -16.56131966192772,
+          "resistance_change_ohm": -16.553434164828367,
+          "directivity_change_db": -0.10944644246193258,
+          "efficiency_change_percentage_points": -0.043194685853620296,
+          "pattern_change_db": 7.150082415126576,
+          "current_change": 0.0015310904879159981
+        },
+        "resonance_shift_error_percentage_points": -0.08541767623584562,
+        "resistance_change_error_ohm": -0.8548979936687644,
+        "directivity_change_error_db": 0.007227133183672851,
+        "efficiency_change_error_percentage_points": 0.043194685853620296,
+        "pattern_change_error_db": 0.10176702524113779,
+        "current_change_error": 0.00124888495857578
+      }
+    },
+    {
+      "name": "staged90-b6",
+      "bare": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 259.49611376690996,
+            "resistance_ohm": 45.511358384689466
+          },
+          "directivity_dbi": 2.0642603752802544,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "center-negative",
+              "point_mm": [
+                -51.29824561403507,
+                0,
+                0
+              ],
+              "magnitude_a": 0.021240628007887327,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                51.29824561403508,
+                0,
+                0
+              ],
+              "magnitude_a": 0.021240628007772152,
+              "relative_magnitude": 0.9999999999945776
+            },
+            {
+              "name": "outer-negative",
+              "point_mm": [
+                -110.0,
+                0,
+                -100.52729636050283
+              ],
+              "magnitude_a": 0.011546760061773034,
+              "relative_magnitude": 0.5436166980319674
+            },
+            {
+              "name": "outer-positive",
+              "point_mm": [
+                110.0,
+                0,
+                100.5272963605031
+              ],
+              "magnitude_a": 0.011546760061633164,
+              "relative_magnitude": 0.5436166980253824
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 249.13452409123897,
+            "resistance_ohm": 42.37279827210145
+          },
+          "directivity_dbi": 2.055739733301953,
+          "radiation_efficiency": 0.9884206850711803,
+          "current": [
+            {
+              "name": "center-negative",
+              "point_mm": [
+                -50,
+                0,
+                0
+              ],
+              "direction": "x",
+              "current_a": {
+                "re": -4.0407349686953335e-14,
+                "im": -1.8829476609632745e-15
+              },
+              "magnitude_a": 4.0451197764932185e-14,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                50,
+                0,
+                0
+              ],
+              "direction": "x",
+              "current_a": {
+                "re": -4.040734872472145e-14,
+                "im": -1.8829492992808193e-15
+              },
+              "magnitude_a": 4.04511968800048e-14,
+              "relative_magnitude": 0.9999999781235802
+            },
+            {
+              "name": "outer-negative",
+              "point_mm": [
+                -110,
+                0,
+                -100
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -2.2030052005990555e-14,
+                "im": -1.6509573586389781e-16
+              },
+              "magnitude_a": 2.2030670620492897e-14,
+              "relative_magnitude": 0.544623443501385
+            },
+            {
+              "name": "outer-positive",
+              "point_mm": [
+                110,
+                0,
+                100
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -2.2030051185850845e-14,
+                "im": -1.6509602923925714e-16
+              },
+              "magnitude_a": 2.2030669802574745e-14,
+              "relative_magnitude": 0.5446234232815104
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              258,
+              119,
+              359
+            ],
+            "cell_counts": [
+              257,
+              118,
+              358
+            ],
+            "total_cells": 10856708,
+            "minimum_steps_mm": [
+              1.5,
+              1.5,
+              1.5
+            ],
+            "maximum_steps_mm": [
+              29.62962962962979,
+              29.62962962962979,
+              29.62962962962979
+            ]
+          },
+          "mesh_pitch_mm": 1.5,
+          "wall_seconds": 868.5637380660046,
+          "geometry": {
+            "points_mm": [
+              [
+                -110.0,
+                0,
+                -189.05887450304573
+              ],
+              [
+                -110.0,
+                0,
+                -24.0
+              ],
+              [
+                -86.0,
+                0,
+                0
+              ],
+              [
+                86.0,
+                0,
+                0
+              ],
+              [
+                110.0,
+                0,
+                24.0
+              ],
+              [
+                110.0,
+                0,
+                189.05887450304573
+              ]
+            ],
+            "conductors_mm": [
+              [
+                [
+                  -110.0,
+                  0,
+                  -189.05887450304573
+                ],
+                [
+                  -110.0,
+                  0,
+                  -24.0
+                ]
+              ],
+              [
+                [
+                  -110.0,
+                  0,
+                  -24.0
+                ],
+                [
+                  -86.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  -86.0,
+                  0,
+                  0
+                ],
+                [
+                  -0.75,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  0.75,
+                  0,
+                  0
+                ],
+                [
+                  86.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  86.0,
+                  0,
+                  0
+                ],
+                [
+                  110.0,
+                  0,
+                  24.0
+                ]
+              ],
+              [
+                [
+                  110.0,
+                  0,
+                  24.0
+                ],
+                [
+                  110.0,
+                  0,
+                  189.05887450304573
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              -0.75,
+              0,
+              0
+            ],
+            "feed_stop_mm": [
+              0.75,
+              0,
+              0
+            ],
+            "feed_direction": "x",
+            "maximum_turn_deg": 45.0,
+            "minimum_chord_outer_radius_ratio": 5.65685424949238,
+            "experimental_topology": false,
+            "current_samples": [
+              {
+                "name": "center-negative",
+                "point_mm": [
+                  -50,
+                  0,
+                  0
+                ],
+                "direction": "x"
+              },
+              {
+                "name": "center-positive",
+                "point_mm": [
+                  50,
+                  0,
+                  0
+                ],
+                "direction": "x"
+              },
+              {
+                "name": "outer-negative",
+                "point_mm": [
+                  -110,
+                  0,
+                  -100
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "outer-positive",
+                "point_mm": [
+                  110,
+                  0,
+                  100
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "coated": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 233.77546060361098,
+            "resistance_ohm": 38.10512872934324
+          },
+          "directivity_dbi": 2.0146057614214437,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "center-negative",
+              "point_mm": [
+                -51.29824561403507,
+                0,
+                0
+              ],
+              "magnitude_a": 0.025429467493257998,
+              "relative_magnitude": 0.9999999999928195
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                51.298245614035075,
+                0,
+                0
+              ],
+              "magnitude_a": 0.025429467493440595,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "outer-negative",
+              "point_mm": [
+                -110.00000000000001,
+                0,
+                -100.52729636050283
+              ],
+              "magnitude_a": 0.014078486688785731,
+              "relative_magnitude": 0.553628843876389
+            },
+            {
+              "name": "outer-positive",
+              "point_mm": [
+                110.00000000000001,
+                0,
+                100.5272963605031
+              ],
+              "magnitude_a": 0.014078486688968316,
+              "relative_magnitude": 0.553628843883569
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 224.34771863942694,
+            "resistance_ohm": 35.46498341543984
+          },
+          "directivity_dbi": 1.9994669362491957,
+          "radiation_efficiency": 0.9873555889225292,
+          "current": [
+            {
+              "name": "center-negative",
+              "point_mm": [
+                -50,
+                0,
+                0
+              ],
+              "direction": "x",
+              "current_a": {
+                "re": -2.403719599370945e-14,
+                "im": -3.520092908281625e-14
+              },
+              "magnitude_a": 4.262501846959671e-14,
+              "relative_magnitude": 0.9999999557091112
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                50,
+                0,
+                0
+              ],
+              "direction": "x",
+              "current_a": {
+                "re": -2.4037197408419687e-14,
+                "im": -3.5200930402841257e-14
+              },
+              "magnitude_a": 4.2625020357496746e-14,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "outer-negative",
+              "point_mm": [
+                -110,
+                0,
+                -100
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -1.4006688687564122e-14,
+                "im": -1.89534510036904e-14
+              },
+              "magnitude_a": 2.356736372485538e-14,
+              "relative_magnitude": 0.5528997646733189
+            },
+            {
+              "name": "outer-positive",
+              "point_mm": [
+                110,
+                0,
+                100
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -1.4006690608539504e-14,
+                "im": -1.8953450174466066e-14
+              },
+              "magnitude_a": 2.3567364199657892e-14,
+              "relative_magnitude": 0.5528997758123755
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              258,
+              119,
+              359
+            ],
+            "cell_counts": [
+              257,
+              118,
+              358
+            ],
+            "total_cells": 10856708,
+            "minimum_steps_mm": [
+              1.5,
+              1.5,
+              1.5
+            ],
+            "maximum_steps_mm": [
+              29.62962962962979,
+              29.62962962962979,
+              29.62962962962979
+            ]
+          },
+          "mesh_pitch_mm": 1.5,
+          "wall_seconds": 895.4174460250069,
+          "geometry": {
+            "points_mm": [
+              [
+                -110.0,
+                0,
+                -189.05887450304573
+              ],
+              [
+                -110.0,
+                0,
+                -24.0
+              ],
+              [
+                -86.0,
+                0,
+                0
+              ],
+              [
+                86.0,
+                0,
+                0
+              ],
+              [
+                110.0,
+                0,
+                24.0
+              ],
+              [
+                110.0,
+                0,
+                189.05887450304573
+              ]
+            ],
+            "conductors_mm": [
+              [
+                [
+                  -110.0,
+                  0,
+                  -189.05887450304573
+                ],
+                [
+                  -110.0,
+                  0,
+                  -24.0
+                ]
+              ],
+              [
+                [
+                  -110.0,
+                  0,
+                  -24.0
+                ],
+                [
+                  -86.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  -86.0,
+                  0,
+                  0
+                ],
+                [
+                  -0.75,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  0.75,
+                  0,
+                  0
+                ],
+                [
+                  86.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  86.0,
+                  0,
+                  0
+                ],
+                [
+                  110.0,
+                  0,
+                  24.0
+                ]
+              ],
+              [
+                [
+                  110.0,
+                  0,
+                  24.0
+                ],
+                [
+                  110.0,
+                  0,
+                  189.05887450304573
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              -0.75,
+              0,
+              0
+            ],
+            "feed_stop_mm": [
+              0.75,
+              0,
+              0
+            ],
+            "feed_direction": "x",
+            "maximum_turn_deg": 45.0,
+            "minimum_chord_outer_radius_ratio": 5.65685424949238,
+            "experimental_topology": false,
+            "current_samples": [
+              {
+                "name": "center-negative",
+                "point_mm": [
+                  -50,
+                  0,
+                  0
+                ],
+                "direction": "x"
+              },
+              {
+                "name": "center-positive",
+                "point_mm": [
+                  50,
+                  0,
+                  0
+                ],
+                "direction": "x"
+              },
+              {
+                "name": "outer-negative",
+                "point_mm": [
+                  -110,
+                  0,
+                  -100
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "outer-positive",
+                "point_mm": [
+                  110,
+                  0,
+                  100
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "sqrt_er_k0_b": 0.05046695045352613,
+      "direct_errors": {
+        "bare": {
+          "resonance_error_percent": 4.159034045348253,
+          "resistance_error_percent": 7.407016389225518,
+          "resistance_error_ohm": 3.138560112588017,
+          "directivity_error_db": 0.00852064197830149,
+          "efficiency_error_percentage_points": 1.1579314928819695,
+          "pattern_maximum_db_above_minus_40": 1.6233945568843708,
+          "current_maximum_normalized_delta": 0.0010067454694175915
+        },
+        "coated": {
+          "resonance_error_percent": 4.202290097425232,
+          "resistance_error_percent": 7.444372052783765,
+          "resistance_error_ohm": 2.6401453139034032,
+          "directivity_error_db": 0.01513882517224796,
+          "efficiency_error_percentage_points": 1.264441107747083,
+          "pattern_maximum_db_above_minus_40": 1.4971938176392108,
+          "current_maximum_normalized_delta": 0.0007290792030700821
+        }
+      },
+      "coating_effect": {
+        "nec": {
+          "resonance_shift_percent": -9.91176815326118,
+          "resistance_change_ohm": -7.406229655346223,
+          "directivity_change_db": -0.04965461385881076,
+          "efficiency_change_percentage_points": 0.0,
+          "pattern_change_db": 5.494485047036111,
+          "current_change": 0.01001214585818666
+        },
+        "openems": {
+          "resonance_shift_percent": -9.94916523200715,
+          "resistance_change_ohm": -6.907814856661609,
+          "directivity_change_db": -0.05627279705275723,
+          "efficiency_change_percentage_points": -0.10650961486511346,
+          "pattern_change_db": 5.558750982038745,
+          "current_change": 0.008276352530865116
+        },
+        "resonance_shift_error_percentage_points": 0.03739707874597009,
+        "resistance_change_error_ohm": -0.4984147986846139,
+        "directivity_change_error_db": 0.00661818319394647,
+        "efficiency_change_error_percentage_points": 0.10650961486511346,
+        "pattern_change_error_db": 0.06426593500263422,
+        "current_change_error": 0.0017357933273215442
+      }
+    },
+    {
+      "name": "staged90-b6-gap6-control",
+      "bare": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 259.49611376690996,
+            "resistance_ohm": 45.511358384689466
+          },
+          "directivity_dbi": 2.0642603752802544,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "center-negative",
+              "point_mm": [
+                -51.29824561403507,
+                0,
+                0
+              ],
+              "magnitude_a": 0.021240628007887327,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                51.29824561403508,
+                0,
+                0
+              ],
+              "magnitude_a": 0.021240628007772152,
+              "relative_magnitude": 0.9999999999945776
+            },
+            {
+              "name": "outer-negative",
+              "point_mm": [
+                -110.0,
+                0,
+                -100.52729636050283
+              ],
+              "magnitude_a": 0.011546760061773034,
+              "relative_magnitude": 0.5436166980319674
+            },
+            {
+              "name": "outer-positive",
+              "point_mm": [
+                110.0,
+                0,
+                100.5272963605031
+              ],
+              "magnitude_a": 0.011546760061633164,
+              "relative_magnitude": 0.5436166980253824
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 248.97062580267968,
+            "resistance_ohm": 42.06342592350238
+          },
+          "directivity_dbi": 2.0539431961410677,
+          "radiation_efficiency": 0.9892047122739065,
+          "current": [
+            {
+              "name": "center-negative",
+              "point_mm": [
+                -50,
+                0,
+                0
+              ],
+              "direction": "x",
+              "current_a": {
+                "re": -1.2350375848347606e-13,
+                "im": -7.218530942980985e-15
+              },
+              "magnitude_a": 1.237145324871721e-13,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                50,
+                0,
+                0
+              ],
+              "direction": "x",
+              "current_a": {
+                "re": -1.235037566725622e-13,
+                "im": -7.2185329850496e-15
+              },
+              "magnitude_a": 1.2371453079849472e-13,
+              "relative_magnitude": 0.99999998635021
+            },
+            {
+              "name": "outer-negative",
+              "point_mm": [
+                -110,
+                0,
+                -100
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -6.717987185626898e-14,
+                "im": -1.3126372376941224e-15
+              },
+              "magnitude_a": 6.719269453699935e-14,
+              "relative_magnitude": 0.5431269325126903
+            },
+            {
+              "name": "outer-positive",
+              "point_mm": [
+                110,
+                0,
+                100
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -6.717987338860505e-14,
+                "im": -1.31263856161744e-15
+              },
+              "magnitude_a": 6.71926960949064e-14,
+              "relative_magnitude": 0.5431269451054473
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              259,
+              119,
+              359
+            ],
+            "cell_counts": [
+              258,
+              118,
+              358
+            ],
+            "total_cells": 10898952,
+            "minimum_steps_mm": [
+              1.5,
+              1.5,
+              1.5
+            ],
+            "maximum_steps_mm": [
+              29.62962962962979,
+              29.62962962962979,
+              29.62962962962979
+            ]
+          },
+          "mesh_pitch_mm": 1.5,
+          "wall_seconds": 872.3089889309776,
+          "geometry": {
+            "points_mm": [
+              [
+                -110.0,
+                0,
+                -189.05887450304573
+              ],
+              [
+                -110.0,
+                0,
+                -24.0
+              ],
+              [
+                -86.0,
+                0,
+                0
+              ],
+              [
+                86.0,
+                0,
+                0
+              ],
+              [
+                110.0,
+                0,
+                24.0
+              ],
+              [
+                110.0,
+                0,
+                189.05887450304573
+              ]
+            ],
+            "conductors_mm": [
+              [
+                [
+                  -110.0,
+                  0,
+                  -189.05887450304573
+                ],
+                [
+                  -110.0,
+                  0,
+                  -24.0
+                ]
+              ],
+              [
+                [
+                  -110.0,
+                  0,
+                  -24.0
+                ],
+                [
+                  -86.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  -86.0,
+                  0,
+                  0
+                ],
+                [
+                  -3.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  3.0,
+                  0,
+                  0
+                ],
+                [
+                  86.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  86.0,
+                  0,
+                  0
+                ],
+                [
+                  110.0,
+                  0,
+                  24.0
+                ]
+              ],
+              [
+                [
+                  110.0,
+                  0,
+                  24.0
+                ],
+                [
+                  110.0,
+                  0,
+                  189.05887450304573
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              -3.0,
+              0,
+              0
+            ],
+            "feed_stop_mm": [
+              3.0,
+              0,
+              0
+            ],
+            "feed_direction": "x",
+            "maximum_turn_deg": 45.0,
+            "minimum_chord_outer_radius_ratio": 5.65685424949238,
+            "experimental_topology": false,
+            "current_samples": [
+              {
+                "name": "center-negative",
+                "point_mm": [
+                  -50,
+                  0,
+                  0
+                ],
+                "direction": "x"
+              },
+              {
+                "name": "center-positive",
+                "point_mm": [
+                  50,
+                  0,
+                  0
+                ],
+                "direction": "x"
+              },
+              {
+                "name": "outer-negative",
+                "point_mm": [
+                  -110,
+                  0,
+                  -100
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "outer-positive",
+                "point_mm": [
+                  110,
+                  0,
+                  100
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "coated": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 233.77546060361098,
+            "resistance_ohm": 38.10512872934324
+          },
+          "directivity_dbi": 2.0146057614214437,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "center-negative",
+              "point_mm": [
+                -51.29824561403507,
+                0,
+                0
+              ],
+              "magnitude_a": 0.025429467493257998,
+              "relative_magnitude": 0.9999999999928195
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                51.298245614035075,
+                0,
+                0
+              ],
+              "magnitude_a": 0.025429467493440595,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "outer-negative",
+              "point_mm": [
+                -110.00000000000001,
+                0,
+                -100.52729636050283
+              ],
+              "magnitude_a": 0.014078486688785731,
+              "relative_magnitude": 0.553628843876389
+            },
+            {
+              "name": "outer-positive",
+              "point_mm": [
+                110.00000000000001,
+                0,
+                100.5272963605031
+              ],
+              "magnitude_a": 0.014078486688968316,
+              "relative_magnitude": 0.553628843883569
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 224.4489887174676,
+            "resistance_ohm": 35.28464233671307
+          },
+          "directivity_dbi": 1.9994942302544323,
+          "radiation_efficiency": 0.9842915783289905,
+          "current": [
+            {
+              "name": "center-negative",
+              "point_mm": [
+                -50,
+                0,
+                0
+              ],
+              "direction": "x",
+              "current_a": {
+                "re": -7.304584108364272e-14,
+                "im": -1.0778603499160535e-13
+              },
+              "magnitude_a": 1.302056997171336e-13,
+              "relative_magnitude": 0.9999999941743547
+            },
+            {
+              "name": "center-positive",
+              "point_mm": [
+                50,
+                0,
+                0
+              ],
+              "direction": "x",
+              "current_a": {
+                "re": -7.304583846812033e-14,
+                "im": -1.0778603768043461e-13
+              },
+              "magnitude_a": 1.302057004756658e-13,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "outer-negative",
+              "point_mm": [
+                -110,
+                0,
+                -100
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.2507768312673165e-14,
+                "im": -5.797495770387586e-14
+              },
+              "magnitude_a": 7.188884536345048e-14,
+              "relative_magnitude": 0.5521174963985991
+            },
+            {
+              "name": "outer-positive",
+              "point_mm": [
+                110,
+                0,
+                100
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": -4.2507773068506824e-14,
+                "im": -5.797495940149963e-14
+              },
+              "magnitude_a": 7.188884954462135e-14,
+              "relative_magnitude": 0.5521175285106406
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              259,
+              119,
+              359
+            ],
+            "cell_counts": [
+              258,
+              118,
+              358
+            ],
+            "total_cells": 10898952,
+            "minimum_steps_mm": [
+              1.5,
+              1.5,
+              1.5
+            ],
+            "maximum_steps_mm": [
+              29.62962962962979,
+              29.62962962962979,
+              29.62962962962979
+            ]
+          },
+          "mesh_pitch_mm": 1.5,
+          "wall_seconds": 885.7689291670104,
+          "geometry": {
+            "points_mm": [
+              [
+                -110.0,
+                0,
+                -189.05887450304573
+              ],
+              [
+                -110.0,
+                0,
+                -24.0
+              ],
+              [
+                -86.0,
+                0,
+                0
+              ],
+              [
+                86.0,
+                0,
+                0
+              ],
+              [
+                110.0,
+                0,
+                24.0
+              ],
+              [
+                110.0,
+                0,
+                189.05887450304573
+              ]
+            ],
+            "conductors_mm": [
+              [
+                [
+                  -110.0,
+                  0,
+                  -189.05887450304573
+                ],
+                [
+                  -110.0,
+                  0,
+                  -24.0
+                ]
+              ],
+              [
+                [
+                  -110.0,
+                  0,
+                  -24.0
+                ],
+                [
+                  -86.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  -86.0,
+                  0,
+                  0
+                ],
+                [
+                  -3.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  3.0,
+                  0,
+                  0
+                ],
+                [
+                  86.0,
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  86.0,
+                  0,
+                  0
+                ],
+                [
+                  110.0,
+                  0,
+                  24.0
+                ]
+              ],
+              [
+                [
+                  110.0,
+                  0,
+                  24.0
+                ],
+                [
+                  110.0,
+                  0,
+                  189.05887450304573
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              -3.0,
+              0,
+              0
+            ],
+            "feed_stop_mm": [
+              3.0,
+              0,
+              0
+            ],
+            "feed_direction": "x",
+            "maximum_turn_deg": 45.0,
+            "minimum_chord_outer_radius_ratio": 5.65685424949238,
+            "experimental_topology": false,
+            "current_samples": [
+              {
+                "name": "center-negative",
+                "point_mm": [
+                  -50,
+                  0,
+                  0
+                ],
+                "direction": "x"
+              },
+              {
+                "name": "center-positive",
+                "point_mm": [
+                  50,
+                  0,
+                  0
+                ],
+                "direction": "x"
+              },
+              {
+                "name": "outer-negative",
+                "point_mm": [
+                  -110,
+                  0,
+                  -100
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "outer-positive",
+                "point_mm": [
+                  110,
+                  0,
+                  100
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "sqrt_er_k0_b": 0.05048973112650064,
+      "direct_errors": {
+        "bare": {
+          "resonance_error_percent": 4.227602324690372,
+          "resistance_error_percent": 8.196984400313912,
+          "resistance_error_ohm": 3.4479324611870865,
+          "directivity_error_db": 0.010317179139186727,
+          "efficiency_error_percentage_points": 1.0795287726093505,
+          "pattern_maximum_db_above_minus_40": 1.406847317818304,
+          "current_maximum_normalized_delta": 0.0004897655192771522
+        },
+        "coated": {
+          "resonance_error_percent": 4.155274630300676,
+          "resistance_error_percent": 7.9935241109005295,
+          "resistance_error_ohm": 2.8204863926301726,
+          "directivity_error_db": 0.01511153116701136,
+          "efficiency_error_percentage_points": 1.5708421671009498,
+          "pattern_maximum_db_above_minus_40": 1.281231625682942,
+          "current_maximum_normalized_delta": 0.001511347477789915
+        }
+      },
+      "coating_effect": {
+        "nec": {
+          "resonance_shift_percent": -9.91176815326118,
+          "resistance_change_ohm": -7.406229655346223,
+          "directivity_change_db": -0.04965461385881076,
+          "efficiency_change_percentage_points": 0.0,
+          "pattern_change_db": 5.494485047036111,
+          "current_change": 0.01001214585818666
+        },
+        "openems": {
+          "resonance_shift_percent": -9.849208920190666,
+          "resistance_change_ohm": -6.778783586789309,
+          "directivity_change_db": -0.05444896588663539,
+          "efficiency_change_percentage_points": -0.4913133944915993,
+          "pattern_change_db": 5.561344522438322,
+          "current_change": 0.008990583405193209
+        },
+        "resonance_shift_error_percentage_points": -0.06255923307051425,
+        "resistance_change_error_ohm": -0.6274460685569139,
+        "directivity_change_error_db": 0.004794352027824633,
+        "efficiency_change_error_percentage_points": 0.4913133944915993,
+        "pattern_change_error_db": 0.06685947540221093,
+        "current_change_error": 0.001021562452993452
+      }
+    },
+    {
+      "name": "groundplane45-b6",
+      "bare": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 467.86331343266994,
+            "resistance_ohm": 51.611693861834986
+          },
+          "directivity_dbi": 1.8849880129278596,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "monopole-near",
+              "point_mm": [
+                0,
+                0,
+                34.739583333333336
+              ],
+              "magnitude_a": 0.018096390575040727,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "monopole-middle",
+              "point_mm": [
+                0,
+                0,
+                74.01041666666667
+              ],
+              "magnitude_a": 0.014179630026334879,
+              "relative_magnitude": 0.7835612282756539
+            },
+            {
+              "name": "monopole-far",
+              "point_mm": [
+                0,
+                0,
+                116.30208333333334
+              ],
+              "magnitude_a": 0.007399185522499088,
+              "relative_magnitude": 0.4088763166232908
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 439.6943045010056,
+            "resistance_ohm": 48.42194353223385
+          },
+          "directivity_dbi": 1.930645955919539,
+          "radiation_efficiency": 0.9942137229257937,
+          "current": [
+            {
+              "name": "monopole-near",
+              "point_mm": [
+                0,
+                0,
+                41.0
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 3.2313466176505814e-14,
+                "im": -1.1991094277482755e-13
+              },
+              "magnitude_a": 1.2418854332621891e-13,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "monopole-middle",
+              "point_mm": [
+                0,
+                0,
+                81.0
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 2.164604167815422e-14,
+                "im": -9.338230421227556e-14
+              },
+              "magnitude_a": 9.585825921810998e-14,
+              "relative_magnitude": 0.7718768305890275
+            },
+            {
+              "name": "monopole-far",
+              "point_mm": [
+                0,
+                0,
+                121.0
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 1.0434789766243033e-14,
+                "im": -5.1359680330606174e-14
+              },
+              "magnitude_a": 5.2408983973434794e-14,
+              "relative_magnitude": 0.42201142367671296
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              313,
+              313,
+              360
+            ],
+            "cell_counts": [
+              312,
+              312,
+              359
+            ],
+            "total_cells": 34946496,
+            "minimum_steps_mm": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "maximum_steps_mm": [
+              30.0,
+              30.0,
+              30.0
+            ]
+          },
+          "mesh_pitch_mm": 1.0,
+          "wall_seconds": 1466.4136134740256,
+          "geometry": {
+            "points_mm": null,
+            "conductors_mm": [
+              [
+                [
+                  0,
+                  0,
+                  6.0
+                ],
+                [
+                  0,
+                  0,
+                  151.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  102.53048327204938,
+                  0,
+                  -102.53048327204938
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  -102.53048327204938,
+                  0,
+                  -102.53048327204938
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  102.53048327204938,
+                  -102.53048327204938
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  -102.53048327204938,
+                  -102.53048327204938
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              0,
+              0,
+              0
+            ],
+            "feed_stop_mm": [
+              0,
+              0,
+              6.0
+            ],
+            "feed_direction": "z",
+            "maximum_turn_deg": 90.0,
+            "minimum_chord_outer_radius_ratio": 24.166666666666668,
+            "experimental_topology": true,
+            "radial_count": 4,
+            "radial_slope_deg": -45.0,
+            "current_samples": [
+              {
+                "name": "monopole-near",
+                "point_mm": [
+                  0,
+                  0,
+                  41.0
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "monopole-middle",
+                "point_mm": [
+                  0,
+                  0,
+                  81.0
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "monopole-far",
+                "point_mm": [
+                  0,
+                  0,
+                  121.0
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "coated": {
+        "nec": {
+          "resonance": {
+            "frequency_mhz": 414.2247402118025,
+            "resistance_ohm": 42.30564543750542
+          },
+          "directivity_dbi": 1.8590918409880683,
+          "radiation_efficiency": 1.0,
+          "current": [
+            {
+              "name": "monopole-near",
+              "point_mm": [
+                0,
+                0,
+                34.73958333333333
+              ],
+              "magnitude_a": 0.022189535505582534,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "monopole-middle",
+              "point_mm": [
+                0,
+                0,
+                74.01041666666666
+              ],
+              "magnitude_a": 0.01753805823985446,
+              "relative_magnitude": 0.790375185431086
+            },
+            {
+              "name": "monopole-far",
+              "point_mm": [
+                0,
+                0,
+                116.30208333333333
+              ],
+              "magnitude_a": 0.009369937191744686,
+              "relative_magnitude": 0.42226828900439844
+            }
+          ]
+        },
+        "openems": {
+          "resonance": {
+            "frequency_mhz": 390.29197543208846,
+            "resistance_ohm": 39.84854461808171
+          },
+          "directivity_dbi": 1.8936116235063203,
+          "radiation_efficiency": 0.9933499012858441,
+          "current": [
+            {
+              "name": "monopole-near",
+              "point_mm": [
+                0,
+                0,
+                41.0
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 1.536567813113321e-13,
+                "im": -7.919877339291987e-14
+              },
+              "magnitude_a": 1.7286657325782103e-13,
+              "relative_magnitude": 1.0
+            },
+            {
+              "name": "monopole-middle",
+              "point_mm": [
+                0,
+                0,
+                81.0
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 1.1750996016356778e-13,
+                "im": -6.564210474601816e-14
+              },
+              "magnitude_a": 1.346011762694907e-13,
+              "relative_magnitude": 0.7786420111928778
+            },
+            {
+              "name": "monopole-far",
+              "point_mm": [
+                0,
+                0,
+                121.0
+              ],
+              "direction": "z",
+              "current_a": {
+                "re": 6.475547276943966e-14,
+                "im": -3.835344733517954e-14
+              },
+              "magnitude_a": 7.52612661073811e-14,
+              "relative_magnitude": 0.4353720021691703
+            }
+          ],
+          "mesh": {
+            "line_counts": [
+              313,
+              313,
+              360
+            ],
+            "cell_counts": [
+              312,
+              312,
+              359
+            ],
+            "total_cells": 34946496,
+            "minimum_steps_mm": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "maximum_steps_mm": [
+              30.0,
+              30.0,
+              30.0
+            ]
+          },
+          "mesh_pitch_mm": 1.0,
+          "wall_seconds": 1523.3505983829964,
+          "geometry": {
+            "points_mm": null,
+            "conductors_mm": [
+              [
+                [
+                  0,
+                  0,
+                  6.0
+                ],
+                [
+                  0,
+                  0,
+                  151.0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  102.53048327204938,
+                  0,
+                  -102.53048327204938
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  -102.53048327204938,
+                  0,
+                  -102.53048327204938
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  102.53048327204938,
+                  -102.53048327204938
+                ]
+              ],
+              [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  -102.53048327204938,
+                  -102.53048327204938
+                ]
+              ]
+            ],
+            "feed_start_mm": [
+              0,
+              0,
+              0
+            ],
+            "feed_stop_mm": [
+              0,
+              0,
+              6.0
+            ],
+            "feed_direction": "z",
+            "maximum_turn_deg": 90.0,
+            "minimum_chord_outer_radius_ratio": 24.166666666666668,
+            "experimental_topology": true,
+            "radial_count": 4,
+            "radial_slope_deg": -45.0,
+            "current_samples": [
+              {
+                "name": "monopole-near",
+                "point_mm": [
+                  0,
+                  0,
+                  41.0
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "monopole-middle",
+                "point_mm": [
+                  0,
+                  0,
+                  81.0
+                ],
+                "direction": "z"
+              },
+              {
+                "name": "monopole-far",
+                "point_mm": [
+                  0,
+                  0,
+                  121.0
+                ],
+                "direction": "z"
+              }
+            ]
+          }
+        }
+      },
+      "sqrt_er_k0_b": 0.087796060089191,
+      "direct_errors": {
+        "bare": {
+          "resonance_error_percent": 6.406498479354283,
+          "resistance_error_percent": 6.587406652683736,
+          "resistance_error_ohm": 3.1897503296011394,
+          "directivity_error_db": -0.04565794299167947,
+          "efficiency_error_percentage_points": 0.5786277074206314,
+          "pattern_maximum_db_above_minus_40": 0.04041260245632117,
+          "current_maximum_normalized_delta": 0.013135107053422135
+        },
+        "coated": {
+          "resonance_error_percent": 6.132015589922979,
+          "resistance_error_percent": 6.166099271562286,
+          "resistance_error_ohm": 2.457100819423708,
+          "directivity_error_db": -0.03451978251825194,
+          "efficiency_error_percentage_points": 0.6650098714155894,
+          "pattern_maximum_db_above_minus_40": 0.03439978364955465,
+          "current_maximum_normalized_delta": 0.01310371316477188
+        }
+      },
+      "coating_effect": {
+        "nec": {
+          "resonance_shift_percent": -11.464582000953694,
+          "resistance_change_ohm": -9.306048424329568,
+          "directivity_change_db": -0.025896171939791213,
+          "efficiency_change_percentage_points": 0.0,
+          "pattern_change_db": 0.16416406068885436,
+          "current_change": 0.01339197238110762
+        },
+        "openems": {
+          "resonance_shift_percent": -11.235608140292419,
+          "resistance_change_ohm": -8.573398914152136,
+          "directivity_change_db": -0.03703433241321874,
+          "efficiency_change_percentage_points": -0.08638216399495802,
+          "pattern_change_db": 0.15825029460455653,
+          "current_change": 0.013360578492457365
+        },
+        "resonance_shift_error_percentage_points": -0.22897386066127545,
+        "resistance_change_error_ohm": -0.7326495101774313,
+        "directivity_change_error_db": 0.011138160473427527,
+        "efficiency_change_error_percentage_points": 0.08638216399495802,
+        "pattern_change_error_db": 0.0059137660842978335,
+        "current_change_error": 3.1393888650255164e-05
+      }
+    }
+  ]
+}

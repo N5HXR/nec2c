@@ -1,0 +1,77 @@
+{
+  "schema": "nec2c-coated-wire-m8-nec-thickness",
+  "article": {
+    "length_mm": 475,
+    "conductor_radius_mm": 2,
+    "segments": 95,
+    "epsilon_r": 3.2,
+    "tan_delta": 0.0,
+    "conductivity_s_per_m": 0.002269806113113656,
+    "free_end_geometry": "reduced-operator flush convention"
+  },
+  "cases": [
+    {
+      "outer_radius_mm": 2.0,
+      "thickness_mm": 0.0,
+      "radius_ratio_b_over_a": 1.0,
+      "resonance_mhz": 295.9527092725061,
+      "resistance_ohm": 72.26016700225614,
+      "k0_b": 0.012405420249237905,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 72.26004777978943,
+          "im": -1.1359389505888563e-05
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.006919452939246931,
+          "air_radiated_w": 0.006919551001569096,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": 0,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": 9.80623221652488e-08,
+          "balance_defect_relative": 1.4171976170116315e-05,
+          "angular_quadrature": {
+            "theta_count": 3896,
+            "phi_count": 1
+          }
+        },
+        "radiation_efficiency": 1.0000141719761702
+      },
+      "resonance_shift_from_zero_thickness_percent": 0.0
+    },
+    {
+      "outer_radius_mm": 6.0,
+      "thickness_mm": 4.0,
+      "radius_ratio_b_over_a": 3.0,
+      "resonance_mhz": 265.15574538313723,
+      "resistance_ohm": 62.10672484126663,
+      "k0_b": 0.03334352094018815,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 62.10627273806921,
+          "im": -0.0001457486238592376
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.008050716585520708,
+          "air_radiated_w": 0.007784293415860922,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": 0.0002822917364569719,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": 1.5868566797186542e-05,
+          "balance_defect_relative": 0.0019710750749475287,
+          "angular_quadrature": {
+            "theta_count": 3896,
+            "phi_count": 1
+          }
+        },
+        "radiation_efficiency": 0.9669068999225547
+      },
+      "resonance_shift_from_zero_thickness_percent": -10.406042223797252
+    }
+  ],
+  "note": "This is the reduced model's prediction, not independent accuracy evidence. OpenEMS comparison supplies the error curve."
+}

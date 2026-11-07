@@ -226,6 +226,55 @@ See `docs/COATED-WIRE-M7-RESULTS.md` for the independent Cartesian OpenEMS
 comparison, convergence record, topology support matrix and acceptance
 decision.
 
+## M8 thickness/permittivity envelope
+
+Run the retained validity, loss, mesh-refinement, endpoint and warning-policy
+checks with:
+
+```sh
+python3 tests/coated-wire/m8_validity.py
+```
+
+M8 uses `sqrt(ER)*k0*b`, where `b` is coating outer radius, rather than a fixed
+thickness/conductor-radius ratio.  NEC2C warns and continues above 0.12.  The
+largest tested point meeting 1% in both resonance and resistance is 0.1091;
+the first failing point is 0.1276.  Each JSON material evaluation records the
+metric and status, and the job records the warning policy.
+
+The convention is flush dielectric and metal at a free wire end.  A thick,
+extended-flat printed cap shifted the reference resonance by 2.178%, which is
+reported as physical endpoint sensitivity rather than reduced-operator error.
+The straight-wire envelope was also transferred to a 45-degree dogleg at
+`b=6` and `12 mm`, a 90-degree route staged through two 45-degree transitions,
+and an experimental ground plane with four 45-degree down-sloped radials.
+Paired bare/coated
+Cartesian OpenEMS references isolate coating error from ordinary geometry and
+feed error.  The worst refined coating-effect errors were 0.229 percentage
+point in resonance shift, 0.855 ohm in resistance change, 0.226 dB in pattern
+change, and 0.0018 in normalized-current change.  The 45-degree ground-plane
+reference has a roughly plus or minus 0.5-point resonance-shift uncertainty
+from non-monotonic 2, 1.5, and 1 mm Cartesian-grid results.  The ground-plane
+junction remains experimental; this evidence does not override the M6
+topology policy.
+See `docs/COATED-WIRE-M8-RESULTS.md` for the full table and reproduction notes.
+
+For manual acceptance, compare the quiet in-envelope article with the
+warn-and-continue article:
+
+```sh
+./nec2c --result-json /tmp/m8-within.json \
+  -i tests/coated-wire/m8-within-envelope.nec \
+  -o /tmp/m8-within.out
+./nec2c --result-json /tmp/m8-warning.json \
+  -i tests/coated-wire/m8-warning-envelope.nec \
+  -o /tmp/m8-warning.out
+```
+
+The first result should contain `within-reference-envelope` and no M8 warning.
+The second should complete normally, contain
+`warning-outside-reference-envelope`, and emit exactly one
+`COATED_WIRE_VALIDITY_ENVELOPE_EXCEEDED` diagnostic.
+
 ### M7 bend-envelope addendum
 
 The practical bend study keeps the centerline length fixed at 474 mm while

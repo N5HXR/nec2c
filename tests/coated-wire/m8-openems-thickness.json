@@ -1,0 +1,635 @@
+{
+  "schema": "nec2c-coated-wire-m8-thickness-evidence",
+  "article": {
+    "length_mm": 475,
+    "conductor_radius_mm": 2,
+    "feed_gap_mm": 2,
+    "coating_end": "flush",
+    "loss_tangent": 0
+  },
+  "interpretation": {
+    "strict_reference_band_percent": 1.0,
+    "candidate_engineering_band_percent": 5.0,
+    "note": "No cutoff is inferred until the reference grid spans thickness, permittivity, loss, and end geometry."
+  },
+  "cases": [
+    {
+      "key": "er10-b12mm",
+      "source": "openems-run",
+      "epsilon_r": 10.0,
+      "outer_radius_mm": 12.0,
+      "mesh": {
+        "cell_counts": [
+          163,
+          8,
+          638
+        ],
+        "line_counts": [
+          164,
+          9,
+          639
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026294,
+          1.000000000000001,
+          12.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 831952
+      },
+      "wall_seconds": 194.14632234501187,
+      "resonance": {
+        "frequency_mhz": 223.0871274786528,
+        "resistance_ohm": 44.626274390279924
+      },
+      "directivity_db": 2.049320680863643,
+      "reference_directory": "/tmp/m8-er10-b12",
+      "thickness_mm": 10.0,
+      "radius_ratio_b_over_a": 6.0,
+      "k0_b_at_openems_resonance": 0.05610672547051617,
+      "sqrt_er_k0_b": 0.1774250445406135,
+      "nec": {
+        "frequency_mhz": 226.3098109671823,
+        "resistance_ohm": 46.73320222855184,
+        "directivity_db": 1.9937377041042454,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 1.4445851380814778,
+        "resistance_ohm": 2.1069278382719148,
+        "resistance_percent": 4.721272091516626,
+        "directivity_db": -0.055582976759397607,
+        "maximum_pattern_db_above_minus_40_db": 0.17383564775944294
+      }
+    },
+    {
+      "key": "er10-b6mm",
+      "source": "openems-run",
+      "epsilon_r": 10.0,
+      "outer_radius_mm": 6.0,
+      "mesh": {
+        "cell_counts": [
+          128,
+          8,
+          642
+        ],
+        "line_counts": [
+          129,
+          9,
+          643
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026305,
+          1.000000000000001,
+          6.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 657408
+      },
+      "wall_seconds": 147.23093611598597,
+      "resonance": {
+        "frequency_mhz": 252.73392524714941,
+        "resistance_ohm": 56.1806413806108
+      },
+      "directivity_db": 2.051913560350376,
+      "reference_directory": "/tmp/m8-er10-b6",
+      "thickness_mm": 4.0,
+      "radius_ratio_b_over_a": 3.0,
+      "k0_b_at_openems_resonance": 0.03178146834645279,
+      "sqrt_er_k0_b": 0.10050182735933615,
+      "nec": {
+        "frequency_mhz": 254.96722616334387,
+        "resistance_ohm": 56.67029810084446,
+        "directivity_db": 2.048533101156892,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 0.8836569582063358,
+        "resistance_ohm": 0.48965672023366125,
+        "resistance_percent": 0.8715755253065671,
+        "directivity_db": -0.0007875797067509183,
+        "maximum_pattern_db_above_minus_40_db": 0.4755543190880296
+      }
+    },
+    {
+      "key": "er10-b8mm",
+      "source": "openems-run",
+      "epsilon_r": 10.0,
+      "outer_radius_mm": 8.0,
+      "mesh": {
+        "cell_counts": [
+          140,
+          8,
+          640
+        ],
+        "line_counts": [
+          141,
+          9,
+          641
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.339283954702629,
+          1.000000000000001,
+          8.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 716800
+      },
+      "wall_seconds": 279.8479189570062,
+      "resonance": {
+        "frequency_mhz": 240.59131699484152,
+        "resistance_ohm": 51.656360382030364
+      },
+      "directivity_db": 2.0450803185492643,
+      "reference_directory": "/tmp/m8-er10-b8",
+      "thickness_mm": 6.0,
+      "radius_ratio_b_over_a": 4.0,
+      "k0_b_at_openems_resonance": 0.04033936912387501,
+      "sqrt_er_k0_b": 0.12756428580571602,
+      "nec": {
+        "frequency_mhz": 243.41505038617734,
+        "resistance_ohm": 52.6222410173003,
+        "directivity_db": 2.025893359119755,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 1.1736638822241297,
+        "resistance_ohm": 0.965880635269933,
+        "resistance_percent": 1.8698193758264425,
+        "directivity_db": -0.02342732174388784,
+        "maximum_pattern_db_above_minus_40_db": 0.3500220785337085
+      }
+    },
+    {
+      "key": "er3.2-b12mm",
+      "source": "openems-run",
+      "epsilon_r": 3.2,
+      "outer_radius_mm": 12.0,
+      "mesh": {
+        "cell_counts": [
+          163,
+          8,
+          638
+        ],
+        "line_counts": [
+          164,
+          9,
+          639
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026294,
+          1.000000000000001,
+          12.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 831952
+      },
+      "wall_seconds": 158.81045375199756,
+      "resonance": {
+        "frequency_mhz": 242.44706335875702,
+        "resistance_ohm": 52.05241896481093
+      },
+      "directivity_db": 2.0272337051730562,
+      "reference_directory": "/tmp/m8-er3p2-b12",
+      "thickness_mm": 10.0,
+      "radius_ratio_b_over_a": 6.0,
+      "k0_b_at_openems_resonance": 0.060975776499270586,
+      "sqrt_er_k0_b": 0.10907678498656255,
+      "nec": {
+        "frequency_mhz": 244.446676027358,
+        "resistance_ohm": 52.30021979219406,
+        "directivity_db": 2.0257910755364925,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 0.8247625856544483,
+        "resistance_ohm": 0.2478008273831307,
+        "resistance_percent": 0.47606015687888803,
+        "directivity_db": -0.023529605327150538,
+        "maximum_pattern_db_above_minus_40_db": 0.3508559956122319
+      }
+    },
+    {
+      "key": "er3.2-b3mm",
+      "source": "openems-run",
+      "epsilon_r": 3.2,
+      "outer_radius_mm": 3.0,
+      "mesh": {
+        "cell_counts": [
+          118,
+          8,
+          646
+        ],
+        "line_counts": [
+          119,
+          9,
+          647
+        ],
+        "maximum_adjacent_step_ratio": [
+          2.0,
+          1.000000000000001,
+          3.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.25,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            3.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 609824
+      },
+      "wall_seconds": 155.09189764098846,
+      "resonance": {
+        "frequency_mhz": 283.9282953185612,
+        "resistance_ohm": 67.62052338638357
+      },
+      "directivity_db": 2.161660484575097,
+      "reference_directory": "/tmp/m8-er3p2-b3",
+      "thickness_mm": 1.0,
+      "radius_ratio_b_over_a": 1.5,
+      "k0_b_at_openems_resonance": 0.017852091130039004,
+      "sqrt_er_k0_b": 0.0319347914458306,
+      "nec": {
+        "frequency_mhz": 284.7080447893584,
+        "resistance_ohm": 67.79799134273487,
+        "directivity_db": 2.111001455361419,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 0.2746290114982397,
+        "resistance_ohm": 0.17746795635130752,
+        "resistance_percent": 0.2624468836735394,
+        "directivity_db": 0.06168077449777609,
+        "maximum_pattern_db_above_minus_40_db": 0.8273481319643246
+      }
+    },
+    {
+      "key": "er3.2-b4mm",
+      "source": "m1-retained-flush-8cell",
+      "epsilon_r": 3.2,
+      "outer_radius_mm": 4.0,
+      "mesh": {
+        "total_cells": 1267776,
+        "coating_radial_cells": 8
+      },
+      "wall_seconds": null,
+      "resonance": {
+        "frequency_mhz": 275.5996865656617,
+        "resistance_ohm": 64.08381371129923
+      },
+      "directivity_db": 2.16417356924318,
+      "reference_directory": "tests/coated-wire/m1-openems-caps.json",
+      "thickness_mm": 2.0,
+      "radius_ratio_b_over_a": 2.0,
+      "k0_b_at_openems_resonance": 0.023104569245603435,
+      "sqrt_er_k0_b": 0.041330709939216254,
+      "nec": {
+        "frequency_mhz": 276.642353945035,
+        "resistance_ohm": 64.63215578065912,
+        "directivity_db": 2.0933394693246785,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 0.37832676530451526,
+        "resistance_ohm": 0.5483420693598902,
+        "resistance_percent": 0.8556639151193535,
+        "directivity_db": 0.04401878846103546,
+        "maximum_pattern_db_above_minus_40_db": 0.7272144349936234
+      }
+    },
+    {
+      "key": "er3.2-b6mm",
+      "source": "openems-run",
+      "epsilon_r": 3.2,
+      "outer_radius_mm": 6.0,
+      "mesh": {
+        "cell_counts": [
+          128,
+          8,
+          642
+        ],
+        "line_counts": [
+          129,
+          9,
+          643
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026305,
+          1.000000000000001,
+          6.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 657408
+      },
+      "wall_seconds": 158.66333129201666,
+      "resonance": {
+        "frequency_mhz": 263.76818330010735,
+        "resistance_ohm": 59.68063979113703
+      },
+      "directivity_db": 2.115841056053784,
+      "reference_directory": "/tmp/m8-er3p2-b6",
+      "thickness_mm": 4.0,
+      "radius_ratio_b_over_a": 3.0,
+      "k0_b_at_openems_resonance": 0.033169034035126124,
+      "sqrt_er_k0_b": 0.05933457188043693,
+      "nec": {
+        "frequency_mhz": 265.03190060335197,
+        "resistance_ohm": 60.13756199460225,
+        "directivity_db": 2.068453215437766,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 0.4791014926189163,
+        "resistance_ohm": 0.4569222034652185,
+        "resistance_percent": 0.765612106479252,
+        "directivity_db": 0.019132534574123117,
+        "maximum_pattern_db_above_minus_40_db": 0.5872529968028566
+      }
+    },
+    {
+      "key": "er3.2-b8mm",
+      "source": "openems-run",
+      "epsilon_r": 3.2,
+      "outer_radius_mm": 8.0,
+      "mesh": {
+        "cell_counts": [
+          140,
+          8,
+          640
+        ],
+        "line_counts": [
+          141,
+          9,
+          641
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.339283954702629,
+          1.000000000000001,
+          8.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 716800
+      },
+      "wall_seconds": 149.77802697799052,
+      "resonance": {
+        "frequency_mhz": 255.0399328207406,
+        "resistance_ohm": 56.58466707603587
+      },
+      "directivity_db": 2.0654891286943435,
+      "reference_directory": "/tmp/m8-er3p2-b8",
+      "thickness_mm": 6.0,
+      "radius_ratio_b_over_a": 4.0,
+      "k0_b_at_openems_resonance": 0.04276193388809924,
+      "sqrt_er_k0_b": 0.07649487281851343,
+      "nec": {
+        "frequency_mhz": 256.58670286565695,
+        "resistance_ohm": 56.90710182095719,
+        "directivity_db": 2.0507552716225823,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 0.6064815136237911,
+        "resistance_ohm": 0.32243474492131696,
+        "resistance_percent": 0.5698270601964373,
+        "directivity_db": 0.0014345907589392581,
+        "maximum_pattern_db_above_minus_40_db": 0.4885959881855584
+      }
+    },
+    {
+      "key": "er6-b12mm",
+      "source": "openems-run",
+      "epsilon_r": 6.0,
+      "outer_radius_mm": 12.0,
+      "mesh": {
+        "cell_counts": [
+          163,
+          8,
+          638
+        ],
+        "line_counts": [
+          164,
+          9,
+          639
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026294,
+          1.000000000000001,
+          12.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 831952
+      },
+      "wall_seconds": 178.03239067699178,
+      "resonance": {
+        "frequency_mhz": 229.49426793669383,
+        "resistance_ohm": 46.8362295972015
+      },
+      "directivity_db": 2.0589284526967195,
+      "reference_directory": "/tmp/m8-er6-b12",
+      "thickness_mm": 10.0,
+      "radius_ratio_b_over_a": 6.0,
+      "k0_b_at_openems_resonance": 0.05771813028258783,
+      "sqrt_er_k0_b": 0.141379968099822,
+      "nec": {
+        "frequency_mhz": 232.13697432111206,
+        "resistance_ohm": 48.297329712811056,
+        "directivity_db": 2.0033894843169726,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 1.1515348109466528,
+        "resistance_ohm": 1.461100115609554,
+        "resistance_percent": 3.1195938020101677,
+        "directivity_db": -0.04593119654667044,
+        "maximum_pattern_db_above_minus_40_db": 0.22707771912265784
+      }
+    }
+  ]
+}

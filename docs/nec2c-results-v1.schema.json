@@ -91,6 +91,15 @@
             "observed_minimum_chord_outer_radius_ratio": {"type": "number", "minimum": 3.999999999}
           }
         },
+        "validity_policy": {
+          "type": "object",
+          "required": ["metric", "warning_threshold", "behavior"],
+          "properties": {
+            "metric": {"const": "sqrt(ER)*k0*b"},
+            "warning_threshold": {"const": 0.12},
+            "behavior": {"const": "warn-and-continue"}
+          }
+        },
         "domains": {
           "type": "array",
           "items": {

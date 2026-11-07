@@ -2705,6 +2705,12 @@ int main( int argc, char **argv )
 			  }
 			  else
 				result_json_execution_begin(save.fmhz,"driven-voltage",NULL);
+			  if(coated_wire_check_validity(&coated_wires, save.fmhz,
+			      &coated_error))
+			  {
+				coated_wire_print_diagnostic(output_fp, &coated_error);
+				result_json_coated_wire_diagnostic(&coated_error, "warning");
+			  }
 			  result_json_add_coated_evaluations(&coated_wires, save.fmhz);
 			  {
 				double solve_started = performance_now();

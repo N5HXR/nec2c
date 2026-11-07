@@ -12,6 +12,7 @@
 
 static const coated_wire_model *active_model;
 static double active_wavelength_m;
+static const double coated_wire_m8_warning_threshold = 0.12;
 
 typedef struct
 {
@@ -491,6 +492,44 @@ complex double coated_wire_relative_permittivity(
       domain->conductivity_s_per_m/
       (TP*frequency_mhz*1.0e6*epsilon0);
   return cmplx(domain->epsilon_r, -loss);
+}
+
+double coated_wire_validity_metric(const coated_wire_domain *domain,
+    double frequency_mhz)
+{
+  if(!domain || frequency_mhz <= 0.0) return NAN;
+  /* NEC uses MHz and CVEL in metres per microsecond, so f/CVEL is 1/metre. */
+  return sqrt(domain->epsilon_r)*TP*frequency_mhz/CVEL*
+      domain->outer_radius_m;
+}
+
+double coated_wire_validity_warning_threshold(void)
+{
+  return coated_wire_m8_warning_threshold;
+}
+
+int coated_wire_check_validity(coated_wire_model *model, double frequency_mhz,
+    coated_wire_diagnostic *diagnostic)
+{
+  double maximum = 0.0;
+  size_t domain;
+  if(!model || !model->operator_enabled || model->validity_warning_emitted)
+    return 0;
+  for(domain = 0; domain < model->domain_count; ++domain)
+  {
+    if(model->domains[domain].outer_radius_m <=
+       model->domains[domain].conductor_radius_m)
+      continue;
+    double metric = coated_wire_validity_metric(&model->domains[domain],
+        frequency_mhz);
+    if(metric > maximum) maximum = metric;
+  }
+  if(maximum <= coated_wire_m8_warning_threshold) return 0;
+  model->validity_warning_emitted = 1;
+  fail_value(diagnostic, "COATED_WIRE_VALIDITY_ENVELOPE_EXCEEDED", 0,
+      "sqrt(ER)*k0*outer_radius exceeds the M8 0.12 reference envelope; continuing with reduced-operator results",
+      maximum);
+  return 1;
 }
 
 int coated_wire_has_loss(void)

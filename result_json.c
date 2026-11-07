@@ -385,6 +385,10 @@ void result_json_job_end(const dielectric_model *model)
       fputc('}', f);
     }
     fputs("]", f);
+    fputs(",\"validity_policy\":{\"metric\":\"sqrt(ER)*k0*b\","
+        "\"warning_threshold\":", f);
+    json_number(f, coated_wire_validity_warning_threshold());
+    fputs(",\"behavior\":\"warn-and-continue\"}", f);
     if(coated->qualified_bend_count && !coated->experimental_geometry &&
        !coated->experimental_junction_count)
     {
@@ -790,6 +794,14 @@ void result_json_add_coated_evaluations(const coated_wire_model *model,
     json_number(f, domain->conductivity_s_per_m);
     fputs(",\"complex_relative_permittivity\":", f);
     json_complex(f, epsilon);
+    fputs(",\"validity_metric_sqrt_er_k0_b\":", f);
+    json_number(f, coated_wire_validity_metric(domain, frequency));
+    fputs(",\"validity_warning_threshold\":", f);
+    json_number(f, coated_wire_validity_warning_threshold());
+    fputs(",\"validity_status\":", f);
+    json_string(f, coated_wire_validity_metric(domain, frequency) <=
+        coated_wire_validity_warning_threshold() ?
+        "within-reference-envelope" : "warning-outside-reference-envelope");
     fputc('}', f);
   }
 }
