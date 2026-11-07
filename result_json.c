@@ -347,7 +347,11 @@ void result_json_job_end(const dielectric_model *model)
         coating_has_loss = 1;
     fprintf(f, ",\"coated_wires\":{\"operator_status\":\"%s\",\"domains\":[",
         coated->operator_enabled ?
-        (coated->experimental_junction_count ? "experimental-junction" :
+        (coated->experimental_geometry ? "experimental-geometry" :
+         coated->experimental_junction_count ? "experimental-junction" :
+         coated->qualified_bend_count ?
+         (coating_has_loss ? "lossy-qualified-bend" :
+          "lossless-qualified-bend") :
          coating_has_loss ?
          (coated->domain_count == 1 ? "lossy-isolated" :
           "lossy-uniform-junction") :
@@ -380,7 +384,21 @@ void result_json_job_end(const dielectric_model *model)
       json_number(f, domain->conductivity_s_per_m);
       fputc('}', f);
     }
-    fputs("]}", f);
+    fputs("]", f);
+    if(coated->qualified_bend_count && !coated->experimental_geometry &&
+       !coated->experimental_junction_count)
+    {
+      fprintf(f, ",\"bend_policy\":{\"status\":\"qualified\","
+          "\"validated_maximum_turn_deg\":45,"
+          "\"validated_minimum_chord_outer_radius_ratio\":4,"
+          "\"qualified_junction_count\":%d,\"observed_maximum_turn_deg\":",
+          coated->qualified_bend_count);
+      json_number(f, coated->qualified_bend_maximum_turn_deg);
+      fputs(",\"observed_minimum_chord_outer_radius_ratio\":", f);
+      json_number(f, coated->qualified_bend_minimum_chord_ratio);
+      fputc('}', f);
+    }
+    fputc('}', f);
   }
   if(session.validation_only)
   {

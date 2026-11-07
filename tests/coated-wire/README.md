@@ -174,3 +174,96 @@ stamped `experimental-junction` and includes a
 This escape hatch is not a claim of validity. See
 `docs/COATED-WIRE-M6-RESULTS.md` for the reciprocity evidence, asymmetric
 OpenEMS references, supported-topology matrix, and M6 acceptance decision.
+
+## M7 general geometry and mutual coupling
+
+Run the automated geometry, null-limit, reciprocity, power, backend and
+retained OpenEMS evidence checks with:
+
+```sh
+python3 tests/coated-wire/m7_geometry.py
+```
+
+The experimental manual witness is a uniformly coated, three-element Yagi. Its
+elements are separate straight wires, so it exercises mutual coupling without
+introducing a coating junction or sharp bend. The bare Cartesian reference
+failed the 1% convergence gate, so the article requires explicit opt-in:
+
+```sh
+./nec2c --coated-wire-junctions experimental \
+  --result-json /tmp/m7-yagi.json \
+  -i tests/coated-wire/m7-coated-yagi.nec \
+  -o /tmp/m7-yagi.out
+```
+
+Non-collinear connected coated wires inside the qualified bend envelope are
+supported by default.
+The initial coarse axis-aligned reference was outside the M7 budget, but later
+fine OpenEMS and MATLAB references corrected that result and the bend addendum
+qualified a conservative `X=45 degrees, Y=4 coating radii` envelope. Strict
+mode rejects bends outside that envelope with `COATED_WIRE_BEND_UNVALIDATED`.
+Run the accepted witness with:
+
+```sh
+./nec2c --result-json /tmp/m7-qualified-bend.json \
+  -i tests/coated-wire/m7-qualified-bend.nec \
+  -o /tmp/m7-qualified-bend.out
+```
+
+The accepted witness needs no experimental flag. Its
+`coated_wires.operator_status` is `lossless-qualified-bend`, and its
+`bend_policy` object reports the observed turns and chord/radius ratio. The
+older sharp 90-degree witness remains research-only:
+
+```sh
+./nec2c --coated-wire-junctions experimental \
+  --result-json /tmp/m7-bend.json \
+  -i tests/coated-wire/m7-coated-v.nec \
+  -o /tmp/m7-bend.out
+```
+
+See `docs/COATED-WIRE-M7-RESULTS.md` for the independent Cartesian OpenEMS
+comparison, convergence record, topology support matrix and acceptance
+decision.
+
+### M7 bend-envelope addendum
+
+The practical bend study keeps the centerline length fixed at 474 mm while
+varying the number of chords per 90-degree corner and the bend radius relative
+to the 4 mm coating radius.  Regenerate all 31 NEC cases and the representative
+MATLAB input with:
+
+```sh
+python3 tools/coated_wire_m7_bend_study.py \
+  --run-nec --write-matlab-config
+matlab -batch \
+  "run('/home/josh/homebrew/nec2c/tools/coated_wire_bend_matlab.m')"
+```
+
+The MATLAB command is deliberately stable; all runtime choices are read from
+`tests/coated-wire/m7-bend-matlab-config.json`.  This permits a narrowly scoped
+persistent execution approval without authorizing arbitrary MATLAB commands.
+
+OpenEMS pilots and selected refinements use the same generated centerlines:
+
+```sh
+/home/josh/opt/openEMS/venv/bin/python3 \
+  tools/coated_wire_m7_bend_openems_batch.py \
+  --stage pilot --material bare --mesh-mm 2 --threads 16
+```
+
+Rebuild the compact comparison record and figure, then check the retained
+evidence with:
+
+```sh
+python3 tools/coated_wire_m7_bend_analyze.py
+python3 tests/coated-wire/m7_bend_envelope.py
+```
+
+The retained OpenEMS record includes sharp-bend convergence, a 61.85-million-
+cell bare reference for the one-chord `R/b=4` candidate, and matched 2 mm and
+1 mm bare/coated pairs. The engineering bands in the analysis JSON distinguish
+high-confidence, "basically right," and qualitative agreement. They are
+reporting bands, not automatic promotion gates; the candidate met the
+high-confidence resonance, resistance, and coating-shift bands, but support
+is enforced by the default topology validator.

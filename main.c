@@ -1403,11 +1403,21 @@ int main( int argc, char **argv )
 	     (ain_num == 6 || ain_num == 8 || ain_num == 12 ||
 	      ain_num == 13 || ain_num == 18))
 	  {
-		if(!coated_wire_validate_isolated(&coated_wires, &data,
+		if(!coated_wire_validate_geometry(&coated_wires, &data,
 		    &coated_error))
 		{
 		  publish_coated_failure(&dielectric, &coated_error);
 		  stop(-1);
+		}
+		if(coated_wires.experimental_geometry &&
+		   !coated_wires.experimental_geometry_warning_emitted)
+		{
+		  memset(&coated_error, 0, sizeof(coated_error));
+		  coated_error.code = "COATED_WIRE_EXPERIMENTAL_GEOMETRY";
+		  snprintf(coated_error.message, sizeof(coated_error.message),
+		      "disconnected or non-collinear coated-wire geometry uses an unvalidated general-geometry approximation");
+		  result_json_coated_wire_diagnostic(&coated_error, "warning");
+		  coated_wires.experimental_geometry_warning_emitted = 1;
 		}
 		if(gnd.ksymp != 1)
 		{

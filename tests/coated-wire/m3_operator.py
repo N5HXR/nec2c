@@ -256,18 +256,6 @@ def main():
         if abs(directivity-reference["far_field"]["directivity_db"]) > 0.1:
             raise AssertionError("coated directivity misses OpenEMS by over 0.1 dB")
 
-        bent = """CM M3 BEND REJECTION
-CE
-GW 1 5 0 0 -0.25 0 0 0 0.001
-GW 1 5 0 0 0 0.25 0 0 0.001
-GE 0
-LD 7 1 0 0 2.5 0.002 0 0
-FR 0 1 0 0 300
-EX 0 1 3 0 1 0
-XQ
-EN
-"""
-        expect_error(root, "bend", bent, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED")
         grounded = """CM M3 GROUND REJECTION
 CE
 GW 1 11 0 0 0.1 0.5 0 0.1 0.001
@@ -292,7 +280,7 @@ EN
               f"shift {shift:.3f}%")
         print(f"M3 pattern: {pattern_error:.6f} dB maximum error above -40 dB, "
               f"{directivity:.6f} dBi sampled directivity")
-        print("M3 bend and ground gates passed")
+        print("M3 ground gate passed; bend policy is covered by M7")
 
 
 if __name__ == "__main__":

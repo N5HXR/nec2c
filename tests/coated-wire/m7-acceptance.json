@@ -1,0 +1,2156 @@
+{
+  "bare_convergence_1mm_to_half_mm_transverse": {
+    "current_maximum_normalized_delta": 0.007122042188622807,
+    "pattern_maximum_db_above_minus_40": 0.14978068326663418,
+    "resistance_ohm_coarse_to_fine": -0.3405053563805076,
+    "resonance_percent_coarse_to_fine": -1.486012819421345
+  },
+  "bare_convergence_2mm_to_1mm": {
+    "current_maximum_normalized_delta": 0.012207278232671176,
+    "pattern_maximum_db_above_minus_40": 0.29993298736875573,
+    "resistance_ohm_coarse_to_fine": 0.0430109897599813,
+    "resonance_percent_coarse_to_fine": 2.915683904837718
+  },
+  "comparison": {
+    "bare": {
+      "resistance_error_ohm": -0.529128498288987,
+      "resonance_error_percent": 3.0865927634523116
+    },
+    "coated": {
+      "current_maximum_normalized_delta": 0.0072036235289336115,
+      "directivity_error_db": 0.09639932016570008,
+      "pattern_maximum_db_above_minus_40": 0.29083424189563445,
+      "resistance_error_ohm": -0.7064611971648116,
+      "resonance_error_percent": 2.564247072966852
+    },
+    "coating_effect": {
+      "nec_resonance_shift_percent": -7.078165074873977,
+      "openems_resonance_shift_percent": -6.604926871403216,
+      "resistance_shift_error_ohm": -0.1773326988758246,
+      "shift_error_percentage_points": -0.4732382034707605
+    }
+  },
+  "decision": {
+    "reason": "bare Cartesian resonance failed the 1 percent reference-convergence gate",
+    "status": "experimental-only"
+  },
+  "nec": {
+    "bare": {
+      "current": [
+        {
+          "magnitude_a": 0.012819084668733258,
+          "relative_magnitude": 0.1764677870635486,
+          "x_mm": -120,
+          "z_mm": -120
+        },
+        {
+          "magnitude_a": 0.017801397703798478,
+          "relative_magnitude": 0.24505441227715002,
+          "x_mm": -120,
+          "z_mm": 0
+        },
+        {
+          "magnitude_a": 0.012819084668737003,
+          "relative_magnitude": 0.17646778706360017,
+          "x_mm": -120,
+          "z_mm": 120
+        },
+        {
+          "magnitude_a": 0.055247302147145336,
+          "relative_magnitude": 0.760535514280317,
+          "x_mm": 0,
+          "z_mm": -120
+        },
+        {
+          "magnitude_a": 0.07264263286826915,
+          "relative_magnitude": 1.0,
+          "x_mm": 0,
+          "z_mm": -60
+        },
+        {
+          "magnitude_a": 0.07264263286826915,
+          "relative_magnitude": 1.0,
+          "x_mm": 0,
+          "z_mm": 60
+        },
+        {
+          "magnitude_a": 0.05524730214716048,
+          "relative_magnitude": 0.7605355142805255,
+          "x_mm": 0,
+          "z_mm": 120
+        },
+        {
+          "magnitude_a": 0.045043684802698616,
+          "relative_magnitude": 0.6200723049835111,
+          "x_mm": 110,
+          "z_mm": -120
+        },
+        {
+          "magnitude_a": 0.06622229129648642,
+          "relative_magnitude": 0.9116174439405929,
+          "x_mm": 110,
+          "z_mm": 0
+        },
+        {
+          "magnitude_a": 0.0450436848027065,
+          "relative_magnitude": 0.6200723049836196,
+          "x_mm": 110,
+          "z_mm": 120
+        }
+      ],
+      "directivity_dbi": 7.976763186034574,
+      "frequency_mhz": 316.36105917377654,
+      "pattern": [
+        {
+          "phi_deg": 0,
+          "relative_db": -Infinity,
+          "theta_deg": 0
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -32.30742999725236,
+          "theta_deg": 5
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -25.07719154524201,
+          "theta_deg": 10
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -20.45559766110515,
+          "theta_deg": 15
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -16.956674957975178,
+          "theta_deg": 20
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -14.111853808592087,
+          "theta_deg": 25
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -11.712063944883544,
+          "theta_deg": 30
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -9.646535466735196,
+          "theta_deg": 35
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -7.850356836819458,
+          "theta_deg": 40
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -6.28299444431998,
+          "theta_deg": 45
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -4.918071418905986,
+          "theta_deg": 50
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -3.7379583710853397,
+          "theta_deg": 55
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -2.7306761283265404,
+          "theta_deg": 60
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -1.8880143863248167,
+          "theta_deg": 65
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -1.204338305770968,
+          "theta_deg": 70
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.6758090984590486,
+          "theta_deg": 75
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.29986782361172626,
+          "theta_deg": 80
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.0748957099873278,
+          "theta_deg": 85
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": 0.0,
+          "theta_deg": 90
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.07489571000482823,
+          "theta_deg": 95
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.29986782364679804,
+          "theta_deg": 100
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.6758090985118312,
+          "theta_deg": 105
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -1.2043383058416977,
+          "theta_deg": 110
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -1.8880143864138565,
+          "theta_deg": 115
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -2.7306761284344514,
+          "theta_deg": 120
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -3.7379583712128994,
+          "theta_deg": 125
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -4.918071419054359,
+          "theta_deg": 130
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -6.2829944444908294,
+          "theta_deg": 135
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -7.8503568370153065,
+          "theta_deg": 140
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -9.646535466959822,
+          "theta_deg": 145
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -11.712063945142827,
+          "theta_deg": 150
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -14.111853808895713,
+          "theta_deg": 155
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -16.956674958340294,
+          "theta_deg": 160
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -20.455597661566163,
+          "theta_deg": 165
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -25.077191545884535,
+          "theta_deg": 170
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -32.30742999841648,
+          "theta_deg": 175
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -232.28202036811442,
+          "theta_deg": 180
+        }
+      ],
+      "resistance_ohm": 12.703746579936684
+    },
+    "coated": {
+      "current": [
+        {
+          "magnitude_a": 0.012915010790050033,
+          "relative_magnitude": 0.16039737540222956,
+          "x_mm": -120,
+          "z_mm": -120
+        },
+        {
+          "magnitude_a": 0.0179443327692363,
+          "relative_magnitude": 0.22285880564243601,
+          "x_mm": -120,
+          "z_mm": 0
+        },
+        {
+          "magnitude_a": 0.012915010790054932,
+          "relative_magnitude": 0.1603973754022904,
+          "x_mm": -120,
+          "z_mm": 120
+        },
+        {
+          "magnitude_a": 0.06153822779314747,
+          "relative_magnitude": 0.7642711558963515,
+          "x_mm": 0,
+          "z_mm": -120
+        },
+        {
+          "magnitude_a": 0.0805188411447547,
+          "relative_magnitude": 0.9999999999998199,
+          "x_mm": 0,
+          "z_mm": -60
+        },
+        {
+          "magnitude_a": 0.0805188411447692,
+          "relative_magnitude": 1.0,
+          "x_mm": 0,
+          "z_mm": 60
+        },
+        {
+          "magnitude_a": 0.061538227793161974,
+          "relative_magnitude": 0.7642711558965317,
+          "x_mm": 0,
+          "z_mm": 120
+        },
+        {
+          "magnitude_a": 0.05106075460995268,
+          "relative_magnitude": 0.6341466653518743,
+          "x_mm": 110,
+          "z_mm": -120
+        },
+        {
+          "magnitude_a": 0.07452078821758495,
+          "relative_magnitude": 0.9255074608388858,
+          "x_mm": 110,
+          "z_mm": 0
+        },
+        {
+          "magnitude_a": 0.05106075460996242,
+          "relative_magnitude": 0.6341466653519953,
+          "x_mm": 110,
+          "z_mm": 120
+        }
+      ],
+      "directivity_dbi": 7.84291542943077,
+      "frequency_mhz": 293.9685011728369,
+      "pattern": [
+        {
+          "phi_deg": 0,
+          "relative_db": -Infinity,
+          "theta_deg": 0
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -31.86800388696153,
+          "theta_deg": 5
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -24.623303289139265,
+          "theta_deg": 10
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -20.00764934899508,
+          "theta_deg": 15
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -16.529208181888706,
+          "theta_deg": 20
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -13.715087526492184,
+          "theta_deg": 25
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -11.352872381178901,
+          "theta_deg": 30
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -9.329119085260642,
+          "theta_deg": 35
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -7.576734365305207,
+          "theta_deg": 40
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -6.053383796856693,
+          "theta_deg": 45
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -4.731197157559688,
+          "theta_deg": 50
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -3.591307576625045,
+          "theta_deg": 55
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -2.620716048752298,
+          "theta_deg": 60
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -1.8103805491427463,
+          "theta_deg": 65
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -1.1539991802693292,
+          "theta_deg": 70
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.6472119637849733,
+          "theta_deg": 75
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.2870697334982428,
+          "theta_deg": 80
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.0716830568351142,
+          "theta_deg": 85
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": 0.0,
+          "theta_deg": 90
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.07168305685185364,
+          "theta_deg": 95
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.2870697335317897,
+          "theta_deg": 100
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -0.6472119638354963,
+          "theta_deg": 105
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -1.153999180337105,
+          "theta_deg": 110
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -1.8103805492281966,
+          "theta_deg": 115
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -2.620716048856032,
+          "theta_deg": 120
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -3.5913075767479357,
+          "theta_deg": 125
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -4.731197157702978,
+          "theta_deg": 130
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -6.053383797022233,
+          "theta_deg": 135
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -7.576734365495625,
+          "theta_deg": 140
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -9.32911908547991,
+          "theta_deg": 145
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -11.352872381433139,
+          "theta_deg": 150
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -13.715087526791345,
+          "theta_deg": 155
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -16.52920818225027,
+          "theta_deg": 160
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -20.00764934945389,
+          "theta_deg": 165
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -24.623303289781447,
+          "theta_deg": 170
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -31.86800388812801,
+          "theta_deg": 175
+        },
+        {
+          "phi_deg": 0,
+          "relative_db": -231.8859430029627,
+          "theta_deg": 180
+        }
+      ],
+      "resistance_ohm": 11.475084842008457
+    }
+  },
+  "openems": {
+    "bare": {
+      "current": [
+        {
+          "current_a": {
+            "im": -4.436894142975369e-15,
+            "re": 1.3112425271949442e-14
+          },
+          "magnitude_a": 1.3842749948923716e-14,
+          "relative_magnitude": 0.16468271943648188,
+          "x_mm": -120,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": -5.760611083209348e-15,
+            "re": 1.841708398210111e-14
+          },
+          "magnitude_a": 1.929698480218502e-14,
+          "relative_magnitude": 0.22956998760173175,
+          "x_mm": -120,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": -4.458589485839766e-15,
+            "re": 1.3194128742669538e-14
+          },
+          "magnitude_a": 1.3927097812587494e-14,
+          "relative_magnitude": 0.16568617869263125,
+          "x_mm": -120,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": -2.0878345279787708e-14,
+            "re": -6.011071064137626e-14
+          },
+          "magnitude_a": 6.363334688222284e-14,
+          "relative_magnitude": 0.7570253490148615,
+          "x_mm": 0,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": -2.8312133189195198e-14,
+            "re": -7.889881586734405e-14
+          },
+          "magnitude_a": 8.38248175124276e-14,
+          "relative_magnitude": 0.9972367452383778,
+          "x_mm": 0,
+          "z_mm": -60
+        },
+        {
+          "current_a": {
+            "im": -2.8404553360405075e-14,
+            "re": -7.911242318929744e-14
+          },
+          "magnitude_a": 8.405708866292352e-14,
+          "relative_magnitude": 1.0,
+          "x_mm": 0,
+          "z_mm": 60
+        },
+        {
+          "current_a": {
+            "im": -2.102982382413347e-14,
+            "re": -6.051321474005928e-14
+          },
+          "magnitude_a": 6.406327066463763e-14,
+          "relative_magnitude": 0.7621400132181249,
+          "x_mm": 0,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": 3.850862811275157e-14,
+            "re": 3.556782862364342e-14
+          },
+          "magnitude_a": 5.2421225397038066e-14,
+          "relative_magnitude": 0.6236383656737374,
+          "x_mm": 110,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": 5.650994156503612e-14,
+            "re": 5.266341215618786e-14
+          },
+          "magnitude_a": 7.724511942910253e-14,
+          "relative_magnitude": 0.9189602049966589,
+          "x_mm": 110,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": 3.8793562350543344e-14,
+            "re": 3.583683169857549e-14
+          },
+          "magnitude_a": 5.281305696546564e-14,
+          "relative_magnitude": 0.6282998591261083,
+          "x_mm": 110,
+          "z_mm": 120
+        }
+      ],
+      "directivity_dbi": 7.868231620981789,
+      "end_criteria": 0.0001,
+      "frequency_mhz": 306.88865612205706,
+      "mesh": {
+        "cell_counts": [
+          204,
+          128,
+          598
+        ],
+        "line_counts": [
+          205,
+          129,
+          599
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ],
+        "minimum_steps_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "total_cells": 15614976
+      },
+      "mesh_pitch_mm": 1.0,
+      "pattern": [
+        {
+          "phi_deg": 0.0,
+          "relative_db": -60.524977837885686,
+          "theta_deg": 0.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -32.169603197783644,
+          "theta_deg": 5.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -24.790515102704727,
+          "theta_deg": 10.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -20.142293305779177,
+          "theta_deg": 15.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.649413687478653,
+          "theta_deg": 20.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -13.824686239676037,
+          "theta_deg": 25.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.452184008272354,
+          "theta_deg": 30.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.417665370719961,
+          "theta_deg": 35.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.654038518300339,
+          "theta_deg": 40.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -6.119212636325125,
+          "theta_deg": 45.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.785617364100537,
+          "theta_deg": 50.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.634690941358916,
+          "theta_deg": 55.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.653738139084534,
+          "theta_deg": 60.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.8340192675257971,
+          "theta_deg": 65.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.1695103468212227,
+          "theta_deg": 70.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6561077798573582,
+          "theta_deg": 75.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.2910795065244169,
+          "theta_deg": 80.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.07269468423766695,
+          "theta_deg": 85.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": 0.0,
+          "theta_deg": 90.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.07269469227904805,
+          "theta_deg": 95.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.2910785137429314,
+          "theta_deg": 100.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6561077565221173,
+          "theta_deg": 105.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.1695082738464428,
+          "theta_deg": 110.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.8340194761247819,
+          "theta_deg": 115.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.6537400808896687,
+          "theta_deg": 120.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.634690813349748,
+          "theta_deg": 125.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.785617143884472,
+          "theta_deg": 130.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -6.119212779280534,
+          "theta_deg": 135.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.654038373459118,
+          "theta_deg": 140.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.417665572964442,
+          "theta_deg": 145.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.452182951455345,
+          "theta_deg": 150.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -13.824684411555854,
+          "theta_deg": 155.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.649411030695006,
+          "theta_deg": 160.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -20.142290967536788,
+          "theta_deg": 165.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -24.790506699258714,
+          "theta_deg": 170.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -32.16961494886017,
+          "theta_deg": 175.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -60.52474514703836,
+          "theta_deg": 180.0
+        }
+      ],
+      "resistance_ohm": 13.232875078225671,
+      "wall_seconds": 2077.2862255709915
+    },
+    "bare_coarse": {
+      "current": [
+        {
+          "current_a": {
+            "im": -1.2157515160076451e-14,
+            "re": 1.4877988427751588e-14
+          },
+          "magnitude_a": 1.921352946555627e-14,
+          "relative_magnitude": 0.17413835508280617,
+          "x_mm": -120,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": -1.6510611123081645e-14,
+            "re": 2.0953118243809793e-14
+          },
+          "magnitude_a": 2.6676458606732306e-14,
+          "relative_magnitude": 0.24177726583440293,
+          "x_mm": -120,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": -1.2157519597625428e-14,
+            "re": 1.487798290563248e-14
+          },
+          "magnitude_a": 1.921352799740169e-14,
+          "relative_magnitude": 0.17413834177645227,
+          "x_mm": -120,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": 9.457364531836087e-15,
+            "re": -8.334817594490476e-14
+          },
+          "magnitude_a": 8.388301483155473e-14,
+          "relative_magnitude": 0.7602585588628948,
+          "x_mm": 0,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": 1.134778300342997e-14,
+            "re": -1.0974974793277289e-13
+          },
+          "magnitude_a": 1.1033485102360052e-13,
+          "relative_magnitude": 1.0,
+          "x_mm": 0,
+          "z_mm": -60
+        },
+        {
+          "current_a": {
+            "im": 1.1347780442138303e-14,
+            "re": -1.0974974773402866e-13
+          },
+          "magnitude_a": 1.1033485056248504e-13,
+          "relative_magnitude": 0.9999999958207632,
+          "x_mm": 0,
+          "z_mm": 60
+        },
+        {
+          "current_a": {
+            "im": 9.457366496256766e-15,
+            "re": -8.334817438933728e-14
+          },
+          "magnitude_a": 8.38830135073836e-14,
+          "relative_magnitude": 0.7602585468615088,
+          "x_mm": 0,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": 2.4340396465015958e-14,
+            "re": 6.406024264733051e-14
+          },
+          "magnitude_a": 6.852860415993473e-14,
+          "relative_magnitude": 0.6210966301597355,
+          "x_mm": 110,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": 3.5389629478990824e-14,
+            "re": 9.428792097427589e-14
+          },
+          "magnitude_a": 1.0071066436237799e-13,
+          "relative_magnitude": 0.9127729219558748,
+          "x_mm": 110,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": 2.4340396457476435e-14,
+            "re": 6.40602474727351e-14
+          },
+          "magnitude_a": 6.852860866802416e-14,
+          "relative_magnitude": 0.6210966710179902,
+          "x_mm": 110,
+          "z_mm": 120
+        }
+      ],
+      "directivity_dbi": 7.952332359014186,
+      "end_criteria": 0.0001,
+      "frequency_mhz": 315.83655927438065,
+      "mesh": {
+        "cell_counts": [
+          156,
+          112,
+          340
+        ],
+        "line_counts": [
+          157,
+          113,
+          341
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ],
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          1.0
+        ],
+        "total_cells": 5940480
+      },
+      "mesh_pitch_mm": 2.0,
+      "pattern": [
+        {
+          "phi_deg": 0.0,
+          "relative_db": -60.606377416576215,
+          "theta_deg": 0.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -32.4695361851524,
+          "theta_deg": 5.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -25.080224609066807,
+          "theta_deg": 10.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -20.416485895399767,
+          "theta_deg": 15.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.903456542647714,
+          "theta_deg": 20.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -14.055334112539564,
+          "theta_deg": 25.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.657453595877216,
+          "theta_deg": 30.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.596636987992051,
+          "theta_deg": 35.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.806685537592589,
+          "theta_deg": 40.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -6.246243623464352,
+          "theta_deg": 45.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.888341457733004,
+          "theta_deg": 50.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.7149142418456416,
+          "theta_deg": 55.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.713677180203028,
+          "theta_deg": 60.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.876229043117399,
+          "theta_deg": 65.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.1968326021893645,
+          "theta_deg": 70.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.671613243996714,
+          "theta_deg": 75.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.2980121091901007,
+          "theta_deg": 80.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.07443292740370479,
+          "theta_deg": 85.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": 0.0,
+          "theta_deg": 90.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.07443228257159988,
+          "theta_deg": 95.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.29801262531191053,
+          "theta_deg": 100.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6716131377080979,
+          "theta_deg": 105.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.19683287656274,
+          "theta_deg": 110.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.876230762393341,
+          "theta_deg": 115.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.7136786524560024,
+          "theta_deg": 120.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.7149144817351747,
+          "theta_deg": 125.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.8883411117503,
+          "theta_deg": 130.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -6.246243661892972,
+          "theta_deg": 135.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.806687219999744,
+          "theta_deg": 140.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.596637717475009,
+          "theta_deg": 145.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.657452276196814,
+          "theta_deg": 150.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -14.055331677547322,
+          "theta_deg": 155.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.903456023374076,
+          "theta_deg": 160.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -20.4164805949087,
+          "theta_deg": 165.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -25.080217588713868,
+          "theta_deg": 170.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -32.469541947471136,
+          "theta_deg": 175.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -60.606142139566145,
+          "theta_deg": 180.0
+        }
+      ],
+      "resistance_ohm": 13.275886067985653,
+      "wall_seconds": 600.7141026280005
+    },
+    "bare_refined_transverse": {
+      "current": [
+        {
+          "current_a": {
+            "im": -6.382943888414577e-15,
+            "re": 1.0896011600718326e-14
+          },
+          "magnitude_a": 1.262794684363366e-14,
+          "relative_magnitude": 0.16987360071785462,
+          "x_mm": -120,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": -8.572985304844003e-15,
+            "re": 1.536521008609245e-14
+          },
+          "magnitude_a": 1.7595049247638623e-14,
+          "relative_magnitude": 0.23669202979035456,
+          "x_mm": -120,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": -6.417781398933955e-15,
+            "re": 1.0964683271888195e-14
+          },
+          "magnitude_a": 1.2704810007919342e-14,
+          "relative_magnitude": 0.1709075789758768,
+          "x_mm": -120,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": -5.816956217541325e-15,
+            "re": -5.590853349981898e-14
+          },
+          "magnitude_a": 5.621032910184012e-14,
+          "relative_magnitude": 0.7561522961968371,
+          "x_mm": 0,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": -8.430425509645064e-15,
+            "re": -7.364996613120559e-14
+          },
+          "magnitude_a": 7.413089494536947e-14,
+          "relative_magnitude": 0.9972232386419637,
+          "x_mm": 0,
+          "z_mm": -60
+        },
+        {
+          "current_a": {
+            "im": -8.46710728149772e-15,
+            "re": -7.385353097760354e-14
+          },
+          "magnitude_a": 7.43373119205708e-14,
+          "relative_magnitude": 1.0,
+          "x_mm": 0,
+          "z_mm": 60
+        },
+        {
+          "current_a": {
+            "im": -5.866126123838566e-15,
+            "re": -5.628678417133801e-14
+          },
+          "magnitude_a": 5.659163814603328e-14,
+          "relative_magnitude": 0.761281739733894,
+          "x_mm": 0,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": 2.593631814690413e-14,
+            "re": 3.8052752048078254e-14
+          },
+          "magnitude_a": 4.605110788515247e-14,
+          "relative_magnitude": 0.6194884734917231,
+          "x_mm": 110,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": 3.802243389209484e-14,
+            "re": 5.631356575364851e-14
+          },
+          "magnitude_a": 6.794794453822144e-14,
+          "relative_magnitude": 0.9140489853981217,
+          "x_mm": 110,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": 2.6127888549668553e-14,
+            "re": 3.834036982811699e-14
+          },
+          "magnitude_a": 4.6396664951488536e-14,
+          "relative_magnitude": 0.6241369744585765,
+          "x_mm": 110,
+          "z_mm": 120
+        }
+      ],
+      "directivity_dbi": 7.900501635049918,
+      "end_criteria": 0.0001,
+      "frequency_mhz": 311.51785132757067,
+      "mesh": {
+        "cell_counts": [
+          288,
+          156,
+          598
+        ],
+        "line_counts": [
+          289,
+          157,
+          599
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ],
+        "minimum_steps_mm": [
+          0.5,
+          0.5,
+          1.0
+        ],
+        "total_cells": 26866944
+      },
+      "mesh_pitch_mm": 0.5,
+      "pattern": [
+        {
+          "phi_deg": 0.0,
+          "relative_db": -59.423382081999264,
+          "theta_deg": 0.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -32.31938388105028,
+          "theta_deg": 5.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -24.914486750655428,
+          "theta_deg": 10.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -20.25564662819125,
+          "theta_deg": 15.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.75351766950826,
+          "theta_deg": 20.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -13.919054548243137,
+          "theta_deg": 25.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.536207385298646,
+          "theta_deg": 30.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.490983894761388,
+          "theta_deg": 35.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.716611208786909,
+          "theta_deg": 40.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -6.171294788486998,
+          "theta_deg": 45.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.8277268461598535,
+          "theta_deg": 50.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.667561520025905,
+          "theta_deg": 55.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.678280611907442,
+          "theta_deg": 60.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.8512896272239152,
+          "theta_deg": 65.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.1806802136006207,
+          "theta_deg": 70.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6624427711196262,
+          "theta_deg": 75.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.29391062307062316,
+          "theta_deg": 80.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.07340515415446472,
+          "theta_deg": 85.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": 0.0,
+          "theta_deg": 90.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.07340490090790561,
+          "theta_deg": 95.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.2939107671925418,
+          "theta_deg": 100.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6624418576357315,
+          "theta_deg": 105.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.1806802388435391,
+          "theta_deg": 110.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.851290611864545,
+          "theta_deg": 115.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.678282868945053,
+          "theta_deg": 120.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.6675620244735434,
+          "theta_deg": 125.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.827727067971249,
+          "theta_deg": 130.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -6.17129541149199,
+          "theta_deg": 135.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.716610081912908,
+          "theta_deg": 140.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.490983943513623,
+          "theta_deg": 145.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.53620846578125,
+          "theta_deg": 150.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -13.91905208167926,
+          "theta_deg": 155.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.753514844235923,
+          "theta_deg": 160.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -20.25564374113841,
+          "theta_deg": 165.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -24.914478171193032,
+          "theta_deg": 170.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -32.31939242164264,
+          "theta_deg": 175.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -59.42309859746206,
+          "theta_deg": 180.0
+        }
+      ],
+      "resistance_ohm": 13.573380434606179,
+      "wall_seconds": 5353.013010839
+    },
+    "coated": {
+      "current": [
+        {
+          "current_a": {
+            "im": 6.204323699925312e-15,
+            "re": 1.1585119099251244e-14
+          },
+          "magnitude_a": 1.3141865054751204e-14,
+          "relative_magnitude": 0.15507283929382656,
+          "x_mm": -120,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": 9.219345557352686e-15,
+            "re": 1.578023652823075e-14
+          },
+          "magnitude_a": 1.8276000585269928e-14,
+          "relative_magnitude": 0.2156551821135024,
+          "x_mm": -120,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": 6.2493991818018414e-15,
+            "re": 1.1650985067117159e-14
+          },
+          "magnitude_a": 1.3221211864564176e-14,
+          "relative_magnitude": 0.1560091245954441,
+          "x_mm": -120,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": -6.279487210708708e-14,
+            "re": -1.436037552772797e-14
+          },
+          "magnitude_a": 6.441596345815835e-14,
+          "relative_magnitude": 0.7601026420289252,
+          "x_mm": 0,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": -8.25850770919002e-14,
+            "re": -1.7959618386431702e-14
+          },
+          "magnitude_a": 8.451534092022202e-14,
+          "relative_magnitude": 0.9972735091847792,
+          "x_mm": 0,
+          "z_mm": -60
+        },
+        {
+          "current_a": {
+            "im": -8.281411878898818e-14,
+            "re": -1.7993727972723508e-14
+          },
+          "magnitude_a": 8.474640120472973e-14,
+          "relative_magnitude": 1.0,
+          "x_mm": 0,
+          "z_mm": 60
+        },
+        {
+          "current_a": {
+            "im": -6.321507382501586e-14,
+            "re": -1.44442558472586e-14
+          },
+          "magnitude_a": 6.484429108011952e-14,
+          "relative_magnitude": 0.7651568698884236,
+          "x_mm": 0,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": 5.1761023404892506e-14,
+            "re": -1.4870599458301592e-14
+          },
+          "magnitude_a": 5.385478875802104e-14,
+          "relative_magnitude": 0.6354817194882298,
+          "x_mm": 110,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": 7.59389204516932e-14,
+            "re": -2.1372771172120284e-14
+          },
+          "magnitude_a": 7.88892577411171e-14,
+          "relative_magnitude": 0.9308862278474459,
+          "x_mm": 110,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": 5.2142809513509913e-14,
+            "re": -1.4974735139947185e-14
+          },
+          "magnitude_a": 5.4250486416932233e-14,
+          "relative_magnitude": 0.6401509166846425,
+          "x_mm": 110,
+          "z_mm": 120
+        }
+      ],
+      "directivity_dbi": 7.74651610926507,
+      "end_criteria": 0.0001,
+      "frequency_mhz": 286.6188848085631,
+      "mesh": {
+        "cell_counts": [
+          204,
+          128,
+          598
+        ],
+        "line_counts": [
+          205,
+          129,
+          599
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ],
+        "minimum_steps_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "total_cells": 15614976
+      },
+      "mesh_pitch_mm": 1.0,
+      "pattern": [
+        {
+          "phi_deg": 0.0,
+          "relative_db": -61.637004747502345,
+          "theta_deg": 0.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -31.679674448118696,
+          "theta_deg": 5.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -24.338254320123195,
+          "theta_deg": 10.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -19.716817603256292,
+          "theta_deg": 15.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.25440458453496,
+          "theta_deg": 20.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -13.464494043717696,
+          "theta_deg": 25.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.130038241156532,
+          "theta_deg": 30.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.135396534296303,
+          "theta_deg": 35.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.412156672099201,
+          "theta_deg": 40.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -5.917057165440296,
+          "theta_deg": 45.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.621514619894606,
+          "theta_deg": 50.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.5061032352170605,
+          "theta_deg": 55.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.557390055107829,
+          "theta_deg": 60.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.7660041860119982,
+          "theta_deg": 65.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.125401766867585,
+          "theta_deg": 70.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6310423269329146,
+          "theta_deg": 75.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.2798581158674891,
+          "theta_deg": 80.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.06987618767545854,
+          "theta_deg": 85.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": 0.0,
+          "theta_deg": 90.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.06987578087987678,
+          "theta_deg": 95.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.2798577931803282,
+          "theta_deg": 100.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6310416625743744,
+          "theta_deg": 105.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.1254021267997347,
+          "theta_deg": 110.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.7660055230912914,
+          "theta_deg": 115.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.5573902880003567,
+          "theta_deg": 120.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.506102899427101,
+          "theta_deg": 125.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.621515177301886,
+          "theta_deg": 130.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -5.91705642842815,
+          "theta_deg": 135.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.412156254267963,
+          "theta_deg": 140.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.135395931534736,
+          "theta_deg": 145.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.130036248970843,
+          "theta_deg": 150.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -13.464492057682119,
+          "theta_deg": 155.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.254400805279026,
+          "theta_deg": 160.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -19.716815107558254,
+          "theta_deg": 165.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -24.33824475990557,
+          "theta_deg": 170.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -31.67968360966407,
+          "theta_deg": 175.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -61.63680996623248,
+          "theta_deg": 180.0
+        }
+      ],
+      "resistance_ohm": 12.181546039173268,
+      "wall_seconds": 2261.3214038699953
+    },
+    "coated_coarse": {
+      "current": [
+        {
+          "current_a": {
+            "im": 6.8632830015210185e-15,
+            "re": 1.6723393932465405e-14
+          },
+          "magnitude_a": 1.8076962083806782e-14,
+          "relative_magnitude": 0.15839459196663494,
+          "x_mm": -120,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": 1.0288302459979025e-14,
+            "re": 2.2890450919186345e-14
+          },
+          "magnitude_a": 2.50962529233288e-14,
+          "relative_magnitude": 0.21989926865217088,
+          "x_mm": -120,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": 6.863282465139237e-15,
+            "re": 1.6723397407477478e-14
+          },
+          "magnitude_a": 1.8076965094968573e-14,
+          "relative_magnitude": 0.15839461835114252,
+          "x_mm": -120,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": -8.032723976460031e-14,
+            "re": -3.38273250277881e-14
+          },
+          "magnitude_a": 8.715935616292267e-14,
+          "relative_magnitude": 0.7637107712842789,
+          "x_mm": 0,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": -1.0563678685413044e-13,
+            "re": -4.319309238080687e-14
+          },
+          "magnitude_a": 1.1412613182913851e-13,
+          "relative_magnitude": 1.0,
+          "x_mm": 0,
+          "z_mm": -60
+        },
+        {
+          "current_a": {
+            "im": -1.0563678581636944e-13,
+            "re": -4.319309460197386e-14
+          },
+          "magnitude_a": 1.1412613170921275e-13,
+          "relative_magnitude": 0.9999999989491822,
+          "x_mm": 0,
+          "z_mm": 60
+        },
+        {
+          "current_a": {
+            "im": -8.032723824400452e-14,
+            "re": -3.3827329014976134e-14
+          },
+          "magnitude_a": 8.715935630898447e-14,
+          "relative_magnitude": 0.7637107725641068,
+          "x_mm": 0,
+          "z_mm": 120
+        },
+        {
+          "current_a": {
+            "im": 7.231381842956534e-14,
+            "re": -6.662051355850644e-15
+          },
+          "magnitude_a": 7.262004726060245e-14,
+          "relative_magnitude": 0.6363139282537325,
+          "x_mm": 110,
+          "z_mm": -120
+        },
+        {
+          "current_a": {
+            "im": 1.0560767538407174e-13,
+            "re": -9.180687984436209e-15
+          },
+          "magnitude_a": 1.0600597215202096e-13,
+          "relative_magnitude": 0.9288492517272514,
+          "x_mm": 110,
+          "z_mm": 0
+        },
+        {
+          "current_a": {
+            "im": 7.231381461007469e-14,
+            "re": -6.662048947730085e-15
+          },
+          "magnitude_a": 7.262004323630083e-14,
+          "relative_magnitude": 0.6363138929918555,
+          "x_mm": 110,
+          "z_mm": 120
+        }
+      ],
+      "directivity_dbi": 7.796187286014798,
+      "end_criteria": 0.0001,
+      "frequency_mhz": 290.0968391234222,
+      "mesh": {
+        "cell_counts": [
+          156,
+          112,
+          340
+        ],
+        "line_counts": [
+          157,
+          113,
+          341
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ],
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          1.0
+        ],
+        "total_cells": 5940480
+      },
+      "mesh_pitch_mm": 2.0,
+      "pattern": [
+        {
+          "phi_deg": 0.0,
+          "relative_db": -61.366064211306394,
+          "theta_deg": 0.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -31.876389987684796,
+          "theta_deg": 5.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -24.509902048882545,
+          "theta_deg": 10.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -19.869642647931116,
+          "theta_deg": 15.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.39015375798937,
+          "theta_deg": 20.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -13.58407564959036,
+          "theta_deg": 25.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.23415091404874,
+          "theta_deg": 30.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.224727704281213,
+          "theta_deg": 35.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.487458310670304,
+          "theta_deg": 40.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -5.979185497754218,
+          "theta_deg": 45.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.671435922138039,
+          "theta_deg": 50.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.544906849681595,
+          "theta_deg": 55.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.586280966174739,
+          "theta_deg": 60.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.7862995313516017,
+          "theta_deg": 65.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.1385128255560455,
+          "theta_deg": 70.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6384735611914996,
+          "theta_deg": 75.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.28317817140191315,
+          "theta_deg": 80.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.07070984584873351,
+          "theta_deg": 85.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": 0.0,
+          "theta_deg": 90.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.07070965933663365,
+          "theta_deg": 95.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.2831779638110516,
+          "theta_deg": 100.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -0.6384728839964959,
+          "theta_deg": 105.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.1385127548742555,
+          "theta_deg": 110.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -1.7862988957123993,
+          "theta_deg": 115.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -2.5862820080644955,
+          "theta_deg": 120.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -3.5449077491501333,
+          "theta_deg": 125.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -4.671436095683694,
+          "theta_deg": 130.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -5.97918464316357,
+          "theta_deg": 135.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -7.48745715014075,
+          "theta_deg": 140.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -9.224726574642018,
+          "theta_deg": 145.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -11.23415009569567,
+          "theta_deg": 150.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -13.584074676650065,
+          "theta_deg": 155.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -16.390151123906087,
+          "theta_deg": 160.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -19.869640240215688,
+          "theta_deg": 165.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -24.50989945120121,
+          "theta_deg": 170.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -31.876404545174143,
+          "theta_deg": 175.0
+        },
+        {
+          "phi_deg": 0.0,
+          "relative_db": -61.3657906257495,
+          "theta_deg": 180.0
+        }
+      ],
+      "resistance_ohm": 11.862353580972076,
+      "wall_seconds": 660.0391560070129
+    }
+  },
+  "openems_convergence": {
+    "current_maximum_normalized_delta": 0.004244086538668479,
+    "pattern_maximum_db_above_minus_40": 0.19672093551007208,
+    "resistance_ohm_coarse_to_fine": -0.3191924582011918,
+    "resonance_percent_coarse_to_fine": 1.2134421349040192
+  },
+  "schema": "nec2c-coated-wire-m7-acceptance"
+}

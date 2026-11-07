@@ -78,7 +78,19 @@
       "type": "object",
       "required": ["operator_status", "domains"],
       "properties": {
-        "operator_status": {"enum": ["validation-only", "lossless-isolated", "lossy-isolated"]},
+        "operator_status": {"enum": ["validation-only", "lossless-isolated", "lossy-isolated", "lossless-uniform-junction", "lossy-uniform-junction", "lossless-qualified-bend", "lossy-qualified-bend", "experimental-junction", "experimental-geometry"]},
+        "bend_policy": {
+          "type": "object",
+          "required": ["status", "validated_maximum_turn_deg", "validated_minimum_chord_outer_radius_ratio", "qualified_junction_count", "observed_maximum_turn_deg", "observed_minimum_chord_outer_radius_ratio"],
+          "properties": {
+            "status": {"const": "qualified"},
+            "validated_maximum_turn_deg": {"const": 45},
+            "validated_minimum_chord_outer_radius_ratio": {"const": 4},
+            "qualified_junction_count": {"type": "integer", "minimum": 1},
+            "observed_maximum_turn_deg": {"type": "number", "minimum": 0, "maximum": 45.000000001},
+            "observed_minimum_chord_outer_radius_ratio": {"type": "number", "minimum": 3.999999999}
+          }
+        },
         "domains": {
           "type": "array",
           "items": {

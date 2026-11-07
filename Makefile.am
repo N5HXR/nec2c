@@ -36,6 +36,8 @@ EXTRA_DIST = \
   docs/COATED-WIRE-M4-RESULTS.md \
   docs/COATED-WIRE-M5-RESULTS.md \
   docs/COATED-WIRE-M6-RESULTS.md \
+  docs/COATED-WIRE-M7-RESULTS.md \
+  docs/COATED-WIRE-M7-BEND-ENVELOPE.md \
   tests/coated-wire/README.md \
   tests/coated-wire/m0-bare-dipole.nec \
   tests/coated-wire/m0-baseline.json \
@@ -80,6 +82,19 @@ EXTRA_DIST = \
   tests/coated-wire/m6-coated-bare-experimental.nec \
   tests/coated-wire/m6-acceptance.json \
   tests/coated-wire/m6-openems.png \
+  tests/coated-wire/m7_geometry.py \
+  tests/coated-wire/m7-qualified-bend.nec \
+  tests/coated-wire/m7-coated-v.nec \
+  tests/coated-wire/m7-coated-yagi.nec \
+  tests/coated-wire/m7-acceptance.json \
+  tests/coated-wire/m7-yagi.png \
+  tests/coated-wire/m7-bend-study.json \
+  tests/coated-wire/m7-bend-matlab-config.json \
+  tests/coated-wire/m7-bend-matlab-result.json \
+  tests/coated-wire/m7-bend-openems.json \
+  tests/coated-wire/m7-bend-analysis.json \
+  tests/coated-wire/m7-bend-envelope.png \
+  tests/coated-wire/m7_bend_envelope.py \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -329,12 +344,20 @@ EXTRA_DIST = \
   tools/m5_refinement.py \
 	  tools/openems_m6_n2.py \
 	  tools/openems_m7_mixed.py \
+  tools/coated_wire_m7_openems.py \
+  tools/coated_wire_m7_acceptance.py \
+  tools/coated_wire_bend_geometry.py \
+  tools/coated_wire_bend_matlab.m \
+  tools/coated_wire_m7_bend_study.py \
+  tools/coated_wire_m7_bend_openems_batch.py \
+  tools/coated_wire_m7_bend_collect.py \
+  tools/coated_wire_m7_bend_analyze.py \
   tools/voxscatter_m5_reference.m \
   tests/decks/nt-network.nec \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \

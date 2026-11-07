@@ -29,6 +29,11 @@ typedef struct
   int operator_enabled;
   int experimental_junctions_enabled;
   int experimental_junction_count;
+  int experimental_geometry;
+  int experimental_geometry_warning_emitted;
+  int qualified_bend_count;
+  double qualified_bend_maximum_turn_deg;
+  double qualified_bend_minimum_chord_ratio;
 } coated_wire_model;
 
 typedef struct
@@ -50,7 +55,7 @@ int coated_wire_add(coated_wire_model *model, int tag, int first, int last,
     double conductivity_s_per_m, coated_wire_diagnostic *diagnostic);
 int coated_wire_finalize(coated_wire_model *model, const data_t *geometry,
     coated_wire_diagnostic *diagnostic);
-int coated_wire_validate_isolated(coated_wire_model *model,
+int coated_wire_validate_geometry(coated_wire_model *model,
     const data_t *geometry, coated_wire_diagnostic *diagnostic);
 int coated_wire_domain_equal(const coated_wire_domain *left,
     const coated_wire_domain *right);

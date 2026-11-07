@@ -1,0 +1,565 @@
+{
+  "schema": "nec2c-coated-wire-m7-bend-openems",
+  "runs": [
+    {
+      "key": "bare-0.5mm-n1-r4",
+      "status": "ok",
+      "stage": "rounded-n1-r4-validation",
+      "material": "bare",
+      "mesh_mm": 0.5,
+      "z_mesh_mm": 0.5,
+      "chords_per_corner": 1,
+      "radius_ratio": 4.0,
+      "maximum_turn_deg": 45.0,
+      "minimum_chord_ratio": 5.65685424949238,
+      "mesh": {
+        "line_counts": [
+          392,
+          157,
+          1015
+        ],
+        "cell_counts": [
+          391,
+          156,
+          1014
+        ],
+        "total_cells": 61849944,
+        "minimum_steps_mm": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 5832.151354793998,
+      "resonance": {
+        "frequency_mhz": 306.377179311077,
+        "resistance_ohm": 51.553334890292106
+      }
+    },
+    {
+      "key": "bare-0.5x1mm-sharp",
+      "status": "ok",
+      "stage": "sharp-convergence",
+      "material": "bare",
+      "mesh_mm": 0.5,
+      "z_mesh_mm": 1.0,
+      "chords_per_corner": 0,
+      "radius_ratio": 0,
+      "maximum_turn_deg": 90,
+      "minimum_chord_ratio": 0,
+      "mesh": {
+        "line_counts": [
+          392,
+          157,
+          551
+        ],
+        "cell_counts": [
+          391,
+          156,
+          550
+        ],
+        "total_cells": 33547800,
+        "minimum_steps_mm": [
+          0.5,
+          0.5,
+          1.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 3148.769150263004,
+      "resonance": {
+        "frequency_mhz": 313.37285208348675,
+        "resistance_ohm": 47.79567819567439
+      }
+    },
+    {
+      "key": "bare-1mm-n1-r4",
+      "status": "ok",
+      "stage": "rounded-n1-r4-validation",
+      "material": "bare",
+      "mesh_mm": 1.0,
+      "z_mesh_mm": 1.0,
+      "chords_per_corner": 1,
+      "radius_ratio": 4.0,
+      "maximum_turn_deg": 45.0,
+      "minimum_chord_ratio": 5.65685424949238,
+      "mesh": {
+        "line_counts": [
+          244,
+          129,
+          551
+        ],
+        "cell_counts": [
+          243,
+          128,
+          550
+        ],
+        "total_cells": 17107200,
+        "minimum_steps_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 917.6594375170098,
+      "resonance": {
+        "frequency_mhz": 302.269672447955,
+        "resistance_ohm": 50.27623601948021
+      }
+    },
+    {
+      "key": "bare-1mm-sharp",
+      "status": "ok",
+      "stage": "sharp-convergence",
+      "material": "bare",
+      "mesh_mm": 1.0,
+      "z_mesh_mm": 1.0,
+      "chords_per_corner": 0,
+      "radius_ratio": 0,
+      "maximum_turn_deg": 90,
+      "minimum_chord_ratio": 0,
+      "mesh": {
+        "line_counts": [
+          224,
+          129,
+          493
+        ],
+        "cell_counts": [
+          223,
+          128,
+          492
+        ],
+        "total_cells": 14043648,
+        "minimum_steps_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 873.9209688370029,
+      "resonance": {
+        "frequency_mhz": 308.7035910982001,
+        "resistance_ohm": 46.630507512388704
+      }
+    },
+    {
+      "key": "bare-2mm-n1-r2b",
+      "status": "ok",
+      "stage": "pilot",
+      "material": "bare",
+      "mesh_mm": 2.0,
+      "chords_per_corner": 1,
+      "radius_ratio": 2,
+      "maximum_turn_deg": 45.0,
+      "minimum_chord_ratio": 2.82842712474619,
+      "mesh": {
+        "line_counts": [
+          168,
+          113,
+          317
+        ],
+        "cell_counts": [
+          167,
+          112,
+          316
+        ],
+        "total_cells": 5910464,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 208.6419351479999,
+      "batch_wall_seconds": 208.9633383140026,
+      "resonance": {
+        "frequency_mhz": 285.20449598622395,
+        "resistance_ohm": 43.99661561223922
+      }
+    },
+    {
+      "key": "bare-2mm-n1-r4",
+      "status": "ok",
+      "stage": "rounded-n1-r4-validation",
+      "material": "bare",
+      "mesh_mm": 2.0,
+      "z_mesh_mm": 2.0,
+      "chords_per_corner": 1,
+      "radius_ratio": 4.0,
+      "maximum_turn_deg": 45.0,
+      "minimum_chord_ratio": 5.65685424949238,
+      "mesh": {
+        "line_counts": [
+          168,
+          113,
+          317
+        ],
+        "cell_counts": [
+          167,
+          112,
+          316
+        ],
+        "total_cells": 5910464,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 209.54388089299027,
+      "resonance": {
+        "frequency_mhz": 282.35424490867075,
+        "resistance_ohm": 46.11554565836592
+      }
+    },
+    {
+      "key": "bare-2mm-n1-r8b",
+      "status": "ok",
+      "stage": "pilot",
+      "material": "bare",
+      "mesh_mm": 2.0,
+      "chords_per_corner": 1,
+      "radius_ratio": 8,
+      "maximum_turn_deg": 45.0,
+      "minimum_chord_ratio": 11.31370849898476,
+      "mesh": {
+        "line_counts": [
+          168,
+          113,
+          317
+        ],
+        "cell_counts": [
+          167,
+          112,
+          316
+        ],
+        "total_cells": 5910464,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 202.52380314499896,
+      "batch_wall_seconds": 202.8478582969983,
+      "resonance": {
+        "frequency_mhz": 280.11007238088416,
+        "resistance_ohm": 51.060604642919586
+      }
+    },
+    {
+      "key": "bare-2mm-n2-r4b",
+      "status": "ok",
+      "stage": "pilot",
+      "material": "bare",
+      "mesh_mm": 2.0,
+      "chords_per_corner": 2,
+      "radius_ratio": 4,
+      "maximum_turn_deg": 45.0,
+      "minimum_chord_ratio": 3.0614674589207183,
+      "mesh": {
+        "line_counts": [
+          168,
+          113,
+          317
+        ],
+        "cell_counts": [
+          167,
+          112,
+          316
+        ],
+        "total_cells": 5910464,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 208.11913905499387,
+      "batch_wall_seconds": 208.46536981999816,
+      "resonance": {
+        "frequency_mhz": 279.8201103790779,
+        "resistance_ohm": 43.894809831754486
+      }
+    },
+    {
+      "key": "bare-2mm-n3-r4b",
+      "status": "ok",
+      "stage": "pilot",
+      "material": "bare",
+      "mesh_mm": 2.0,
+      "chords_per_corner": 3,
+      "radius_ratio": 4,
+      "maximum_turn_deg": 30.0,
+      "minimum_chord_ratio": 2.070552360820166,
+      "mesh": {
+        "line_counts": [
+          168,
+          113,
+          317
+        ],
+        "cell_counts": [
+          167,
+          112,
+          316
+        ],
+        "total_cells": 5910464,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 208.9821788650006,
+      "batch_wall_seconds": 209.3242486740055,
+      "resonance": {
+        "frequency_mhz": 279.39631084472325,
+        "resistance_ohm": 43.72685726318728
+      }
+    },
+    {
+      "key": "bare-2mm-n4-r4b",
+      "status": "ok",
+      "stage": "pilot",
+      "material": "bare",
+      "mesh_mm": 2.0,
+      "chords_per_corner": 4,
+      "radius_ratio": 4,
+      "maximum_turn_deg": 22.5,
+      "minimum_chord_ratio": 1.560722576129026,
+      "mesh": {
+        "line_counts": [
+          168,
+          113,
+          317
+        ],
+        "cell_counts": [
+          167,
+          112,
+          316
+        ],
+        "total_cells": 5910464,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 207.24522072500258,
+      "batch_wall_seconds": 207.56369673099834,
+      "resonance": {
+        "frequency_mhz": 279.5287073779352,
+        "resistance_ohm": 43.73011842743385
+      }
+    },
+    {
+      "key": "bare-2mm-n6-r8b",
+      "status": "ok",
+      "stage": "pilot",
+      "material": "bare",
+      "mesh_mm": 2.0,
+      "chords_per_corner": 6,
+      "radius_ratio": 8,
+      "maximum_turn_deg": 15.0,
+      "minimum_chord_ratio": 2.088419075520825,
+      "mesh": {
+        "line_counts": [
+          168,
+          113,
+          317
+        ],
+        "cell_counts": [
+          167,
+          112,
+          316
+        ],
+        "total_cells": 5910464,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 214.07762270100648,
+      "batch_wall_seconds": 214.44155077799223,
+      "resonance": {
+        "frequency_mhz": 273.73201493935363,
+        "resistance_ohm": 45.03389621144231
+      }
+    },
+    {
+      "key": "bare-2mm-sharp",
+      "status": "ok",
+      "stage": "sharp-convergence",
+      "material": "bare",
+      "mesh_mm": 2.0,
+      "z_mesh_mm": 2.0,
+      "chords_per_corner": 0,
+      "radius_ratio": 0,
+      "maximum_turn_deg": 90,
+      "minimum_chord_ratio": 0,
+      "mesh": {
+        "line_counts": [
+          158,
+          113,
+          289
+        ],
+        "cell_counts": [
+          157,
+          112,
+          288
+        ],
+        "total_cells": 5064192,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 184.84029673499754,
+      "resonance": {
+        "frequency_mhz": 288.19496927870193,
+        "resistance_ohm": 42.8244270196391
+      }
+    },
+    {
+      "key": "coated-1mm-n1-r4",
+      "status": "ok",
+      "stage": "rounded-n1-r4-validation",
+      "material": "coated",
+      "mesh_mm": 1.0,
+      "z_mesh_mm": 1.0,
+      "chords_per_corner": 1,
+      "radius_ratio": 4.0,
+      "maximum_turn_deg": 45.0,
+      "minimum_chord_ratio": 5.65685424949238,
+      "mesh": {
+        "line_counts": [
+          244,
+          129,
+          551
+        ],
+        "cell_counts": [
+          243,
+          128,
+          550
+        ],
+        "total_cells": 17107200,
+        "minimum_steps_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 984.2748793329811,
+      "resonance": {
+        "frequency_mhz": 283.40147284077676,
+        "resistance_ohm": 45.10628733001387
+      }
+    },
+    {
+      "key": "coated-2mm-n1-r4",
+      "status": "ok",
+      "stage": "rounded-n1-r4-validation",
+      "material": "coated",
+      "mesh_mm": 2.0,
+      "z_mesh_mm": 2.0,
+      "chords_per_corner": 1,
+      "radius_ratio": 4.0,
+      "maximum_turn_deg": 45.0,
+      "minimum_chord_ratio": 5.65685424949238,
+      "mesh": {
+        "line_counts": [
+          168,
+          113,
+          317
+        ],
+        "cell_counts": [
+          167,
+          112,
+          316
+        ],
+        "total_cells": 5910464,
+        "minimum_steps_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "maximum_steps_mm": [
+          29.62962962962979,
+          29.62962962962979,
+          29.62962962962979
+        ]
+      },
+      "solver_wall_seconds": 215.21326119700097,
+      "resonance": {
+        "frequency_mhz": 269.6639855957887,
+        "resistance_ohm": 42.41228524748463
+      }
+    }
+  ]
+}

@@ -6,6 +6,7 @@
 #include "shared.h"
 
 #include <math.h>
+#include <float.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -160,6 +161,94 @@ static int connected_segment(int connection, int self, int segment_count)
   return absolute - 1;
 }
 
+static int connected_endpoint(const data_t *geometry, int segment, int other)
+{
+  if(connected_segment(geometry->icon1[segment], segment, geometry->n) == other)
+    return 0;
+  if(connected_segment(geometry->icon2[segment], segment, geometry->n) == other)
+    return 1;
+  return -1;
+}
+
+static double segment_alignment(const data_t *geometry, int left, int right)
+{
+  return geometry->cab[left]*geometry->cab[right] +
+      geometry->sab[left]*geometry->sab[right] +
+      geometry->salp[left]*geometry->salp[right];
+}
+
+/* Length of the straight geometric chord from a bend to the next bend/end.
+ * NEC subdivides each GW card into MoM segments, so the validated Y=4 rule
+ * must apply to the whole collinear run rather than an individual unknown. */
+static double straight_chord_length(const data_t *geometry, int segment,
+    int bend_endpoint)
+{
+  double length = 0.0;
+  int current = segment, endpoint = bend_endpoint, visited;
+  for(visited = 0; visited < geometry->n; ++visited)
+  {
+    int next, next_endpoint;
+    /* Segment centers/lengths may already be frequency-normalized when XQ is
+     * dispatched.  Endpoint arrays retain the input geometry in meters. */
+    {
+      double dx = geometry->x2[current]-geometry->x1[current];
+      double dy = geometry->y2[current]-geometry->y1[current];
+      double dz = geometry->z2[current]-geometry->z1[current];
+      length += sqrt(dx*dx+dy*dy+dz*dz);
+    }
+    endpoint = 1-endpoint;
+    next = connected_segment(endpoint ? geometry->icon2[current] :
+        geometry->icon1[current], current, geometry->n);
+    if(next < 0 || fabs(segment_alignment(geometry, current, next)) < 0.999999)
+      break;
+    next_endpoint = connected_endpoint(geometry, next, current);
+    if(next_endpoint < 0) break;
+    current = next;
+    endpoint = next_endpoint;
+  }
+  return length;
+}
+
+static int wire_component_count(const data_t *geometry)
+{
+  unsigned char *visited;
+  int *stack, components = 0, start;
+  if(geometry->n == 0) return 0;
+  visited = calloc((size_t)geometry->n, sizeof(*visited));
+  stack = malloc((size_t)geometry->n*sizeof(*stack));
+  if(!visited || !stack)
+  {
+    free(visited);
+    free(stack);
+    return -1;
+  }
+  for(start = 0; start < geometry->n; ++start)
+    if(!visited[start])
+    {
+      int top = 0;
+      ++components;
+      visited[start] = 1;
+      stack[top++] = start;
+      while(top)
+      {
+        int segment = stack[--top], endpoint;
+        for(endpoint = 0; endpoint < 2; ++endpoint)
+        {
+          int next = connected_segment(endpoint ? geometry->icon2[segment] :
+              geometry->icon1[segment], segment, geometry->n);
+          if(next >= 0 && !visited[next])
+          {
+            visited[next] = 1;
+            stack[top++] = next;
+          }
+        }
+      }
+    }
+  free(visited);
+  free(stack);
+  return components;
+}
+
 int coated_wire_finalize(coated_wire_model *model, const data_t *geometry,
     coated_wire_diagnostic *diagnostic)
 {
@@ -170,6 +259,8 @@ int coated_wire_finalize(coated_wire_model *model, const data_t *geometry,
         "coated-wire geometry is unavailable");
   if(model->finalized) return 1;
   model->experimental_junction_count = 0;
+  model->experimental_geometry = 0;
+  model->experimental_geometry_warning_emitted = 0;
   free(model->segment_domain);
   model->segment_domain = NULL;
   model->segment_count = (size_t)geometry->n;
@@ -270,12 +361,11 @@ int coated_wire_finalize(coated_wire_model *model, const data_t *geometry,
   return 1;
 }
 
-int coated_wire_validate_isolated(coated_wire_model *model,
+int coated_wire_validate_geometry(coated_wire_model *model,
     const data_t *geometry, coated_wire_diagnostic *diagnostic)
 {
   const coated_wire_domain *domain;
-  double ux, uy, uz, x0, y0, z0, scale = 1.0;
-  int i, open_ends = 0;
+  int i, open_ends = 0, components, unqualified_geometry = 0;
 
   if(!model || !geometry || !model->finalized)
     return fail(diagnostic, "COATED_WIRE_INTERNAL_ERROR", 0, 0,
@@ -284,26 +374,19 @@ int coated_wire_validate_isolated(coated_wire_model *model,
       model->segment_count != (size_t)geometry->n ||
       !model->segment_domain || geometry->m != 0 || geometry->ipsym != 0)
     return fail(diagnostic, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED", 0, 0,
-        "the coated-wire operator requires an unsymmetrized isolated coating covering every wire segment and no surface patches");
+        "the coated-wire operator requires unsymmetrized, uniformly coated wire geometry and no surface patches");
   domain = &model->domains[0];
   if(geometry->n < 1)
     return fail(diagnostic, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED", domain->tag, 0,
-        "M4 requires at least one coated wire segment");
-
-  ux = geometry->cab[0];
-  uy = geometry->sab[0];
-  uz = geometry->salp[0];
-  x0 = geometry->x[0];
-  y0 = geometry->y[0];
-  z0 = geometry->z[0];
+        "the coated-wire operator requires at least one coated wire segment");
+  model->operator_enabled = 0;
+  model->experimental_geometry = 0;
+  model->qualified_bend_count = 0;
+  model->qualified_bend_maximum_turn_deg = 0.0;
+  model->qualified_bend_minimum_chord_ratio = DBL_MAX;
   for(i = 0; i < geometry->n; ++i)
   {
-    double dot = geometry->cab[i]*ux + geometry->sab[i]*uy +
-        geometry->salp[i]*uz;
-    double dx = geometry->x[i]-x0, dy = geometry->y[i]-y0,
-        dz = geometry->z[i]-z0;
-    double axial = dx*ux + dy*uy + dz*uz;
-    double radial = sqrt(fmax(0.0, dx*dx+dy*dy+dz*dz-axial*axial));
+    int connections[2] = { geometry->icon1[i], geometry->icon2[i] };
     int endpoint;
     if(model->segment_domain[i] < 0 &&
        !model->experimental_junctions_enabled)
@@ -317,21 +400,76 @@ int coated_wire_validate_isolated(coated_wire_model *model,
       return fail(diagnostic, "COATED_WIRE_JUNCTION_MISMATCH",
           geometry->itag[i], i+1,
           "one continuous coated wire must use identical coating parameters");
-    if(geometry->si[i] > scale) scale = geometry->si[i];
-    if(fabs(fabs(dot)-1.0) > 1.0e-10 || radial > scale*1.0e-9)
-      return fail(diagnostic, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED",
-          domain->tag, i+1,
-          "the coated-wire operator supports one straight collinear coated wire; bends are deferred");
     for(endpoint = 0; endpoint < 2; ++endpoint)
     {
-      int connection = endpoint ? geometry->icon2[i] : geometry->icon1[i];
-      if(connection == 0) ++open_ends;
+      int other = connected_segment(connections[endpoint], i, geometry->n);
+      if(connections[endpoint] == 0) ++open_ends;
+      if(other >= 0)
+      {
+        double alignment = segment_alignment(geometry, i, other);
+        if(fabs(alignment) < 0.999999 && i < other)
+        {
+          int other_endpoint = connected_endpoint(geometry, other, i);
+          double away_dot, turn_cos, turn_deg, left_length, right_length;
+          double outer_radius, minimum_ratio;
+          if(model->segment_domain[i] < 0 ||
+             model->segment_domain[other] < 0 ||
+             !coated_wire_domain_equal(
+                 &model->domains[model->segment_domain[i]],
+                 &model->domains[model->segment_domain[other]]))
+          {
+            unqualified_geometry = 1;
+            continue;
+          }
+          if(other_endpoint < 0)
+          {
+            unqualified_geometry = 1;
+            continue;
+          }
+          /* Direction vectors point from endpoint 1 to endpoint 2.  Reverse
+           * the vector when the shared junction is endpoint 2 so both vectors
+           * point away from the junction. */
+          away_dot = alignment * (endpoint == other_endpoint ? 1.0 : -1.0);
+          turn_cos = fmax(-1.0, fmin(1.0, -away_dot));
+          turn_deg = acos(turn_cos)*180.0/PI;
+          left_length = straight_chord_length(geometry, i, endpoint);
+          right_length = straight_chord_length(geometry, other,
+              other_endpoint);
+          outer_radius = model->domains[model->segment_domain[i]].outer_radius_m;
+          minimum_ratio = fmin(left_length, right_length)/outer_radius;
+          if(turn_deg > model->qualified_bend_maximum_turn_deg)
+            model->qualified_bend_maximum_turn_deg = turn_deg;
+          if(minimum_ratio < model->qualified_bend_minimum_chord_ratio)
+            model->qualified_bend_minimum_chord_ratio = minimum_ratio;
+          if(turn_cos + 1.0e-12 < sqrt(0.5) ||
+              minimum_ratio + 1.0e-12 < 4.0)
+          {
+            unqualified_geometry = 1;
+            if(!model->experimental_junctions_enabled)
+              return fail(diagnostic, "COATED_WIRE_BEND_UNVALIDATED",
+                  geometry->itag[i], i+1,
+                  "coated-wire bend exceeds the validated 45-degree maximum turn or four-outer-radius minimum chord; use --coated-wire-junctions experimental to override");
+          }
+          else
+            ++model->qualified_bend_count;
+        }
+      }
     }
   }
   if(open_ends != 2)
-    return fail(diagnostic, "COATED_WIRE_M4_GEOMETRY_UNSUPPORTED",
+    unqualified_geometry = 1;
+  components = wire_component_count(geometry);
+  if(components < 0)
+    return fail(diagnostic, "COATED_WIRE_ALLOCATION_FAILED", domain->tag, 0,
+        "unable to allocate coated-wire geometry traversal");
+  if(components != 1) unqualified_geometry = 1;
+  if(unqualified_geometry && !model->experimental_junctions_enabled)
+    return fail(diagnostic, "COATED_WIRE_GENERAL_GEOMETRY_UNVALIDATED",
         domain->tag, 0,
-        "the coated-wire operator requires one connected coated wire with exactly two free ends");
+        "disconnected or non-collinear coated-wire geometry requires --coated-wire-junctions experimental because M7 lacks a converged full-wave reference");
+  if(unqualified_geometry) model->experimental_geometry = 1;
+  if(model->qualified_bend_count == 0)
+    model->qualified_bend_minimum_chord_ratio = 0.0;
   model->operator_enabled = 1;
   return 1;
 }
@@ -547,10 +685,10 @@ void coated_wire_print_summary(FILE *stream, const coated_wire_model *model)
         d->conductor_radius_m, d->outer_radius_m, d->epsilon_r,
         d->loss_tangent, d->conductivity_s_per_m);
   }
-  if(model->experimental_junction_count)
-    fprintf(stream, "  STATUS: EXPERIMENTAL COATING JUNCTION OPERATOR REQUESTED\n");
+  if(model->experimental_junctions_enabled)
+    fprintf(stream, "  STATUS: EXPERIMENTAL COATING GEOMETRY/JUNCTION MODE REQUESTED\n");
   else
-    fprintf(stream, "  STATUS: VALIDATED; STRAIGHT UNIFORM-COATING OPERATOR ENABLED\n");
+    fprintf(stream, "  STATUS: VALIDATED; STRAIGHT OR QUALIFIED-BEND UNIFORM-COATING OPERATOR ENABLED\n");
 }
 
 void coated_wire_print_diagnostic(FILE *stream,
