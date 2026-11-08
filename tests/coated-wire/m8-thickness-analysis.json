@@ -1,0 +1,42 @@
+{
+  "schema": "nec2c-coated-wire-m8-thickness-analysis",
+  "case_count": 9,
+  "observed_range": {
+    "radius_ratio_b_over_a": [
+      1.5,
+      6.0
+    ],
+    "epsilon_r": [
+      3.2,
+      10.0
+    ],
+    "sqrt_er_k0_b": [
+      0.0319347914458306,
+      0.1774250445406135
+    ],
+    "frequency_error_percent": [
+      0.2746290114982397,
+      1.4445851380814778
+    ]
+  },
+  "affine_fit_frequency_error_vs_sqrt_er_k0_b": {
+    "slope_percent_per_unit": 8.193865137154482,
+    "intercept_percent": 0.014299739006372754,
+    "r_squared": 0.980189603393829,
+    "maximum_absolute_residual_percent": 0.11411958900829,
+    "estimated_one_percent_crossing": 0.12029734984580617,
+    "warning": "The crossing is an interpolation aid, not a final validity rule; mesh refinement, loss, and endpoint sweeps remain."
+  },
+  "strict_one_percent_boundary": {
+    "largest_passing_sqrt_er_k0_b": 0.10907678498656255,
+    "first_failing_sqrt_er_k0_b": 0.12756428580571602,
+    "provisional_warning_threshold": 0.12,
+    "criteria": "absolute resonance-frequency and resistance errors must both be no greater than one percent"
+  },
+  "radiation_metrics": {
+    "maximum_absolute_directivity_error_db": 0.06168077449777609,
+    "maximum_pattern_error_db_above_minus_40_db": 0.8273481319643246
+  },
+  "observed_knee": false,
+  "interpretation": "Across the current lossless flush-end grid the error rises smoothly. sqrt(Er)*k0*b collapses thickness and permittivity better than b/a alone; no abrupt physical failure is observed."
+}

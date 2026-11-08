@@ -12,6 +12,7 @@ import tempfile
 ROOT = Path(os.environ.get("TEST_SRCDIR", Path(__file__).resolve().parents[1]))
 BINARY = Path(os.environ.get("NEC2C", ROOT / "nec2c"))
 DECKS = (
+    "circular-mesh-center-junction-segfault.nec",
     "tests/performance/scaling-dipole-801.nec",
     "tests/performance/m6-mixed-ground-651.nec",
     "tests/performance/m6-connected-patch-657.nec",
@@ -62,7 +63,7 @@ def main():
             parallel = run(deck, 4, directory)
             if serial != parallel:
                 raise AssertionError(f"serial/parallel mismatch: {deck}")
-    print("classic matrix fill is exact across interaction families and repeated builtin fills")
+    print("classic matrix fill is exact across high-order junctions, interaction families, and repeated builtin fills")
 
 
 if __name__ == "__main__":

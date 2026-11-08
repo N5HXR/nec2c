@@ -1,0 +1,1653 @@
+{
+  "schema": "nec2c-coated-wire-m8-nec-thickness",
+  "article": {
+    "length_mm": 475,
+    "conductor_radius_mm": 2,
+    "segments": 95,
+    "epsilon_r": 3.2,
+    "tan_delta": 0.0,
+    "conductivity_s_per_m": 0.0,
+    "free_end_geometry": "reduced-operator flush convention"
+  },
+  "cases": [
+    {
+      "outer_radius_mm": 2.0,
+      "thickness_mm": 0.0,
+      "radius_ratio_b_over_a": 1.0,
+      "resonance_mhz": 295.9527092725061,
+      "resistance_ohm": 72.26016700225614,
+      "k0_b": 0.012405420249237905,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 72.26004777978943,
+          "im": -1.1359389505888563e-05
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.006919452939246931,
+          "air_radiated_w": 0.006919452939246931,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.1360164212327915,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -23.191988425009743
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -17.157552544820987
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.61453103575724
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -11.089917482339208
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -9.124892047037326
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.517914788075316
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -6.1642052759079515
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -5.003755759258713
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -4.000151262651135
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -3.1305424082163706
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.380357092262507
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.740274429101867
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.2043812969956342
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.7689951728911257
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.43188765394636475
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.1917639080322981
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.04791569507550899
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.04791569508672031
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.1917639080547361
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.43188765398009876
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.7689951729362585
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.2043812970523635
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.740274429170524
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.380357092343645
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -3.130542408310848
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -4.000151262760296
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -5.00375575938468
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -6.16420527605405
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.5179147882469195
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -9.124892047243483
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -11.08991748259628
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.614531036098626
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -17.157552545330976
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -23.191988426026676
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.83592401477014
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": 0.0
+    },
+    {
+      "outer_radius_mm": 2.5,
+      "thickness_mm": 0.5,
+      "radius_ratio_b_over_a": 1.25,
+      "resonance_mhz": 289.77651386434354,
+      "resistance_ohm": 69.80331443529334,
+      "k0_b": 0.015183166601527421,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 69.802944431414,
+          "im": -5.520472117206324e-05
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.007163021618536024,
+          "air_radiated_w": 0.007163021618536024,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.122226851614722,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -23.113078529867774
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -17.080556279745817
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.540646292250774
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -11.020229821810457
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -9.060338212376541
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.459253624773066
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -6.111996909633661
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -4.95834922770627
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -3.961680247499565
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -3.098928307346121
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.355318427816391
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.7213414904139404
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.1909149379921258
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.7602087834917017
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.4268714678452018
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.1895109649343861
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.047348922067194085
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.04734892207826406
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.18951096495656367
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.4268714678785437
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.7602087835363345
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.190914938048248
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.721341490481921
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.3553184278967754
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -3.0989283074397984
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -3.961680247607915
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -4.958349227831419
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -6.111996909778972
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.459253624943938
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -9.060338212582051
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -11.020229822066984
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.540646292591735
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -17.080556280255518
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -23.113078530884582
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.75636832520993
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": -2.086885916112935
+    },
+    {
+      "outer_radius_mm": 3,
+      "thickness_mm": 1.0,
+      "radius_ratio_b_over_a": 1.5,
+      "resonance_mhz": 284.7080447893584,
+      "resistance_ohm": 67.79799134273487,
+      "k0_b": 0.017901118151441197,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 67.79760366341989,
+          "im": -7.516362889093228e-05
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.007374891928063229,
+          "air_radiated_w": 0.007374891928063229,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.111001455361419,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -23.049114469636784
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -17.01813961242895
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.480746078230577
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -10.963724841429787
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -9.007987526950467
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.411673011773421
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -6.069641866001499
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -4.921504727556484
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -3.930457004687878
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -3.0732649683713475
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.3349889193443203
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.7059666597163625
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.1799776311707106
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.7530715769272994
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.42279637478535553
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.187680557858717
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.046888424830244205
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.046888424841229175
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.18768055788071558
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.4227963748184424
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.7530715769716043
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.1799776312264472
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.705966659783893
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.334988919424224
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -3.0732649684645255
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -3.930457004795729
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -4.921504727681155
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -6.069641866146359
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.411673011943893
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -9.007987527155652
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -10.963724841686078
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.480746078571404
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -17.018139612938633
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -23.049114470653684
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.69188211010618
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": -3.799480163837232
+    },
+    {
+      "outer_radius_mm": 4,
+      "thickness_mm": 2.0,
+      "radius_ratio_b_over_a": 2.0,
+      "resonance_mhz": 276.642353945035,
+      "resistance_ohm": 64.63215578065912,
+      "k0_b": 0.02319198001506787,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 64.63179395157894,
+          "im": -9.536020483766997e-05
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.007736130616666825,
+          "air_radiated_w": 0.007736130616666825,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.0933394693246785,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -22.948980772666083
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -16.920421546832728
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.386957197625444
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -10.875238745246138
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -8.925992023480758
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.337133243644038
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -6.003273496446714
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -4.863757523771962
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -3.8815084933076482
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -3.0330233368845185
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.3031040178359454
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.6818478096117233
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.1628169403375357
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.7418715524407516
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.4164007744936863
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.18480759398680477
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.046165600046084485
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.04616560005688878
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.18480759400844868
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.41640077452624313
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.7418715524843754
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.162816940392458
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.6818478096783207
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.30310401791483
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -3.033023336976606
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -3.8815084934143695
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -4.863757523895504
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -6.003273496590472
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.337133243813474
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -8.925992023684994
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -10.87523874550159
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.386957197965593
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -16.920421547341885
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -22.948980773682635
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.5909333585975
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": -6.524811134501441
+    },
+    {
+      "outer_radius_mm": 5,
+      "thickness_mm": 3.0,
+      "radius_ratio_b_over_a": 2.5,
+      "resonance_mhz": 270.2944755129126,
+      "resistance_ohm": 62.16616515798765,
+      "k0_b": 0.028324766548238928,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 62.16569867142793,
+          "im": -0.00014607135263517316
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.008043020679940418,
+          "air_radiated_w": 0.008043020679940418,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.079650012664884,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -22.871819674566805
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -16.845116326003534
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.314671303408634
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -10.807028908266755
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -8.862773140594637
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.27964997890753
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -5.952079453392143
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -4.8192022836418555
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -3.843732321805054
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -3.001958982455135
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.278484775275811
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.6632208987536794
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.1495612297682598
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.7332187138968691
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.41145905503538316
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.18258751402841983
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.04560700531530446
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.04560700532596558
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.1825875140497771
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.41145905506753505
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.7332187139399603
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.149561229822536
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.6632208988195527
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.278484775353889
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -3.001958982546386
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -3.8437323219109083
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -4.819202283764536
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -5.952079453535076
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.279649979076192
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -8.862773140798168
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -10.80702890852162
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.314671303748288
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -16.84511632651234
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -22.87181967558315
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.51314613737142
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": -8.669707340292687
+    },
+    {
+      "outer_radius_mm": 6,
+      "thickness_mm": 4.0,
+      "radius_ratio_b_over_a": 3.0,
+      "resonance_mhz": 265.03190060335197,
+      "resistance_ohm": 60.13756199460225,
+      "k0_b": 0.03332794737227569,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 60.137438859043314,
+          "im": -4.326008862175164e-05
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.008314288228530912,
+          "air_radiated_w": 0.008314288228530912,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.068453215437766,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -22.809019334475316
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -16.783822944804694
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.25582998307903
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -10.7514986033497
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -8.811298209514849
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.2328370821818
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -5.910380499877446
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -4.782903686351699
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -3.812950435432607
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -2.9766412903561186
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.258416189246659
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.6480344278504258
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.138752249553163
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.7261621033030419
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.40742854166782744
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.1807766596461101
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.04515135508032016
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.0451513550908832
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.18077665966728507
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.40742854169969583
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.7261621033457638
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.1387522496070015
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.6480344279157921
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.2584161893241785
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -2.976641290446775
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -3.8129504355378607
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -4.782903686473781
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -5.910380500019798
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.232837082349924
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -8.811298209717908
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -10.751498603604173
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.2558299834184
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -16.783822945313315
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -22.809019335491598
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.4498374311222
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": -10.447888362016322
+    },
+    {
+      "outer_radius_mm": 8,
+      "thickness_mm": 6.0,
+      "radius_ratio_b_over_a": 4.0,
+      "resonance_mhz": 256.58670286565695,
+      "resistance_ohm": 56.90710182095719,
+      "k0_b": 0.043021277111998595,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 56.906779328358574,
+          "im": -0.00013037724339218842
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.008786299381174232,
+          "air_radiated_w": 0.008786299381174232,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.0507552716225823,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -22.710362325858018
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -16.687527053422926
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.163376694571959
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -10.664235328017353
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -8.730393825172284
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.159245666227907
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -5.844814360028411
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -4.7258161383314965
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -3.7645281841629554
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -2.93680580154734
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.226833114970387
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.6241299710738721
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.1217352983458913
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.7150510047957976
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.4010814854318511
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.17792476924931339
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.044433720082132165
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.044433720092541484
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.17792476927015297
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.4010814854632441
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.7150510048379144
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.1217352983989861
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.6241299711384087
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.226833115047014
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -2.9368058016370497
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -3.7645281842672422
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -4.725816138452626
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -5.844814360169855
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.159245666395197
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -8.730393825374614
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -10.664235328271223
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.163376694910875
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -16.687527053931262
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -22.71036232687419
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.35038398287077
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": -13.301451608135784
+    },
+    {
+      "outer_radius_mm": 10,
+      "thickness_mm": 8.0,
+      "radius_ratio_b_over_a": 5.0,
+      "resonance_mhz": 249.93344044318133,
+      "resistance_ohm": 54.37782620747004,
+      "k0_b": 0.052382175697209876,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 54.377553071470686,
+          "im": -0.00012042965545173314
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.009194970566998055,
+          "air_radiated_w": 0.009194970566998055,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.03701419532289,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -22.634320431320873
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -16.613299893550714
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.092103492399547
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -10.59695299618956
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -8.668002893703665
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.102482350661895
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -5.794229630878239
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -4.681762167073812
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -3.7271521014912516
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -2.90605034902011
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.202443520699592
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.6056662343886332
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.1085890143380919
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.706465876214739
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.39617673282425236
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.17572073816591016
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.04387907787539205
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.04387907788564808
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.17572073818648615
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.3961767328552323
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.7064658762563286
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.1085890143905623
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.6056662344524417
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.2024435207754123
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -2.9060503491089538
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -3.7271521015946356
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -4.681762167194029
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -5.794229631018785
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.102482350828325
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -8.668002893905198
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -10.596952996442718
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.092103492737854
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -16.613299894058553
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -22.63432043233669
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.27373001148578
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": -15.549534566670031
+    },
+    {
+      "outer_radius_mm": 12,
+      "thickness_mm": 10.0,
+      "radius_ratio_b_over_a": 6.0,
+      "resonance_mhz": 244.446676027358,
+      "resistance_ohm": 52.30021979219406,
+      "k0_b": 0.06147868189014885,
+      "resonance_evaluation": {
+        "impedance_ohm": {
+          "re": 52.2999855869308,
+          "im": -0.00011001482726621729
+        },
+        "power": {
+          "basis": "driven-accepted-power",
+          "accepted_w": 0.00956023208011614,
+          "air_radiated_w": 0.00956023208011614,
+          "lower_halfspace_flux_w": null,
+          "dielectric_absorbed_w": null,
+          "structure_loss_w": 0,
+          "network_loss_w": 0,
+          "balance_defect_w": null,
+          "balance_defect_relative": null,
+          "angular_quadrature": {
+            "theta_count": 0,
+            "phi_count": 0
+          }
+        },
+        "radiation_efficiency": 1.0,
+        "directivity_db": 2.0257910755364925,
+        "pattern": [
+          {
+            "theta_deg": 0,
+            "relative_db": null
+          },
+          {
+            "theta_deg": 5,
+            "relative_db": -22.57262233328469
+          },
+          {
+            "theta_deg": 10,
+            "relative_db": -16.553070970780816
+          },
+          {
+            "theta_deg": 15,
+            "relative_db": -13.034266394179323
+          },
+          {
+            "theta_deg": 20,
+            "relative_db": -10.542348008177942
+          },
+          {
+            "theta_deg": 25,
+            "relative_db": -8.617360415849735
+          },
+          {
+            "theta_deg": 30,
+            "relative_db": -7.05640024990325
+          },
+          {
+            "theta_deg": 35,
+            "relative_db": -5.753156170242684
+          },
+          {
+            "theta_deg": 40,
+            "relative_db": -4.645984833786187
+          },
+          {
+            "theta_deg": 45,
+            "relative_db": -3.6967923105470795
+          },
+          {
+            "theta_deg": 50,
+            "relative_db": -2.8810637159201162
+          },
+          {
+            "theta_deg": 55,
+            "relative_db": -2.182625193312504
+          },
+          {
+            "theta_deg": 60,
+            "relative_db": -1.5906606509059416
+          },
+          {
+            "theta_deg": 65,
+            "relative_db": -1.097903402948727
+          },
+          {
+            "theta_deg": 70,
+            "relative_db": -0.699486816930748
+          },
+          {
+            "theta_deg": 75,
+            "relative_db": -0.39218914487199974
+          },
+          {
+            "theta_deg": 80,
+            "relative_db": -0.17392872022741201
+          },
+          {
+            "theta_deg": 85,
+            "relative_db": -0.04342809846913133
+          },
+          {
+            "theta_deg": 90,
+            "relative_db": 0.0
+          },
+          {
+            "theta_deg": 95,
+            "relative_db": -0.04342809847929327
+          },
+          {
+            "theta_deg": 100,
+            "relative_db": -0.17392872024779277
+          },
+          {
+            "theta_deg": 105,
+            "relative_db": -0.39218914490270845
+          },
+          {
+            "theta_deg": 110,
+            "relative_db": -0.6994868169719839
+          },
+          {
+            "theta_deg": 115,
+            "relative_db": -1.0979034030007813
+          },
+          {
+            "theta_deg": 120,
+            "relative_db": -1.5906606509692802
+          },
+          {
+            "theta_deg": 125,
+            "relative_db": -2.1826251933878265
+          },
+          {
+            "theta_deg": 130,
+            "relative_db": -2.8810637160084336
+          },
+          {
+            "theta_deg": 135,
+            "relative_db": -3.6967923106499305
+          },
+          {
+            "theta_deg": 140,
+            "relative_db": -4.645984833905886
+          },
+          {
+            "theta_deg": 145,
+            "relative_db": -5.753156170382758
+          },
+          {
+            "theta_deg": 150,
+            "relative_db": -7.056400250069267
+          },
+          {
+            "theta_deg": 155,
+            "relative_db": -8.617360416050918
+          },
+          {
+            "theta_deg": 160,
+            "relative_db": -10.542348008430828
+          },
+          {
+            "theta_deg": 165,
+            "relative_db": -13.034266394517465
+          },
+          {
+            "theta_deg": 170,
+            "relative_db": -16.5530709712886
+          },
+          {
+            "theta_deg": 175,
+            "relative_db": -22.572622334300576
+          },
+          {
+            "theta_deg": 180,
+            "relative_db": -221.21153642510188
+          }
+        ]
+      },
+      "resonance_shift_from_zero_thickness_percent": -17.403467389015393
+    }
+  ],
+  "note": "This is the reduced model's prediction, not independent accuracy evidence. OpenEMS comparison supplies the error curve."
+}

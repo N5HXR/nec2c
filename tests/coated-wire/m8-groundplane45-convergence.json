@@ -1,0 +1,56 @@
+{
+  "schema": "nec2c-coated-wire-m8-groundplane45-convergence",
+  "article": {
+    "vertical_length_mm": 145.0,
+    "radial_count": 4,
+    "radial_length_mm": 145.0,
+    "radial_slope_deg": -45.0,
+    "wire_radius_mm": 2.0,
+    "coating_radius_mm": 6.0,
+    "epsilon_r": 3.2,
+    "feed_gap_mm": 6.0
+  },
+  "nec": {
+    "bare_resonance_mhz": 467.86331343266994,
+    "coated_resonance_mhz": 414.2247402118025,
+    "coating_resonance_shift_percent": -11.464582000953694
+  },
+  "openems": [
+    {
+      "mesh_pitch_mm": 2.0,
+      "cells": 7265160,
+      "bare_wall_seconds": 190.90662778599653,
+      "coated_wall_seconds": 198.13547202199697,
+      "bare_resonance_mhz": 436.6812321206699,
+      "coated_resonance_mhz": 386.2289794854072,
+      "coating_resonance_shift_percent": -11.553565604422644,
+      "nec_shift_error_percentage_points": 0.08898360346895018
+    },
+    {
+      "mesh_pitch_mm": 1.5,
+      "cells": 13411872,
+      "bare_wall_seconds": 431.34649388099206,
+      "coated_wall_seconds": 447.3058397800196,
+      "bare_resonance_mhz": 438.61602018009,
+      "coated_resonance_mhz": 385.4779111586749,
+      "coating_resonance_shift_percent": -12.114949426515997,
+      "nec_shift_error_percentage_points": 0.6503674255623029
+    },
+    {
+      "mesh_pitch_mm": 1.0,
+      "cells": 34946496,
+      "bare_wall_seconds": 1466.4136134740256,
+      "coated_wall_seconds": 1523.3505983829964,
+      "bare_resonance_mhz": 439.6943045010056,
+      "coated_resonance_mhz": 390.29197543208846,
+      "coating_resonance_shift_percent": -11.235608140292419,
+      "nec_shift_error_percentage_points": -0.22897386066127545
+    }
+  ],
+  "interpretation": {
+    "finest_mesh_shift_error_percentage_points": -0.22897386066127545,
+    "maximum_adjacent_mesh_shift_change_percentage_points": 0.879341286223578,
+    "reference_uncertainty_percentage_points": 0.5,
+    "convergence_classification": "non-monotonic Cartesian staircase alignment"
+  }
+}

@@ -32,6 +32,7 @@
 #include "dielectric.h"
 #include "dielectric_fft.h"
 #include "result_json.h"
+#include "coated_wire.h"
 #include "performance.h"
 #include "dense_backend.h"
 #include "concurrency.h"
@@ -773,6 +774,15 @@ static void set_mode_diagnostic(const dielectric_model *model,
       "requested dielectric deck, excitation, ground, or output combination is unsupported");
 }
 
+static void publish_coated_failure(const dielectric_model *dielectric,
+    const coated_wire_diagnostic *diagnostic)
+{
+  coated_wire_print_diagnostic(output_fp, diagnostic);
+  result_json_coated_wire_diagnostic(diagnostic, "error");
+  result_json_job_end(dielectric);
+  result_json_finish("validation-error");
+}
+
 /*-------------------------------------------------------------------*/
 
 int main( int argc, char **argv )
@@ -790,11 +800,14 @@ int main( int argc, char **argv )
   dielectric_mesh_result dielectric_mesh;
   dielectric_diagnostic dielectric_error;
   dielectric_plane_wave dielectric_wave;
+  coated_wire_model coated_wires;
+  coated_wire_diagnostic coated_error;
   int dielectric_excitation_seen, dielectric_any_excitation_seen;
   int dielectric_solved;
   int dielectric_iterative = 0;
   int capabilities_json = 0;
   int validate_only = 0;
+  int coated_wire_experimental_junctions = 0;
   char result_path[NEC2C_PATH_MAX * 4 + 1] = "";
   char timing_path[NEC2C_PATH_MAX * 4 + 1] = "";
 
@@ -879,6 +892,7 @@ int main( int argc, char **argv )
       {"jobs", required_argument, NULL, 1005},
       {"threads", required_argument, NULL, 1006},
       {"fft-backend", required_argument, NULL, 1007},
+      {"coated-wire-junctions", required_argument, NULL, 1008},
       {NULL, 0, NULL, 0}
     };
   while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
@@ -995,6 +1009,17 @@ int main( int argc, char **argv )
         if(!vie_fft_backend_set(optarg))
         {
           fprintf(stderr,"nec2c: FFTW backend is unavailable in this build\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1008:
+        if(!strcmp(optarg, "strict")) coated_wire_experimental_junctions = 0;
+        else if(!strcmp(optarg, "experimental"))
+          coated_wire_experimental_junctions = 1;
+        else
+        {
+          fprintf(stderr, "nec2c: --coated-wire-junctions requires strict or experimental\n");
           exit(EXIT_FAILURE);
         }
         break;
@@ -1127,6 +1152,9 @@ int main( int argc, char **argv )
   Null_Pointers();
   dielectric_model_init( &dielectric );
   dielectric_mesh_init( &dielectric_mesh );
+  coated_wire_model_init( &coated_wires );
+  coated_wire_allow_experimental_junctions(&coated_wires,
+      coated_wire_experimental_junctions);
 
   /* Allocate some buffers */
   mreq = sizeof(complex double) * 11 * 10 * 4;
@@ -1168,6 +1196,7 @@ int main( int argc, char **argv )
   {
 	dielectric_mesh_free( &dielectric_mesh );
 	dielectric_model_free( &dielectric );
+	coated_wire_model_clear( &coated_wires );
 	result_json_job_begin();
 	ifrtmw=0;
 	ifrtmp=0;
@@ -1347,6 +1376,59 @@ int main( int argc, char **argv )
 		  break;
 
 	  /* take action according to card id mnemonic */
+	  if(coated_wires.domain_count && !coated_wires.finalized &&
+	     (ain_num == 6 || ain_num == 8 || ain_num == 9 ||
+	      ain_num == 12 || ain_num == 13 || ain_num == 18))
+	  {
+		if(!coated_wire_finalize(&coated_wires, &data, &coated_error))
+		{
+		  result_json_set_coated_wires(&coated_wires);
+		  publish_coated_failure(&dielectric, &coated_error);
+		  stop(-1);
+		}
+		result_json_set_coated_wires(&coated_wires);
+		if(coated_wires.experimental_junction_count)
+		{
+		  memset(&coated_error, 0, sizeof(coated_error));
+		  coated_error.code = "COATED_WIRE_EXPERIMENTAL_JUNCTION";
+		  snprintf(coated_error.message, sizeof(coated_error.message),
+		      "%d coated/bare or unequal-coating junction%s use an unvalidated source-domain approximation",
+		      coated_wires.experimental_junction_count,
+		      coated_wires.experimental_junction_count == 1 ? "" : "s");
+		  result_json_coated_wire_diagnostic(&coated_error, "warning");
+		}
+		coated_wire_print_summary(output_fp, &coated_wires);
+	  }
+	  if(coated_wires.domain_count && !result_json_validation_only() &&
+	     (ain_num == 6 || ain_num == 8 || ain_num == 12 ||
+	      ain_num == 13 || ain_num == 18))
+	  {
+		if(!coated_wire_validate_geometry(&coated_wires, &data,
+		    &coated_error))
+		{
+		  publish_coated_failure(&dielectric, &coated_error);
+		  stop(-1);
+		}
+		if(coated_wires.experimental_geometry &&
+		   !coated_wires.experimental_geometry_warning_emitted)
+		{
+		  memset(&coated_error, 0, sizeof(coated_error));
+		  coated_error.code = "COATED_WIRE_EXPERIMENTAL_GEOMETRY";
+		  snprintf(coated_error.message, sizeof(coated_error.message),
+		      "disconnected or non-collinear coated-wire geometry uses an unvalidated general-geometry approximation");
+		  result_json_coated_wire_diagnostic(&coated_error, "warning");
+		  coated_wires.experimental_geometry_warning_emitted = 1;
+		}
+		if(gnd.ksymp != 1)
+		{
+		  memset(&coated_error, 0, sizeof(coated_error));
+		  coated_error.code = "COATED_WIRE_M4_GROUND_UNSUPPORTED";
+		  snprintf(coated_error.message, sizeof(coated_error.message),
+		      "M4 supports the coated-wire operator in free space only");
+		  publish_coated_failure(&dielectric, &coated_error);
+		  stop(-1);
+		}
+	  }
 	  switch( ain_num )
 	  {
 		case 0: /* "fr" card, frequency parameters */
@@ -1379,6 +1461,7 @@ int main( int argc, char **argv )
 			  iflow=3;
 			  /* Free loading buffers */
 			  zload.nload=0;
+			  coated_wire_model_clear(&coated_wires);
 			  free_ptr( (void *)&ldtyp );
 			  free_ptr( (void *)&ldtag );
 			  free_ptr( (void *)&ldtagf );
@@ -1391,6 +1474,28 @@ int main( int argc, char **argv )
 				igo=2;
 			  if( itmp1 == -1 )
 				continue; /* continue card input loop */
+			}
+
+			if(itmp1 == 7)
+			{
+			  if(tmp5 != 0.0 || tmp6 != 0.0)
+			  {
+				memset(&coated_error, 0, sizeof(coated_error));
+				coated_error.code = "COATED_WIRE_RESERVED_FIELD_NONZERO";
+				coated_error.tag = itmp2;
+				snprintf(coated_error.message, sizeof(coated_error.message),
+				    "LD 7 floating fields 5 and 6 are reserved and must be zero");
+				publish_coated_failure(&dielectric, &coated_error);
+				stop(-1);
+			  }
+			  if(!coated_wire_add(&coated_wires, itmp2, itmp3, itmp4,
+			      tmp1, tmp2, tmp3, tmp4, &coated_error))
+			  {
+				result_json_set_coated_wires(&coated_wires);
+				publish_coated_failure(&dielectric, &coated_error);
+				stop(-1);
+			  }
+			  continue;
 			}
 
 			/* Reallocate loading buffers */
@@ -2422,6 +2527,7 @@ int main( int argc, char **argv )
 			/* label 50 */
 			/* fill and factor primary interaction matrix */
 			tmp1 = performance_now();
+			coated_wire_activate(&coated_wires, data.wlam);
 			cmset_parallel_configure(classic_fill_processes, numerical_fork_safe);
 			cmset( netcx.neq, cm, rkh, iexk );
 			tim=(performance_now() - tmp1)*1000.0;
@@ -2599,6 +2705,13 @@ int main( int argc, char **argv )
 			  }
 			  else
 				result_json_execution_begin(save.fmhz,"driven-voltage",NULL);
+			  if(coated_wire_check_validity(&coated_wires, save.fmhz,
+			      &coated_error))
+			  {
+				coated_wire_print_diagnostic(output_fp, &coated_error);
+				result_json_coated_wire_diagnostic(&coated_error, "warning");
+			  }
+			  result_json_add_coated_evaluations(&coated_wires, save.fmhz);
 			  {
 				double solve_started = performance_now();
 				netwk( cm, save.ip, crnt.cur );
@@ -2876,10 +2989,39 @@ int main( int argc, char **argv )
 
 			  if( (fpat.ixtyp == 0) || (fpat.ixtyp == 5) )
 			  {
-				tmp1= netcx.pin- netcx.pnls- fpat.ploss;
+				double coating_loss = 0.0, balance_defect = 0.0;
+				int coating_loss_enabled = coated_wire_has_loss();
+				if(coating_loss_enabled)
+				{
+				  coating_loss = coated_wire_absorbed_power();
+				  tmp1 = coated_wire_radiated_power(3896);
+				  balance_defect = fabs(netcx.pin-tmp1-coating_loss-
+				      fpat.ploss-netcx.pnls);
+				}
+				else
+				  tmp1= netcx.pin- netcx.pnls- fpat.ploss;
 				tmp2= 100.* tmp1/ netcx.pin;
 
-				fprintf( output_fp, "\n\n\n"
+				if(coating_loss_enabled)
+				  fprintf( output_fp, "\n\n\n"
+					"                               "
+					"---------- POWER BUDGET ---------\n"
+					"                               "
+					"INPUT POWER   = %11.4E Watts\n"
+					"                               "
+					"RADIATED POWER= %11.4E Watts\n"
+					"                               "
+					"STRUCTURE LOSS= %11.4E Watts\n"
+					"                               "
+					"NETWORK LOSS  = %11.4E Watts\n"
+					"                               "
+					"DIELECTRIC LOSS= %11.4E Watts\n"
+					"                               "
+					"EFFICIENCY    = %7.2f Percent",
+					netcx.pin, tmp1, fpat.ploss, netcx.pnls,
+					coating_loss, tmp2 );
+				else
+				  fprintf( output_fp, "\n\n\n"
 					"                               "
 					"---------- POWER BUDGET ---------\n"
 					"                               "
@@ -2899,6 +3041,14 @@ int main( int argc, char **argv )
 				  power.structure_loss_defined=power.network_loss_defined=1;
 				  power.accepted_w=netcx.pin;power.air_radiated_w=tmp1;
 				  power.structure_loss_w=fpat.ploss;power.network_loss_w=netcx.pnls;
+				  if(coating_loss_enabled)
+				  {
+				    power.dielectric_absorbed_defined=1;
+				    power.dielectric_absorbed_w=coating_loss;
+				    power.defect_defined=1;power.defect_w=balance_defect;
+				    power.defect_relative=balance_defect/fmax(fabs(netcx.pin),DBL_MIN);
+				    power.theta_count=3896;power.phi_count=1;
+				  }
 				  result_json_set_power(&power);
 				}
 

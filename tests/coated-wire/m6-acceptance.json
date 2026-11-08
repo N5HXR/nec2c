@@ -1,0 +1,170 @@
+{
+  "decision": {
+    "coated_bare_junction": "rejected-by-default",
+    "experimental_cli": "--coated-wire-junctions experimental",
+    "identical_coating_junction": "supported",
+    "openems_role": "future transition-basis target; reciprocity rejects the present source-domain candidate before accuracy comparison",
+    "unequal_coating_junction": "rejected-by-default"
+  },
+  "experimental_candidates": {
+    "coated_bare_reciprocity_relative_defect": 0.01816429273655229,
+    "coated_bare_resistance_ohm": 63.47795823276268,
+    "coated_bare_resonance_mhz": 286.1450903702257,
+    "unequal_coating_reciprocity_relative_defect": 0.006966666312882529,
+    "unequal_coating_resistance_ohm": 64.59040832461356,
+    "unequal_coating_resonance_mhz": 281.8324307481877
+  },
+  "openems_asymmetric_references": [
+    {
+      "current_mirror_maximum_relative_delta": 0.04675126559245202,
+      "directivity_dbi": 2.159342822109531,
+      "end_criteria": 0.0001,
+      "experimental_nec_candidate_error": {
+        "resistance_ohm": -8.1166825747352,
+        "resonance_percent": 0.2674274457080017
+      },
+      "label": "coated / bare",
+      "mesh": {
+        "cell_counts": [
+          116,
+          8,
+          1116
+        ],
+        "line_counts": [
+          117,
+          9,
+          1117
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026274,
+          1.000000000000001,
+          8.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 1035648
+      },
+      "negative_arm": {
+        "coating_radius_mm": null,
+        "epsilon_r": 1.0,
+        "material": "bare",
+        "tan_delta": 0.0
+      },
+      "positive_arm": {
+        "epsilon_r": 3.2,
+        "material": "coated",
+        "tan_delta": 0.0
+      },
+      "resonance": {
+        "frequency_mhz": 285.38190084229024,
+        "resistance_ohm": 71.59464080749788
+      },
+      "wall_seconds": 348.1367579929938
+    },
+    {
+      "current_mirror_maximum_relative_delta": 0.026929864524504632,
+      "directivity_dbi": 2.1680335334635736,
+      "end_criteria": 0.0001,
+      "experimental_nec_candidate_error": {
+        "resistance_ohm": -3.961678240669414,
+        "resonance_percent": 0.5291171003661832
+      },
+      "label": "Er 3.2 / Er 2.2",
+      "mesh": {
+        "cell_counts": [
+          118,
+          8,
+          1116
+        ],
+        "line_counts": [
+          119,
+          9,
+          1117
+        ],
+        "maximum_adjacent_step_ratio": [
+          2.0,
+          1.000000000000001,
+          8.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.25,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            3.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 1053504
+      },
+      "negative_arm": {
+        "coating_radius_mm": 3.0,
+        "epsilon_r": 2.2,
+        "material": "coated",
+        "tan_delta": 0.0
+      },
+      "positive_arm": {
+        "epsilon_r": 3.2,
+        "material": "coated",
+        "tan_delta": 0.0
+      },
+      "resonance": {
+        "frequency_mhz": 280.3490559524282,
+        "resistance_ohm": 68.55208656528298
+      },
+      "wall_seconds": 361.5761493040045
+    }
+  ],
+  "schema": "nec2c-coated-wire-m6-junctions",
+  "schema_version": 1,
+  "uniform_junction": {
+    "maximum_relative_delta_lossless": 4.1383531760527023e-10,
+    "maximum_relative_delta_lossy": 4.21454092893831e-10,
+    "maximum_relative_power_delta_lossless": 4.4619527024794474e-10,
+    "maximum_relative_power_delta_lossy": 1.4198002332248655e-06,
+    "operator_status_lossless": "lossless-uniform-junction",
+    "operator_status_lossy": "lossy-uniform-junction",
+    "reciprocity_relative_defect": 2.651371076720412e-13,
+    "resistance_ohm": 64.66131114495286,
+    "resonance_mhz": 273.8592580052888
+  }
+}

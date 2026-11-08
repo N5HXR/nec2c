@@ -1,0 +1,1063 @@
+{
+  "schema": "nec2c-coated-wire-m9-acceptance",
+  "vswr": {
+    "reference_impedance_ohm": 50.0,
+    "samples": [
+      {
+        "frequency_mhz": 250,
+        "resistance_ohm": 44.86472772824801,
+        "reactance_ohm": -68.093117044634,
+        "vswr_50_ohm": 3.816706545553621
+      },
+      {
+        "frequency_mhz": 250.5,
+        "resistance_ohm": 45.17409526281199,
+        "reactance_ohm": -66.82094915706698,
+        "vswr_50_ohm": 3.718175870390812
+      },
+      {
+        "frequency_mhz": 251,
+        "resistance_ohm": 45.48569440792408,
+        "reactance_ohm": -65.54899499774132,
+        "vswr_50_ohm": 3.622119635961885
+      },
+      {
+        "frequency_mhz": 251.5,
+        "resistance_ohm": 45.79954432758355,
+        "reactance_ohm": -64.27723114686744,
+        "vswr_50_ohm": 3.5284912450370776
+      },
+      {
+        "frequency_mhz": 252,
+        "resistance_ohm": 46.115664386854185,
+        "reactance_ohm": -63.00563427799464,
+        "vswr_50_ohm": 3.4372447857486788
+      },
+      {
+        "frequency_mhz": 252.5,
+        "resistance_ohm": 46.43407415345655,
+        "reactance_ohm": -61.73418108620335,
+        "vswr_50_ohm": 3.3483350305128297
+      },
+      {
+        "frequency_mhz": 253,
+        "resistance_ohm": 46.75479339646255,
+        "reactance_ohm": -60.46284838082957,
+        "vswr_50_ohm": 3.261717446881168
+      },
+      {
+        "frequency_mhz": 253.5,
+        "resistance_ohm": 47.077842093301385,
+        "reactance_ohm": -59.19161302726054,
+        "vswr_50_ohm": 3.177348200946587
+      },
+      {
+        "frequency_mhz": 254,
+        "resistance_ohm": 47.403240408282045,
+        "reactance_ohm": -57.92045207600587,
+        "vswr_50_ohm": 3.0951841747995994
+      },
+      {
+        "frequency_mhz": 254.5,
+        "resistance_ohm": 47.731008753055036,
+        "reactance_ohm": -56.649342427404555,
+        "vswr_50_ohm": 3.0151829577619114
+      },
+      {
+        "frequency_mhz": 255,
+        "resistance_ohm": 48.061167723981704,
+        "reactance_ohm": -55.3782612570822,
+        "vswr_50_ohm": 2.9373028872547793
+      },
+      {
+        "frequency_mhz": 255.5,
+        "resistance_ohm": 48.39373813131273,
+        "reactance_ohm": -54.10718577136763,
+        "vswr_50_ohm": 2.8615030521552245
+      },
+      {
+        "frequency_mhz": 256,
+        "resistance_ohm": 48.72874103316211,
+        "reactance_ohm": -52.83609308217558,
+        "vswr_50_ohm": 2.7877433077442344
+      },
+      {
+        "frequency_mhz": 256.5,
+        "resistance_ohm": 49.06619767404845,
+        "reactance_ohm": -51.56496060836378,
+        "vswr_50_ohm": 2.7159843241596717
+      },
+      {
+        "frequency_mhz": 257,
+        "resistance_ohm": 49.40612953312712,
+        "reactance_ohm": -50.293765746331516,
+        "vswr_50_ohm": 2.646187598784591
+      },
+      {
+        "frequency_mhz": 257.5,
+        "resistance_ohm": 49.748558326499165,
+        "reactance_ohm": -49.02248588697606,
+        "vswr_50_ohm": 2.5783154940323376
+      },
+      {
+        "frequency_mhz": 258,
+        "resistance_ohm": 50.09350598365667,
+        "reactance_ohm": -47.751098577048076,
+        "vswr_50_ohm": 2.512331288468571
+      },
+      {
+        "frequency_mhz": 258.5,
+        "resistance_ohm": 50.440994673412284,
+        "reactance_ohm": -46.479581408986846,
+        "vswr_50_ohm": 2.4481992210470573
+      },
+      {
+        "frequency_mhz": 259,
+        "resistance_ohm": 50.791046796146595,
+        "reactance_ohm": -45.207912026143084,
+        "vswr_50_ohm": 2.385884550547618
+      },
+      {
+        "frequency_mhz": 259.5,
+        "resistance_ohm": 51.14368497820813,
+        "reactance_ohm": -43.93606824369573,
+        "vswr_50_ohm": 2.325353629867165
+      },
+      {
+        "frequency_mhz": 260,
+        "resistance_ohm": 51.498932104535655,
+        "reactance_ohm": -42.66402778495685,
+        "vswr_50_ohm": 2.266573975025476
+      },
+      {
+        "frequency_mhz": 260.5,
+        "resistance_ohm": 51.85681128405764,
+        "reactance_ohm": -41.39176857513792,
+        "vswr_50_ohm": 2.209514373485251
+      },
+      {
+        "frequency_mhz": 261,
+        "resistance_ohm": 52.21734589020622,
+        "reactance_ohm": -40.11926849130109,
+        "vswr_50_ohm": 2.1541449848796024
+      },
+      {
+        "frequency_mhz": 261.5,
+        "resistance_ohm": 52.58055953291939,
+        "reactance_ohm": -38.84650552813949,
+        "vswr_50_ohm": 2.100437480164191
+      },
+      {
+        "frequency_mhz": 262,
+        "resistance_ohm": 52.94647606720863,
+        "reactance_ohm": -37.573457813161006,
+        "vswr_50_ohm": 2.0483651974195207
+      },
+      {
+        "frequency_mhz": 262.5,
+        "resistance_ohm": 53.31511961224627,
+        "reactance_ohm": -36.30010345230761,
+        "vswr_50_ohm": 1.9979033199650273
+      },
+      {
+        "frequency_mhz": 263,
+        "resistance_ohm": 53.6865145382582,
+        "reactance_ohm": -35.02642067013988,
+        "vswr_50_ohm": 1.9490291005114768
+      },
+      {
+        "frequency_mhz": 263.5,
+        "resistance_ohm": 54.0606854889689,
+        "reactance_ohm": -33.75238769875689,
+        "vswr_50_ohm": 1.9017221168907739
+      },
+      {
+        "frequency_mhz": 264,
+        "resistance_ohm": 54.43765734559113,
+        "reactance_ohm": -32.477982910805,
+        "vswr_50_ohm": 1.8559645869707266
+      },
+      {
+        "frequency_mhz": 264.5,
+        "resistance_ohm": 54.81745526788552,
+        "reactance_ohm": -31.20318476902306,
+        "vswr_50_ohm": 1.81174173643763
+      },
+      {
+        "frequency_mhz": 265,
+        "resistance_ohm": 55.2001047378536,
+        "reactance_ohm": -29.92797150952363,
+        "vswr_50_ohm": 1.7690422311859286
+      },
+      {
+        "frequency_mhz": 265.5,
+        "resistance_ohm": 55.58563139693848,
+        "reactance_ohm": -28.652321919746406,
+        "vswr_50_ohm": 1.7278587332736042
+      },
+      {
+        "frequency_mhz": 266,
+        "resistance_ohm": 55.97406123370767,
+        "reactance_ohm": -27.37621461533442,
+        "vswr_50_ohm": 1.6881885104735204
+      },
+      {
+        "frequency_mhz": 266.5,
+        "resistance_ohm": 56.36542052803499,
+        "reactance_ohm": -26.09962816461927,
+        "vswr_50_ohm": 1.6500341995725465
+      },
+      {
+        "frequency_mhz": 267,
+        "resistance_ohm": 56.759735822113335,
+        "reactance_ohm": -24.822541316511483,
+        "vswr_50_ohm": 1.6134047168592731
+      },
+      {
+        "frequency_mhz": 267.5,
+        "resistance_ohm": 57.15703393870388,
+        "reactance_ohm": -23.544932903091258,
+        "vswr_50_ohm": 1.5783163253230945
+      },
+      {
+        "frequency_mhz": 268,
+        "resistance_ohm": 57.55734200725199,
+        "reactance_ohm": -22.26678177280256,
+        "vswr_50_ohm": 1.5447938893139812
+      },
+      {
+        "frequency_mhz": 268.5,
+        "resistance_ohm": 57.960687436231055,
+        "reactance_ohm": -20.98806688142679,
+        "vswr_50_ohm": 1.5128723304037544
+      },
+      {
+        "frequency_mhz": 269,
+        "resistance_ohm": 58.367097909010695,
+        "reactance_ohm": -19.70876736849207,
+        "vswr_50_ohm": 1.4825982722242588
+      },
+      {
+        "frequency_mhz": 269.5,
+        "resistance_ohm": 58.77660150002538,
+        "reactance_ohm": -18.428861995239956,
+        "vswr_50_ohm": 1.4540318198443538
+      },
+      {
+        "frequency_mhz": 270,
+        "resistance_ohm": 59.18922645456895,
+        "reactance_ohm": -17.148330263339904,
+        "vswr_50_ohm": 1.4272484302503536
+      },
+      {
+        "frequency_mhz": 270.5,
+        "resistance_ohm": 59.6050014204695,
+        "reactance_ohm": -15.867151246475553,
+        "vswr_50_ohm": 1.4023405900044172
+      },
+      {
+        "frequency_mhz": 271,
+        "resistance_ohm": 60.02395534330535,
+        "reactance_ohm": -14.585304182151829,
+        "vswr_50_ohm": 1.3794190700107876
+      },
+      {
+        "frequency_mhz": 271.5,
+        "resistance_ohm": 60.4461174640918,
+        "reactance_ohm": -13.302768467096167,
+        "vswr_50_ohm": 1.3586131945265703
+      },
+      {
+        "frequency_mhz": 272,
+        "resistance_ohm": 60.87151733735493,
+        "reactance_ohm": -12.019523602245853,
+        "vswr_50_ohm": 1.340069429096852
+      },
+      {
+        "frequency_mhz": 272.5,
+        "resistance_ohm": 61.30018486797687,
+        "reactance_ohm": -10.735549004333015,
+        "vswr_50_ohm": 1.3239474164276268
+      },
+      {
+        "frequency_mhz": 273,
+        "resistance_ohm": 61.73215026169923,
+        "reactance_ohm": -9.450824320167706,
+        "vswr_50_ohm": 1.3104126112474084
+      },
+      {
+        "frequency_mhz": 273.5,
+        "resistance_ohm": 62.16744407347555,
+        "reactance_ohm": -8.1653291662246,
+        "vswr_50_ohm": 1.2996250078524398
+      },
+      {
+        "frequency_mhz": 274,
+        "resistance_ohm": 62.60609718790978,
+        "reactance_ohm": -6.879043265830813,
+        "vswr_50_ohm": 1.291724371689194
+      },
+      {
+        "frequency_mhz": 274.5,
+        "resistance_ohm": 63.048140811793495,
+        "reactance_ohm": -5.591946474056919,
+        "vswr_50_ohm": 1.28681371546158
+      },
+      {
+        "frequency_mhz": 275,
+        "resistance_ohm": 63.493606534202655,
+        "reactance_ohm": -4.304018558732221,
+        "vswr_50_ohm": 1.2849441514758702
+      },
+      {
+        "frequency_mhz": 275.5,
+        "resistance_ohm": 63.94252625953174,
+        "reactance_ohm": -3.0152395140415953,
+        "vswr_50_ohm": 1.2861048694363055
+      },
+      {
+        "frequency_mhz": 276,
+        "resistance_ohm": 64.3949322512898,
+        "reactance_ohm": -1.7255893712849397,
+        "vswr_50_ohm": 1.290221140897597
+      },
+      {
+        "frequency_mhz": 276.5,
+        "resistance_ohm": 64.85085711137015,
+        "reactance_ohm": -0.4350483191723897,
+        "vswr_50_ohm": 1.2971610434006673
+      },
+      {
+        "frequency_mhz": 277,
+        "resistance_ohm": 65.31033383981627,
+        "reactance_ohm": 0.8564035332717793,
+        "vswr_50_ohm": 1.306749003201573
+      },
+      {
+        "frequency_mhz": 277.5,
+        "resistance_ohm": 65.77339578026952,
+        "reactance_ohm": 2.148785922092248,
+        "vswr_50_ohm": 1.3187825893132958
+      },
+      {
+        "frequency_mhz": 278,
+        "resistance_ohm": 66.24007665013464,
+        "reactance_ohm": 3.4421185195208115,
+        "vswr_50_ohm": 1.3330488871848476
+      },
+      {
+        "frequency_mhz": 278.5,
+        "resistance_ohm": 66.71041053329174,
+        "reactance_ohm": 4.736420837706842,
+        "vswr_50_ohm": 1.349337889500959
+      },
+      {
+        "frequency_mhz": 279,
+        "resistance_ohm": 67.18443188566845,
+        "reactance_ohm": 6.0317123573924825,
+        "vswr_50_ohm": 1.367451842986838
+      },
+      {
+        "frequency_mhz": 279.5,
+        "resistance_ohm": 67.66217555534753,
+        "reactance_ohm": 7.328012446536946,
+        "vswr_50_ohm": 1.3872106860003066
+      },
+      {
+        "frequency_mhz": 280,
+        "resistance_ohm": 68.1436768050892,
+        "reactance_ohm": 8.625340517188585,
+        "vswr_50_ohm": 1.4084543628682775
+      },
+      {
+        "frequency_mhz": 280.5,
+        "resistance_ohm": 68.62897125220597,
+        "reactance_ohm": 9.923715748745149,
+        "vswr_50_ohm": 1.4310429642318585
+      },
+      {
+        "frequency_mhz": 281,
+        "resistance_ohm": 69.11809490375299,
+        "reactance_ohm": 11.223157182620874,
+        "vswr_50_ohm": 1.4548555544679798
+      },
+      {
+        "frequency_mhz": 281.5,
+        "resistance_ohm": 69.61108422800834,
+        "reactance_ohm": 12.523684027917518,
+        "vswr_50_ohm": 1.4797883268168612
+      },
+      {
+        "frequency_mhz": 282,
+        "resistance_ohm": 70.10797601596285,
+        "reactance_ohm": 13.825315038113585,
+        "vswr_50_ohm": 1.5057524964646336
+      },
+      {
+        "frequency_mhz": 282.5,
+        "resistance_ohm": 70.60880754729342,
+        "reactance_ohm": 15.12806918893028,
+        "vswr_50_ohm": 1.5326722273299682
+      },
+      {
+        "frequency_mhz": 283,
+        "resistance_ohm": 71.11361649483862,
+        "reactance_ohm": 16.431965263069237,
+        "vswr_50_ohm": 1.560482692440702
+      },
+      {
+        "frequency_mhz": 283.5,
+        "resistance_ohm": 71.62244090147476,
+        "reactance_ohm": 17.737021723547393,
+        "vswr_50_ohm": 1.5891283522385928
+      },
+      {
+        "frequency_mhz": 284,
+        "resistance_ohm": 72.1353193259234,
+        "reactance_ohm": 19.04325730072768,
+        "vswr_50_ohm": 1.6185614771466525
+      },
+      {
+        "frequency_mhz": 284.5,
+        "resistance_ohm": 72.65229069807644,
+        "reactance_ohm": 20.350690373588844,
+        "vswr_50_ohm": 1.6487408677624864
+      },
+      {
+        "frequency_mhz": 285,
+        "resistance_ohm": 73.17339442563178,
+        "reactance_ohm": 21.65933937163223,
+        "vswr_50_ohm": 1.6796307952154779
+      },
+      {
+        "frequency_mhz": 285.5,
+        "resistance_ohm": 73.6986703002034,
+        "reactance_ohm": 22.96922235182263,
+        "vswr_50_ohm": 1.7112000992718177
+      },
+      {
+        "frequency_mhz": 286,
+        "resistance_ohm": 74.22815864262746,
+        "reactance_ohm": 24.280357638528162,
+        "vswr_50_ohm": 1.7434214582480247
+      },
+      {
+        "frequency_mhz": 286.5,
+        "resistance_ohm": 74.7619001482302,
+        "reactance_ohm": 25.5927630757932,
+        "vswr_50_ohm": 1.7762707547854208
+      },
+      {
+        "frequency_mhz": 287,
+        "resistance_ohm": 75.29993605376096,
+        "reactance_ohm": 26.906456719606652,
+        "vswr_50_ohm": 1.809726577855178
+      },
+      {
+        "frequency_mhz": 287.5,
+        "resistance_ohm": 75.84230798871369,
+        "reactance_ohm": 28.22145625971125,
+        "vswr_50_ohm": 1.8437697829329045
+      },
+      {
+        "frequency_mhz": 288,
+        "resistance_ohm": 76.38905810221932,
+        "reactance_ohm": 29.53777940196427,
+        "vswr_50_ohm": 1.8783831464622405
+      },
+      {
+        "frequency_mhz": 288.5,
+        "resistance_ohm": 76.9402289824205,
+        "reactance_ohm": 30.855443611710406,
+        "vswr_50_ohm": 1.913551064039185
+      },
+      {
+        "frequency_mhz": 289,
+        "resistance_ohm": 77.49586374944008,
+        "reactance_ohm": 32.174466402419235,
+        "vswr_50_ohm": 1.9492593111429728
+      },
+      {
+        "frequency_mhz": 289.5,
+        "resistance_ohm": 78.05600602489564,
+        "reactance_ohm": 33.494865178392644,
+        "vswr_50_ohm": 1.9854948333138505
+      },
+      {
+        "frequency_mhz": 290,
+        "resistance_ohm": 78.62069978204032,
+        "reactance_ohm": 34.81665678058686,
+        "vswr_50_ohm": 2.0222455611164327
+      },
+      {
+        "frequency_mhz": 290.5,
+        "resistance_ohm": 79.189989656164,
+        "reactance_ohm": 36.13985839693705,
+        "vswr_50_ohm": 2.0595002891644185
+      },
+      {
+        "frequency_mhz": 291,
+        "resistance_ohm": 79.7639207437327,
+        "reactance_ohm": 37.464486945059924,
+        "vswr_50_ohm": 2.0972485377285377
+      },
+      {
+        "frequency_mhz": 291.5,
+        "resistance_ohm": 80.34253865929588,
+        "reactance_ohm": 38.79055923335539,
+        "vswr_50_ohm": 2.135480453944627
+      },
+      {
+        "frequency_mhz": 292,
+        "resistance_ohm": 80.92588947189566,
+        "reactance_ohm": 40.1180916519483,
+        "vswr_50_ohm": 2.1741867163271227
+      },
+      {
+        "frequency_mhz": 292.5,
+        "resistance_ohm": 81.51401991147496,
+        "reactance_ohm": 41.447100944215215,
+        "vswr_50_ohm": 2.2133584820638035
+      },
+      {
+        "frequency_mhz": 293,
+        "resistance_ohm": 82.10697708502978,
+        "reactance_ohm": 42.77760316121656,
+        "vswr_50_ohm": 2.252987295507983
+      },
+      {
+        "frequency_mhz": 293.5,
+        "resistance_ohm": 82.70480875472234,
+        "reactance_ohm": 44.10961457965831,
+        "vswr_50_ohm": 2.2930650606144702
+      },
+      {
+        "frequency_mhz": 294,
+        "resistance_ohm": 83.30756320245024,
+        "reactance_ohm": 45.443151238741564,
+        "vswr_50_ohm": 2.3335839826532236
+      },
+      {
+        "frequency_mhz": 294.5,
+        "resistance_ohm": 83.915289231643,
+        "reactance_ohm": 46.778228911759385,
+        "vswr_50_ohm": 2.374536528653328
+      },
+      {
+        "frequency_mhz": 295,
+        "resistance_ohm": 84.52803621860215,
+        "reactance_ohm": 48.1148632425272,
+        "vswr_50_ohm": 2.4159153983867445
+      },
+      {
+        "frequency_mhz": 295.5,
+        "resistance_ohm": 85.14585413167416,
+        "reactance_ohm": 49.453069767036375,
+        "vswr_50_ohm": 2.457713496965337
+      },
+      {
+        "frequency_mhz": 296,
+        "resistance_ohm": 85.76879351242569,
+        "reactance_ohm": 50.79286385085528,
+        "vswr_50_ohm": 2.499923908904227
+      },
+      {
+        "frequency_mhz": 296.5,
+        "resistance_ohm": 86.39690546540855,
+        "reactance_ohm": 52.13426065532164,
+        "vswr_50_ohm": 2.5425398764634486
+      },
+      {
+        "frequency_mhz": 297,
+        "resistance_ohm": 87.03024164683865,
+        "reactance_ohm": 53.47727501228253,
+        "vswr_50_ohm": 2.585554778279346
+      },
+      {
+        "frequency_mhz": 297.5,
+        "resistance_ohm": 87.66885437840085,
+        "reactance_ohm": 54.82192179667763,
+        "vswr_50_ohm": 2.6289621257125297
+      },
+      {
+        "frequency_mhz": 298,
+        "resistance_ohm": 88.31279659192205,
+        "reactance_ohm": 56.16821567441774,
+        "vswr_50_ohm": 2.6727555424379434
+      },
+      {
+        "frequency_mhz": 298.5,
+        "resistance_ohm": 88.962121718229,
+        "reactance_ohm": 57.516170830724704,
+        "vswr_50_ohm": 2.716928744561829
+      },
+      {
+        "frequency_mhz": 299,
+        "resistance_ohm": 89.61688394556275,
+        "reactance_ohm": 58.86580162679223,
+        "vswr_50_ohm": 2.761475552256535
+      },
+      {
+        "frequency_mhz": 299.5,
+        "resistance_ohm": 90.27713798634822,
+        "reactance_ohm": 60.217121947922735,
+        "vswr_50_ohm": 2.8063898609386877
+      },
+      {
+        "frequency_mhz": 300,
+        "resistance_ohm": 90.94293925877443,
+        "reactance_ohm": 61.57014561376652,
+        "vswr_50_ohm": 2.8516656477826263
+      },
+      {
+        "frequency_mhz": 300.5,
+        "resistance_ohm": 91.6143437585922,
+        "reactance_ohm": 62.92488613286011,
+        "vswr_50_ohm": 2.897296957748243
+      },
+      {
+        "frequency_mhz": 301,
+        "resistance_ohm": 92.29140818373972,
+        "reactance_ohm": 64.28135688684134,
+        "vswr_50_ohm": 2.943277905030479
+      },
+      {
+        "frequency_mhz": 301.5,
+        "resistance_ohm": 92.97418988922462,
+        "reactance_ohm": 65.63957100855063,
+        "vswr_50_ohm": 2.9896026649228675
+      },
+      {
+        "frequency_mhz": 302,
+        "resistance_ohm": 93.66274680990627,
+        "reactance_ohm": 66.99954119530979,
+        "vswr_50_ohm": 3.0362654639754583
+      },
+      {
+        "frequency_mhz": 302.5,
+        "resistance_ohm": 94.35713763917623,
+        "reactance_ohm": 68.3612801443477,
+        "vswr_50_ohm": 3.0832605917823592
+      },
+      {
+        "frequency_mhz": 303,
+        "resistance_ohm": 95.05742174857052,
+        "reactance_ohm": 69.72480024920516,
+        "vswr_50_ohm": 3.130582388599568
+      },
+      {
+        "frequency_mhz": 303.5,
+        "resistance_ohm": 95.76365918218116,
+        "reactance_ohm": 71.09011366749988,
+        "vswr_50_ohm": 3.1782252455167987
+      },
+      {
+        "frequency_mhz": 304,
+        "resistance_ohm": 96.47591067179066,
+        "reactance_ohm": 72.45723217470959,
+        "vswr_50_ohm": 3.2261835981085114
+      },
+      {
+        "frequency_mhz": 304.5,
+        "resistance_ohm": 97.19423765157006,
+        "reactance_ohm": 73.82616736347886,
+        "vswr_50_ohm": 3.2744519317401655
+      },
+      {
+        "frequency_mhz": 305,
+        "resistance_ohm": 97.91870229662248,
+        "reactance_ohm": 75.19693057447499,
+        "vswr_50_ohm": 3.3230247784924143
+      },
+      {
+        "frequency_mhz": 305.5,
+        "resistance_ohm": 98.64936751849072,
+        "reactance_ohm": 76.56953286653294,
+        "vswr_50_ohm": 3.371896715384943
+      },
+      {
+        "frequency_mhz": 306,
+        "resistance_ohm": 99.38629691064929,
+        "reactance_ohm": 77.94398494894091,
+        "vswr_50_ohm": 3.4210623613403683
+      },
+      {
+        "frequency_mhz": 306.5,
+        "resistance_ohm": 100.12955484427113,
+        "reactance_ohm": 79.3202972576725,
+        "vswr_50_ohm": 3.4705163796834104
+      },
+      {
+        "frequency_mhz": 307,
+        "resistance_ohm": 100.879206442734,
+        "reactance_ohm": 80.69847997528552,
+        "vswr_50_ohm": 3.5202534785525583
+      },
+      {
+        "frequency_mhz": 307.5,
+        "resistance_ohm": 101.63531756894831,
+        "reactance_ohm": 82.07854289615501,
+        "vswr_50_ohm": 3.5702684061276018
+      },
+      {
+        "frequency_mhz": 308,
+        "resistance_ohm": 102.3979548651405,
+        "reactance_ohm": 83.46049550003939,
+        "vswr_50_ohm": 3.620555953266613
+      },
+      {
+        "frequency_mhz": 308.5,
+        "resistance_ohm": 103.16718576620836,
+        "reactance_ohm": 84.84434703232536,
+        "vswr_50_ohm": 3.6711109565076665
+      },
+      {
+        "frequency_mhz": 309,
+        "resistance_ohm": 103.94307848811239,
+        "reactance_ohm": 86.23010631283722,
+        "vswr_50_ohm": 3.721928291516417
+      },
+      {
+        "frequency_mhz": 309.5,
+        "resistance_ohm": 104.72570201205404,
+        "reactance_ohm": 87.6177817962285,
+        "vswr_50_ohm": 3.7730028754147367
+      },
+      {
+        "frequency_mhz": 310,
+        "resistance_ohm": 105.5151261879015,
+        "reactance_ohm": 89.00738170516921,
+        "vswr_50_ohm": 3.8243296720899798
+      },
+      {
+        "frequency_mhz": 310.5,
+        "resistance_ohm": 106.31142161595564,
+        "reactance_ohm": 90.39891371792913,
+        "vswr_50_ohm": 3.875903681135889
+      },
+      {
+        "frequency_mhz": 311,
+        "resistance_ohm": 107.11465977309872,
+        "reactance_ohm": 91.79238530395128,
+        "vswr_50_ohm": 3.9277199505676488
+      },
+      {
+        "frequency_mhz": 311.5,
+        "resistance_ohm": 107.92491293150054,
+        "reactance_ohm": 93.18780337825284,
+        "vswr_50_ohm": 3.9797735646065635
+      },
+      {
+        "frequency_mhz": 312,
+        "resistance_ohm": 108.74225424860799,
+        "reactance_ohm": 94.58517464943777,
+        "vswr_50_ohm": 4.0320596569864255
+      },
+      {
+        "frequency_mhz": 312.5,
+        "resistance_ohm": 109.56675774421095,
+        "reactance_ohm": 95.98450539009742,
+        "vswr_50_ohm": 4.084573403056079
+      },
+      {
+        "frequency_mhz": 313,
+        "resistance_ohm": 110.39849823990853,
+        "reactance_ohm": 97.38580125859231,
+        "vswr_50_ohm": 4.137310013570008
+      },
+      {
+        "frequency_mhz": 313.5,
+        "resistance_ohm": 111.23755147849396,
+        "reactance_ohm": 98.78906768036234,
+        "vswr_50_ohm": 4.190264749477003
+      },
+      {
+        "frequency_mhz": 314,
+        "resistance_ohm": 112.08399408967459,
+        "reactance_ohm": 100.19430956020238,
+        "vswr_50_ohm": 4.243432911737677
+      },
+      {
+        "frequency_mhz": 314.5,
+        "resistance_ohm": 112.93790365662473,
+        "reactance_ohm": 101.6015315300667,
+        "vswr_50_ohm": 4.296809851233335
+      },
+      {
+        "frequency_mhz": 315,
+        "resistance_ohm": 113.79935852889878,
+        "reactance_ohm": 103.01073747123722,
+        "vswr_50_ohm": 4.350390951244305
+      },
+      {
+        "frequency_mhz": 315.5,
+        "resistance_ohm": 114.66843810694914,
+        "reactance_ohm": 104.42193099649995,
+        "vswr_50_ohm": 4.404171646275805
+      },
+      {
+        "frequency_mhz": 316,
+        "resistance_ohm": 115.54522266619325,
+        "reactance_ohm": 105.83511518615263,
+        "vswr_50_ohm": 4.458147412643675
+      },
+      {
+        "frequency_mhz": 316.5,
+        "resistance_ohm": 116.4297933897312,
+        "reactance_ohm": 107.2502925432945,
+        "vswr_50_ohm": 4.512313767307565
+      },
+      {
+        "frequency_mhz": 317,
+        "resistance_ohm": 117.32223247619007,
+        "reactance_ohm": 108.6674651957129,
+        "vswr_50_ohm": 4.566666276188189
+      },
+      {
+        "frequency_mhz": 317.5,
+        "resistance_ohm": 118.2226230690197,
+        "reactance_ohm": 110.08663465274823,
+        "vswr_50_ohm": 4.621200545399742
+      },
+      {
+        "frequency_mhz": 318,
+        "resistance_ohm": 119.13104923066504,
+        "reactance_ohm": 111.50780187038445,
+        "vswr_50_ohm": 4.675912224366763
+      },
+      {
+        "frequency_mhz": 318.5,
+        "resistance_ohm": 120.0475961176745,
+        "reactance_ohm": 112.93096743067737,
+        "vswr_50_ohm": 4.73079701330351
+      },
+      {
+        "frequency_mhz": 319,
+        "resistance_ohm": 120.97234973364155,
+        "reactance_ohm": 114.35613106555529,
+        "vswr_50_ohm": 4.785850645388387
+      },
+      {
+        "frequency_mhz": 319.5,
+        "resistance_ohm": 121.90539722178755,
+        "reactance_ohm": 115.78329216082484,
+        "vswr_50_ohm": 4.841068906822077
+      },
+      {
+        "frequency_mhz": 320,
+        "resistance_ohm": 122.84682665249842,
+        "reactance_ohm": 117.21244936153802,
+        "vswr_50_ohm": 4.89644762214933
+      }
+    ],
+    "minimum": {
+      "frequency_mhz": 275,
+      "resistance_ohm": 63.493606534202655,
+      "reactance_ohm": -4.304018558732221,
+      "vswr_50_ohm": 1.2849441514758702
+    },
+    "maximum_validity_metric": 0.04798806061057351,
+    "validity_statuses": [
+      "within-reference-envelope"
+    ]
+  },
+  "pattern": {
+    "frequency_mhz": 276.5,
+    "samples": [
+      {
+        "theta_deg": 0,
+        "phi_deg": 0,
+        "relative_db": -300.0
+      },
+      {
+        "theta_deg": 5,
+        "phi_deg": 0,
+        "relative_db": -22.946725303535725
+      },
+      {
+        "theta_deg": 10,
+        "phi_deg": 0,
+        "relative_db": -16.918221028539328
+      },
+      {
+        "theta_deg": 15,
+        "phi_deg": 0,
+        "relative_db": -13.384846003642108
+      },
+      {
+        "theta_deg": 20,
+        "phi_deg": 0,
+        "relative_db": -10.873247990612393
+      },
+      {
+        "theta_deg": 25,
+        "phi_deg": 0,
+        "relative_db": -8.924148511429424
+      },
+      {
+        "theta_deg": 30,
+        "phi_deg": 0,
+        "relative_db": -7.3354586313109404
+      },
+      {
+        "theta_deg": 35,
+        "phi_deg": 0,
+        "relative_db": -6.001783704202457
+      },
+      {
+        "theta_deg": 40,
+        "phi_deg": 0,
+        "relative_db": -4.862462393170115
+      },
+      {
+        "theta_deg": 45,
+        "phi_deg": 0,
+        "relative_db": -3.8804116819794454
+      },
+      {
+        "theta_deg": 50,
+        "phi_deg": 0,
+        "relative_db": -3.032122426456726
+      },
+      {
+        "theta_deg": 55,
+        "phi_deg": 0,
+        "relative_db": -2.302390803618471
+      },
+      {
+        "theta_deg": 60,
+        "phi_deg": 0,
+        "relative_db": -1.6813087380482168
+      },
+      {
+        "theta_deg": 65,
+        "phi_deg": 0,
+        "relative_db": -1.1624336611277295
+      },
+      {
+        "theta_deg": 70,
+        "phi_deg": 0,
+        "relative_db": -0.7416215556745018
+      },
+      {
+        "theta_deg": 75,
+        "phi_deg": 0,
+        "relative_db": -0.4162580879487019
+      },
+      {
+        "theta_deg": 80,
+        "phi_deg": 0,
+        "relative_db": -0.18474352097295238
+      },
+      {
+        "theta_deg": 85,
+        "phi_deg": 0,
+        "relative_db": -0.046149483114776776
+      },
+      {
+        "theta_deg": 90,
+        "phi_deg": 0,
+        "relative_db": 0.0
+      },
+      {
+        "theta_deg": 95,
+        "phi_deg": 0,
+        "relative_db": -0.046149483125570795
+      },
+      {
+        "theta_deg": 100,
+        "phi_deg": 0,
+        "relative_db": -0.18474352099458125
+      },
+      {
+        "theta_deg": 105,
+        "phi_deg": 0,
+        "relative_db": -0.41625808798124114
+      },
+      {
+        "theta_deg": 110,
+        "phi_deg": 0,
+        "relative_db": -0.7416215557180811
+      },
+      {
+        "theta_deg": 115,
+        "phi_deg": 0,
+        "relative_db": -1.1624336611825934
+      },
+      {
+        "theta_deg": 120,
+        "phi_deg": 0,
+        "relative_db": -1.6813087381147542
+      },
+      {
+        "theta_deg": 125,
+        "phi_deg": 0,
+        "relative_db": -2.302390803697275
+      },
+      {
+        "theta_deg": 130,
+        "phi_deg": 0,
+        "relative_db": -3.0321224265487356
+      },
+      {
+        "theta_deg": 135,
+        "phi_deg": 0,
+        "relative_db": -3.8804116820860846
+      },
+      {
+        "theta_deg": 140,
+        "phi_deg": 0,
+        "relative_db": -4.862462393293574
+      },
+      {
+        "theta_deg": 145,
+        "phi_deg": 0,
+        "relative_db": -6.001783704346133
+      },
+      {
+        "theta_deg": 150,
+        "phi_deg": 0,
+        "relative_db": -7.335458631480294
+      },
+      {
+        "theta_deg": 155,
+        "phi_deg": 0,
+        "relative_db": -8.924148511633575
+      },
+      {
+        "theta_deg": 160,
+        "phi_deg": 0,
+        "relative_db": -10.873247990867782
+      },
+      {
+        "theta_deg": 165,
+        "phi_deg": 0,
+        "relative_db": -13.38484600398218
+      },
+      {
+        "theta_deg": 170,
+        "phi_deg": 0,
+        "relative_db": -16.918221029048425
+      },
+      {
+        "theta_deg": 175,
+        "phi_deg": 0,
+        "relative_db": -22.946725304552213
+      },
+      {
+        "theta_deg": 180,
+        "phi_deg": 0,
+        "relative_db": -221.58865934258228
+      }
+    ],
+    "peak_direction": {
+      "theta_deg": 90,
+      "phi_deg": 0
+    },
+    "symmetry_maximum_db_above_minus_40": 1.0164882269236841e-09,
+    "maximum_validity_metric": 0.04146468362132367,
+    "statuses": [
+      "within-reference-envelope"
+    ]
+  }
+}

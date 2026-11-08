@@ -5,6 +5,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 EXTRA_DIST = \
   .gitattributes \
   autogen.sh \
+  circular-mesh-center-junction-segfault.nec \
   NEC2-bug.txt \
   docs/DIELECTRIC-VOLUME-DESIGN.md \
   docs/DIELECTRIC-REVISION-1.md \
@@ -28,6 +29,98 @@ EXTRA_DIST = \
   docs/PERFORMANCE-M9-COMPILER.md \
   docs/PERFORMANCE-M9-RESULTS.md \
   docs/PERFORMANCE-M9-ACCEPTANCE.md \
+  docs/COATED-WIRE-PLAN.md \
+  docs/COATED-WIRE-M1-OPENEMS.md \
+  docs/COATED-WIRE-M2-DERIVATION.md \
+  docs/COATED-WIRE-M3-RESULTS.md \
+  docs/COATED-WIRE-M4-RESULTS.md \
+  docs/COATED-WIRE-M5-RESULTS.md \
+  docs/COATED-WIRE-M6-RESULTS.md \
+  docs/COATED-WIRE-M7-RESULTS.md \
+  docs/COATED-WIRE-M7-BEND-ENVELOPE.md \
+  docs/COATED-WIRE-M8-RESULTS.md \
+  docs/COATED-WIRE-M9-RESULTS.md \
+  docs/COATED-WIRE-ANTENNA-TURTLE-SPEC.md \
+  tests/coated-wire/README.md \
+  tests/coated-wire/m0-bare-dipole.nec \
+  tests/coated-wire/m0-baseline.json \
+  tests/coated-wire/m0_baseline.py \
+  tests/coated-wire/m1_harness.py \
+  tests/coated-wire/m1-openems-caps.json \
+  tests/coated-wire/m1-openems-caps-impedance.png \
+  tests/coated-wire/m1-openems-caps-convergence.png \
+  tests/coated-wire/m1-openems-caps-caps.png \
+  tests/coated-wire/m1-openems-audits.json \
+  tests/coated-wire/m1-openems-audits-impedance.png \
+  tests/coated-wire/m1-openems-audits-convergence.png \
+  tests/coated-wire/m2-valid.nec \
+  tests/coated-wire/m2-junction-mismatch.nec \
+  tests/coated-wire/m2_parser.py \
+  tests/coated-wire/m3-bare-dipole.nec \
+  tests/coated-wire/m3-coated-dipole.nec \
+  tests/coated-wire/m3-bare-sweep.nec \
+  tests/coated-wire/m3-coated-sweep.nec \
+  tests/coated-wire/m3_operator.py \
+  tests/coated-wire/m3-acceptance.json \
+  tests/coated-wire/m3-impedance.png \
+  tests/coated-wire/m3-current.png \
+  tests/coated-wire/m3-pattern.png \
+  tests/coated-wire/m4-lossy-dipole.nec \
+  tests/coated-wire/m4-low-loss-sweep.nec \
+  tests/coated-wire/m4-lossy-sweep.nec \
+  tests/coated-wire/m4-openems-equivalent-sweep.nec \
+  tests/coated-wire/m4_loss.py \
+  tests/coated-wire/m4-acceptance.json \
+  tests/coated-wire/m4-vswr.png \
+  tests/coated-wire/m4-power.png \
+  tests/coated-wire/m4-openems.png \
+  tests/coated-wire/m5-continuous-source.nec \
+  tests/coated-wire/m5_feed.py \
+  tests/coated-wire/m5-acceptance.json \
+  tests/coated-wire/m5-impedance.png \
+  tests/coated-wire/m5-current.png \
+  tests/coated-wire/m5-pattern.png \
+  tests/coated-wire/m6_junctions.py \
+  tests/coated-wire/m6-uniform-junction.nec \
+  tests/coated-wire/m6-coated-bare-experimental.nec \
+  tests/coated-wire/m6-acceptance.json \
+  tests/coated-wire/m6-openems.png \
+  tests/coated-wire/m7_geometry.py \
+  tests/coated-wire/m7-qualified-bend.nec \
+  tests/coated-wire/m7-coated-v.nec \
+  tests/coated-wire/m7-coated-yagi.nec \
+  tests/coated-wire/m7-acceptance.json \
+  tests/coated-wire/m7-yagi.png \
+  tests/coated-wire/m7-bend-study.json \
+  tests/coated-wire/m7-bend-matlab-config.json \
+  tests/coated-wire/m7-bend-matlab-result.json \
+  tests/coated-wire/m7-bend-openems.json \
+  tests/coated-wire/m7-bend-analysis.json \
+  tests/coated-wire/m7-bend-envelope.png \
+  tests/coated-wire/m7_bend_envelope.py \
+  tests/coated-wire/m8_validity.py \
+  tests/coated-wire/m8-within-envelope.nec \
+  tests/coated-wire/m8-warning-envelope.nec \
+  tests/coated-wire/m8-nec-thickness.json \
+  tests/coated-wire/m8-nec-er6.json \
+  tests/coated-wire/m8-nec-er10.json \
+  tests/coated-wire/m8-nec-loss.json \
+  tests/coated-wire/m8-openems-thickness.json \
+  tests/coated-wire/m8-variant-evidence.json \
+  tests/coated-wire/m8-thickness-analysis.json \
+  tests/coated-wire/m8-thickness-error.png \
+  tests/coated-wire/m8-geometry-analysis.json \
+  tests/coated-wire/m8-groundplane45-convergence.json \
+  tests/coated-wire/m8-geometry-error.png \
+  tests/coated-wire/m9-bare-order.nec \
+  tests/coated-wire/m9-coated-order.nec \
+  tests/coated-wire/m9-vswr.nec \
+  tests/coated-wire/m9-pattern.nec \
+  tests/coated-wire/m9-performance.json \
+  tests/coated-wire/m9-acceptance.json \
+  tests/coated-wire/m9-vswr.png \
+  tests/coated-wire/m9-pattern.png \
+  tests/coated-wire/m9_release.py \
   tests/performance/models.json \
   tests/performance/loop-yagi-438.nec \
   tests/performance/cross-solver-dipole.nec \
@@ -89,6 +182,21 @@ EXTRA_DIST = \
   tools/prepare_nec_fixture.py \
   tools/cross_solver_compare.py \
   tools/timing_overhead.py \
+  tools/coated_wire_openems.py \
+  tools/coated_wire_m3_acceptance.py \
+  tools/coated_wire_m4_acceptance.py \
+  tools/coated_wire_m5_acceptance.py \
+  tools/coated_wire_m6_acceptance.py \
+  tools/coated_wire_m1_analyze.py \
+  tools/coated_wire_m8_nec_map.py \
+  tools/coated_wire_m8_collect.py \
+  tools/coated_wire_m8_variants.py \
+  tools/coated_wire_m8_analyze.py \
+  tools/coated_wire_m8_geometry_openems.py \
+  tools/coated_wire_m8_geometry_nec.py \
+  tools/coated_wire_m8_geometry_analyze.py \
+  tools/coated_wire_m9_benchmark.py \
+  tools/coated_wire_m9_acceptance.py \
   examples/dielectric-r1/README.md \
   examples/dielectric-r1/run.py \
   examples/dielectric-r1/reference-summary.json \
@@ -271,12 +379,20 @@ EXTRA_DIST = \
   tools/m5_refinement.py \
 	  tools/openems_m6_n2.py \
 	  tools/openems_m7_mixed.py \
+  tools/coated_wire_m7_openems.py \
+  tools/coated_wire_m7_acceptance.py \
+  tools/coated_wire_bend_geometry.py \
+  tools/coated_wire_bend_matlab.m \
+  tools/coated_wire_m7_bend_study.py \
+  tools/coated_wire_m7_bend_openems_batch.py \
+  tools/coated_wire_m7_bend_collect.py \
+  tools/coated_wire_m7_bend_analyze.py \
   tools/voxscatter_m5_reference.m \
   tests/decks/nt-network.nec \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -340,6 +456,8 @@ tests_vie_iterative_test_LDADD = -lm
 
 nec2c_SOURCES = \
   calculations.c \
+  coated_wire.c \
+  coated_wire.h \
   dielectric_io.c \
   dielectric_mesh.c \
   dielectric_solver.c \

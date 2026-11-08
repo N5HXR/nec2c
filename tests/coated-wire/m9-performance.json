@@ -1,0 +1,170 @@
+{
+  "schema": "nec2c-coated-wire-m9-performance",
+  "created_utc": "2026-11-07T22:34:14Z",
+  "host": {
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "logical_cpus": 32
+  },
+  "settings": {
+    "threads": 16,
+    "warmup": 3,
+    "repeat": 15,
+    "sizes": [
+      95,
+      401,
+      801,
+      1601
+    ],
+    "backend": "auto"
+  },
+  "cases": [
+    {
+      "segments": 95,
+      "bare": {
+        "repeat": 15,
+        "matrix_fill_seconds": 0.0010649639880284667,
+        "matrix_factor_seconds": 0.00023128101020120084,
+        "matrix_solve_seconds": 1.6364007024094462e-05,
+        "wall_seconds": 0.0018730669980868697,
+        "peak_rss_kib": 13312,
+        "backend_used": "builtin",
+        "wire_unknowns": 95,
+        "patch_unknown_rows": 0,
+        "volume_unknowns": 0,
+        "coating_domains": 0
+      },
+      "coated": {
+        "repeat": 15,
+        "matrix_fill_seconds": 0.009546718996716663,
+        "matrix_factor_seconds": 0.00023088400484994054,
+        "matrix_solve_seconds": 1.7682992620393634e-05,
+        "wall_seconds": 0.017377279000356793,
+        "peak_rss_kib": 13312,
+        "backend_used": "builtin",
+        "wire_unknowns": 95,
+        "patch_unknown_rows": 0,
+        "volume_unknowns": 0,
+        "coating_domains": 1
+      },
+      "matrix_order_equal": true,
+      "overhead": {
+        "matrix_fill_ratio": 8.964358517314933,
+        "matrix_factor_ratio": 0.9982834502888286,
+        "wall_ratio": 9.277446571908937,
+        "peak_rss_ratio": 1.0,
+        "peak_rss_delta_kib": 0
+      }
+    },
+    {
+      "segments": 401,
+      "bare": {
+        "repeat": 15,
+        "matrix_fill_seconds": 0.004264721996150911,
+        "matrix_factor_seconds": 0.0029359390027821064,
+        "matrix_solve_seconds": 0.00018462000298313797,
+        "wall_seconds": 0.009542788990074769,
+        "peak_rss_kib": 15616,
+        "backend_used": "lapack",
+        "wire_unknowns": 401,
+        "patch_unknown_rows": 0,
+        "volume_unknowns": 0,
+        "coating_domains": 0
+      },
+      "coated": {
+        "repeat": 15,
+        "matrix_fill_seconds": 0.01872219899087213,
+        "matrix_factor_seconds": 0.002980983001179993,
+        "matrix_solve_seconds": 0.0001838080061133951,
+        "wall_seconds": 0.028399837989127263,
+        "peak_rss_kib": 16384,
+        "backend_used": "lapack",
+        "wire_unknowns": 401,
+        "patch_unknown_rows": 0,
+        "volume_unknowns": 0,
+        "coating_domains": 1
+      },
+      "matrix_order_equal": true,
+      "overhead": {
+        "matrix_fill_ratio": 4.390016279553437,
+        "matrix_factor_ratio": 1.0153422800525498,
+        "wall_ratio": 2.976052181250709,
+        "peak_rss_ratio": 1.0491803278688525,
+        "peak_rss_delta_kib": 768
+      }
+    },
+    {
+      "segments": 801,
+      "bare": {
+        "repeat": 15,
+        "matrix_fill_seconds": 0.013549593015341088,
+        "matrix_factor_seconds": 0.009558825986459851,
+        "matrix_solve_seconds": 0.0007997070206329226,
+        "wall_seconds": 0.028272553987335414,
+        "peak_rss_kib": 26880,
+        "backend_used": "lapack",
+        "wire_unknowns": 801,
+        "patch_unknown_rows": 0,
+        "volume_unknowns": 0,
+        "coating_domains": 0
+      },
+      "coated": {
+        "repeat": 15,
+        "matrix_fill_seconds": 0.06832973501877859,
+        "matrix_factor_seconds": 0.009620162018109113,
+        "matrix_solve_seconds": 0.0007997890061233193,
+        "wall_seconds": 0.1001028070168104,
+        "peak_rss_kib": 26624,
+        "backend_used": "lapack",
+        "wire_unknowns": 801,
+        "patch_unknown_rows": 0,
+        "volume_unknowns": 0,
+        "coating_domains": 1
+      },
+      "matrix_order_equal": true,
+      "overhead": {
+        "matrix_fill_ratio": 5.042936340701486,
+        "matrix_factor_ratio": 1.0064166908923904,
+        "wall_ratio": 3.54063545379208,
+        "peak_rss_ratio": 0.9904761904761905,
+        "peak_rss_delta_kib": -256
+      }
+    },
+    {
+      "segments": 1601,
+      "bare": {
+        "repeat": 15,
+        "matrix_fill_seconds": 0.05076387702138163,
+        "matrix_factor_seconds": 0.05344262599828653,
+        "matrix_solve_seconds": 0.004443129990249872,
+        "wall_seconds": 0.11871882498962805,
+        "peak_rss_kib": 86784,
+        "backend_used": "lapack",
+        "wire_unknowns": 1601,
+        "patch_unknown_rows": 0,
+        "volume_unknowns": 0,
+        "coating_domains": 0
+      },
+      "coated": {
+        "repeat": 15,
+        "matrix_fill_seconds": 0.23573618399677798,
+        "matrix_factor_seconds": 0.05347629397874698,
+        "matrix_solve_seconds": 0.004523055977188051,
+        "wall_seconds": 0.329075332992943,
+        "peak_rss_kib": 86528,
+        "backend_used": "lapack",
+        "wire_unknowns": 1601,
+        "patch_unknown_rows": 0,
+        "volume_unknowns": 0,
+        "coating_domains": 1
+      },
+      "matrix_order_equal": true,
+      "overhead": {
+        "matrix_fill_ratio": 4.643778171188273,
+        "matrix_factor_ratio": 1.0006299836475387,
+        "wall_ratio": 2.771888392777581,
+        "peak_rss_ratio": 0.9970501474926253,
+        "peak_rss_delta_kib": -256
+      }
+    }
+  ]
+}

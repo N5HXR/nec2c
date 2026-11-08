@@ -54,6 +54,7 @@ typedef struct
   char last_ground[512];
   int last_ground_id;
   json_spool meshes, grounds, executions, omissions;
+  const coated_wire_model *coated_wires;
   result_execution_state execution;
 } result_job_state;
 
@@ -187,6 +188,7 @@ int result_json_write_capabilities(FILE *stream)
     ",\"schema\":\"nec2c-capabilities\",\"schema_version\":1,"
     "\"features\":{\"dielectric_feature_revision\":1,"
     "\"dielectric_resource_versions\":[1,2,3],\"result_json_versions\":[1],"
+    "\"coated_wire_ld7\":\"validation-only\","
     "\"timing_json_versions\":[2],"
     "\"validate_only\":true,\"legacy_result_output\":true,"
     "\"solvers\":[\"dense\",\"gmres\",\"fft\"],"
@@ -263,6 +265,11 @@ void result_json_job_begin(void)
   spool_open(&job->executions); spool_open(&job->omissions);
 }
 
+void result_json_set_coated_wires(const coated_wire_model *model)
+{
+  if(session.active && session.job.open) session.job.coated_wires = model;
+}
+
 static void write_material(FILE *f, const dielectric_material *m)
 {
   size_t i;
@@ -329,10 +336,80 @@ void result_json_job_end(const dielectric_model *model)
     }
     fputs("]}", f);
   }
+  if(job->coated_wires && job->coated_wires->domain_count &&
+     job->coated_wires->finalized)
+  {
+    const coated_wire_model *coated = job->coated_wires;
+    int coating_has_loss = 0;
+    for(i = 0; i < coated->domain_count; ++i)
+      if(coated->domains[i].loss_tangent != 0.0 ||
+         coated->domains[i].conductivity_s_per_m != 0.0)
+        coating_has_loss = 1;
+    fprintf(f, ",\"coated_wires\":{\"operator_status\":\"%s\",\"domains\":[",
+        coated->operator_enabled ?
+        (coated->experimental_geometry ? "experimental-geometry" :
+         coated->experimental_junction_count ? "experimental-junction" :
+         coated->qualified_bend_count ?
+         (coating_has_loss ? "lossy-qualified-bend" :
+          "lossless-qualified-bend") :
+         coating_has_loss ?
+         (coated->domain_count == 1 ? "lossy-isolated" :
+          "lossy-uniform-junction") :
+         (coated->domain_count == 1 ? "lossless-isolated" :
+          "lossless-uniform-junction")) : "validation-only");
+    for(i = 0; i < coated->domain_count; ++i)
+    {
+      const coated_wire_domain *domain = &coated->domains[i];
+      if(i) fputc(',', f);
+      fprintf(f, "{\"tag\":%d,\"tag_relative_range\":[%d,%d],"
+          "\"segment_count\":%lu,\"segments\":[",
+          domain->tag, domain->first, domain->last,
+          (unsigned long)domain->segment_count);
+      {
+        int segment, first_segment = 1;
+        for(segment = 0; segment < (int)coated->segment_count; ++segment)
+          if(coated->segment_domain[segment] == (int)i)
+          {
+            if(!first_segment) fputc(',', f);
+            fprintf(f, "%d", segment + 1);
+            first_segment = 0;
+          }
+      }
+      fputs("],\"conductor_radius_m\":", f);
+      json_number(f, domain->conductor_radius_m);
+      fputs(",\"outer_radius_m\":", f); json_number(f, domain->outer_radius_m);
+      fputs(",\"er\":", f); json_number(f, domain->epsilon_r);
+      fputs(",\"tan_delta\":", f); json_number(f, domain->loss_tangent);
+      fputs(",\"sigma_dc_s_per_m\":", f);
+      json_number(f, domain->conductivity_s_per_m);
+      fputc('}', f);
+    }
+    fputs("]", f);
+    fputs(",\"validity_policy\":{\"metric\":\"sqrt(ER)*k0*b\","
+        "\"warning_threshold\":", f);
+    json_number(f, coated_wire_validity_warning_threshold());
+    fputs(",\"behavior\":\"warn-and-continue\"}", f);
+    if(coated->qualified_bend_count && !coated->experimental_geometry &&
+       !coated->experimental_junction_count)
+    {
+      fprintf(f, ",\"bend_policy\":{\"status\":\"qualified\","
+          "\"validated_maximum_turn_deg\":45,"
+          "\"validated_minimum_chord_outer_radius_ratio\":4,"
+          "\"qualified_junction_count\":%d,\"observed_maximum_turn_deg\":",
+          coated->qualified_bend_count);
+      json_number(f, coated->qualified_bend_maximum_turn_deg);
+      fputs(",\"observed_minimum_chord_outer_radius_ratio\":", f);
+      json_number(f, coated->qualified_bend_minimum_chord_ratio);
+      fputc('}', f);
+    }
+    fputc('}', f);
+  }
   if(session.validation_only)
   {
     fputs(",\"validation\":",f);
-    json_string(f,model&&model->loaded?"dielectric-preflight":"classic-input-only");
+    json_string(f,model&&model->loaded?"dielectric-preflight":
+        (job->coated_wires&&job->coated_wires->domain_count?
+         "coated-wire-preflight":"classic-input-only"));
   }
   fputs(",\"mesh_states\":[", f); spool_copy(f, &job->meshes);
   fputs("],\"ground_states\":[", f); spool_copy(f, &job->grounds);
@@ -697,6 +774,38 @@ void result_json_add_material_evaluations(const dielectric_model *model,double f
   }
 }
 
+void result_json_add_coated_evaluations(const coated_wire_model *model,
+    double frequency)
+{
+  size_t d;
+  if(!session.active || !session.job.execution.open || !model ||
+      !model->operator_enabled) return;
+  for(d = 0; d < model->domain_count; ++d)
+  {
+    const coated_wire_domain *domain = &model->domains[d];
+    complex double epsilon = coated_wire_relative_permittivity(domain, frequency);
+    FILE *f = spool_row(&session.job.execution.materials);
+    if(!f) return;
+    fputs("{\"kind\":\"coated-wire\",\"tag\":", f);
+    fprintf(f, "%d,\"frequency_mhz\":", domain->tag); json_number(f, frequency);
+    fputs(",\"er\":", f); json_number(f, domain->epsilon_r);
+    fputs(",\"tan_delta\":", f); json_number(f, domain->loss_tangent);
+    fputs(",\"sigma_dc_s_per_m\":", f);
+    json_number(f, domain->conductivity_s_per_m);
+    fputs(",\"complex_relative_permittivity\":", f);
+    json_complex(f, epsilon);
+    fputs(",\"validity_metric_sqrt_er_k0_b\":", f);
+    json_number(f, coated_wire_validity_metric(domain, frequency));
+    fputs(",\"validity_warning_threshold\":", f);
+    json_number(f, coated_wire_validity_warning_threshold());
+    fputs(",\"validity_status\":", f);
+    json_string(f, coated_wire_validity_metric(domain, frequency) <=
+        coated_wire_validity_warning_threshold() ?
+        "within-reference-envelope" : "warning-outside-reference-envelope");
+    fputc('}', f);
+  }
+}
+
 void result_json_set_power(const result_power *power)
 {
   if(!session.active||!session.job.execution.open||!power)return;
@@ -784,6 +893,26 @@ void result_json_dielectric_diagnostic(const dielectric_diagnostic *d,const char
   char context[192];if(!session.active||!d)return;
   snprintf(context,sizeof(context),"{\"job_index\":%lu,\"line\":%lu}",(unsigned long)session.job.index,(unsigned long)d->line);
   result_json_diagnostic(severity?severity:"error",diagnostic_code(d),d->message,context);
+}
+
+void result_json_coated_wire_diagnostic(const coated_wire_diagnostic *d,
+    const char *severity)
+{
+  char context[256], value[96];
+  if(!d) return;
+  if(d->value_defined)
+  {
+    if(finite_number(d->value)) number_text(value, sizeof(value), d->value);
+    else snprintf(value, sizeof(value), "null");
+    snprintf(context, sizeof(context),
+        "{\"tag\":%d,\"segment\":%d,\"value\":%s}",
+        d->tag, d->segment, value);
+  }
+  else
+    snprintf(context, sizeof(context), "{\"tag\":%d,\"segment\":%d}",
+        d->tag, d->segment);
+  result_json_diagnostic(severity ? severity : "error",
+      d->code ? d->code : "COATED_WIRE_ERROR", d->message, context);
 }
 
 int result_json_finish(const char *status)

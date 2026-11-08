@@ -2,6 +2,7 @@
 #define RESULT_JSON_H 1
 
 #include "dielectric.h"
+#include "coated_wire.h"
 
 #include <complex.h>
 #include <stddef.h>
@@ -51,6 +52,7 @@ int result_json_active(void);
 void result_json_set_validation_only(int enabled);
 int result_json_validation_only(void);
 void result_json_job_begin(void);
+void result_json_set_coated_wires(const coated_wire_model *model);
 void result_json_job_end(const dielectric_model *model);
 int result_json_finish(const char *status);
 void result_json_abandon(void);
@@ -105,6 +107,8 @@ void result_json_add_volume(size_t cell_id, size_t box_id, int region_id,
     const complex double current_a_per_m2[3]);
 void result_json_add_material_evaluations(const dielectric_model *model,
     double frequency_mhz);
+void result_json_add_coated_evaluations(const coated_wire_model *model,
+    double frequency_mhz);
 void result_json_set_power(const result_power *power);
 
 void result_json_far_begin(size_t request_index, const char *kind);
@@ -121,5 +125,7 @@ void result_json_diagnostic(const char *severity, const char *code,
     const char *message, const char *context_json);
 void result_json_dielectric_diagnostic(const dielectric_diagnostic *diagnostic,
     const char *severity);
+void result_json_coated_wire_diagnostic(
+    const coated_wire_diagnostic *diagnostic, const char *severity);
 
 #endif

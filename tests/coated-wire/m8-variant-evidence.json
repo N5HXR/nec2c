@@ -1,0 +1,510 @@
+{
+  "schema": "nec2c-coated-wire-m8-variant-evidence",
+  "interpretation": {
+    "mesh_refinement": "A small change confirms the OpenEMS reference rather than expanding the NEC validity envelope.",
+    "loss": "Constant NEC conductivity is used to match OpenEMS's frequency-independent material kappa.",
+    "endpoints": "Non-flush cases measure physical endpoint-model spread, not reduced-operator error."
+  },
+  "cases": [
+    {
+      "label": "refined-er10-b12",
+      "openems_directory": "/tmp/m8-er10-b12-refined",
+      "nec_map": "tests/coated-wire/m8-nec-er10.json",
+      "geometry_mm": {
+        "coating_free_end": "flush",
+        "coating_outer_radius": 12.0,
+        "conductor_radius": 2.0,
+        "feed_gap": 2.0,
+        "length": 475.0
+      },
+      "material_parameters": {
+        "epsilon_r": 10.0,
+        "tan_delta": 0.0
+      },
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 0.5,
+        "axisymmetric_nf2ff_samples": 512,
+        "coating_radial_cells": 40,
+        "current_samples_per_arm": 0,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.25,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "mesh": {
+        "cell_counts": [
+          237,
+          8,
+          1110
+        ],
+        "line_counts": [
+          238,
+          9,
+          1111
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3478889613213145,
+          1.000000000000001,
+          24.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.25,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            2.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 2104560
+      },
+      "wall_seconds": 1314.4894891660078,
+      "openems": {
+        "resonance": {
+          "frequency_mhz": 223.06347462605015,
+          "resistance_ohm": 44.62691665295204,
+          "accepted_power_w": 6.143536279550505e-24
+        },
+        "radiation_efficiency": 1.0102513523605297,
+        "directivity_db": 2.0493022261870077,
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 5.261939635355784e-08
+        }
+      },
+      "nec": {
+        "resonance_mhz": 226.3098109671823,
+        "resistance_ohm": 46.73320222855184,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 1.4553419588636762,
+        "resistance_percent": 4.719764961535766,
+        "efficiency_percentage_points": -1.0251352360529653
+      }
+    },
+    {
+      "label": "loss-er3p2-b6",
+      "openems_directory": "/tmp/m8-loss-er3p2-b6",
+      "nec_map": "tests/coated-wire/m8-nec-loss.json",
+      "geometry_mm": {
+        "coating_free_end": "flush",
+        "coating_outer_radius": 6.0,
+        "conductor_radius": 2.0,
+        "feed_gap": 2.0,
+        "length": 475.0
+      },
+      "material_parameters": {
+        "epsilon_r": 3.2,
+        "tan_delta": 0.05
+      },
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 1.0,
+        "axisymmetric_nf2ff_samples": 512,
+        "coating_radial_cells": 8,
+        "current_samples_per_arm": 0,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.5,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "mesh": {
+        "cell_counts": [
+          128,
+          8,
+          642
+        ],
+        "line_counts": [
+          129,
+          9,
+          643
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026305,
+          1.000000000000001,
+          6.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 657408
+      },
+      "wall_seconds": 261.7126698559732,
+      "openems": {
+        "resonance": {
+          "frequency_mhz": 263.81985933347784,
+          "resistance_ohm": 61.74790411230282,
+          "accepted_power_w": 9.30108557666784e-24
+        },
+        "radiation_efficiency": 0.9672595601537375,
+        "directivity_db": 2.111793773561628,
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 5.64630577227847e-08
+        }
+      },
+      "nec": {
+        "resonance_mhz": 265.15574538313723,
+        "resistance_ohm": 62.10672484126663,
+        "radiation_efficiency": 0.9669068999225547
+      },
+      "error": {
+        "frequency_percent": 0.5063629603299757,
+        "resistance_percent": 0.5811059243585159,
+        "efficiency_percentage_points": -0.035266023118274425
+      }
+    },
+    {
+      "label": "flat-overhang-er3p2-b12",
+      "openems_directory": "/tmp/m8-cap-flat-er3p2-b12",
+      "nec_map": "tests/coated-wire/m8-nec-thickness.json",
+      "geometry_mm": {
+        "coating_free_end": "flat-overhang",
+        "coating_outer_radius": 12.0,
+        "conductor_radius": 2.0,
+        "feed_gap": 2.0,
+        "length": 475.0
+      },
+      "material_parameters": {
+        "epsilon_r": 3.2,
+        "tan_delta": 0.0
+      },
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 1.0,
+        "axisymmetric_nf2ff_samples": 512,
+        "coating_radial_cells": 20,
+        "current_samples_per_arm": 0,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.5,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "mesh": {
+        "cell_counts": [
+          163,
+          8,
+          638
+        ],
+        "line_counts": [
+          164,
+          9,
+          639
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026294,
+          1.000000000000001,
+          12.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 831952
+      },
+      "wall_seconds": 323.0604400569864,
+      "openems": {
+        "resonance": {
+          "frequency_mhz": 237.16686483969022,
+          "resistance_ohm": 51.991261871354354,
+          "accepted_power_w": 7.532724533689043e-24
+        },
+        "radiation_efficiency": 0.9993678671870297,
+        "directivity_db": 2.053181313911342,
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 5.3305273799968684e-08
+        }
+      },
+      "nec": {
+        "resonance_mhz": 244.446676027358,
+        "resistance_ohm": 52.30021979219406,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 3.0694891516942935,
+        "resistance_percent": 0.5942497060452023,
+        "efficiency_percentage_points": 0.06321328129702541
+      }
+    },
+    {
+      "label": "current-er3p2-b12",
+      "openems_directory": "/tmp/m8-current-er3p2-b12",
+      "nec_map": "tests/coated-wire/m8-nec-thickness.json",
+      "geometry_mm": {
+        "coating_free_end": "flush",
+        "coating_outer_radius": 12.0,
+        "conductor_radius": 2.0,
+        "feed_gap": 2.0,
+        "length": 475.0
+      },
+      "material_parameters": {
+        "epsilon_r": 3.2,
+        "tan_delta": 0.0
+      },
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 1.0,
+        "axisymmetric_nf2ff_samples": 512,
+        "coating_radial_cells": 20,
+        "current_samples_per_arm": 9,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.5,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "mesh": {
+        "cell_counts": [
+          163,
+          8,
+          638
+        ],
+        "line_counts": [
+          164,
+          9,
+          639
+        ],
+        "maximum_adjacent_step_ratio": [
+          1.3392839547026294,
+          1.000000000000001,
+          12.0
+        ],
+        "maximum_steps": [
+          39.705882352941444,
+          0.7853981633973239,
+          39.705882352941444
+        ],
+        "minimum_steps": [
+          0.5,
+          0.785398163397323,
+          0.5
+        ],
+        "pml_cells": 8,
+        "pml_inner_faces": [
+          [
+            4.0,
+            2882.3529411764703
+          ],
+          [
+            3.141592653588793,
+            -3.141592653589793
+          ],
+          [
+            -2982.3529411764707,
+            2982.3529411764707
+          ]
+        ],
+        "total_cells": 831952
+      },
+      "wall_seconds": 150.7377852909849,
+      "openems": {
+        "resonance": {
+          "frequency_mhz": 242.4129372401721,
+          "resistance_ohm": 51.954758973230675,
+          "accepted_power_w": 6.991919927891259e-24
+        },
+        "radiation_efficiency": 0.9992230523910739,
+        "directivity_db": 2.033683822663729,
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 5.2639519855928873e-08
+        }
+      },
+      "nec": {
+        "resonance_mhz": 244.446676027358,
+        "resistance_ohm": 52.30021979219406,
+        "radiation_efficiency": 1.0
+      },
+      "error": {
+        "frequency_percent": 0.8389563735086147,
+        "resistance_percent": 0.664926227723206,
+        "efficiency_percentage_points": 0.0776947608926104
+      },
+      "current_comparison": {
+        "samples": [
+          {
+            "z_mm": -236.5,
+            "openems": 0.08017692806417429,
+            "nec": 0.02044507089087379,
+            "absolute_delta": 0.0597318571733005
+          },
+          {
+            "z_mm": -207.5,
+            "openems": 0.2907560092609963,
+            "nec": 0.2836750582628569,
+            "absolute_delta": 0.007080950998139435
+          },
+          {
+            "z_mm": -177.5,
+            "openems": 0.4749504139304402,
+            "nec": 0.46855591292574283,
+            "absolute_delta": 0.0063945010046973505
+          },
+          {
+            "z_mm": -148.5,
+            "openems": 0.6272124899881126,
+            "nec": 0.6206744697932103,
+            "absolute_delta": 0.00653802019490235
+          },
+          {
+            "z_mm": -119.5,
+            "openems": 0.7553001602981582,
+            "nec": 0.7487675284668793,
+            "absolute_delta": 0.0065326318312788345
+          },
+          {
+            "z_mm": -89.5,
+            "openems": 0.8610595604338714,
+            "nec": 0.8547546949097362,
+            "absolute_delta": 0.006304865524135228
+          },
+          {
+            "z_mm": -60.5,
+            "openems": 0.9357909610793457,
+            "nec": 0.9300317012386375,
+            "absolute_delta": 0.005759259840708131
+          },
+          {
+            "z_mm": -31.5,
+            "openems": 0.9821551440499278,
+            "nec": 0.9773327842775889,
+            "absolute_delta": 0.004822359772338913
+          },
+          {
+            "z_mm": -2.5,
+            "openems": 0.9998330182495675,
+            "nec": 0.9983519833102718,
+            "absolute_delta": 0.0014810349392957445
+          },
+          {
+            "z_mm": 2.5,
+            "openems": 1.0,
+            "nec": 0.9983519833099376,
+            "absolute_delta": 0.001648016690062426
+          },
+          {
+            "z_mm": 31.5,
+            "openems": 0.9832383561951821,
+            "nec": 0.9773327842760521,
+            "absolute_delta": 0.005905571919129993
+          },
+          {
+            "z_mm": 60.5,
+            "openems": 0.9378689060308955,
+            "nec": 0.9300317012367446,
+            "absolute_delta": 0.007837204794150843
+          },
+          {
+            "z_mm": 89.5,
+            "openems": 0.8640947436477237,
+            "nec": 0.8547546949074869,
+            "absolute_delta": 0.00934004874023675
+          },
+          {
+            "z_mm": 119.5,
+            "openems": 0.759273001362921,
+            "nec": 0.7487675284646982,
+            "absolute_delta": 0.01050547289822279
+          },
+          {
+            "z_mm": 148.5,
+            "openems": 0.6320362212243722,
+            "nec": 0.6206744697916647,
+            "absolute_delta": 0.011361751432707456
+          },
+          {
+            "z_mm": 177.5,
+            "openems": 0.4806035950125736,
+            "nec": 0.46855591292457666,
+            "absolute_delta": 0.012047682087996947
+          },
+          {
+            "z_mm": 207.5,
+            "openems": 0.2974000645506439,
+            "nec": 0.2836750582622754,
+            "absolute_delta": 0.01372500628836848
+          },
+          {
+            "z_mm": 236.5,
+            "openems": 0.08757886602249154,
+            "nec": 0.02044507089083057,
+            "absolute_delta": 0.06713379513166097
+          }
+        ],
+        "maximum_normalized_delta": 0.06713379513166097,
+        "near_feed_maximum_delta": 0.005905571919129993,
+        "interior_maximum_delta": 0.012047682087996947,
+        "near_end_maximum_delta": 0.06713379513166097
+      }
+    }
+  ]
+}

@@ -1,0 +1,2907 @@
+{
+  "cases": [
+    {
+      "coating_free_end": "flush",
+      "coating_radial_cells": 4,
+      "coordinates": "cylindrical",
+      "cylindrical_source": "ring-voltage",
+      "delta_from_same_mesh_flush": {
+        "directivity_db": 0.0,
+        "maximum_sampled_pattern_db_above_minus_40": 0.0,
+        "resistance_at_resonance_ohm": 0.0,
+        "resonance_mhz": 0.0
+      },
+      "diagnostic": null,
+      "end_criteria": 0.0001,
+      "far_field": {
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 7.341249817971183e-08
+        },
+        "directivity_db": 2.165759202019669,
+        "frequency_mhz": 275.57664983811316,
+        "radiated_power_w": 1.1954469948551443e-23,
+        "samples": [
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.27853947992858,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.278621190083875,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.855912220778087,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.954998224830057,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.88486586187973,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.92644039584589,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.370187750937522,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.392539459684329,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.867945058631383,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.880548902202442,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.92494601652561,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.93145766136614,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.341192237517817,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.343313386218897,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.012086808249192,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.010691811866362,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.877159377364419,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.8727151538535365,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.8991871599221235,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.8919536203926604,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0543639286455795,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.0445020749651253,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.3271854887377654,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.3148199140406205,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7075623577576948,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.692830138314404,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.189058693400418,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1721431133433844,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7677322777259794,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7488788299647502,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.441322329389654,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.4208535955875232,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20864903696703146,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.1869642016960796,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06917498699012053,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04673292873897391,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.02269954678411058,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": 0.0,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06917498905787302,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04673298071469158,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20864814003479287,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18696423891255332,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.44132066466066494,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.4208537567617745,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7677322056013681,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7488788645111831,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1890586318532161,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1721431020171122,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7075639556044722,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6928321415297094,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.3271857048731617,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.314819851887151,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0543639286455795,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.0445020749651253,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.8991871599221235,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.8919536203926604,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.877159826102405,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.87271441042196,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.012086808249192,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.010691811866362,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.341191933446051,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.343312884191002,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.924944564946234,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.931455762846722,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.86794328154242,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.88054805513452,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.370187022248706,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.392536061802003,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.884860120613645,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.926436586075862,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.855922185584703,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.95500775676299,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.27908731180431,
+            "theta_deg": 180.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.27852818842879,
+            "theta_deg": 180.0
+          }
+        ]
+      },
+      "feed": "split",
+      "feed_gap_mm": 2.0,
+      "label": "flush-4cell",
+      "material": "coated",
+      "mesh_cells": 597632,
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 1.0,
+        "axisymmetric_nf2ff_samples": 512,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.5,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "resistance_at_resonance_ohm": 63.99209895748481,
+      "resonance_mhz": 275.57664983811316,
+      "valid_terminal_response": true
+    },
+    {
+      "coating_free_end": "flat-overhang",
+      "coating_radial_cells": 4,
+      "coordinates": "cylindrical",
+      "cylindrical_source": "ring-voltage",
+      "delta_from_same_mesh_flush": {
+        "directivity_db": 0.0017898945137910793,
+        "maximum_sampled_pattern_db_above_minus_40": 0.002698943125153619,
+        "resistance_at_resonance_ohm": -0.04465650980661451,
+        "resonance_mhz": -2.0528243711681284
+      },
+      "diagnostic": null,
+      "end_criteria": 0.0001,
+      "far_field": {
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 7.696695464768089e-08
+        },
+        "directivity_db": 2.16754909653346,
+        "frequency_mhz": 273.523825466945,
+        "radiated_power_w": 1.0690575947694051e-23,
+        "samples": [
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.21707838750369,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.21714676333151,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.853215073778806,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.95291976453134,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.882545120954763,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.92445001793076,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.368066813051978,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.390666840318124,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.865987461108542,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.878820888263707,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.923136284006553,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.929875913272145,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.339508680551998,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.341875215023563,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.010504378484215,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.009378520872363,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.8756545437015655,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.871513407953718,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.8977449864434766,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.890853463891177,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.052980528663345,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.043507157742687,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.3258701130749584,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.313945002165067,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7063326191334287,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6920960849613795,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1879319859220039,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.171568482685975,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7667184767489189,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7484721473191465,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.4404208941958243,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.420606494608099,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20784244080707784,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18684677731422805,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06843312746326263,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.046705041218866955,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.02198065383690648,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": 0.0,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06843315562612665,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.046705047872186975,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.2078424624038844,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18684665645239154,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.440420703691208,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.42060552558041814,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7667183019153345,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.748472205814424,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.187933247796376,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1715688084723794,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7063342832508144,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6920972960906464,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.3258698690285917,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.3139447469565555,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.052980528663345,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.043507157742687,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.8977449864434766,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.890853463891177,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.87565449961071,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.87151318752283,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.010504378484215,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.009378520872363,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.339508394929649,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.341875233099378,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.923134807815135,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.929876004545553,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.865985823663282,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.878819510240803,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.368063947034559,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.390665877783235,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.882539607078474,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.924443532297616,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.85322324245955,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.952929336328786,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.21764587735552,
+            "theta_deg": 180.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.21708943312144,
+            "theta_deg": 180.0
+          }
+        ]
+      },
+      "feed": "split",
+      "feed_gap_mm": 2.0,
+      "label": "flat-overhang-4cell",
+      "material": "coated",
+      "mesh_cells": 597632,
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 1.0,
+        "axisymmetric_nf2ff_samples": 512,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.5,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "resistance_at_resonance_ohm": 63.94744244767819,
+      "resonance_mhz": 273.523825466945,
+      "valid_terminal_response": true
+    },
+    {
+      "coating_free_end": "hemisphere",
+      "coating_radial_cells": 4,
+      "coordinates": "cylindrical",
+      "cylindrical_source": "ring-voltage",
+      "delta_from_same_mesh_flush": {
+        "directivity_db": 0.0015356573021061415,
+        "maximum_sampled_pattern_db_above_minus_40": 0.004669963858390247,
+        "resistance_at_resonance_ohm": -0.00869913747644091,
+        "resonance_mhz": -1.0367346880074706
+      },
+      "diagnostic": null,
+      "end_criteria": 0.0001,
+      "far_field": {
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 7.337788573023623e-08
+        },
+        "directivity_db": 2.167294859321775,
+        "frequency_mhz": 274.5399151501057,
+        "radiated_power_w": 1.1313724439346879e-23,
+        "samples": [
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.24747253890285,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.24747169851821,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.860201572860078,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.959668188688447,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.88925463416718,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.93102240413923,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.374466302807848,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.396956782459624,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.871993020272788,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.884717481401378,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.928657513076441,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.935288757757277,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.344470756064608,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.346716470351221,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.014849403062426,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.013592092296806,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.8793563079098465,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.87506775261717,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.9008038773177605,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.893746237006623,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.055431923473021,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.045770087624429,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.327775304072829,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.315638282836255,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7077734976906258,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6932955351813859,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1889982983984089,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.172363535196275,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7675011782298647,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7489545811742165,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.4410020060183385,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.42086448400341986,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.2082960939313247,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18695581233177663,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06881519962282029,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.046728893896578534,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.0223395635501443,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": 0.0,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06881616519960095,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04672886573678147,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20829608971206434,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.1869559234742455,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.44100297660636106,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.4208636998744209,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7675007721721552,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7489545522814698,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1889987411944123,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1723632037963918,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7077750567488994,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.693297009822685,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.327774783647678,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.315637738875803,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.055431923473021,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.045770087624429,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.9008038773177605,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.893746237006623,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.879355205870387,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.875066027186187,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.014849403062426,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.013592092296806,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.344470168491926,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.346716159611781,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.928656264967689,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.93528723891983,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.871991644196628,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.884715587229996,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.374463702917545,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.396954779061222,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.88924820587671,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.93101629070344,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.860210909471917,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.959676118079724,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.24812043585323,
+            "theta_deg": 180.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.24745126317687,
+            "theta_deg": 180.0
+          }
+        ]
+      },
+      "feed": "split",
+      "feed_gap_mm": 2.0,
+      "label": "hemisphere-4cell",
+      "material": "coated",
+      "mesh_cells": 612480,
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 1.0,
+        "axisymmetric_nf2ff_samples": 512,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.5,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "resistance_at_resonance_ohm": 63.983399820008366,
+      "resonance_mhz": 274.5399151501057,
+      "valid_terminal_response": true
+    },
+    {
+      "coating_free_end": "recessed",
+      "coating_radial_cells": 4,
+      "coordinates": "cylindrical",
+      "cylindrical_source": "ring-voltage",
+      "delta_from_same_mesh_flush": {
+        "directivity_db": -0.0023740508909568803,
+        "maximum_sampled_pattern_db_above_minus_40": 0.0024719456237392023,
+        "resistance_at_resonance_ohm": 0.06672819340459313,
+        "resonance_mhz": 1.4566775332502857
+      },
+      "diagnostic": null,
+      "end_criteria": 0.0001,
+      "far_field": {
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 7.517528783245037e-08
+        },
+        "directivity_db": 2.163385151128712,
+        "frequency_mhz": 277.03332737136344,
+        "radiated_power_w": 1.287674200757461e-23,
+        "samples": [
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.321417881552875,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.32146411449013,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.85838330274767,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.95705837317069,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.88707109611123,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.92842682437627,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.372231879522118,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.394418429737158,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.869842241334622,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.88229417576655,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.926701452395827,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.93305881792758,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.342817090445287,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.344772114665328,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.013596055386015,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.012014319905927,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.878565817959438,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.873912860960761,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.900500437888507,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.8930327238639233,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0555881260090207,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.04545633885214,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.3283154337922616,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.3156441345921923,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7085868391143364,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.693508649242346,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1899672697813117,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1726662164623782,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.768520382964017,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7492463392446178,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.44199934464631396,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.4210762066471926,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20923539283421944,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18706741430666723,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06970038982955146,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04675814003161535,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.023204963374415327,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": 0.0,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06970036922068512,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.046758135224086825,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.2092362501883757,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18706739483540724,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.44199948999548605,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.42107638192824115,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7685215385136351,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7492462594674034,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1899687904805445,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1726676485687795,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.708586161434751,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6935101523298552,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.328314726940514,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.3156442792963445,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0555881260090207,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.04545633885214,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.900500437888507,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.8930327238639233,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.878565494038731,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.873913330860993,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.013596055386015,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.012014319905927,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.3428167194374065,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.3447713285744465,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.926701190272269,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.933058240216303,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.869840576681238,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.882293251205999,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.372229696770306,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.394414928122192,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.887065802340324,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.928423682929733,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.858394131208442,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.957069161005336,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.32204181210263,
+            "theta_deg": 180.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.32144531403118,
+            "theta_deg": 180.0
+          }
+        ]
+      },
+      "feed": "split",
+      "feed_gap_mm": 2.0,
+      "label": "recessed-4cell",
+      "material": "coated",
+      "mesh_cells": 597632,
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 1.0,
+        "axisymmetric_nf2ff_samples": 512,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.5,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "resistance_at_resonance_ohm": 64.0588271508894,
+      "resonance_mhz": 277.03332737136344,
+      "valid_terminal_response": true
+    },
+    {
+      "coating_free_end": "flush",
+      "coating_radial_cells": 8,
+      "coordinates": "cylindrical",
+      "cylindrical_source": "ring-voltage",
+      "delta_from_same_mesh_flush": {
+        "directivity_db": 0.0,
+        "maximum_sampled_pattern_db_above_minus_40": 0.0,
+        "resistance_at_resonance_ohm": 0.0,
+        "resonance_mhz": 0.0
+      },
+      "diagnostic": null,
+      "end_criteria": 0.0001,
+      "far_field": {
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 7.748444569047575e-08
+        },
+        "directivity_db": 2.16417356924318,
+        "frequency_mhz": 275.5996865656617,
+        "radiated_power_w": 1.0783532474303265e-23,
+        "samples": [
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.28349611528997,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.2834941268366,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.85829092352591,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.95733642153973,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.887193894866716,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.928749085482995,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.372460504229187,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.394800660192274,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.870141950738175,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.882741198824604,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.927047154284226,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.93355952742027,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.343176885217966,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.345302938739032,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.013929738736705,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.01254492263129,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.878835543532615,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.874407765945846,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.9006723745862253,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.8934626872546563,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0556384736527757,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.0458044112722837,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.328234632531448,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.315902339095329,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7083789888813097,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6936861472006879,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1896462230258504,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1727751525096843,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7681078070988367,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7493058281990789,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.4415173033424433,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.42110400993459796,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20870568128417286,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.1870777646702078,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.0691467878555613,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04676151788202126,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.02264007863358786,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": 0.0,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06914772034166938,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04676145302836948,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20870555950260766,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18707767420200683,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.4415164603298815,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.4211031347689273,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7681078611578946,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7493057217103507,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1896461778693639,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1727760363298145,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7083777413672654,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6936875477492228,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.3282343755126864,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.3159022867054118,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0556384736527757,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.0458044112722837,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.9006723745862253,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.8934626872546563,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.878835564730013,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.874408654051869,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.013929738736705,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.01254492263129,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.343177333107686,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.345303080071394,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.927047398284815,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.933557702304926,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.870139483363012,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.882738614503122,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.372458281285793,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.394798067568647,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.887188811522797,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.92874453295729,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.85830207314488,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.95734611819985,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.28400774770427,
+            "theta_deg": 180.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.28342595580091,
+            "theta_deg": 180.0
+          }
+        ]
+      },
+      "feed": "split",
+      "feed_gap_mm": 2.0,
+      "label": "flush-8cell",
+      "material": "coated",
+      "mesh_cells": 1267776,
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 0.5,
+        "axisymmetric_nf2ff_samples": 512,
+        "coating_radial_cells": 8,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.25,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "resistance_at_resonance_ohm": 64.08381371129923,
+      "resonance_mhz": 275.5996865656617,
+      "valid_terminal_response": true
+    },
+    {
+      "coating_free_end": "flat-overhang",
+      "coating_radial_cells": 8,
+      "coordinates": "cylindrical",
+      "cylindrical_source": "ring-voltage",
+      "delta_from_same_mesh_flush": {
+        "directivity_db": 0.0029992555798910026,
+        "maximum_sampled_pattern_db_above_minus_40": 0.0010574946209052083,
+        "resistance_at_resonance_ohm": -0.06140236193765247,
+        "resonance_mhz": -2.077938305712962
+      },
+      "diagnostic": null,
+      "end_criteria": 0.0001,
+      "far_field": {
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 7.443232976400175e-08
+        },
+        "directivity_db": 2.167172824823071,
+        "frequency_mhz": 273.52174825994877,
+        "radiated_power_w": 9.630707419586381e-24,
+        "samples": [
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.2225995300153,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.22260161262541,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.857292411578882,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.956969174000108,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.88651870161432,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.928409027318597,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.371888340352706,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.394482076669032,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.86960606947975,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.882433515296626,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.926503973450973,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.93324506343652,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.342585011661341,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.344955336133619,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.0132547680434225,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.012141710426455,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.8780575562422275,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.873933580794823,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.8997855731712323,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.892919219395688,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0546567839665477,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.0452184433133382,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.3271935069170357,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.3153099015922445,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7073214942604045,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.693132281837066,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.188619171040455,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1723083699919108,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7671439803647601,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7489551535120473,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.4406325717566401,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.42088211528958164,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20789846272672796,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18697202762125825,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06839388050567757,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.046732856612312766,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.021908145218154564,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": 0.0,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06839388660122256,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04673291926164127,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20789846272675955,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.1869709820808657,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.4406329625445171,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.4208824744084267,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.767144051454008,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7489539572718307,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.188618492378777,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1723083061907926,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7073222134553898,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6931345029447908,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.327193231195343,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.3153095472822773,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0546567839665477,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.0452184433133382,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.8997855731712323,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.892919219395688,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.878057268371431,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.873934252845532,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.0132547680434225,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.012141710426455,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.342584264174591,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.344955739609047,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.92650274141025,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.933245088258051,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.869604496607357,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.88243354777693,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.371885280536716,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.394478936328056,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.8865124298406,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.92840409750322,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.85730242634071,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.956978363282253,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.22323427583503,
+            "theta_deg": 180.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.22257347602293,
+            "theta_deg": 180.0
+          }
+        ]
+      },
+      "feed": "split",
+      "feed_gap_mm": 2.0,
+      "label": "flat-overhang-8cell",
+      "material": "coated",
+      "mesh_cells": 1267776,
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 0.5,
+        "axisymmetric_nf2ff_samples": 512,
+        "coating_radial_cells": 8,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.25,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "resistance_at_resonance_ohm": 64.02241134936158,
+      "resonance_mhz": 273.52174825994877,
+      "valid_terminal_response": true
+    },
+    {
+      "coating_free_end": "hemisphere",
+      "coating_radial_cells": 8,
+      "coordinates": "cylindrical",
+      "cylindrical_source": "ring-voltage",
+      "delta_from_same_mesh_flush": {
+        "directivity_db": 0.001987021746006956,
+        "maximum_sampled_pattern_db_above_minus_40": 0.005212114667475731,
+        "resistance_at_resonance_ohm": -0.011968141342109107,
+        "resonance_mhz": -0.9715699007410308
+      },
+      "diagnostic": null,
+      "end_criteria": 0.0001,
+      "far_field": {
+        "axisymmetric_postprocess": {
+          "azimuth_samples": 512,
+          "maximum_relative_rms_residual": 5.930364945436467e-06
+        },
+        "directivity_db": 2.166160590989187,
+        "frequency_mhz": 274.6281166649207,
+        "radiated_power_w": 1.0242533648224897e-23,
+        "samples": [
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.25518491997525,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.25518441517429,
+            "theta_deg": 0.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.863147148940364,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.962548536207205,
+            "theta_deg": 5.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.89210809549163,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.933845567839512,
+            "theta_deg": 10.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.377214428316769,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.39968406443946,
+            "theta_deg": 15.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.87460702038257,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.887319968076248,
+            "theta_deg": 20.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.931114657157025,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.937736024341545,
+            "theta_deg": 25.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.346746611197307,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.348989819493854,
+            "theta_deg": 30.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.0169260048569715,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.015671415295954,
+            "theta_deg": 35.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.881216714624415,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.8769329906401175,
+            "theta_deg": 40.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.902432492308903,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.8953884127514584,
+            "theta_deg": 45.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.0568215305623347,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.0471731412289498,
+            "theta_deg": 50.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.328915061852922,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.316797121435724,
+            "theta_deg": 55.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7086615204891817,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.694208300423488,
+            "theta_deg": 60.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.1896425023288044,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1730369711539272,
+            "theta_deg": 65.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7679236266818977,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.749409195769994,
+            "theta_deg": 70.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.4412356856549082,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.42113092127567475,
+            "theta_deg": 75.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20838206923040228,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18707953844871145,
+            "theta_deg": 80.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06880964138587435,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04676240753650504,
+            "theta_deg": 85.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.022302478989974454,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": 0.0,
+            "theta_deg": 90.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.06880983300421985,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.04676147854422084,
+            "theta_deg": 95.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.20838141496406906,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.18707995785427983,
+            "theta_deg": 100.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.4412361648204667,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.42113162877182425,
+            "theta_deg": 105.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -0.7679244776521397,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -0.7494088209233902,
+            "theta_deg": 110.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.189643888081284,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.1730384572737886,
+            "theta_deg": 115.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -1.7086608927317521,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -1.6942104372164577,
+            "theta_deg": 120.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -2.328915738937757,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -2.316797117955829,
+            "theta_deg": 125.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.056821855885544,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.0471741136943726,
+            "theta_deg": 130.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -3.9024336947267866,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -3.8953889410678464,
+            "theta_deg": 135.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -4.881215900301154,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -4.876933794601197,
+            "theta_deg": 140.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -6.016926029161228,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -6.015671568591486,
+            "theta_deg": 145.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -7.346747107790382,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -7.3489897793136905,
+            "theta_deg": 150.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -8.931113133871145,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -8.937734344520742,
+            "theta_deg": 155.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -10.874605633040835,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -10.887317783383228,
+            "theta_deg": 160.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -13.377209971120504,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -13.39968074866016,
+            "theta_deg": 165.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -16.892100724623965,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -16.933838048728088,
+            "theta_deg": 170.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -22.8631572417787,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -22.962557560592067,
+            "theta_deg": 175.0
+          },
+          {
+            "phi_deg": 0.0,
+            "relative_db": -59.255643667862245,
+            "theta_deg": 180.0
+          },
+          {
+            "phi_deg": 90.0,
+            "relative_db": -59.255099556948934,
+            "theta_deg": 180.0
+          }
+        ]
+      },
+      "feed": "split",
+      "feed_gap_mm": 2.0,
+      "label": "hemisphere-8cell",
+      "material": "coated",
+      "mesh_cells": 1299584,
+      "mesh_controls_mm": {
+        "air_maximum": 40.0,
+        "angular_cells": 8,
+        "antenna_axial": 0.5,
+        "axisymmetric_nf2ff_samples": 512,
+        "coating_radial_cells": 8,
+        "domain_half_height": 3300.0,
+        "domain_radius": 3200.0,
+        "local_transverse": 0.25,
+        "nf2ff_half_height": 600.0,
+        "nf2ff_radius": 500.0
+      },
+      "resistance_at_resonance_ohm": 64.07184556995712,
+      "resonance_mhz": 274.6281166649207,
+      "valid_terminal_response": true
+    }
+  ],
+  "schema": "nec2c-coated-wire-m1-summary",
+  "schema_version": 1
+}

@@ -1,0 +1,14 @@
+{
+  "reference_commit": "60df8fc722fef936229a4a358ca70ed918462da0",
+  "reference_binary_sha256": "b7fa21ba69bdbfe669ff38e076d4ced1dfc530b88fc8e09193374d3ca3725ecf",
+  "deck_sha256": "0acc71614a4134217b3c8fefbdd78108c6d3ce34c2b771521bb42be7f224b14b",
+  "canonical_result_sha256": "0852ae6e6f425d28fa6a70d756ed7b64d45fee8eb9e4fafdd3a9ed7716a55a0f",
+  "normalized_report_sha256": "c4299cd2105827185d4a5d533cacb27085f23bfdb0bb69d37939987e91fb1d69",
+  "feed_impedance_ohm": [
+    {"frequency_mhz": 290.0, "re": 74.82978708754783, "im": 12.398158167288537},
+    {"frequency_mhz": 299.896229, "re": 83.8410060490305, "im": 48.26302302343913},
+    {"frequency_mhz": 309.792458, "re": 93.992160363995, "im": 84.46686220252845}
+  ],
+  "far_field_samples_per_frequency": 703,
+  "notes": "Semantic golden produced by the unmodified solver on codex/coated-wire at the M0 reference commit. Timing and invocation-dependent deck paths are normalized."
+}

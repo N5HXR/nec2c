@@ -37,6 +37,7 @@ with tempfile.TemporaryDirectory() as directory:
     assert capabilities["schema_version"] == 1
     assert capabilities["features"]["dielectric_resource_versions"] == [1, 2, 3]
     assert capabilities["features"]["result_json_versions"] == [1]
+    assert capabilities["features"]["coated_wire_ld7"] == "validation-only"
     assert capabilities["features"]["grounds"] == ["free-space", "pec", "sommerfeld-norton"]
     assert capabilities["features"]["default_dense_backend"] == "auto"
     assert capabilities["features"]["dense_backends"][:2] == ["auto", "builtin"]
