@@ -1,6 +1,6 @@
 # Coated-wire project plan and M0 contract
 
-Status: M0 through M6 accepted; M7 is in progress.
+Status: M0 through M9 accepted; the coated-wire project is complete.
 
 Date: 2026-11-03  
 Branch: `codex/coated-wire`  
@@ -362,15 +362,18 @@ printed-housing model inside and outside it.
 
 ### M9 — integration and release
 
-Goal: complete documentation, Antenna Turtle-facing examples, performance
-checks and backward-compatibility certification.
+Goal: complete documentation, an Antenna Turtle integration specification,
+performance checks and backward-compatibility certification.  Implementing
+the Antenna Turtle DSL or exporter is explicitly outside this repository's
+scope; that work belongs in the Antenna Turtle project.
 
 Metrics: complete suite and M0 golden pass; uncoated end-to-end output remains
 unchanged; coated matrix order equals bare order; coated runtime/memory overhead
 is characterized; CLI/result schema consumers accept both coated and uncoated
 jobs; all promoted cases have archived OpenEMS evidence.
 
-User acceptance: final example/VSWR/pattern review, then explicit merge verdict.
+User acceptance: final NEC example/VSWR/pattern review, review of the proposed
+Antenna Turtle handoff contract, then explicit merge verdict.
 
 ## Dependencies and administration
 

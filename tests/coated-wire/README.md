@@ -275,6 +275,34 @@ The second should complete normally, contain
 `warning-outside-reference-envelope`, and emit exactly one
 `COATED_WIRE_VALIDITY_ENVELOPE_EXCEEDED` diagnostic.
 
+## M9 integration and release
+
+Run the final compatibility, matrix-order, backend-shape, performance-record,
+promoted-evidence, VSWR and pattern gates with:
+
+```sh
+python3 tests/coated-wire/m0_baseline.py
+python3 tests/coated-wire/m9_release.py
+```
+
+Regenerate the compact end-to-end acceptance record and figures with:
+
+```sh
+python3 tools/coated_wire_m9_acceptance.py \
+  --output /tmp/m9-acceptance.json \
+  --figure-directory /tmp/m9-figures
+```
+
+The release VSWR witness has a 1.284944 minimum at 275 MHz.  The release
+pattern is a promoted straight coated dipole, not the experimental disconnected
+multi-element geometry, and is mirror-symmetric to `1.016e-9 dB` above -40 dB.
+The retained performance record confirms equal bare/coated matrix order, no
+material memory increase, and approximately 2.8--3.5 times total runtime for
+the meaningful 401--1601-segment single-frequency cases.  See
+`docs/COATED-WIRE-M9-RESULTS.md` and
+`docs/COATED-WIRE-ANTENNA-TURTLE-SPEC.md` for the release decision and the
+separate-project integration handoff.
+
 ### M7 bend-envelope addendum
 
 The practical bend study keeps the centerline length fixed at 474 mm while
