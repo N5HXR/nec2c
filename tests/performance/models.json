@@ -45,6 +45,13 @@
       "provenance": "Milestone 3 frequency-sweep variant of the deterministic Milestone 1 scaling fixture"
     },
     {
+      "id": "classic-real-ground-sweep-401",
+      "description": "Nine-frequency 401-segment dipole using Sommerfeld real ground",
+      "deck": "tests/performance/m3-real-ground-sweep.nec",
+      "arguments": [],
+      "provenance": "Real-ground result-JSON frequency-parallel regression and benchmark fixture"
+    },
+    {
       "id": "dielectric-dense",
       "description": "Wire and dielectric cube using the dense VIE solver",
       "deck": "tests/dielectric/m6-cube.nec",

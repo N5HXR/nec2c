@@ -12,19 +12,23 @@ PROGRAM = pathlib.Path(os.environ.get("NEC2C", ROOT / "nec2c")).resolve()
 DECKS = {
     "dielectric": ROOT / "tests/dielectric/m3-frequency-sweep.nec",
     "classic": ROOT / "tests/dielectric/m6-n2-legacy-sweep.nec",
+    "real-ground": ROOT / "tests/performance/m3-real-ground-sweep.nec",
 }
 
 
 def run(directory: pathlib.Path, label: str, deck: pathlib.Path, jobs: str):
     report = directory / f"{label}-jobs-{jobs}.out"
     result = directory / f"{label}-jobs-{jobs}.json"
+    timing = directory / f"{label}-jobs-{jobs}-timing.json"
     subprocess.run(
         [str(PROGRAM), "--jobs", jobs, "--threads", "1", "--backend", "builtin",
          "--fft-backend", "auto",
-         "-i", str(deck), "-o", str(report), "--result-json", str(result)],
+         "-i", str(deck), "-o", str(report), "--result-json", str(result),
+         "--timing-json", str(timing)],
         cwd=ROOT, check=True,
     )
-    return report.read_text(), json.loads(result.read_text())
+    return (report.read_text(), json.loads(result.read_text()),
+            json.loads(timing.read_text()))
 
 
 def normalize_report(text: str) -> str:
@@ -47,11 +51,18 @@ with tempfile.TemporaryDirectory(prefix="nec2c-m3-") as temporary:
     expected = {
         "dielectric": [90, 100, 110, 120],
         "classic": [240, 270, 300, 330, 360],
+        "real-ground": [80, 85, 90, 95, 100, 105, 110, 115, 120],
     }
     for label, deck in DECKS.items():
-        serial_report, serial_result = run(directory, label, deck, "1")
-        parallel_report, parallel_result = run(directory, label, deck, "2")
+        serial_report, serial_result, _ = run(directory, label, deck, "1")
+        parallel_report, parallel_result, parallel_timing = \
+            run(directory, label, deck, "2")
         assert normalize_report(serial_report) == normalize_report(parallel_report)
         assert normalize_result(serial_result) == normalize_result(parallel_result)
+        assert parallel_result["jobs"][0]["ground_states"] == \
+            serial_result["jobs"][0]["ground_states"]
+        assert parallel_timing["concurrency"]["jobs_used"] == 2
         executions = parallel_result["jobs"][0]["executions"]
         assert [row["frequency_mhz"] for row in executions] == expected[label]
+
+print("classic, real-ground, and dielectric frequency sweeps preserve ordered reports and machine results")

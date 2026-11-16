@@ -133,6 +133,7 @@ EXTRA_DIST = \
   tests/performance/m2-dense-backend.json \
   tests/performance/m2-cross-solver.json \
   tests/performance/m3-frequency-jobs.json \
+  tests/performance/m3-real-ground-sweep.nec \
   tests/performance/m4a-fft-scaling.json \
   tests/performance/m4a-fft-full-solve.json \
   tests/performance/m4b-builtin-scaling.json \

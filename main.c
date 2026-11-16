@@ -2320,9 +2320,10 @@ int main( int argc, char **argv )
 
 #ifndef _WIN32
 		  classic_parallel_mode = 0;
+		  /* start_classic_frequency_workers() registers the ground state before
+		     fork, so real-ground result-JSON workers inherit its stable ID. */
 		  if(numerical_fork_safe && nfrq > 1 && fpat.ixtyp == 0 &&
-		     yparm.ncoup == 0 && plot_fp == NULL && save.sig >= 0.0 &&
-		     (gnd.ksymp == 1 || gnd.iperf == 1 || !result_json_active()))
+		     yparm.ncoup == 0 && plot_fp == NULL && save.sig >= 0.0)
 		  {
 			size_t worker_bytes = ((size_t)iresrv +
 			    (size_t)smat.nop * (size_t)smat.nop) * sizeof(complex double);
