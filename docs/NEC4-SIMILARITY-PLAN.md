@@ -144,7 +144,7 @@ Acceptance metrics:
 
 ### M1 - independent numerical oracles and operator boundary
 
-Status: in progress.
+Status: accepted by the user on 2026-11-16.
 
 Goal: establish trusted mathematical references and a clean engine interface before replacing any physics.
 

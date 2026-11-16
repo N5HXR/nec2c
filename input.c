@@ -38,7 +38,7 @@ void qdsrc( int is, complex double v, complex double *e )
   is--;
   i= data.icon1[is];
   data.icon1[is]=0;
-  tbf( is+1,0);
+  wire_operator_tbf( is+1,0);
   data.icon1[is]= i;
   dataj.s= data.si[is]*.5;
   curd= CCJ* v/(( log(2.* dataj.s/ data.bi[is])-1.)*( segj.bx[segj.jsno-1]*
@@ -166,7 +166,7 @@ void qdsrc( int is, complex double v, complex double *e )
 	  yi= data.y[i];
 	  zi= data.z[i];
 	  ai= data.bi[i];
-	  efld( xi, yi, zi, ai, ij);
+	  wire_operator_efld( xi, yi, zi, ai, ij);
 	  cabi= data.cab[i];
 	  sabi= data.sab[i];
 	  salpi= data.salp[i];
@@ -184,7 +184,7 @@ void qdsrc( int is, complex double v, complex double *e )
 		xi= data.px[i];
 		yi= data.py[i];
 		zi= data.pz[i];
-		hsfld( xi, yi, zi,0.);
+		wire_operator_hsfld( xi, yi, zi,0.);
 		i1++;
 		tx= data.t2x[i];
 		ty= data.t2y[i];
@@ -438,4 +438,3 @@ void readmn( char *gm, char *free_field, size_t free_field_size,
 }
 
 /*-----------------------------------------------------------------------*/
-

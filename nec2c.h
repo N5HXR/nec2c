@@ -13,6 +13,8 @@
 #include <time.h>
 #include <sys/types.h>
 
+#include "wire_operator.h"
+
 #ifndef _WIN32
 #include <sys/times.h>
 #endif

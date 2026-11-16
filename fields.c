@@ -1259,7 +1259,7 @@ void nefld( double xob, double yob, double zob,
 
 	  } /* if( dataj.iexk != 0) */
 
-	  efld( xob, yob, zob, ax,1);
+	  wire_operator_efld( xob, yob, zob, ax,1);
 	  acx= cmplx( crnt.air[i], crnt.aii[i]);
 	  bcx= cmplx( crnt.bir[i], crnt.bii[i]);
 	  ccx= cmplx( crnt.cir[i], crnt.cii[i]);
@@ -1507,7 +1507,7 @@ void nhfld( double xob, double yob, double zob,
 	  dataj.cabj= data.cab[i];
 	  dataj.sabj= data.sab[i];
 	  dataj.salpj= data.salp[i];
-	  hsfld( xob, yob, zob, ax);
+	  wire_operator_hsfld( xob, yob, zob, ax);
 	  acx= cmplx( crnt.air[i], crnt.aii[i]);
 	  bcx= cmplx( crnt.bir[i], crnt.bii[i]);
 	  ccx= cmplx( crnt.cir[i], crnt.cii[i]);

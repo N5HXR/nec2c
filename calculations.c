@@ -77,7 +77,7 @@ void cabc( complex double *curx)
 	{
 	  ar= creal( curx[i]);
 	  ai= cimag( curx[i]);
-	  tbf( i+1, 1 );
+	  wire_operator_tbf( i+1, 1 );
 
 	  for( jx = 0; jx < segj.jsno; jx++ )
 	  {
@@ -99,7 +99,7 @@ void cabc( complex double *curx)
 		i= vsorc.iqds[is]-1;
 		jx= data.icon1[i];
 		data.icon1[i]=0;
-		tbf(i+1,0);
+		wire_operator_tbf(i+1,0);
 		data.icon1[i]= jx;
 		sh= data.si[i]*.5;
 		curd= CCJ* vsorc.vqds[is]/( (log(2.* sh/ data.bi[i])-1.)*

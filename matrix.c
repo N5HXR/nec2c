@@ -86,7 +86,7 @@ static void cmset_serial( int nrow, complex double *cm, double rkhx, int iexkx )
   {
 	for( j = 1; j <= data.n; j++ )
 	{
-	  trio(j);
+	  wire_operator_trio(j);
 	  for( i = 0; i < segj.jsno; i++ )
 	  {
 		ij= segj.jco[i];
@@ -223,7 +223,7 @@ static void cmset_columns(int nrow,complex double *cm,double rkhx,int iexkx,
   if(data.n!=0)
     for(j=1;j<=data.n;++j)
     {
-      trio(j);
+      wire_operator_trio(j);
       for(i=0;i<segj.jsno;++i)
       {
         ij=segj.jco[i];
@@ -547,7 +547,7 @@ void cmsw( int j1, int j2, int i1, int i2, complex double *cm,
 			  pyl= cos( pyl);
 			  dataj.exc= emel[8]* fsign;
 
-			  trio(i+1);
+			  wire_operator_trio(i+1);
 
 			  il= i-ncw;
 			  if( i < data.np)
@@ -640,7 +640,7 @@ void cmws( int j, int i1, int i2, complex double *cm,
 	  xi= data.px[js];
 	  yi= data.py[js];
 	  zi= data.pz[js];
-	  hsfld( xi, yi, zi,0.);
+	  wire_operator_hsfld( xi, yi, zi,0.);
 
 	  if( ik != 0 )
 	  {
@@ -858,7 +858,7 @@ void cmww( int j, int i1, int i2, complex double *cm,
 	sabi= data.sab[i];
 	salpi= data.salp[i];
 
-	efld( xi, yi, zi, ai, ij);
+	wire_operator_efld( xi, yi, zi, ai, ij);
 
 	etk= dataj.exk* cabi+ dataj.eyk* sabi+ dataj.ezk* salpi;
 	ets= dataj.exs* cabi+ dataj.eys* sabi+ dataj.ezs* salpi;

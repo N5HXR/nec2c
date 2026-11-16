@@ -1048,6 +1048,9 @@ int main( int argc, char **argv )
       {"threads", required_argument, NULL, 1006},
       {"fft-backend", required_argument, NULL, 1007},
       {"coated-wire-junctions", required_argument, NULL, 1008},
+      {"wire-engine", required_argument, NULL, 1009},
+      {"ground-engine", required_argument, NULL, 1010},
+      {"model-check", required_argument, NULL, 1011},
       {NULL, 0, NULL, 0}
     };
   while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
@@ -1175,6 +1178,36 @@ int main( int argc, char **argv )
         else
         {
           fprintf(stderr, "nec2c: --coated-wire-junctions requires strict or experimental\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1009:
+        if(!wire_operator_set_engine(optarg))
+        {
+          if(!strcmp(optarg, "nec4"))
+            fprintf(stderr, "nec2c: NEC4 wire engine is planned but not available in this milestone\n");
+          else
+            fprintf(stderr, "nec2c: --wire-engine requires auto, nec2, or an available future engine\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1010:
+        if(!wire_operator_set_ground_engine(optarg))
+        {
+          if(!strcmp(optarg, "nec4") || !strcmp(optarg, "adaptive"))
+            fprintf(stderr, "nec2c: requested ground engine is planned but not available in this milestone\n");
+          else
+            fprintf(stderr, "nec2c: --ground-engine requires auto, nec2, or an available future engine\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1011:
+        if(!wire_operator_set_model_check(optarg))
+        {
+          fprintf(stderr, "nec2c: --model-check requires warn, strict, or off\n");
           exit(EXIT_FAILURE);
         }
         break;
