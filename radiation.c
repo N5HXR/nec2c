@@ -133,6 +133,7 @@ void ffld( double thet, double phi,
 
 		b= el*( boo- too);
 		c= el*( boo+ too);
+		c=wire_operator_cosine_integral(a,c);
 		rr= a* crnt.air[i]+ b* crnt.bii[i]+ c* crnt.cir[i];
 		ri= a* crnt.aii[i]- b* crnt.bir[i]+ c* crnt.cii[i];
 		arg= TP*( data.x[i]* rox+ data.y[i]* roy+ data.z[i]* roz);
@@ -489,6 +490,7 @@ void gfld( double rho, double phi, double rz,
 
 	  b= el*( boo- too);
 	  c= el*( boo+ too);
+	  c=wire_operator_cosine_integral(a,c);
 	  rr= a* crnt.air[i]+ b* crnt.bii[i]+ c* crnt.cir[i];
 	  ri= a* crnt.aii[i]- b* crnt.bir[i]+ c* crnt.cii[i];
 	  arg= TP*( data.x[i]* rnx+ data.y[i]* rny+ data.z[i]* rnz* rfl);

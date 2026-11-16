@@ -1185,10 +1185,7 @@ int main( int argc, char **argv )
       case 1009:
         if(!wire_operator_set_engine(optarg))
         {
-          if(!strcmp(optarg, "nec4"))
-            fprintf(stderr, "nec2c: NEC4 wire engine is planned but not available in this milestone\n");
-          else
-            fprintf(stderr, "nec2c: --wire-engine requires auto, nec2, or an available future engine\n");
+          fprintf(stderr, "nec2c: --wire-engine requires auto, nec2, or nec4\n");
           exit(EXIT_FAILURE);
         }
         break;

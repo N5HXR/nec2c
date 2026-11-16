@@ -115,7 +115,8 @@ static void cmset_serial( int nrow, complex double *cm, double rkhx, int iexkx )
 	  for( i = 0; i < segj.jsno; i++ )
 	  {
 		jss= segj.jco[i];
-		cm[(jss-1)+(ipr-1)*nrow] -= ( segj.ax[i]+ segj.cx[i])* zaj;
+		cm[(jss-1)+(ipr-1)*nrow] -=
+		  wire_operator_center_basis(segj.ax[i],segj.cx[i])*zaj;
 	  }
 
 	} /* for( j = 1; j <= n; j++ ) */
@@ -243,7 +244,8 @@ static void cmset_columns(int nrow,complex double *cm,double rkhx,int iexkx,
       for(i=0;i<segj.jsno;++i)
       {
         jss=segj.jco[i];
-        cm[(jss-1)+(size_t)(ipr-1)*nrow]-=(segj.ax[i]+segj.cx[i])*zaj;
+        cm[(jss-1)+(size_t)(ipr-1)*nrow]-=
+          wire_operator_center_basis(segj.ax[i],segj.cx[i])*zaj;
       }
     }
 

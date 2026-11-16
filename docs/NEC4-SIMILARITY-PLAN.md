@@ -1,6 +1,6 @@
 # NEC4-similarity project plan
 
-Status: approved by the user on 2026-11-16; M0 accepted and M1 in progress.
+Status: approved by the user on 2026-11-16; M0-M2 accepted and M3 in progress.
 
 Date: 2026-11-16  
 Branch: `codex/nec4-similarity`  
@@ -166,6 +166,8 @@ Acceptance metrics:
 Possible administration request: high-precision C oracle work may require Ubuntu packages `libmpfr-dev` and `libgmp-dev`. Development will stop and ask before relying on them; a Python `mpmath` oracle is an acceptable slower alternative.
 
 ### M2 - cancellation-resistant basis and current representation
+
+Status: accepted by the user on 2026-11-16.
 
 Goal: implement the documented NEC4 short-segment basis representation without yet changing junction or field physics.
 

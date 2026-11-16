@@ -1,4 +1,5 @@
 #include "nec2c.h"
+#include "shared.h"
 #include "wire_operator.h"
 
 typedef struct
@@ -13,6 +14,10 @@ typedef struct
 
 static const wire_operator_vtable nec2_operator = {
   "nec2", sbf, tbf, trio, efld, hsfld
+};
+
+static const wire_operator_vtable nec4_operator = {
+  "nec4", sbf, tbf, trio, efld, hsfld
 };
 
 static const wire_operator_vtable *active_operator = &nec2_operator;
@@ -34,6 +39,12 @@ int wire_operator_set_engine(const char *name)
   {
     requested_engine = "nec2";
     active_operator = &nec2_operator;
+    return 1;
+  }
+  if(!strcmp(name, "nec4"))
+  {
+    requested_engine = "nec4";
+    active_operator = &nec4_operator;
     return 1;
   }
   return 0;
@@ -78,6 +89,33 @@ const char *wire_operator_resolved_ground_engine(void)
   return resolved_ground_engine;
 }
 const char *wire_operator_model_check(void) { return model_check_policy; }
+int wire_operator_nec4_basis(void) { return active_operator == &nec4_operator; }
+
+double wire_operator_cosine_shape(double angle)
+{
+  if(!wire_operator_nec4_basis()) return cos(angle);
+  return -2.0*sin(0.5*angle)*sin(0.5*angle);
+}
+
+double wire_operator_center_basis(double constant, double cosine)
+{
+  return wire_operator_nec4_basis() ? constant : constant+cosine;
+}
+
+double wire_operator_cosine_integral(double constant_integral,
+                                     double cosine_integral)
+{
+  return wire_operator_nec4_basis() ? cosine_integral-constant_integral :
+    cosine_integral;
+}
+
+double complex wire_operator_current(double complex constant,
+                                     double complex sine,
+                                     double complex cosine,
+                                     double angle)
+{
+  return constant+sine*sin(angle)+cosine*wire_operator_cosine_shape(angle);
+}
 
 void wire_operator_sbf(int i, int is, double *aa, double *bb, double *cc)
 {
@@ -97,9 +135,21 @@ void wire_operator_trio(int j)
 void wire_operator_efld(double xi, double yi, double zi, double ai, int ij)
 {
   active_operator->efld(xi, yi, zi, ai, ij);
+  if(wire_operator_nec4_basis())
+  {
+    dataj.exc -= dataj.exk;
+    dataj.eyc -= dataj.eyk;
+    dataj.ezc -= dataj.ezk;
+  }
 }
 
 void wire_operator_hsfld(double xi, double yi, double zi, double ai)
 {
   active_operator->hsfld(xi, yi, zi, ai);
+  if(wire_operator_nec4_basis())
+  {
+    dataj.exc -= dataj.exk;
+    dataj.eyc -= dataj.eyk;
+    dataj.ezc -= dataj.ezk;
+  }
 }

@@ -1,6 +1,8 @@
 #ifndef NEC2C_WIRE_OPERATOR_H
 #define NEC2C_WIRE_OPERATOR_H 1
 
+#include <complex.h>
+
 /*
  * Public engine-selection boundary for wire and ground physics.
  *
@@ -18,6 +20,17 @@ const char *wire_operator_resolved_engine(void);
 const char *wire_operator_requested_ground_engine(void);
 const char *wire_operator_resolved_ground_engine(void);
 const char *wire_operator_model_check(void);
+int wire_operator_nec4_basis(void);
+
+/* Representation-aware operations for A + B sin(x) + C f_cos(x). */
+double wire_operator_cosine_shape(double angle);
+double wire_operator_center_basis(double constant, double cosine);
+double wire_operator_cosine_integral(double constant_integral,
+                                     double cosine_integral);
+double complex wire_operator_current(double complex constant,
+                                     double complex sine,
+                                     double complex cosine,
+                                     double angle);
 
 void wire_operator_sbf(int i, int is, double *aa, double *bb, double *cc);
 void wire_operator_tbf(int i, int icap);

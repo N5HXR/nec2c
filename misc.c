@@ -32,7 +32,7 @@ void usage(void)
 	  "\n       --threads auto|N: numerical-library threads per job (default auto)."
 	  "\n       --validate-only: validate without solving (requires --result-json)."
 	  "\n       --coated-wire-junctions strict|experimental: junction policy (default strict)."
-	  "\n       --wire-engine auto|nec2: wire operator (default auto; nec4 planned)."
+	  "\n       --wire-engine auto|nec2|nec4: wire operator (default auto)."
 	  "\n       --ground-engine auto|nec2: ground operator (default auto; nec4/adaptive planned)."
 	  "\n       --model-check warn|strict|off: validity diagnostic policy (default warn)."
 	  "\n       -s dense|gmres|fft: DF solver (default dense; FFT requires uniform cubes/material).\n       -r tolerance: GMRES relative residual target (default 1e-12).\n       -n iterations: GMRES iteration limit (default 300)."

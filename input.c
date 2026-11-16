@@ -208,7 +208,8 @@ void qdsrc( int is, complex double v, complex double *e )
 	} /* if( m != 0) */
 
 	if( zload.nload > 0 )
-	  e[j] += zload.zarray[j]* curd*(segj.ax[jx]+ segj.cx[jx]);
+	  e[j] += zload.zarray[j]*curd*
+		wire_operator_center_basis(segj.ax[jx],segj.cx[jx]);
 
   } /* for( jx = 0; jx < segj.jsno; jx++ ) */
 

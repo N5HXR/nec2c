@@ -50,6 +50,18 @@ static void segj_reserve( size_t count )
   mem_realloc( (void *)&segj.cx, mreq );
 }
 
+/* Cancellation-resistant forms used by the NEC4 coefficient representation. */
+static double basis_one_minus_cos( double angle )
+{
+  double sine=sin(0.5*angle);
+  return 2.0*sine*sine;
+}
+
+static double basis_cos_minus_cos2( double angle )
+{
+  return 2.0*sin(1.5*angle)*sin(0.5*angle);
+}
+
 /*-----------------------------------------------------------------------*/
 
 /* cabc computes coefficients of the constant (a), sine (b), and */
@@ -124,7 +136,9 @@ void cabc( complex double *curx)
 	} /* if( vsorc.nqds != 0) */
 
 	for( i = 0; i < data.n; i++ )
-	  curx[i]= cmplx( crnt.air[i]+crnt.cir[i], crnt.aii[i]+crnt.cii[i] );
+	  curx[i]= cmplx(
+		wire_operator_center_basis(crnt.air[i],crnt.cir[i]),
+		wire_operator_center_basis(crnt.aii[i],crnt.cii[i]));
 
   } /* if( n != 0) */
 
@@ -961,7 +975,10 @@ void sbf( int i, int is, double *aa, double *bb, double *cc )
 
 	  if( jcox == is)
 	  {
-		*aa= aj/ sd* sig;
+		if(wire_operator_nec4_basis())
+		  *aa= aj*basis_one_minus_cos(d)/sd*sig;
+		else
+		  *aa= aj/ sd* sig;
 		*bb= aj/(2.* cdh);
 		*cc= -aj/(2.* sdh)* sig;
 		june= iend;
@@ -1037,6 +1054,8 @@ void sbf( int i, int is, double *aa, double *bb, double *cc )
 	  xxi= qp* qp;
 	  xxi= qp*(1.-.5* xxi)/(1.- xxi);
 	  *cc=1./( cdh- xxi* sdh);
+	  if(wire_operator_nec4_basis())
+		*aa=(basis_one_minus_cos(d)+xxi*sdh)/(cdh-xxi*sdh);
 	  return;
 	}
 
@@ -1054,10 +1073,14 @@ void sbf( int i, int is, double *aa, double *bb, double *cc )
 		return;
 	}
 
-	*aa -= 1.;
 	d = cd - xxi * sd;
+	{
+	  double delta_c=(cdh + ap * qp * (sdh + xxi * cdh)) / d;
+	  if(wire_operator_nec4_basis()) *aa += delta_c-1.;
+	  else *aa -= 1.;
+	  *cc += delta_c;
+	}
 	*bb += (sdh + ap * qp * (cdh - xxi * sdh)) / d;
-	*cc += (cdh + ap * qp * (sdh + xxi * cdh)) / d;
 	return;
 
   } /* if( njun1 == 0) */
@@ -1078,10 +1101,14 @@ void sbf( int i, int is, double *aa, double *bb, double *cc )
 		return;
 	}
 
-	*aa -= 1.;
 	d= cd- xxi* sd;
+	{
+	  double delta_c=(cdh- aj*qm*(sdh+xxi*cdh))/d;
+	  if(wire_operator_nec4_basis()) *aa += delta_c-1.;
+	  else *aa -= 1.;
+	  *cc += delta_c;
+	}
 	*bb += ( aj* qm*( cdh- xxi* sdh)- sdh)/ d;
-	*cc += ( cdh- aj* qm*( sdh+ xxi* cdh))/ d;
 	return;
 
   } /* if( njun2 == 0) */
@@ -1110,9 +1137,13 @@ void sbf( int i, int is, double *aa, double *bb, double *cc )
 
   } /* if( june != 0 ) */
 
-  *aa -= 1.;
-  *bb += ( aj* qm+ ap* qp)* sdh/ sd;
-  *cc += ( aj* qm- ap* qp)* cdh/ sd;
+	{
+	  double delta_c=(aj*qm-ap*qp)*cdh/sd;
+	  if(wire_operator_nec4_basis()) *aa += delta_c-1.;
+	  else *aa -= 1.;
+	  *cc += delta_c;
+	}
+	*bb += ( aj* qm+ ap* qp)* sdh/ sd;
 
   return;
 }
@@ -1169,7 +1200,10 @@ void tbf( int i, int icap )
 
 	  aj=1./( log(1./( PI* data.bi[jcoxx]))-.577215664);
 	  pp= pp- omc/ sd* aj;
-	  segj.ax[jsnox]= aj/ sd* sig;
+	  if(wire_operator_nec4_basis())
+		segj.ax[jsnox]=aj*basis_one_minus_cos(d)/sd*sig;
+	  else
+		segj.ax[jsnox]= aj/ sd* sig;
 	  segj.bx[jsnox]= aj/(2.* cdh);
 	  segj.cx[jsnox]= -aj/(2.* sdh)* sig;
 
@@ -1253,7 +1287,11 @@ void tbf( int i, int icap )
 
 	  segj.cx[jsnop]=1./( cdh- xxi* sdh);
 	  segj.jsno= jsnop+1;
-	  segj.ax[jsnop]=-1.;
+	  if(wire_operator_nec4_basis())
+		segj.ax[jsnop]=(basis_one_minus_cos(d)+xxi*sdh)/
+		  (cdh-xxi*sdh);
+	  else
+		segj.ax[jsnop]=-1.;
 	  return;
 
 	} /* if( njun2 == 0) */
@@ -1280,7 +1318,11 @@ void tbf( int i, int icap )
 	}
 
 	segj.jsno= jsnop+1;
-	segj.ax[jsnop]=-1.;
+	if(wire_operator_nec4_basis())
+	  segj.ax[jsnop]=(basis_cos_minus_cos2(PI*data.si[ix])+xxi*sd+
+		ap*qp*(sdh+xxi*cdh))/d;
+	else
+	  segj.ax[jsnop]=-1.;
 	return;
 
   } /* if( njun1 == 0) */
@@ -1309,7 +1351,11 @@ void tbf( int i, int icap )
 	}
 
 	segj.jsno= jsnop+1;
-	segj.ax[jsnop]=-1.;
+	if(wire_operator_nec4_basis())
+	  segj.ax[jsnop]=(basis_cos_minus_cos2(PI*data.si[ix])+xxi*sd-
+		aj*qm*(sdh+xxi*cdh))/d;
+	else
+	  segj.ax[jsnop]=-1.;
 	return;
 
   } /* if( njun2 == 0) */
@@ -1336,7 +1382,13 @@ void tbf( int i, int icap )
   }
 
   segj.jsno= jsnop+1;
-  segj.ax[jsnop]=-1.;
+  if(wire_operator_nec4_basis())
+  {
+    long double numerator=((long double)aj*qm-(long double)ap*qp)*cdh-sd;
+    segj.ax[jsnop]=(double)(numerator/sd);
+  }
+  else
+    segj.ax[jsnop]=-1.;
 }
 
 /*-----------------------------------------------------------------------*/
