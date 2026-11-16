@@ -1,0 +1,43 @@
+{
+  "reference_commit": "9f7f108456a28b3f961403d9bad2769ad6c55fcf",
+  "reference_binary_sha256": "709c2e7f5daecc4bffca5b5a00fa79eca0fb172fefd01c6afd982e50f01a0057",
+  "reference_source_archive_sha256": "cddf30dc8dc86e27f0a8d35760623d16036460a6efc3ec99fe07d1659c82a47d",
+  "classic_selection": "pre-selector baseline",
+  "cases": [
+    {
+      "deck": "tests/coated-wire/m0-bare-dipole.nec",
+      "deck_sha256": "0acc71614a4134217b3c8fefbdd78108c6d3ce34c2b771521bb42be7f224b14b",
+      "physics_sha256": "2bc268a240ae7b109264900497a13423ffae5f6c3454533b7f9ac995f04e38f3",
+      "normalized_report_sha256": "c4299cd2105827185d4a5d533cacb27085f23bfdb0bb69d37939987e91fb1d69",
+      "frequencies_mhz": [290, 299.896229, 309.792458],
+      "feed_impedance_ohm": [
+        {"re": 74.82978708754783, "im": 12.398158167288537},
+        {"re": 83.8410060490305, "im": 48.26302302343913},
+        {"re": 93.992160363995, "im": 84.46686220252845}
+      ],
+      "wire_current_count": 303,
+      "far_field_sample_count": 2109
+    },
+    {
+      "deck": "tests/performance/m3-real-ground-sweep.nec",
+      "deck_sha256": "338b5cfc91b64ff105d5eeaaa4fdbd229f235a69f16aae55f27d8f015bf2a907",
+      "physics_sha256": "df018166a78a9f50bc7732645bb453863e70f67ae66d2226d74b4d751400bf66",
+      "normalized_report_sha256": "a2d0f488173ded8d7becc179d7be161ecb8e1203c065f20a395b8b556587abf2",
+      "frequencies_mhz": [80, 85, 90, 95, 100, 105, 110, 115, 120],
+      "feed_impedance_ohm": [
+        {"re": 99.7320371578203, "im": 128.35678540200385},
+        {"re": 126.50752446140723, "im": 216.26345742195673},
+        {"re": 162.43624132528004, "im": 310.2930701407098},
+        {"re": 211.46634032364585, "im": 412.67708860814383},
+        {"re": 279.7745714795854, "im": 525.7620172711789},
+        {"re": 377.4101447312206, "im": 651.5164129904587},
+        {"re": 521.1912349555377, "im": 789.7457461051658},
+        {"re": 739.4654137387879, "im": 932.4490239370026},
+        {"re": 1076.6450209716754, "im": 1047.2373208994954}
+      ],
+      "wire_current_count": 3609,
+      "far_field_sample_count": 0
+    }
+  ],
+  "notes": "Semantic classic-engine golden produced by an archived clean build of the M0 reference commit. The runner uses explicit NEC2 engine selectors once they exist. Timing, solver/backend identity, and invocation paths are excluded from the physics hash."
+}

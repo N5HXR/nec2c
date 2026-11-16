@@ -1,6 +1,6 @@
 # NEC4-similarity project plan
 
-Status: approved by the user on 2026-11-16; M0 is in progress.
+Status: approved by the user on 2026-11-16; M0 accepted and M1 in progress.
 
 Date: 2026-11-16  
 Branch: `codex/nec4-similarity`  
@@ -121,6 +121,8 @@ Convergence is judged against a stable limit or independent solution, not by agr
 
 ### M0 - contract, branch, and immutable baseline
 
+Status: accepted by the user on 2026-11-16.
+
 Goal: freeze scope, interfaces, provenance, source state, and the legacy reference before numerical work.
 
 Work:
@@ -141,6 +143,8 @@ Acceptance metrics:
 - user runs one ordinary wire model and one current real-ground model with the archived executable.
 
 ### M1 - independent numerical oracles and operator boundary
+
+Status: in progress.
 
 Goal: establish trusted mathematical references and a clean engine interface before replacing any physics.
 
