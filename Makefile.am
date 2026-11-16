@@ -47,6 +47,7 @@ EXTRA_DIST = \
   docs/NEC4-SIMILARITY-M1-RESULTS.md \
   docs/NEC4-SIMILARITY-M2-RESULTS.md \
   docs/NEC4-SIMILARITY-M3-RESULTS.md \
+  docs/NEC4-SIMILARITY-M4-RESULTS.md \
   tests/nec4-similarity/m0-baseline.json \
   tests/nec4-similarity/m0_baseline.py \
   tests/nec4-similarity/m1-witnesses.json \
@@ -66,6 +67,10 @@ EXTRA_DIST = \
   tests/nec4-similarity/m3-tee.nec \
   tests/nec4-similarity/m3-y.nec \
   tests/nec4-similarity/m3_junctions.py \
+  tests/nec4-similarity/m4-acceptance.json \
+  tests/nec4-similarity/m4-model-convergence.png \
+  tests/nec4-similarity/m4_kernel.py \
+  tests/nec4-similarity/m4_models.py \
   tools/nec4_m1_oracles.py \
   tests/coated-wire/README.md \
   tests/coated-wire/m0-bare-dipole.nec \
@@ -419,7 +424,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -430,6 +435,7 @@ TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_paralle
 	tests/result_json.py \
 	tests/performance_json.py \
 	tests/junction_charge_test \
+	tests/nec4_kernel_test \
 	tests/dense_backend_test \
 	tests/vie_kernel_test \
 	tests/vie_iterative_test \
@@ -459,7 +465,7 @@ AM_CFLAGS = @OPENMP_CFLAGS@
 
 bin_PROGRAMS = nec2c
 
-check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test tests/concurrency_test tests/junction_charge_test
+check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test tests/concurrency_test tests/junction_charge_test tests/nec4_kernel_test
 tests_dense_backend_test_SOURCES = tests/dense_backend_test.c dense_backend.c dense_backend.h
 tests_dense_backend_test_LDADD = -lm
 tests_concurrency_test_SOURCES = tests/concurrency_test.c concurrency.c concurrency.h
@@ -486,10 +492,15 @@ tests_junction_charge_test_SOURCES = tests/junction_charge_test.c junction_charg
 tests_junction_charge_test_CPPFLAGS = -DJUNCTION_CHARGE_PURE
 tests_junction_charge_test_LDADD = -lm
 
+tests_nec4_kernel_test_SOURCES = tests/nec4_kernel_test.c nec4_kernel.c nec4_kernel.h
+tests_nec4_kernel_test_LDADD = -lm
+
 nec2c_SOURCES = \
   calculations.c \
   junction_charge.c \
   junction_charge.h \
+  nec4_kernel.c \
+  nec4_kernel.h \
   wire_operator.c \
   wire_operator.h \
   coated_wire.c \

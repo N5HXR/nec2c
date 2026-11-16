@@ -24,6 +24,7 @@
  ******************************************************************/
 
 #include "nec2c.h"
+#include "nec4_kernel.h"
 #include "shared.h"
 #include "result_json.h"
 
@@ -48,7 +49,7 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 
   int ip, ijx;
   double xij, yij, rfl, salpr, zij, zp, rhox;
-  double rhoy, rhoz, rh, r, rmag, cth, px, py;
+  double rhoy, rhoz, rh, r, rmag, cth, px, py, kernel_radius;
   double xymag, xspec, yspec, rhospc, dmin;
   complex double epx, epy, refs, refps, zrsin, zratx, zscrn;
   complex double tezs, ters, tezc, terc, tezk, terk, egnd[9];
@@ -70,7 +71,9 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 	rhoy= yij- dataj.sabj* zp;
 	rhoz= zij- salpr* zp;
 
-	rh= sqrt( rhox* rhox+ rhoy* rhoy+ rhoz* rhoz+ ai* ai);
+	kernel_radius=wire_operator_nec4_basis()?dataj.b:ai;
+	rh= sqrt( rhox* rhox+ rhoy* rhoy+ rhoz* rhoz+
+		kernel_radius*kernel_radius);
 	if( rh <= 1.e-10)
 	{
 	  rhox=0.;
@@ -109,8 +112,21 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 	} /* if( r >= dataj.rkh) */
 	else
 	{
-	  /* eksc for thin wire approx. or ekscx for extended t.w. approx. */
-	  if( dataj.iexk != 1)
+	  /* NEC4 locates current on the source cylinder and matches on the axis. */
+	  if(wire_operator_nec4_basis())
+	  {
+		nec4_segment_fields field;
+		if(!nec4_reduced_segment_field(dataj.s,zp,rh,TP,&field))
+		{
+		  fprintf(stderr,"nec2c: NEC4 reduced wire kernel failed\n");
+		  stop(-1);
+		}
+		tezs=field.ezs;ters=field.ers;
+		tezc=field.ezc;terc=field.erc;
+		tezk=field.ezk;terk=field.erk;
+	  }
+	  /* eksc for classic thin wire approx. or ekscx for extended t.w. approx. */
+	  else if( dataj.iexk != 1)
 		eksc( dataj.s, zp, rh, TP, ijx, &tezs, &ters,
 			&tezc, &terc, &tezk, &terk );
 	  else

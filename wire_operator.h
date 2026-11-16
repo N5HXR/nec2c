@@ -22,7 +22,18 @@ const char *wire_operator_requested_ground_engine(void);
 const char *wire_operator_resolved_ground_engine(void);
 const char *wire_operator_model_check(void);
 int wire_operator_nec4_basis(void);
+
+typedef struct
+{
+  size_t short_thick_segments;
+  size_t close_parallel_pairs;
+  size_t buried_match_points;
+  size_t overlapping_bends;
+  double minimum_length_radius_ratio;
+} wire_operator_validity;
+
 int wire_operator_prepare_frequency(FILE *report);
+const wire_operator_validity *wire_operator_last_validity(void);
 double complex wire_operator_charge_factor(size_t segment, int end,
                                            double complex fallback);
 
