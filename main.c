@@ -152,6 +152,7 @@ typedef struct
   FILE *report;
   FILE *json;
   FILE *status;
+  classic_worker_status result;
 } classic_worker_slot;
 
 typedef struct
@@ -184,6 +185,45 @@ static int finish_classic_worker(classic_worker_state *worker,
   _exit(status.success ? 0 : 1);
 }
 
+static int classic_worker_path(char *path, size_t size, const char *directory,
+    size_t index, const char *kind)
+{
+  int count = snprintf(path, size, "%s/%lu.%s", directory,
+      (unsigned long)index, kind);
+  return count > 0 && (size_t)count < size;
+}
+
+static FILE *open_classic_worker_file(const char *directory, size_t index,
+    const char *kind, const char *mode)
+{
+  char path[NEC2C_PATH_MAX * 4 + 96];
+  if(!classic_worker_path(path, sizeof(path), directory, index, kind))
+    return NULL;
+  return fopen(path, mode);
+}
+
+static void remove_classic_worker_files(const char *directory, size_t index)
+{
+  static const char *kinds[] = { "report", "json", "status" };
+  char path[NEC2C_PATH_MAX * 4 + 96];
+  size_t kind;
+  for(kind = 0; kind < sizeof(kinds) / sizeof(kinds[0]); ++kind)
+    if(classic_worker_path(path, sizeof(path), directory, index, kinds[kind]))
+      unlink(path);
+}
+
+static int classic_worker_test_failure(size_t index)
+{
+  const char *text = getenv("NEC2C_TEST_CLASSIC_WORKER_FAIL_INDEX");
+  char *end;
+  unsigned long requested;
+  if(!text || !*text) return 0;
+  errno = 0;
+  requested = strtoul(text, &end, 10);
+  return errno == 0 && end != text && *end == '\0' &&
+      requested == (unsigned long)(index + 1);
+}
+
 /* Fork all but the final frequency from the pristine case-1 solver state.
    The parent runs the final frequency normally, preserving the legacy global
    state expected by any later cards. */
@@ -196,9 +236,15 @@ static int start_classic_frequency_workers(int frequency_mode,
   concurrency_plan plan = plan_concurrency((size_t)*frequency_count,
       worker_bytes, 16);
   classic_worker_slot *slots;
+  char worker_directory[NEC2C_PATH_MAX * 4 + 96];
+  const char *temporary_root;
   size_t child_count = (size_t)*frequency_count - 1;
   size_t base_execution = result_json_next_execution();
   size_t next = 0, active = 0, done = 0, index;
+  size_t failed_index = SIZE_MAX;
+  int failed_wait_status = 0, failure_errno = 0;
+  const char *failure_operation = "worker execution";
+  int importing = 0;
   int original_count = *frequency_count;
   if(plan.jobs > (size_t)original_count) plan.jobs = (size_t)original_count;
   configure_classic_concurrency(&plan, threaded_backend, (size_t)netcx.npeq);
@@ -212,6 +258,19 @@ static int start_classic_frequency_workers(int frequency_mode,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
   slots = calloc(child_count, sizeof(*slots));
   if(!slots) return 0;
+  temporary_root = getenv("TMPDIR");
+  if(!temporary_root || !*temporary_root) temporary_root = "/tmp";
+  {
+    int directory_length = snprintf(worker_directory, sizeof(worker_directory),
+        "%s/nec2c-frequency-XXXXXX", temporary_root);
+    if(directory_length <= 0 ||
+       (size_t)directory_length >= sizeof(worker_directory) ||
+       !mkdtemp(worker_directory))
+    {
+      free(slots);
+      return 0;
+    }
+  }
   if(result_json_active()) result_json_ground_state();
   fflush(parent_report);
 
@@ -221,13 +280,24 @@ static int start_classic_frequency_workers(int frequency_mode,
     {
       classic_worker_slot *slot = &slots[next];
       pid_t process;
-      slot->report = tmpfile(); slot->json = tmpfile(); slot->status = tmpfile();
-      if(!slot->report || !slot->json || !slot->status ||
-         !result_json_worker_prepare()) goto failure;
+      if(!result_json_worker_prepare())
+      {
+        failed_index = next;
+        failure_errno = errno;
+        failure_operation = "worker setup";
+        goto failure;
+      }
       process = fork();
       if(process == 0)
       {
         worker_process_enable();
+        slot->report = open_classic_worker_file(worker_directory, next,
+            "report", "w+b");
+        slot->json = open_classic_worker_file(worker_directory, next,
+            "json", "w+b");
+        slot->status = open_classic_worker_file(worker_directory, next,
+            "status", "w+b");
+        if(!slot->report || !slot->json || !slot->status) _exit(125);
         worker->active = 1; worker->index = next; worker->slot = slot;
         worker->started = performance_now();
         output_fp = slot->report;
@@ -237,9 +307,16 @@ static int start_classic_frequency_workers(int frequency_mode,
             requested_frequency(frequency_mode, first_mhz, step,
                 (int)next - 1);
         if(!result_json_worker_begin(base_execution + next)) _exit(125);
+        if(classic_worker_test_failure(next)) _exit(124);
         return 1;
       }
-      if(process < 0) goto failure;
+      if(process < 0)
+      {
+        failed_index = next;
+        failure_errno = errno;
+        failure_operation = "fork";
+        goto failure;
+      }
       slot->process = process;
       ++next; ++active;
     }
@@ -249,37 +326,77 @@ static int start_classic_frequency_workers(int frequency_mode,
       if(completed < 0)
       {
         if(errno == EINTR) continue;
+        failure_errno = errno;
+        failure_operation = "waitpid";
         goto failure;
       }
       for(index = 0; index < next; ++index)
         if(slots[index].process == completed)
         {
           slots[index].process = 0;
+          --active; ++done;
           if(!WIFEXITED(wait_status) || WEXITSTATUS(wait_status) != 0)
+          {
+            failed_index = index;
+            failed_wait_status = wait_status;
             goto failure;
+          }
+          slots[index].report = open_classic_worker_file(worker_directory,
+              index, "report", "rb");
+          slots[index].json = open_classic_worker_file(worker_directory,
+              index, "json", "rb");
+          slots[index].status = open_classic_worker_file(worker_directory,
+              index, "status", "rb");
+          if(!slots[index].report || !slots[index].json ||
+             !slots[index].status)
+          {
+            failed_index = index;
+            failure_errno = errno;
+            failure_operation = "worker output open";
+            goto failure;
+          }
+          rewind(slots[index].status);
+          if(fread(&slots[index].result, sizeof(slots[index].result), 1,
+                 slots[index].status) != 1 ||
+             !slots[index].result.success)
+          {
+            failed_index = index;
+            failure_operation = "worker status read";
+            goto failure;
+          }
+          fclose(slots[index].report); slots[index].report = NULL;
+          fclose(slots[index].json); slots[index].json = NULL;
+          fclose(slots[index].status); slots[index].status = NULL;
           break;
         }
-      --active; ++done;
     }
   }
 
+  importing = 1;
   for(index = 0; index < child_count; ++index)
   {
-    classic_worker_status status;
-    rewind(slots[index].status);
-    if(fread(&status, sizeof(status), 1, slots[index].status) != 1 ||
-       !status.success || !copy_stream(parent_report, slots[index].report) ||
-       !result_json_worker_import(slots[index].json)) goto failure;
-    if(iped && fnorm) memcpy(fnorm + 4 * index, status.impedance,
-        sizeof(status.impedance));
-    if(status.normalization > *zpnorm) *zpnorm = status.normalization;
-    performance_add("frequency_worker", status.elapsed_seconds);
+    classic_worker_status *status = &slots[index].result;
+    slots[index].report = open_classic_worker_file(worker_directory, index,
+        "report", "rb");
+    slots[index].json = open_classic_worker_file(worker_directory, index,
+        "json", "rb");
+    if(!slots[index].report || !slots[index].json ||
+       !copy_stream(parent_report, slots[index].report) ||
+       !result_json_worker_import(slots[index].json))
+    {
+      failed_index = index;
+      failure_operation = "result import";
+      goto failure;
+    }
+    fclose(slots[index].report); slots[index].report = NULL;
+    fclose(slots[index].json); slots[index].json = NULL;
+    remove_classic_worker_files(worker_directory, index);
+    if(iped && fnorm) memcpy(fnorm + 4 * index, status->impedance,
+        sizeof(status->impedance));
+    if(status->normalization > *zpnorm) *zpnorm = status->normalization;
+    performance_add("frequency_worker", status->elapsed_seconds);
   }
-  for(index = 0; index < child_count; ++index)
-  {
-    fclose(slots[index].report); fclose(slots[index].json);
-    fclose(slots[index].status);
-  }
+  rmdir(worker_directory);
   free(slots);
   *frequency_index = original_count;
   *frequency_count = original_count;
@@ -301,9 +418,47 @@ failure:
     if(slots[index].json) fclose(slots[index].json);
     if(slots[index].status) fclose(slots[index].status);
   }
+  for(index = 0; index < child_count; ++index)
+    remove_classic_worker_files(worker_directory, index);
+  rmdir(worker_directory);
   free(slots);
-  fprintf(stderr, "nec2c: classic frequency worker failed\n");
-  stop(-1);
+  if(failed_index != SIZE_MAX)
+  {
+    double frequency = requested_frequency(frequency_mode, first_mhz, step,
+        (int)failed_index);
+    if(failed_wait_status && WIFSIGNALED(failed_wait_status))
+      fprintf(stderr, "nec2c: classic frequency worker %lu at %.12g MHz "
+          "terminated by signal %d\n", (unsigned long)(failed_index + 1),
+          frequency, WTERMSIG(failed_wait_status));
+    else if(failed_wait_status && WIFEXITED(failed_wait_status))
+      fprintf(stderr, "nec2c: classic frequency worker %lu at %.12g MHz "
+          "exited with status %d\n", (unsigned long)(failed_index + 1),
+          frequency, WEXITSTATUS(failed_wait_status));
+    else if(failure_errno)
+      fprintf(stderr, "nec2c: classic frequency %s failed for worker %lu "
+          "at %.12g MHz: %s\n", failure_operation,
+          (unsigned long)(failed_index + 1), frequency,
+          strerror(failure_errno));
+    else
+      fprintf(stderr, "nec2c: classic frequency %s failed for worker %lu "
+          "at %.12g MHz\n", failure_operation,
+          (unsigned long)(failed_index + 1), frequency);
+  }
+  else if(failure_errno)
+    fprintf(stderr, "nec2c: classic frequency %s failed: %s\n",
+        failure_operation, strerror(failure_errno));
+  else
+    fprintf(stderr, "nec2c: classic frequency %s failed\n",
+        failure_operation);
+  if(importing)
+  {
+    fprintf(stderr, "nec2c: cannot retry after frequency results were imported\n");
+    stop(-1);
+  }
+  fprintf(stderr, "nec2c: retrying the frequency sweep serially\n");
+  *frequency_index = 1;
+  *frequency_count = original_count;
+  *current_mhz = first_mhz;
   return 0;
 }
 #endif
