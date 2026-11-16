@@ -1,11 +1,12 @@
 #include "nec2c.h"
 #include "shared.h"
 #include "wire_operator.h"
+#include "junction_charge.h"
 
 typedef struct
 {
   const char *name;
-  void (*sbf)(int, int, double *, double *, double *);
+  void (*sbf)(int, int, double complex *, double complex *, double complex *);
   void (*tbf)(int, int);
   void (*trio)(int);
   void (*efld)(double, double, double, double, int);
@@ -91,13 +92,27 @@ const char *wire_operator_resolved_ground_engine(void)
 const char *wire_operator_model_check(void) { return model_check_policy; }
 int wire_operator_nec4_basis(void) { return active_operator == &nec4_operator; }
 
+int wire_operator_prepare_frequency(FILE *report)
+{
+  if(!wire_operator_nec4_basis()) return 1;
+  return junction_charge_prepare(report,!strcmp(model_check_policy,"strict"));
+}
+
+double complex wire_operator_charge_factor(size_t segment,int end,
+                                           double complex fallback)
+{
+  if(!wire_operator_nec4_basis()) return fallback;
+  return junction_charge_factor(segment,end,fallback);
+}
+
 double wire_operator_cosine_shape(double angle)
 {
   if(!wire_operator_nec4_basis()) return cos(angle);
   return -2.0*sin(0.5*angle)*sin(0.5*angle);
 }
 
-double wire_operator_center_basis(double constant, double cosine)
+double complex wire_operator_center_basis(double complex constant,
+                                          double complex cosine)
 {
   return wire_operator_nec4_basis() ? constant : constant+cosine;
 }
@@ -117,7 +132,8 @@ double complex wire_operator_current(double complex constant,
   return constant+sine*sin(angle)+cosine*wire_operator_cosine_shape(angle);
 }
 
-void wire_operator_sbf(int i, int is, double *aa, double *bb, double *cc)
+void wire_operator_sbf(int i, int is, double complex *aa,
+                       double complex *bb, double complex *cc)
 {
   active_operator->sbf(i, is, aa, bb, cc);
 }

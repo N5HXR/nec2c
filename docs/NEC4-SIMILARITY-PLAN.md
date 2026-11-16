@@ -1,6 +1,6 @@
 # NEC4-similarity project plan
 
-Status: approved by the user on 2026-11-16; M0-M2 accepted and M3 in progress.
+Status: approved by the user on 2026-11-16; M0-M3 accepted and M4 in progress.
 
 Date: 2026-11-16  
 Branch: `codex/nec4-similarity`  
@@ -186,6 +186,8 @@ Acceptance metrics:
 - user runs a frequency-scaled dipole/loop case and reviews current plots.
 
 ### M3 - per-end charge factors and local junction solve
+
+Status: accepted by the user on 2026-11-16.
 
 Goal: implement the documented NEC4 junction treatment.
 

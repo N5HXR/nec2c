@@ -523,7 +523,7 @@ void conect( int ignd )
   } /* for( j = 0; j < data.n; j++ ) */
 
   mreq = (size_t)segj.maxcon;
-  mreq *= sizeof(double);
+  mreq *= sizeof(complex double);
   mem_realloc( (void *)&segj.ax, mreq );
   mem_realloc( (void *)&segj.bx, mreq );
   mem_realloc( (void *)&segj.cx, mreq );
@@ -2450,4 +2450,3 @@ void wire( double xw1, double yw1, double zw1,
 }
 
 /*-----------------------------------------------------------------------*/
-

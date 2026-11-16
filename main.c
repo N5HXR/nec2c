@@ -2604,6 +2604,12 @@ int main( int argc, char **argv )
 			  }
 			}
 
+			if(!wire_operator_prepare_frequency(output_fp))
+			{
+			  fprintf(stderr,"nec2c: NEC4 junction charge solve failed in strict mode\n");
+			  stop(-1);
+			}
+
 			//igo = 2;
 
 			/* label 46 */

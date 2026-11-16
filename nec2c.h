@@ -378,7 +378,7 @@ typedef struct
 	jsno,	/* Total number of entries in ax, bx, cx */
 	maxcon; /* Max. no. connections */
 
-  double
+  complex double
 	*ax, *bx, *cx;	/* Store constants A, B, C used in current expansion */
 
 } segj_t;
@@ -471,7 +471,8 @@ void intrp(double x, double y, complex double *f1, complex double *f2, complex d
 void intx(double el1, double el2, double b, int ij, double *sgr, double *sgi);
 int min(int a, int b);
 void test(double f1r, double f2r, double *tr, double f1i, double f2i, double *ti, double dmin);
-void sbf(int i, int is, double *aa, double *bb, double *cc);
+void sbf(int i, int is, double complex *aa, double complex *bb,
+         double complex *cc);
 void tbf(int i, int icap);
 void trio(int j);
 void zint(double sigl, double rolam, complex double *zt);
