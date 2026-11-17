@@ -127,7 +127,10 @@ def main():
                         match = re.search(
                             r"NEC4 WIRE VALIDITY: (\d+) SEGMENTS BELOW L/A=2, "
                             r"(\d+) CLOSE PARALLEL PAIRS, (\d+) BURIED MATCH "
-                            r"POINTS, (\d+) OVERLAPPING BENDS; MINIMUM L/A ([^\s]+)",
+                            r"POINTS, (\d+) OVERLAPPING BENDS(?:, \d+ SOURCE "
+                            r"LENGTH MISMATCHES, \d+ RADIUS-STEP JUNCTIONS"
+                            r"(?:, \d+ LEGACY EX5 SOURCES)?)?; "
+                            r"MINIMUM L/A ([^\s]+)",
                             report)
                         validity.append(list(map(float, match.groups()))
                                         if match else [0, 0, 0, 0, math.inf])
@@ -166,7 +169,9 @@ def main():
         match = re.search(
             r"NEC4 WIRE VALIDITY: (\d+) SEGMENTS BELOW L/A=2, "
             r"(\d+) CLOSE PARALLEL PAIRS, (\d+) BURIED MATCH POINTS, "
-            r"(\d+) OVERLAPPING BENDS; MINIMUM L/A ([^\s]+)",
+            r"(\d+) OVERLAPPING BENDS(?:, \d+ SOURCE LENGTH MISMATCHES, "
+            r"\d+ RADIUS-STEP JUNCTIONS(?:, \d+ LEGACY EX5 SOURCES)?)?; "
+            r"MINIMUM L/A ([^\s]+)",
             warning_report)
         if not match or int(match.group(1)) != 61:
             raise AssertionError(("validity warning", match, warning_report[-2000:]))

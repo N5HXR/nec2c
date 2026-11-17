@@ -1051,18 +1051,14 @@ void sbf( int i, int is, double complex *aa, double complex *bb,
 	if( njun2 == 0)
 	{
 	  *aa =-1.;
-	  qp= PI* data.bi[ix];
-	  xxi= qp* qp;
-	  xxi= qp*(1.-.5* xxi)/(1.- xxi);
+	  xxi=wire_operator_end_parameter(data.bi[ix]);
 	  *cc=1./( cdh- xxi* sdh);
 	  if(wire_operator_nec4_basis())
 		*aa=(basis_one_minus_cos(d)+xxi*sdh)/(cdh-xxi*sdh);
 	  return;
 	}
 
-	qp= PI* data.bi[ix];
-	xxi= qp* qp;
-	xxi= qp*(1.-.5* xxi)/(1.- xxi);
+	xxi=wire_operator_end_parameter(data.bi[ix]);
 	qp=-( omc+ xxi* sd)/( sd*( ap+ xxi* pp)+ cd*( xxi* ap- pp));
 
 	if( june == 1)
@@ -1088,9 +1084,7 @@ void sbf( int i, int is, double complex *aa, double complex *bb,
 
   if( njun2 == 0)
   {
-	qm= PI* data.bi[ix];
-	xxi= qm* qm;
-	xxi= qm*(1.-.5* xxi)/(1.- xxi);
+	xxi=wire_operator_end_parameter(data.bi[ix]);
 	qm=( omc+ xxi* sd)/( sd*( aj- xxi* pm)+ cd*( pm+ xxi* aj));
 
 	if( june == -1)
@@ -1287,9 +1281,7 @@ void tbf( int i, int icap )
 		xxi=0.;
 	  else
 	  {
-		qp= PI* data.bi[ix];
-		xxi= qp* qp;
-		xxi= qp*(1.-.5* xxi)/(1.- xxi);
+		xxi=wire_operator_end_parameter(data.bi[ix]);
 	  }
 
 	  segj.cx[jsnop]=1./( cdh- xxi* sdh);
@@ -1307,9 +1299,7 @@ void tbf( int i, int icap )
 	  xxi=0.;
 	else
 	{
-	  qp= PI* data.bi[ix];
-	  xxi= qp* qp;
-	  xxi= qp*(1.-.5* xxi)/(1.- xxi);
+	  xxi=wire_operator_end_parameter(data.bi[ix]);
 	}
 
 	qp=-( omc+ xxi* sd)/( sd*( ap+ xxi* pp)+ cd*( xxi* ap- pp));
@@ -1340,9 +1330,7 @@ void tbf( int i, int icap )
 	  xxi=0.;
 	else
 	{
-	  qm= PI* data.bi[ix];
-	  xxi= qm* qm;
-	  xxi= qm*(1.-.5* xxi)/(1.- xxi);
+	  xxi=wire_operator_end_parameter(data.bi[ix]);
 	}
 
 	qm=( omc+ xxi* sd)/( sd*( aj- xxi* pm)+ cd*( pm+ xxi* aj));

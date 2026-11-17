@@ -2,6 +2,7 @@
 #include "shared.h"
 #include "wire_operator.h"
 #include "junction_charge.h"
+#include "nec4_endcap.h"
 
 #include <float.h>
 
@@ -33,6 +34,62 @@ static wire_operator_validity last_validity;
 static double dot3(double ax,double ay,double az,
                    double bx,double by,double bz)
 { return ax*bx+ay*by+az*bz; }
+
+static int endcap_disk_global(size_t segment,int end,double xi,double yi,
+                              double zi,double complex *ex,
+                              double complex *ey,double complex *ez)
+{
+  double cx=end?data.x2[segment]:data.x1[segment];
+  double cy=end?data.y2[segment]:data.y1[segment];
+  double cz=end?data.z2[segment]:data.z1[segment];
+  double dx=xi-cx,dy=yi-cy,dz=zi-cz;
+  double axial=dot3(dx,dy,dz,data.cab[segment],data.sab[segment],
+                    data.salp[segment]);
+  double rx=dx-axial*data.cab[segment];
+  double ry=dy-axial*data.sab[segment];
+  double rz=dz-axial*data.salp[segment];
+  double radial=hypot(hypot(rx,ry),rz);
+  nec4_endcap_field field;
+  if(!nec4_endcap_disk_field(data.bi[segment],radial,axial,TP,&field))
+    return 0;
+  if(radial>0.)
+  {
+    rx/=radial;ry/=radial;rz/=radial;
+  }
+  else rx=ry=rz=0.;
+  *ex=field.axial*data.cab[segment]+field.radial*rx;
+  *ey=field.axial*data.sab[segment]+field.radial*ry;
+  *ez=field.axial*data.salp[segment]+field.radial*rz;
+  return 1;
+}
+
+int wire_operator_endcap_current_field(size_t segment,int end,
+    double xi,double yi,double zi,double complex *ex,
+    double complex *ey,double complex *ez)
+{
+  double complex scale;
+  if(!wire_operator_nec4_basis() || segment>=(size_t)data.n ||
+     (end!=0 && end!=1)) return 0;
+  if(!endcap_disk_global(segment,end,xi,yi,zi,ex,ey,ez)) return 0;
+  /* Equations (4-35), (4-37), with lengths normalized by wavelength. */
+  scale=I*(end?-1.:1.)*ETA/(8.*PI*PI*PI*data.bi[segment]*data.bi[segment]);
+  *ex*=scale;*ey*=scale;*ez*=scale;
+  return 1;
+}
+
+int wire_operator_gap_voltage_field(size_t segment,double xi,double yi,
+    double zi,double complex *ex,double complex *ey,double complex *ez)
+{
+  double complex nx,ny,nz,px,py,pz;
+  double scale;
+  if(!wire_operator_nec4_basis() || segment>=(size_t)data.n) return 0;
+  if(!endcap_disk_global(segment,0,xi,yi,zi,&nx,&ny,&nz) ||
+     !endcap_disk_global(segment,1,xi,yi,zi,&px,&py,&pz)) return 0;
+  /* Equations (4-39), (4-40): positive cap at end 2, negative at end 1. */
+  scale=1./(4.*PI*data.si[segment]);
+  *ex=(px-nx)*scale;*ey=(py-ny)*scale;*ez=(pz-nz)*scale;
+  return 1;
+}
 
 static int same_point(double ax,double ay,double az,
                       double bx,double by,double bz)
@@ -86,6 +143,8 @@ static int prepare_validity(FILE *report)
                                  data.cab[j],data.sab[j],data.salp[j]));
       double dij=point_segment_distance(i,j),dji=point_segment_distance(j,i);
       int connected=connected_pair(i,j);
+      if(connected && fabs(data.bi[i]/data.bi[j]-1.)>1.e-6)
+        ++last_validity.radius_step_junctions;
       if(!connected && alignment>.95)
       {
         double dx=data.x[j]-data.x[i],dy=data.y[j]-data.y[i],
@@ -103,21 +162,40 @@ static int prepare_validity(FILE *report)
         ++last_validity.overlapping_bends;
     }
   }
+  for(i=0;i<(size_t)vsorc.nsant;++i)
+  {
+    size_t source=(size_t)(vsorc.isant[i]-1),j;
+    if(source>=(size_t)data.n) continue;
+    for(j=0;j<(size_t)data.n;++j)
+      if(j!=source && connected_pair(source,j))
+      {
+        double ratio=data.si[source]/data.si[j];
+        if(ratio<1.) ratio=1./ratio;
+        if(ratio>2.) {++last_validity.source_length_mismatches;break;}
+      }
+  }
+  last_validity.legacy_discontinuity_sources=(size_t)vsorc.nvqd;
   if(last_validity.minimum_length_radius_ratio==DBL_MAX)
     last_validity.minimum_length_radius_ratio=0.;
   if(report)
     fprintf(report,"\n  NEC4 WIRE VALIDITY: %lu SEGMENTS BELOW L/A=2, "
             "%lu CLOSE PARALLEL PAIRS, %lu BURIED MATCH POINTS, "
-            "%lu OVERLAPPING BENDS; MINIMUM L/A %.6G\n",
+            "%lu OVERLAPPING BENDS, %lu SOURCE LENGTH MISMATCHES, "
+            "%lu RADIUS-STEP JUNCTIONS, %lu LEGACY EX5 SOURCES; "
+            "MINIMUM L/A %.6G\n",
             (unsigned long)last_validity.short_thick_segments,
             (unsigned long)last_validity.close_parallel_pairs,
             (unsigned long)last_validity.buried_match_points,
             (unsigned long)last_validity.overlapping_bends,
+            (unsigned long)last_validity.source_length_mismatches,
+            (unsigned long)last_validity.radius_step_junctions,
+            (unsigned long)last_validity.legacy_discontinuity_sources,
             last_validity.minimum_length_radius_ratio);
   return !(last_validity.short_thick_segments ||
            last_validity.close_parallel_pairs ||
            last_validity.buried_match_points ||
-           last_validity.overlapping_bends);
+           last_validity.overlapping_bends ||
+           last_validity.source_length_mismatches);
 }
 
 int wire_operator_set_engine(const char *name)
@@ -204,6 +282,13 @@ double complex wire_operator_charge_factor(size_t segment,int end,
 {
   if(!wire_operator_nec4_basis()) return fallback;
   return junction_charge_factor(segment,end,fallback);
+}
+
+double wire_operator_end_parameter(double radius)
+{
+  double ka=PI*radius;
+  if(wire_operator_nec4_basis()) return ka;
+  return ka*(1.-.5*ka*ka)/(1.-ka*ka);
 }
 
 double wire_operator_cosine_shape(double angle)

@@ -1,0 +1,140 @@
+{
+  "schema": "nec2c-nec4-m5-acceptance",
+  "schema_version": 1,
+  "source_refinement": {
+    "nec2": [
+      {
+        "segments": 10,
+        "length_radius": 2.5,
+        "impedance_ohm": {
+          "re": 52.43524335973414,
+          "im": 25.474549573997706
+        },
+        "current_ripple": 0.03069826456931767
+      },
+      {
+        "segments": 20,
+        "length_radius": 1.25,
+        "impedance_ohm": {
+          "re": 56.38138078822164,
+          "im": 23.640185590897516
+        },
+        "current_ripple": 0.0482672725904112
+      },
+      {
+        "segments": 40,
+        "length_radius": 0.625,
+        "impedance_ohm": {
+          "re": 63.67219569561647,
+          "im": 16.608146809342717
+        },
+        "current_ripple": 0.21657256266204833
+      },
+      {
+        "segments": 80,
+        "length_radius": 0.3125,
+        "impedance_ohm": {
+          "re": 12.000529938647386,
+          "im": -26.405749736139846
+        },
+        "current_ripple": 1.524901099987165
+      },
+      {
+        "segments": 120,
+        "length_radius": 0.20833333333333334,
+        "impedance_ohm": {
+          "re": 0.009288271430299453,
+          "im": -0.8154747160872667
+        },
+        "current_ripple": 1.8901269062665698
+      }
+    ],
+    "nec4": [
+      {
+        "segments": 10,
+        "length_radius": 2.5,
+        "impedance_ohm": {
+          "re": 58.004629951562386,
+          "im": 69.9441553906986
+        },
+        "current_ripple": 0.01923770717406958
+      },
+      {
+        "segments": 20,
+        "length_radius": 1.25,
+        "impedance_ohm": {
+          "re": 71.40861694155453,
+          "im": 35.58375527361773
+        },
+        "current_ripple": 0.037259314237506634
+      },
+      {
+        "segments": 40,
+        "length_radius": 0.625,
+        "impedance_ohm": {
+          "re": 87.40947114355723,
+          "im": 33.9363568826657
+        },
+        "current_ripple": 0.06300025816405318
+      },
+      {
+        "segments": 80,
+        "length_radius": 0.3125,
+        "impedance_ohm": {
+          "re": 99.42836711566648,
+          "im": 39.68604361544451
+        },
+        "current_ripple": 0.09769549218948884
+      },
+      {
+        "segments": 120,
+        "length_radius": 0.20833333333333334,
+        "impedance_ohm": {
+          "re": 84.11975857120262,
+          "im": 56.45919755980517
+        },
+        "current_ripple": 0.9916089609287349
+      }
+    ]
+  },
+  "source_length_mismatch": {
+    "warned": true,
+    "strict_rejected": true
+  },
+  "legacy_ex5": {
+    "retained": true,
+    "gap_cap_correction": false
+  },
+  "reciprocity": {
+    "transfer_currents_a": [
+      {
+        "re": -0.0025432991323926426,
+        "im": 0.010545765716105127
+      },
+      {
+        "re": -0.0025432991323926365,
+        "im": 0.010545765716105132
+      }
+    ],
+    "scaled_defect": 7.996680103938911e-18
+  },
+  "loaded_network": {
+    "serial_parallel_scaled_delta": 0.0,
+    "power_balance_relative": 0.0,
+    "power": {
+      "basis": "driven-accepted-power",
+      "accepted_w": 0.008954118408663692,
+      "air_radiated_w": 0.00052305036501411,
+      "lower_halfspace_flux_w": null,
+      "dielectric_absorbed_w": null,
+      "structure_loss_w": 5.8410995344657266e-05,
+      "network_loss_w": 0.008372657048304925,
+      "balance_defect_w": null,
+      "balance_defect_relative": null,
+      "angular_quadrature": {
+        "theta_count": 0,
+        "phi_count": 0
+      }
+    }
+  }
+}

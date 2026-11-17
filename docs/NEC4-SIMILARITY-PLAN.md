@@ -1,6 +1,6 @@
 # NEC4-similarity project plan
 
-Status: approved by the user on 2026-11-16; M0-M3 accepted and M4 complete pending user acceptance.
+Status: approved by the user on 2026-11-16; M0-M4 accepted and M5 complete pending user acceptance.
 
 Date: 2026-11-16  
 Branch: `codex/nec4-similarity`  

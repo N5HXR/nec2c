@@ -29,6 +29,9 @@ typedef struct
   size_t close_parallel_pairs;
   size_t buried_match_points;
   size_t overlapping_bends;
+  size_t source_length_mismatches;
+  size_t radius_step_junctions;
+  size_t legacy_discontinuity_sources;
   double minimum_length_radius_ratio;
 } wire_operator_validity;
 
@@ -36,6 +39,7 @@ int wire_operator_prepare_frequency(FILE *report);
 const wire_operator_validity *wire_operator_last_validity(void);
 double complex wire_operator_charge_factor(size_t segment, int end,
                                            double complex fallback);
+double wire_operator_end_parameter(double radius);
 
 /* Representation-aware operations for A + B sin(x) + C f_cos(x). */
 double wire_operator_cosine_shape(double angle);
@@ -54,5 +58,13 @@ void wire_operator_tbf(int i, int icap);
 void wire_operator_trio(int j);
 void wire_operator_efld(double xi, double yi, double zi, double ai, int ij);
 void wire_operator_hsfld(double xi, double yi, double zi, double ai);
+
+/* NEC4 flat-cap fields in wavelength-normalized coordinates. */
+int wire_operator_endcap_current_field(size_t segment, int end,
+    double xi, double yi, double zi, double complex *ex,
+    double complex *ey, double complex *ez);
+int wire_operator_gap_voltage_field(size_t segment,
+    double xi, double yi, double zi, double complex *ex,
+    double complex *ey, double complex *ez);
 
 #endif

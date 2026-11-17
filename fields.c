@@ -1282,8 +1282,52 @@ void nefld( double xob, double yob, double zob,
 	  *ex += dataj.exk* acx+ dataj.exs* bcx+ dataj.exc* ccx;
 	  *ey += dataj.eyk* acx+ dataj.eys* bcx+ dataj.eyc* ccx;
 	  *ez += dataj.ezk* acx+ dataj.ezs* bcx+ dataj.ezc* ccx;
+	  if(wire_operator_nec4_basis())
+	  {
+		int end;
+		for(end=0;end<2;++end)
+		  if((end?data.icon2[i]:data.icon1[i])==0)
+		  {
+			complex double cx,cy,cz,current;
+			if(wire_operator_endcap_current_field((size_t)i,end,xob,yob,zob,
+			     &cx,&cy,&cz))
+			{
+			  current=wire_operator_current(acx,bcx,ccx,
+			    (end?1.:-1.)*PI*data.si[i]);
+			  *ex+=cx*current/data.wlam;
+			  *ey+=cy*current/data.wlam;
+			  *ez+=cz*current/data.wlam;
+			}
+		  }
+		if(zload.nload && cabs(zload.zarray[i])>1.e-30)
+		{
+		  complex double cx,cy,cz,voltage;
+		  if(wire_operator_gap_voltage_field((size_t)i,xob,yob,zob,
+		       &cx,&cy,&cz))
+		  {
+			voltage=wire_operator_center_basis(acx,ccx)*
+			  zload.zarray[i]*data.si[i];
+			*ex+=cx*voltage/data.wlam;
+			*ey+=cy*voltage/data.wlam;
+			*ez+=cz*voltage/data.wlam;
+		  }
+		}
+	  }
 
 	} /* for( i = 0; i < n; i++ ) */
+
+	if(wire_operator_nec4_basis())
+	  for(i=0;i<vsorc.nsant;++i)
+	  {
+		size_t source=(size_t)(vsorc.isant[i]-1);
+		complex double cx,cy,cz;
+		if(wire_operator_gap_voltage_field(source,xob,yob,zob,&cx,&cy,&cz))
+		{
+		  *ex+=cx*vsorc.vsant[i]/data.wlam;
+		  *ey+=cy*vsorc.vsant[i]/data.wlam;
+		  *ez+=cz*vsorc.vsant[i]/data.wlam;
+		}
+	  }
 
 	if( data.m == 0)
 	  return;
