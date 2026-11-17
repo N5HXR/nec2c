@@ -2186,6 +2186,15 @@ int main( int argc, char **argv )
 		  abort_on_error(-5);
 
 		case 20: /* "df" card, dielectric resource */
+		  if(wire_operator_nec4_basis())
+		  {
+			fprintf(output_fp,"\n\n  NEC4 WIRE COMBINATION ERROR: dielectric VIE "
+			    "has not been qualified with the NEC4 wire operator; select "
+			    "--wire-engine nec2.");
+			fprintf(stderr,"nec2c: dielectric VIE is not yet supported with "
+			    "--wire-engine nec4\n");
+			stop(-1);
+		  }
 		  if( dielectric.loaded )
 		  {
 			fprintf( output_fp, "\n\n  DIELECTRIC DF CARD ERROR:"
@@ -2604,9 +2613,11 @@ int main( int argc, char **argv )
 			  }
 			}
 
+			wire_operator_set_model_features((size_t)data.m,
+			    coated_wires.domain_count,dielectric.loaded);
 			if(!wire_operator_prepare_frequency(output_fp))
 			{
-			  fprintf(stderr,"nec2c: NEC4 model validity or junction charge check failed in strict mode\n");
+			  fprintf(stderr,"nec2c: NEC4 model validity, combination, or junction charge check failed\n");
 			  stop(-1);
 			}
 

@@ -249,6 +249,8 @@ M5 is the first candidate for a useful **free-space NEC4-similarity preview**, b
 
 ### M6 - existing above-ground modes and combined-feature audit
 
+**Status:** accepted.
+
 Goal: integrate the accepted NEC4 wire engine with PEC ground, reflection-coefficient ground, and the fork's existing NEC2 Sommerfeld path before adding buried wires.
 
 Work:

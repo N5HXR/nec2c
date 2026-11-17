@@ -30,24 +30,27 @@ static const char *requested_ground_engine = "auto";
 static const char *resolved_ground_engine = "nec2";
 static const char *model_check_policy = "warn";
 static wire_operator_validity last_validity;
+static size_t model_patches, model_coated_domains;
+static int model_dielectric_loaded;
 
 static double dot3(double ax,double ay,double az,
                    double bx,double by,double bz)
 { return ax*bx+ay*by+az*bz; }
 
-static int endcap_disk_global(size_t segment,int end,double xi,double yi,
-                              double zi,double complex *ex,
-                              double complex *ey,double complex *ez)
+static int endcap_disk_global_image(size_t segment,int end,int image,
+    double xi,double yi,double zi,double complex *ex,
+    double complex *ey,double complex *ez)
 {
   double cx=end?data.x2[segment]:data.x1[segment];
   double cy=end?data.y2[segment]:data.y1[segment];
   double cz=end?data.z2[segment]:data.z1[segment];
+  double cab=data.cab[segment],sab=data.sab[segment],salp=data.salp[segment];
+  if(image) { cz=-cz;salp=-salp; }
   double dx=xi-cx,dy=yi-cy,dz=zi-cz;
-  double axial=dot3(dx,dy,dz,data.cab[segment],data.sab[segment],
-                    data.salp[segment]);
-  double rx=dx-axial*data.cab[segment];
-  double ry=dy-axial*data.sab[segment];
-  double rz=dz-axial*data.salp[segment];
+  double axial=dot3(dx,dy,dz,cab,sab,salp);
+  double rx=dx-axial*cab;
+  double ry=dy-axial*sab;
+  double rz=dz-axial*salp;
   double radial=hypot(hypot(rx,ry),rz);
   nec4_endcap_field field;
   if(!nec4_endcap_disk_field(data.bi[segment],radial,axial,TP,&field))
@@ -57,9 +60,48 @@ static int endcap_disk_global(size_t segment,int end,double xi,double yi,
     rx/=radial;ry/=radial;rz/=radial;
   }
   else rx=ry=rz=0.;
-  *ex=field.axial*data.cab[segment]+field.radial*rx;
-  *ey=field.axial*data.sab[segment]+field.radial*ry;
-  *ez=field.axial*data.salp[segment]+field.radial*rz;
+  *ex=field.axial*cab+field.radial*rx;
+  *ey=field.axial*sab+field.radial*ry;
+  *ez=field.axial*salp+field.radial*rz;
+  return 1;
+}
+
+static void reflect_cap_field(size_t segment,int end,double xi,double yi,
+    double zi,double complex *ex,double complex *ey,double complex *ez)
+{
+  double cx=end?data.x2[segment]:data.x1[segment];
+  double cy=end?data.y2[segment]:data.y1[segment];
+  double cz=end?data.z2[segment]:data.z1[segment];
+  double xij=xi-cx,yij=yi-cy,zij=zi+cz;
+  double r=hypot(hypot(xij,yij),zij),xymag=hypot(xij,yij);
+  double px,py,cth;
+  complex double refs,refps,zrsin,zratx=gnd.zrati,epy,epx;
+  if(gnd.iperf>0) return;
+  /* This is the same Fresnel dyadic used by efld() for GN 0. */
+  if(xymag<=1.e-6) { px=py=0.;cth=1.;zrsin=CPLX_10; }
+  else
+  {
+    px=-yij/xymag;py=xij/xymag;cth=zij/r;
+    zrsin=csqrt(1.-zratx*zratx*(1.-cth*cth));
+  }
+  refs=(cth-zratx*zrsin)/(cth+zratx*zrsin);
+  refps=-(zratx*cth-zrsin)/(zratx*cth+zrsin)-refs;
+  epy=px*(*ex)+py*(*ey);epx=px*epy;epy=py*epy;
+  *ex=refs*(*ex)+refps*epx;
+  *ey=refs*(*ey)+refps*epy;
+  *ez=refs*(*ez);
+}
+
+static int endcap_disk_global(size_t segment,int end,double xi,double yi,
+                              double zi,double complex *ex,
+                              double complex *ey,double complex *ez)
+{
+  complex double ix,iy,iz;
+  if(!endcap_disk_global_image(segment,end,0,xi,yi,zi,ex,ey,ez)) return 0;
+  if(gnd.ksymp<=1) return 1;
+  if(!endcap_disk_global_image(segment,end,1,xi,yi,zi,&ix,&iy,&iz)) return 0;
+  reflect_cap_field(segment,end,xi,yi,zi,&ix,&iy,&iz);
+  *ex-=gnd.frati*ix;*ey-=gnd.frati*iy;*ez-=gnd.frati*iz;
   return 1;
 }
 
@@ -250,6 +292,14 @@ int wire_operator_set_model_check(const char *name)
   return 1;
 }
 
+void wire_operator_set_model_features(size_t patches,size_t coated_domains,
+                                      int dielectric_loaded)
+{
+  model_patches=patches;
+  model_coated_domains=coated_domains;
+  model_dielectric_loaded=dielectric_loaded!=0;
+}
+
 const char *wire_operator_requested_engine(void) { return requested_engine; }
 const char *wire_operator_resolved_engine(void) { return active_operator->name; }
 const char *wire_operator_requested_ground_engine(void)
@@ -268,6 +318,24 @@ int wire_operator_prepare_frequency(FILE *report)
   if(!wire_operator_nec4_basis()) return 1;
   {
     int valid=prepare_validity(!strcmp(model_check_policy,"off")?NULL:report);
+    if(model_coated_domains || model_dielectric_loaded)
+    {
+      if(report) fprintf(report,"\n  NEC4 WIRE COMBINATION ERROR: %s%s%s has not "
+          "been qualified with the NEC4 wire operator; select --wire-engine nec2.\n",
+          model_coated_domains?"LD 7 coated wire":"",
+          model_coated_domains&&model_dielectric_loaded?" and ":"",
+          model_dielectric_loaded?"dielectric VIE":"");
+      return 0;
+    }
+    if(report && model_patches)
+      fprintf(report,"  NEC4 WIRE COMBINATION: %lu surface patches enabled.\n",
+              (unsigned long)model_patches);
+    if(report && gnd.ksymp>1 && gnd.iperf==2)
+      fprintf(report,"  NEC4 GROUND NOTICE: flat-cap direct and image fields are "
+          "included; the cap-specific Sommerfeld correction remains provisional.\n");
+    if(report && gnd.nradl)
+      fprintf(report,"  NEC4 GROUND NOTICE: radial-screen reflection of flat-cap "
+          "fields uses the homogeneous-ground coefficient.\n");
     if(!junction_charge_prepare(report,!strcmp(model_check_policy,"strict")))
       return 0;
     return strcmp(model_check_policy,"strict") || valid;
