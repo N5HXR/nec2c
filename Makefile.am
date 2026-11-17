@@ -51,6 +51,8 @@ EXTRA_DIST = \
   docs/NEC4-SIMILARITY-M5-RESULTS.md \
   docs/NEC4-SIMILARITY-M6-RESULTS.md \
   docs/NEC4-SIMILARITY-M7-RESULTS.md \
+  docs/NEC4-SIMILARITY-M8-SPEC.md \
+  docs/NEC4-SIMILARITY-M8-RESULTS.md \
   tests/nec4-similarity/m0-baseline.json \
   tests/nec4-similarity/m0_baseline.py \
   tests/nec4-similarity/m1-witnesses.json \
@@ -86,7 +88,29 @@ EXTRA_DIST = \
   tests/nec4-similarity/m7-buried-dipole.nec \
   tests/nec4-similarity/m7-ground-stake.nec \
   tests/nec4-similarity/m7_medium.py \
+  tests/nec4-similarity/m8-equation-lock.json \
+  tests/nec4-similarity/m8-bessel-gate.json \
+  tests/nec4-similarity/m8-hankel-gate.json \
+  tests/nec4-similarity/m8-hankel-compact-gate.json \
+  tests/nec4-similarity/m8-limits-gate.json \
+  tests/nec4-similarity/m8-pairing-gate.json \
+  tests/nec4-similarity/m8-singularity-gate.json \
+  tests/nec4-similarity/m8-qualification.csv \
+  tests/nec4-similarity/m8-qualification.json \
+  tests/nec4-similarity/m8_bessel.py \
+  tests/nec4-similarity/m8_equations.py \
+  tests/nec4-similarity/m8_hankel.py \
+  tests/nec4-similarity/m8_limits.py \
+  tests/nec4-similarity/m8_pairings.py \
+  tests/nec4-similarity/m8_oracle.py \
+  tests/nec4-similarity/m8_qualification.py \
+  tests/nec4-similarity/m8_singularity.py \
   tools/nec4_m7_reference.py \
+  tools/nec4_m8_direct.py \
+  tools/nec4_m8_equations.py \
+  tools/nec4_m8_oracle.py \
+  tools/nec4_m8_qualify.py \
+  docs/nec4-m8-convergence.png \
   tools/nec4_m1_oracles.py \
   tests/coated-wire/README.md \
   tests/coated-wire/m0-bare-dipole.nec \
@@ -440,7 +464,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/nec4-similarity/m8_equations.py tests/nec4-similarity/m8_bessel.py tests/nec4-similarity/m8_hankel.py tests/nec4-similarity/m8_limits.py tests/nec4-similarity/m8_pairings.py tests/nec4-similarity/m8_oracle.py tests/nec4-similarity/m8_qualification.py tests/nec4-similarity/m8_singularity.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \

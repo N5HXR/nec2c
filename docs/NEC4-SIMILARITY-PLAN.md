@@ -1,6 +1,6 @@
 # NEC4-similarity project plan
 
-Status: approved by the user on 2026-11-16; M0-M7 accepted and M8 ready for specification review.
+Status: approved by the user on 2026-11-16; M0-M8 accepted and M9 in progress.
 
 Date: 2026-11-16  
 Branch: `codex/nec4-similarity`  
@@ -292,12 +292,16 @@ Acceptance metrics:
 
 ### M8 - direct Sommerfeld field engine for all medium pairings
 
+**Status:** accepted by the user on 2026-11-17.
+
 Goal: create a slow, accurate production-independent reference for source and observer above/above, below/below, and opposite sides of the interface.
 
 Work:
 
 - implement contour integration, singularity subtraction, branch/pole handling, reciprocity transforms, and boundary-condition transforms from the public theory;
-- evaluate E directly and add a direct H reference where public derivation supports it;
+- evaluate the complete electric-field dyadic for vertical and horizontal
+  electric-current elements; magnetic-field H is deferred because the `H`
+  superscript in the public equations denotes horizontal source orientation;
 - validate near-coincident, interface, high-conductivity, low-loss, grazing, small-rho, and cancellation regions;
 - retain convergence and error estimates for every sampled reference value.
 
