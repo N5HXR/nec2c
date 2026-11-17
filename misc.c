@@ -33,7 +33,7 @@ void usage(void)
 	  "\n       --validate-only: validate without solving (requires --result-json)."
 	  "\n       --coated-wire-junctions strict|experimental: junction policy (default strict)."
 	  "\n       --wire-engine auto|nec2|nec4: wire operator (default auto)."
-	  "\n       --ground-engine auto|nec2: ground operator (default auto; nec4/adaptive planned)."
+	  "\n       --ground-engine auto|nec2|nec4: ground operator (nec4 is M7 preflight/reference only; default auto)."
 	  "\n       --model-check warn|strict|off: validity diagnostic policy (default warn)."
 	  "\n       -s dense|gmres|fft: DF solver (default dense; FFT requires uniform cubes/material).\n       -r tolerance: GMRES relative residual target (default 1e-12).\n       -n iterations: GMRES iteration limit (default 300)."
 	  "\n       -h: print this usage information and exit."

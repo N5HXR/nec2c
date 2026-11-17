@@ -36,6 +36,7 @@
 #include "performance.h"
 #include "dense_backend.h"
 #include "concurrency.h"
+#include "nec4_medium.h"
 
 #include <ctype.h>
 #include <getopt.h>
@@ -938,6 +939,136 @@ static void publish_coated_failure(const dielectric_model *dielectric,
   result_json_finish("validation-error");
 }
 
+static int prepare_nec4_medium_preflight(nec4_medium_state *state)
+{
+  nec4_medium_geometry geometry;
+  double loss;
+  int loss_is_epsilon;
+  char context[1024];
+
+  if(gnd.ksymp != 2 || gnd.iperf != 2)
+  {
+    result_json_diagnostic("error", "NEC4_M7_GROUND_REQUIRED",
+        "M7 lower-medium preflight requires a finite Sommerfeld GN 2 medium",
+        "{\"required_card\":\"GN 2\"}");
+    fprintf(output_fp, "\n\n  NEC4 M7 PREFLIGHT ERROR: lower-medium and "
+        "interface models require a finite Sommerfeld GN 2 medium.");
+    return 0;
+  }
+  if(data.m != 0)
+  {
+    result_json_diagnostic("error", "NEC4_M7_PATCH_UNSUPPORTED",
+        "M7 lower-medium preflight does not yet qualify surface patches", "{}");
+    fprintf(output_fp, "\n\n  NEC4 M7 PREFLIGHT ERROR: surface patches are "
+        "deferred until the interface field engine is available.");
+    return 0;
+  }
+
+  geometry.count=(size_t)data.n;
+  geometry.x1=data.x1; geometry.y1=data.y1; geometry.z1=data.z1;
+  geometry.x2=data.x2; geometry.y2=data.y2; geometry.z2=data.z2;
+  loss_is_epsilon=save.sig<0.;
+  loss=loss_is_epsilon ? -save.sig : save.sig;
+  if(!nec4_medium_classify(&geometry,save.epsr,loss,save.fmhz,
+      loss_is_epsilon,state))
+  {
+    snprintf(context,sizeof(context),
+        "{\"segments\":%lu,\"unsupported_interface_junctions\":%lu,"
+        "\"unsplit_crossings\":%lu,"
+        "\"in_plane_segments\":%lu}",
+        (unsigned long)geometry.count,
+        (unsigned long)state->unsupported_interface_junctions,
+        (unsigned long)state->unsplit_crossings,
+        (unsigned long)state->in_plane_segments);
+    result_json_diagnostic("error", "NEC4_M7_INTERFACE_TOPOLOGY",
+        "wires must form a simple one-above/one-below split at every interface crossing and may not lie in the interface plane",
+        context);
+    nec4_medium_print(output_fp,state);
+    fprintf(output_fp, "\n  NEC4 M7 PREFLIGHT ERROR: split every crossing "
+        "at z=0 as one segment on each side; branches, one-sided endpoints, "
+        "and complete segments in the interface plane are deferred.");
+    return 0;
+  }
+
+  wire_operator_set_medium_state(state);
+  nec4_medium_print(output_fp,state);
+  snprintf(context,sizeof(context),
+      "{\"frequency_mhz\":%.17g,\"upper_segments\":%lu,"
+      "\"lower_segments\":%lu,\"interface_endpoints\":%lu,"
+      "\"crossing_junctions\":%lu,\"unsupported_interface_junctions\":%lu,"
+      "\"oblique_crossings\":%lu,"
+      "\"interface_tolerance_m\":%.17g,\"relative_permittivity\":%.17g,"
+      "\"epsilon_relative\":{\"real\":%.17g,\"imag\":%.17g},"
+      "\"wave_number_per_m\":{\"real\":%.17g,\"imag\":%.17g},"
+      "\"intrinsic_impedance_ohm\":{\"real\":%.17g,\"imag\":%.17g}}",
+      state->frequency_mhz,(unsigned long)state->upper_segments,
+      (unsigned long)state->lower_segments,
+      (unsigned long)state->interface_endpoints,
+      (unsigned long)state->crossing_junctions,
+      (unsigned long)state->unsupported_interface_junctions,
+      (unsigned long)state->oblique_crossings,state->interface_tolerance_m,
+      state->relative_permittivity,creal(state->epsilon_relative),
+      cimag(state->epsilon_relative),creal(state->wave_number_per_m),
+      cimag(state->wave_number_per_m),creal(state->intrinsic_impedance_ohm),
+      cimag(state->intrinsic_impedance_ohm));
+  result_json_diagnostic("info", "NEC4_M7_MEDIUM_PREFLIGHT",
+      "lower-medium material and interface topology prepared",context);
+  if(state->oblique_crossings)
+  {
+    snprintf(context,sizeof(context),"{\"oblique_crossings\":%lu}",
+        (unsigned long)state->oblique_crossings);
+    result_json_diagnostic("info", "NEC4_M7_HIGHLY_OBLIQUE_AUDIT",
+        "one or more crossings exceed 60 degrees from the interface normal; retained as audit metadata because the public guide reports apparently good results in this region",
+        context);
+  }
+  return 1;
+}
+
+static void enforce_nec4_m7_boundary(nec4_medium_state *state,
+    const dielectric_model *dielectric,size_t coated_domain_count)
+{
+  if(!wire_operator_nec4_ground()) return;
+  if(!wire_operator_nec4_basis())
+  {
+    result_json_diagnostic("error", "NEC4_M7_WIRE_ENGINE_REQUIRED",
+        "M7 lower-medium preflight requires --wire-engine nec4", "{}");
+    fprintf(output_fp,"\n\n  NEC4 M7 PREFLIGHT ERROR: --ground-engine "
+        "nec4 requires --wire-engine nec4.");
+    result_json_job_end(dielectric);result_json_finish("validation-error");
+    stop(-1);
+  }
+  if((dielectric&&dielectric->loaded)||coated_domain_count)
+  {
+    result_json_diagnostic("error", "NEC4_M7_COMBINATION_UNSUPPORTED",
+        "M7 lower-medium preflight does not yet qualify dielectric VIE or coated-wire combinations",
+        "{}");
+    fprintf(output_fp,"\n\n  NEC4 M7 PREFLIGHT ERROR: dielectric VIE and "
+        "LD 7 coated-wire combinations are deferred for requalification.");
+    result_json_job_end(dielectric);result_json_finish("validation-error");
+    stop(-1);
+  }
+  if(!prepare_nec4_medium_preflight(state))
+  {
+    result_json_job_end(dielectric);
+    result_json_finish("validation-error");
+    fprintf(stderr,"nec2c: NEC4 M7 interface preflight failed\n");
+    stop(-1);
+  }
+  if(!result_json_validation_only())
+  {
+    result_json_diagnostic("error", "NEC4_M7_REFERENCE_ONLY",
+        "M7 validates geometry and homogeneous-medium constants only; production interface fields begin in M8/M9",
+        "{\"required_option\":\"--validate-only\"}");
+    fprintf(output_fp,"\n\n  NEC4 M7 REFERENCE-ONLY BOUNDARY: use "
+        "--validate-only with --ground-engine nec4. Production interface "
+        "fields begin in M8/M9; no NEC2 ground result was substituted.");
+    result_json_job_end(dielectric);
+    result_json_finish("validation-error");
+    fprintf(stderr,"nec2c: --ground-engine nec4 is preflight/reference-only in M7\n");
+    stop(-1);
+  }
+}
+
 /*-------------------------------------------------------------------*/
 
 int main( int argc, char **argv )
@@ -957,6 +1088,7 @@ int main( int argc, char **argv )
   dielectric_plane_wave dielectric_wave;
   coated_wire_model coated_wires;
   coated_wire_diagnostic coated_error;
+  nec4_medium_state nec4_medium;
   int dielectric_excitation_seen, dielectric_any_excitation_seen;
   int dielectric_solved;
   int dielectric_iterative = 0;
@@ -1338,6 +1470,7 @@ int main( int argc, char **argv )
   dielectric_model_init( &dielectric );
   dielectric_mesh_init( &dielectric_mesh );
   coated_wire_model_init( &coated_wires );
+  nec4_medium_state_init( &nec4_medium );
   coated_wire_allow_experimental_junctions(&coated_wires,
       coated_wire_experimental_junctions);
 
@@ -1382,6 +1515,8 @@ int main( int argc, char **argv )
 	dielectric_mesh_free( &dielectric_mesh );
 	dielectric_model_free( &dielectric );
 	coated_wire_model_clear( &coated_wires );
+	nec4_medium_state_free( &nec4_medium );
+	wire_operator_set_medium_state( NULL );
 	result_json_job_begin();
 	ifrtmw=0;
 	ifrtmp=0;
@@ -2225,6 +2360,9 @@ int main( int argc, char **argv )
 		   *** normal exit of nec2c when all jobs complete ok ***
 		   ******************************************************/
 
+		  enforce_nec4_m7_boundary(&nec4_medium,&dielectric,
+		      coated_wires.domain_count);
+
 		  if( dielectric.loaded && ! dielectric_mesh.built )
 		  {
 			double phase_started;
@@ -2326,6 +2464,12 @@ int main( int argc, char **argv )
 		  stop(0);
 
 	  } /* switch( ain_num ) */
+
+	  /* Cards that request an immediate calculation reach this point via a
+	     switch break.  Apply the same M7 gate used by EN before any classic
+	     matrix fill can silently substitute the NEC2 ground formulation. */
+	  enforce_nec4_m7_boundary(&nec4_medium,&dielectric,
+	      coated_wires.domain_count);
 
 	  if( dielectric.loaded )
 	  {

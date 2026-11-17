@@ -1,6 +1,6 @@
 # NEC4-similarity project plan
 
-Status: approved by the user on 2026-11-16; M0-M4 accepted and M5 complete pending user acceptance.
+Status: approved by the user on 2026-11-16; M0-M7 accepted and M8 ready for specification review.
 
 Date: 2026-11-16  
 Branch: `codex/nec4-similarity`  
@@ -269,6 +269,8 @@ Acceptance metrics:
 - user runs a VSWR sweep and radiation grid for an above-ground production model.
 
 ### M7 - homogeneous lower medium and interface topology
+
+**Status:** accepted by the user on 2026-11-17.
 
 Goal: introduce the geometry and material foundations for buried and penetrating wires without yet relying on accelerated ground tables.
 

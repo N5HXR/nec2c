@@ -25,8 +25,11 @@ def run(command, expected=0):
 capabilities = json.loads(run([str(BINARY), "--capabilities-json"]).stdout)
 features = capabilities["features"]
 assert features["wire_engines"][:2] == ["auto", "nec2"]
-assert features["ground_engines"] == ["auto", "nec2"]
-assert features["planned_ground_engines"] == ["nec4", "adaptive"]
+assert features["ground_engines"][:2] == ["auto", "nec2"]
+if "nec4" in features["ground_engines"]:
+    assert features["planned_ground_engines"] == ["adaptive"]
+else:
+    assert features["planned_ground_engines"] == ["nec4", "adaptive"]
 
 if "nec4" not in features["wire_engines"]:
     assert features["planned_wire_engines"] == ["nec4"]

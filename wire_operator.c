@@ -32,6 +32,7 @@ static const char *model_check_policy = "warn";
 static wire_operator_validity last_validity;
 static size_t model_patches, model_coated_domains;
 static int model_dielectric_loaded;
+static const nec4_medium_state *medium_state;
 
 static double dot3(double ax,double ay,double az,
                    double bx,double by,double bz)
@@ -279,6 +280,12 @@ int wire_operator_set_ground_engine(const char *name)
     resolved_ground_engine = "nec2";
     return 1;
   }
+  if(!strcmp(name, "nec4"))
+  {
+    requested_ground_engine = "nec4";
+    resolved_ground_engine = "nec4";
+    return 1;
+  }
   return 0;
 }
 
@@ -300,6 +307,9 @@ void wire_operator_set_model_features(size_t patches,size_t coated_domains,
   model_dielectric_loaded=dielectric_loaded!=0;
 }
 
+void wire_operator_set_medium_state(const nec4_medium_state *state)
+{ medium_state=state; }
+
 const char *wire_operator_requested_engine(void) { return requested_engine; }
 const char *wire_operator_resolved_engine(void) { return active_operator->name; }
 const char *wire_operator_requested_ground_engine(void)
@@ -312,6 +322,8 @@ const char *wire_operator_resolved_ground_engine(void)
 }
 const char *wire_operator_model_check(void) { return model_check_policy; }
 int wire_operator_nec4_basis(void) { return active_operator == &nec4_operator; }
+int wire_operator_nec4_ground(void)
+{ return !strcmp(resolved_ground_engine,"nec4"); }
 
 int wire_operator_prepare_frequency(FILE *report)
 {
@@ -348,7 +360,10 @@ const wire_operator_validity *wire_operator_last_validity(void)
 double complex wire_operator_charge_factor(size_t segment,int end,
                                            double complex fallback)
 {
+  double complex interface_factor;
   if(!wire_operator_nec4_basis()) return fallback;
+  if(medium_state&&nec4_medium_endpoint_factor(medium_state,segment,end,
+      &interface_factor)) return interface_factor;
   return junction_charge_factor(segment,end,fallback);
 }
 

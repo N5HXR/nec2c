@@ -3,6 +3,7 @@
 
 #include <complex.h>
 #include <stdio.h>
+#include "nec4_medium.h"
 
 /*
  * Public engine-selection boundary for wire and ground physics.
@@ -17,6 +18,7 @@ int wire_operator_set_ground_engine(const char *name);
 int wire_operator_set_model_check(const char *name);
 void wire_operator_set_model_features(size_t patches, size_t coated_domains,
                                       int dielectric_loaded);
+void wire_operator_set_medium_state(const nec4_medium_state *state);
 
 const char *wire_operator_requested_engine(void);
 const char *wire_operator_resolved_engine(void);
@@ -24,6 +26,7 @@ const char *wire_operator_requested_ground_engine(void);
 const char *wire_operator_resolved_ground_engine(void);
 const char *wire_operator_model_check(void);
 int wire_operator_nec4_basis(void);
+int wire_operator_nec4_ground(void);
 
 typedef struct
 {

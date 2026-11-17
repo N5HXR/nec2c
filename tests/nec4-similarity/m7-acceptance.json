@@ -1,0 +1,100 @@
+{
+  "schema": "nec2c-nec4-m7-acceptance",
+  "schema_version": 1,
+  "user_models": {
+    "buried_dipole": {
+      "frequency_mhz": 7.1,
+      "upper_segments": 0,
+      "lower_segments": 41,
+      "interface_endpoints": 0,
+      "crossing_junctions": 0,
+      "unsupported_interface_junctions": 0,
+      "oblique_crossings": 0,
+      "interface_tolerance_m": 2.8421709430404007e-13,
+      "relative_permittivity": 13,
+      "epsilon_relative": {
+        "real": 13,
+        "imag": -12.658523651072075
+      },
+      "wave_number_per_m": {
+        "real": 0.5872136538541832,
+        "imag": -0.23866676405070433
+      },
+      "intrinsic_impedance_ohm": {
+        "real": 81.93209786027677,
+        "imag": 33.3004325424859
+      }
+    },
+    "ground_stake": {
+      "frequency_mhz": 7.1,
+      "upper_segments": 21,
+      "lower_segments": 21,
+      "interface_endpoints": 2,
+      "crossing_junctions": 1,
+      "unsupported_interface_junctions": 0,
+      "oblique_crossings": 0,
+      "interface_tolerance_m": 1.1368683772161603e-13,
+      "relative_permittivity": 13,
+      "epsilon_relative": {
+        "real": 13,
+        "imag": -12.658523651072075
+      },
+      "wave_number_per_m": {
+        "real": 0.5872136538541832,
+        "imag": -0.23866676405070433
+      },
+      "intrinsic_impedance_ohm": {
+        "real": 81.93209786027677,
+        "imag": 33.3004325424859
+      }
+    }
+  },
+  "analytic_limits": {
+    "production_reference_relative_errors": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "vacuum_null": {
+      "epsilon": 0.0,
+      "wave_number": 2.1189029016874548e-16,
+      "impedance": 0.0
+    },
+    "lossless_er4_scaling": {
+      "wave_number": 2.1189029016874548e-16,
+      "impedance": 0.0
+    }
+  },
+  "topology_rejections": {
+    "unsplit": {
+      "segments": 21,
+      "unsupported_interface_junctions": 0,
+      "unsplit_crossings": 1,
+      "in_plane_segments": 0
+    },
+    "in_plane": {
+      "segments": 11,
+      "unsupported_interface_junctions": 12,
+      "unsplit_crossings": 0,
+      "in_plane_segments": 11
+    }
+  },
+  "highly_oblique_audit": {
+    "oblique_crossings": 1
+  },
+  "production_boundary": {
+    "explicitly_rejected": true,
+    "nec2_fallback": false
+  },
+  "interface_condition": {
+    "current_continuity_residual": 0.0,
+    "charge_ratio_residual": 0.0,
+    "identical_media_residual": 0.0,
+    "homogeneous_green_reciprocity_residual": 0.0,
+    "alpha_upper_over_alpha_lower": {
+      "real": 0.03948508760476719,
+      "imag": 0.03844791656227679
+    }
+  }
+}
