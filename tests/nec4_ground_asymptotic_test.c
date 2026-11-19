@@ -130,5 +130,44 @@ int main(void)
     for(n=0;n<5;n++) assert(cabs(uniform.value[n]-saddle.value[n]-pole.value[n])<1.e-17);
   }
   puts("NEC4 complete second-order uniform outer field composition passed");
+  {
+    const double f=299792458.,lambda0=1.,depth=.0025,radial=1000.;
+    const double complex upper_k=2.*M_PI/lambda0;
+    const double complex lower_k=upper_k*csqrt(10.-I);
+    const double complex expected[5]={
+      -1.98723117035423e-05-1.6042596627695938e-07*I,
+      -6.632623359371246e-05+2.4012488333541292e-06*I,
+       5.973730178306613e-05-2.8304928198343327e-06*I,
+       6.588166419364788e-06+4.081317286500938e-07*I,
+       1.9888354300169993e-04-1.8268052040772708e-05*I
+    };
+    nec4_ground_asymptotic_result interface;
+    double worst_interface=0.;
+    assert(nec4_ground_asymptotic_second_saddle(f,lower_k,upper_k,
+                                                radial,0.,depth,&interface));
+    for(n=0;n<5;n++) worst_interface=fmax(worst_interface,
+        relative_error(interface.value[n],expected[n]));
+    assert(worst_interface<1.e-8);
+    assert(relative_error(interface.saddle,upper_k)<1.e-14);
+    printf("NEC4 interface limit %.3e maximum relative error\n",worst_interface);
+  }
+  puts("NEC4 Appendix-J buried-source interface limit passed");
+  {
+    const double f=299792458.,rho_far=1000.;
+    const double complex upper_k=2.*M_PI;
+    const double complex lower_k=upper_k*csqrt(10.-1000.*I);
+    nec4_ground_asymptotic_result limit,near,outer;
+    assert(nec4_ground_asymptotic_second_uniform(
+        f,lower_k,upper_k,rho_far,0.,0.,&limit));
+    assert(nec4_ground_asymptotic_second_uniform(
+        f,lower_k,upper_k,rho_far,1.e-6,0.,&near));
+    assert(nec4_ground_asymptotic_second_uniform(
+        f,lower_k,upper_k,rho_far,3.1e-4,0.,&outer));
+    assert(relative_error(near.value[NEC4_GROUND_Z_VERTICAL],
+                          limit.value[NEC4_GROUND_Z_VERTICAL])<1.e-5);
+    assert(relative_error(outer.value[NEC4_GROUND_Z_VERTICAL],
+                          limit.value[NEC4_GROUND_Z_VERTICAL])<1.e-2);
+  }
+  puts("NEC4 Appendix-J source-interface branch-point transition passed");
   return 0;
 }

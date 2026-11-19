@@ -54,9 +54,9 @@
   ],
   "nec4_one_sided": {
     "input_impedance_relative_delta_vs_classic": 0.0004556695081175897,
-    "vertical_field_v2_per_m2_w": 2.974526789687749e-10,
+    "vertical_field_v2_per_m2_w": 2.9745298260075535e-10,
     "published_vertical_field_v2_per_m2_w": 3.088e-10,
-    "field_ratio_to_published": 0.9632534940698669,
+    "field_ratio_to_published": 0.9632544773340522,
     "warning": {
       "severity": "warning",
       "code": "NEC4_M9_GRAZING_INTERFERENCE",

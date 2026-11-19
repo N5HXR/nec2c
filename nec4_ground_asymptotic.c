@@ -231,6 +231,68 @@ static int second_saddle_raw(double frequency_hz,
   return 1;
 }
 
+/* Appendix J equations (J-4)--(J-13) after taking z -> 0 for a source
+   at or below the interface.  The ordinary saddle reaches the k2 branch
+   point in this limit, so evaluating the generic derivatives loses the
+   finite products of their singular factors.  Burke's Lambda2=Gamma2/z
+   form preserves those products without displacing the observation point. */
+static int second_interface_raw(double frequency_hz,
+    double complex k1,double complex k2,double rho,double depth,
+    nec4_ground_asymptotic_result *result)
+{
+  double complex lambda=k2,gamma1=I*outgoing_beta(k1,k2),lambda2,base;
+  double complex f1,f2,denominator,dv,dv1,dv2,du1,du2;
+  double complex root,l32,l52,rv,zv,rh,ph,zh,u,phase,scale;
+  double complex plus=cexp(I*M_PI/4.),minus=cexp(-I*M_PI/4.);
+  double common;
+  if(!result || frequency_hz<=0. || rho<=0. || depth<0. ||
+     cabs(gamma1)==0.) return 0;
+  lambda2=lambda/(lambda*(-depth)/gamma1-I*rho);
+  if(cabs(lambda2)==0.) return 0;
+  base=-k2*k2*gamma1*gamma1*gamma1;
+  if(cabs(base)==0.) return 0;
+
+  f1=-3.*lambda*cpow(gamma1,2.5)*cpow(lambda2,2.5)*
+      k2*k2*cpow(gamma1,5.)/(2.*cpow(base,2.5));
+  f2=cpow(gamma1,4.5)*cpow(lambda2,4.5)/(2.*cpow(base,1.5));
+  denominator=k2*k2*gamma1;
+  dv=1./denominator;
+  dv1=-lambda*k1*k1/(lambda2*denominator*denominator);
+  dv2=k1*k1*k2*k2/(lambda2*lambda2*lambda2*
+                    denominator*denominator);
+  du1=-lambda/(gamma1*gamma1*lambda2);
+  du2=k2*k2/(gamma1*gamma1*lambda2*lambda2*lambda2)+
+      2.*lambda*lambda/(gamma1*gamma1*gamma1*lambda2*lambda2);
+
+  root=csqrt(lambda); l32=lambda*root; l52=lambda*lambda*root;
+  rv=f1/lambda2*(l52-3.*I*l32/(8.*rho))*dv-
+     f2/(lambda2*lambda2*lambda2)*
+       (lambda*l52-3.*I*l52/(8.*rho))*dv;
+  zv=(l52+I*l32/(8.*rho))*(f1*dv1+f2*dv2);
+  rh=(l52-7.*I*l32/(8.*rho))*(f1*dv1+f2*dv2);
+  ph=(l32-3.*I*root/(8.*rho))*(f1*dv1+f2*dv2);
+  zh=gamma1*ph;
+  u=(root+I/(8.*rho*root))*(f1*du1+f2*du2);
+
+  common=(2.*M_PI*frequency_hz)*MU0/(4.*M_PI);
+  phase=cexp(-gamma1*depth-I*lambda*rho);
+  scale=2./sqrt(rho)*phase;
+  /* Principal fractional powers are opposite to the continuation along the
+     outgoing steepest-descent path at this branch point. */
+  result->value[NEC4_GROUND_RHO_VERTICAL]=
+    -common*plus*scale*rv;
+  result->value[NEC4_GROUND_Z_VERTICAL]=
+    -common*minus*scale*zv;
+  result->value[NEC4_GROUND_RHO_HORIZONTAL]=
+    -I*common*plus*scale*(rh-u);
+  result->value[NEC4_GROUND_PHI_HORIZONTAL]=
+    -I*common*scale*(minus*ph/rho+plus*u);
+  result->value[NEC4_GROUND_Z_HORIZONTAL]=
+    -common*plus*scale*zh;
+  result->saddle=k2;
+  return 1;
+}
+
 static int second_axis(double frequency,double complex k1,double complex k2,
     double z,double depth,nec4_ground_asymptotic_result *result)
 {
@@ -271,6 +333,13 @@ int nec4_ground_asymptotic_second_saddle(double frequency_hz,
 {
   double rho_a;
   if(!result || frequency_hz<=0. || rho<0. || z<0. || depth<0.) return 0;
+  /* Very near a source on the interface the generic double-precision
+     derivatives alternate across the k2 branch point.  The exact z=0
+     Appendix-J limit differs by less than 0.1 percent at this switch in the
+     qualified high-loss case and remains continuous with the outer form. */
+  if(rho>0. && ((z==0.) ||
+      (depth==0. && z<=3.e-4*(2.*M_PI/cabs(k2)))))
+    return second_interface_raw(frequency_hz,k1,k2,rho,depth,result);
   rho_a=.02*(z+depth);
   if(rho_a<=0.) return 0;
   if(rho==0.) return second_axis(frequency_hz,k1,k2,z,depth,result);

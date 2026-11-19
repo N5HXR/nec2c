@@ -357,6 +357,10 @@ reference accepted by the user on 2026-11-19.
 The frozen contract and results are in `NEC4-SIMILARITY-M10B-SPEC.md` and
 `NEC4-SIMILARITY-M10B-RESULTS.md`.
 
+**M10C status:** accepted on 2026-11-19.  The
+published monopole/ground-stake contract and measured curves are in
+`NEC4-SIMILARITY-M10C-SPEC.md` and `NEC4-SIMILARITY-M10C-RESULTS.md`.
+
 Goal: qualify the complete documented NEC4-similarity feature on realistic antennas.
 
 Cases include:

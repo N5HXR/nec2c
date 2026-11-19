@@ -191,6 +191,20 @@ def second_order_cross_reference(frequency_hz, k_lower, k_upper,
         # has this exact closed form.
         if source_depth == 0:
             saddle = k2 * radial / mp.sqrt(radial * radial + z * z)
+        elif observer_z > 0:
+            depth = mp.mpf(source_depth)
+            beta1_at_branch = mp.sqrt(k1 * k1 - k2 * k2)
+            beta2_guess = z * k2 / (radial - k2 * depth / beta1_at_branch)
+
+            def beta2_residual(beta2):
+                value = mp.sqrt(k2 * k2 - beta2 * beta2)
+                beta1 = mp.sqrt(k1 * k1 - value * value)
+                return radial - value * (z / beta2 + depth / beta1)
+
+            beta2 = mp.findroot(beta2_residual,
+                                (beta2_guess, beta2_guess * mp.mpf("1.01")),
+                                solver="secant")
+            saddle = mp.sqrt(k2 * k2 - beta2 * beta2)
         else:
             saddle = mp.mpc(saddle_lambda1(
                 rho, observer_z, source_depth, k_lower, k_upper))
@@ -337,6 +351,98 @@ def second_order_zv_interface_reference(frequency_hz, k_lower, k_upper,
         if abs(complex(leading) - first) > abs(complex(-leading) - first):
             value = -value
         return complex(value)
+
+
+def second_order_buried_interface_reference(frequency_hz, k_lower, k_upper,
+                                             rho, source_depth,
+                                             precision_digits=80):
+    """Appendix-J (J-8)--(J-13) limit for ``z=0``, ``z'<0``.
+
+    The printed formulas replace the simultaneous ``Gamma_2 -> 0`` and
+    ``z -> 0`` limit by ``Lambda_2 = Gamma_2/z``.  Evaluating the limit
+    directly avoids perturbing the observer away from the interface.
+    """
+    if rho <= 0 or source_depth < 0:
+        raise ValueError("interface oracle requires rho > 0, depth >= 0")
+    with mp.workdps(precision_digits):
+        k1, k2 = mp.mpc(k_lower), mp.mpc(k_upper)
+        radial, depth = mp.mpf(rho), mp.mpf(source_depth)
+        saddle = k2
+
+        def gamma(value, wave_number):
+            beta = mp.sqrt(wave_number * wave_number - value * value)
+            if (mp.re(beta) < 0 or
+                    (abs(mp.re(beta)) < mp.mpf("1e-60") and mp.im(beta) > 0)):
+                beta = -beta
+            return 1j * beta
+
+        gamma1 = gamma(saddle, k1)
+        lambda2 = saddle / (saddle * (-depth) / gamma1 - 1j * radial)
+        base = -k2 * k2 * gamma1 ** 3
+        f0 = mp.mpc(0)
+        f1 = (-3 * saddle * gamma1 ** (mp.mpf(5) / 2)
+              * lambda2 ** (mp.mpf(5) / 2) * k2 * k2 * gamma1 ** 5
+              / (2 * base ** (mp.mpf(5) / 2)))
+        f2 = (gamma1 ** (mp.mpf(9) / 2)
+              * lambda2 ** (mp.mpf(9) / 2)
+              / (2 * base ** (mp.mpf(3) / 2)))
+
+        denominator = k2 * k2 * gamma1
+        dv = 1 / denominator
+        dv1 = -saddle * k1 * k1 / (lambda2 * denominator ** 2)
+        dv2 = (k1 * k1 * k2 * k2 / lambda2 ** 3
+               / denominator ** 2)
+        du = 1 / gamma1
+        du1 = -saddle / (gamma1 * gamma1 * lambda2)
+        du2 = (k2 * k2 / (gamma1 * gamma1 * lambda2 ** 3)
+               + 2 * saddle * saddle /
+               (gamma1 ** 3 * lambda2 ** 2))
+
+        root = mp.sqrt(saddle)
+        l32 = saddle * root
+        l52 = saddle * saddle * root
+        vertical_radial = (
+            f1 / lambda2 * (l52 - 3j * l32 / (8 * radial)) * dv
+            - f2 / lambda2 ** 3
+            * (saddle * l52 - 3j * l52 / (8 * radial)) * dv)
+        vertical_z = ((f0 * (l52 + 1j * l32 / (8 * radial)) * dv)
+                      + f1 * (l52 + 1j * l32 / (8 * radial)) * dv1
+                      + f2 * (l52 + 1j * l32 / (8 * radial)) * dv2)
+        horizontal_radial = (
+            f0 * (l52 - 7j * l32 / (8 * radial)) * dv
+            + f1 * (l52 - 7j * l32 / (8 * radial)) * dv1
+            + f2 * (l52 - 7j * l32 / (8 * radial)) * dv2)
+        horizontal_phi = (
+            f0 * (l32 - 3j * root / (8 * radial)) * dv
+            + f1 * (l32 - 3j * root / (8 * radial)) * dv1
+            + f2 * (l32 - 3j * root / (8 * radial)) * dv2)
+        horizontal_z = gamma1 * horizontal_phi
+        u = (f0 * (root + 1j / (8 * radial * root)) * du
+             + f1 * (root + 1j / (8 * radial * root)) * du1
+             + f2 * (root + 1j / (8 * radial * root)) * du2)
+
+        omega = 2 * mp.pi * mp.mpf(frequency_hz)
+        common = omega * MU0 / (4 * mp.pi)
+        phase = mp.e ** (-gamma1 * depth - 1j * saddle * radial)
+        scale = 2 / mp.sqrt(radial) * phase
+        result = {
+            "rho_v": common * mp.e ** (1j * mp.pi / 4)
+                     * scale * vertical_radial,
+            "z_v": common * mp.e ** (-1j * mp.pi / 4)
+                   * scale * vertical_z,
+            "rho_h": 1j * common * (mp.e ** (1j * mp.pi / 4)
+                     * scale * horizontal_radial
+                     - mp.e ** (1j * mp.pi / 4) * scale * u),
+            "phi_h": 1j * common * (mp.e ** (-1j * mp.pi / 4)
+                     * scale / radial * horizontal_phi
+                     + mp.e ** (1j * mp.pi / 4) * scale * u),
+            "z_h": common * mp.e ** (1j * mp.pi / 4)
+                   * scale * horizontal_z,
+        }
+        # Continue the fractional powers from the outgoing steepest-descent
+        # path.  Principal roots give the opposite global orientation here;
+        # the sign below is fixed by the nonzero-z Appendix-J limit.
+        return {name: complex(-value) for name, value in result.items()}
 
 
 def second_order_uniform_cross_reference(frequency_hz, k_lower, k_upper,
