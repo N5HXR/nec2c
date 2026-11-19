@@ -23,6 +23,13 @@ int main(void)
   assert(nec4_medium_endpoint_factor(&state,0,1,&upper));
   assert(nec4_medium_endpoint_factor(&state,1,0,&lower));
   assert(close_complex(upper/lower,1./4.,1e-14));
+  assert(nec4_medium_update_frequency(&state,150.,9.-.3*I));
+  assert(close_complex(state.epsilon_relative,9.-.3*I,1e-14));
+  assert(nec4_medium_endpoint_factor(&state,0,1,&upper));
+  assert(nec4_medium_endpoint_factor(&state,1,0,&lower));
+  assert(close_complex(upper,1.,1e-14));
+  assert(close_complex(lower,9.-.3*I,1e-14));
+  assert(!nec4_medium_update_frequency(&state,150.,9.+.3*I));
   nec4_medium_state_free(&state);
 
   /* Endpoint classification is scale-aware and deterministic around z=0.

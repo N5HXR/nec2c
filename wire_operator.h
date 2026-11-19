@@ -4,6 +4,7 @@
 #include <complex.h>
 #include <stdio.h>
 #include "nec4_medium.h"
+#include "nec4_ground_matrix.h"
 
 /*
  * Public engine-selection boundary for wire and ground physics.
@@ -19,6 +20,10 @@ int wire_operator_set_model_check(const char *name);
 void wire_operator_set_model_features(size_t patches, size_t coated_domains,
                                       int dielectric_loaded);
 void wire_operator_set_medium_state(const nec4_medium_state *state);
+void wire_operator_set_ground_matrix_context(
+    const nec4_ground_matrix_context *context);
+void wire_operator_set_source_segment(size_t segment);
+int wire_operator_ground_direct_only(void);
 
 const char *wire_operator_requested_engine(void);
 const char *wire_operator_resolved_engine(void);

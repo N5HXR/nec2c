@@ -152,6 +152,41 @@ int nec4_medium_endpoint_factor(const nec4_medium_state *state,size_t segment,
   return 1;
 }
 
+int nec4_medium_update_frequency(nec4_medium_state *state,double frequency_mhz,
+    double complex epsilon_relative)
+{
+  const double pi=acos(-1.);
+  if(!state||!state->valid||!(frequency_mhz>0.)||
+     !(creal(epsilon_relative)>0.)||cimag(epsilon_relative)>0.||
+     !isfinite(frequency_mhz)||!isfinite(creal(epsilon_relative))||
+     !isfinite(cimag(epsilon_relative))) return 0;
+  state->frequency_mhz=frequency_mhz;
+  state->relative_permittivity=creal(epsilon_relative);
+  state->epsilon_relative=epsilon_relative;
+  state->conductivity_s_per_m=-cimag(epsilon_relative)*2.*pi*
+    frequency_mhz*1.e6*NEC4_EPS0;
+  state->refractive_index=csqrt(epsilon_relative);
+  if(creal(state->refractive_index)<0.||
+     (creal(state->refractive_index)==0.&&cimag(state->refractive_index)>0.))
+    state->refractive_index=-state->refractive_index;
+  state->wave_number_per_m=2.*pi*frequency_mhz*1.e6/NEC4_C0*
+    state->refractive_index;
+  state->intrinsic_impedance_ohm=NEC4_ETA0/state->refractive_index;
+  for(size_t segment=0;segment<state->segment_count;++segment)
+    for(int end=0;end<2;++end)
+    {
+      size_t index=2*segment+(size_t)end;
+      if(state->endpoint_factor_assigned[index])
+        state->endpoint_factor[index]=
+          state->segment_medium[segment]==NEC4_MEDIUM_LOWER?
+          epsilon_relative:1.;
+    }
+  return isfinite(creal(state->wave_number_per_m))&&
+    isfinite(cimag(state->wave_number_per_m))&&
+    isfinite(creal(state->intrinsic_impedance_ohm))&&
+    isfinite(cimag(state->intrinsic_impedance_ohm));
+}
+
 void nec4_medium_print(FILE *stream,const nec4_medium_state *s)
 {
   if(!stream||!s) return;

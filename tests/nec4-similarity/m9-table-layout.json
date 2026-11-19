@@ -1,0 +1,2487 @@
+{
+  "schema": "nec2c-nec4-m9-table-layout-qualification",
+  "schema_version": 1,
+  "frequency_hz": 7100000.0,
+  "reference_evaluator": "validated-bessel-representation",
+  "contour_equivalence_evidence": "tests/nec4-similarity/m8-hankel-gate.json",
+  "target_maximum_error": 0.005,
+  "maximum_steps_over_Lg": {
+    "1": {
+      "rho": 0.02,
+      "observer_z": 0.02,
+      "source_depth": 0.02
+    },
+    "2": {
+      "rho": 0.03,
+      "observer_z": 0.03,
+      "source_depth": 0.015
+    },
+    "3": {
+      "rho": 0.03,
+      "observer_z": 0.03,
+      "source_depth": 0.03
+    }
+  },
+  "worst_error": 0.004090013755438427,
+  "materials": {
+    "lossless-er4": {
+      "epsilon_r": 4.0,
+      "conductivity_s_per_m": 0.0,
+      "layouts": {
+        "1": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 50,
+            "count": 51,
+            "step": 0.02
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 50,
+            "count": 51,
+            "step": 0.02
+          },
+          "source_depth": {
+            "start": 0.0,
+            "stop": 0.4,
+            "intervals": 20,
+            "count": 21,
+            "step": 0.02
+          }
+        },
+        "2": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "source_depth": {
+            "start": 0.4,
+            "stop": 1.0,
+            "intervals": 40,
+            "count": 41,
+            "step": 0.015
+          }
+        },
+        "3": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "source_depth": {
+            "start": 1.0,
+            "stop": 3.3333333333333335,
+            "intervals": 78,
+            "count": 79,
+            "step": 0.029914529914529916
+          }
+        }
+      },
+      "complex_value_count": 1008105,
+      "payload_bytes": 16129680,
+      "worst_error": 0.003120841897624949
+    },
+    "average-soil": {
+      "epsilon_r": 13.0,
+      "conductivity_s_per_m": 0.005,
+      "layouts": {
+        "1": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 50,
+            "count": 51,
+            "step": 0.02
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 50,
+            "count": 51,
+            "step": 0.02
+          },
+          "source_depth": {
+            "start": 0.0,
+            "stop": 0.4,
+            "intervals": 20,
+            "count": 21,
+            "step": 0.02
+          }
+        },
+        "2": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "source_depth": {
+            "start": 0.4,
+            "stop": 1.0,
+            "intervals": 40,
+            "count": 41,
+            "step": 0.015
+          }
+        },
+        "3": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "source_depth": {
+            "start": 1.0,
+            "stop": 4.259685755317278,
+            "intervals": 109,
+            "count": 110,
+            "step": 0.02990537390199338
+          }
+        }
+      },
+      "complex_value_count": 1197980,
+      "payload_bytes": 19167680,
+      "worst_error": 0.004090013755438427
+    },
+    "seawater": {
+      "epsilon_r": 81.0,
+      "conductivity_s_per_m": 4.0,
+      "layouts": {
+        "1": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 50,
+            "count": 51,
+            "step": 0.02
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 50,
+            "count": 51,
+            "step": 0.02
+          },
+          "source_depth": {
+            "start": 0.0,
+            "stop": 0.4,
+            "intervals": 20,
+            "count": 21,
+            "step": 0.02
+          }
+        },
+        "2": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "source_depth": {
+            "start": 0.4,
+            "stop": 1.0,
+            "intervals": 40,
+            "count": 41,
+            "step": 0.015
+          }
+        },
+        "3": {
+          "rho": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "observer_z": {
+            "start": 0.0,
+            "stop": 1.0,
+            "intervals": 34,
+            "count": 35,
+            "step": 0.029411764705882353
+          },
+          "source_depth": {
+            "start": 1.0,
+            "stop": 14.999999999999998,
+            "intervals": 467,
+            "count": 468,
+            "step": 0.029978586723768734
+          }
+        }
+      },
+      "complex_value_count": 3390730,
+      "payload_bytes": 54251680,
+      "worst_error": 0.0023081188526289844
+    }
+  },
+  "cases": [
+    {
+      "material": "average-soil",
+      "region": 1,
+      "probe_over_Lg": [
+        0.083,
+        0.077,
+        0.073
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08,
+          0.1
+        ],
+        [
+          0.06,
+          0.08
+        ],
+        [
+          0.06,
+          0.08
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00013301949405010392,
+        "z_v": 0.00020733299550433246,
+        "rho_h": 0.0008812266623727294,
+        "phi_h": 0.00038473988203385073,
+        "z_h": 0.00018460902575039817
+      },
+      "maximum_null_aware_relative_error": 0.0008812266623727294,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 1,
+      "probe_over_Lg": [
+        0.203,
+        0.797,
+        0.347
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.2,
+          0.22
+        ],
+        [
+          0.78,
+          0.8
+        ],
+        [
+          0.34,
+          0.36000000000000004
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00038077368735319183,
+        "z_v": 0.0005738974954709932,
+        "rho_h": 0.0009238919575267527,
+        "phi_h": 0.0009079658303880688,
+        "z_h": 0.0007227622049571506
+      },
+      "maximum_null_aware_relative_error": 0.0009238919575267527,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 1,
+      "probe_over_Lg": [
+        0.553,
+        0.047,
+        0.033
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.54,
+          0.56
+        ],
+        [
+          0.04,
+          0.06
+        ],
+        [
+          0.02,
+          0.04
+        ]
+      ],
+      "contours": [
+        "hankel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0006997308810857201,
+        "z_v": 0.0013871440996471353,
+        "rho_h": 0.0006132324891863842,
+        "phi_h": 0.0010171561180353772,
+        "z_h": 0.0012832392349607568
+      },
+      "maximum_null_aware_relative_error": 0.0013871440996471353,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 1,
+      "probe_over_Lg": [
+        0.803,
+        0.797,
+        0.197
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8,
+          0.8200000000000001
+        ],
+        [
+          0.78,
+          0.8
+        ],
+        [
+          0.18,
+          0.19999999999999998
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0004324517529534855,
+        "z_v": 0.0005264488935763843,
+        "rho_h": 0.0006337893542931763,
+        "phi_h": 0.0006069198706358154,
+        "z_h": 0.0005880001806343464
+      },
+      "maximum_null_aware_relative_error": 0.0006337893542931763,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 1,
+      "probe_over_Lg": [
+        0.897,
+        0.103,
+        0.023
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.88,
+          0.9
+        ],
+        [
+          0.1,
+          0.12000000000000001
+        ],
+        [
+          0.02,
+          0.04
+        ]
+      ],
+      "contours": [
+        "hankel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0005931802781362892,
+        "z_v": 0.0010772815319312525,
+        "rho_h": 0.001445461679985897,
+        "phi_h": 0.0007891650598684643,
+        "z_h": 0.0008245161343370637
+      },
+      "maximum_null_aware_relative_error": 0.001445461679985897,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 2,
+      "probe_over_Lg": [
+        0.103,
+        0.097,
+        0.453
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.445,
+          0.46
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0018153567727828624,
+        "z_v": 0.0007227806398731707,
+        "rho_h": 0.0011304263263417391,
+        "phi_h": 0.0003532303715550207,
+        "z_h": 0.0020777667707697024
+      },
+      "maximum_null_aware_relative_error": 0.0020777667707697024,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 2,
+      "probe_over_Lg": [
+        0.403,
+        0.297,
+        0.697
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.38235294117647056,
+          0.4117647058823529
+        ],
+        [
+          0.29411764705882354,
+          0.3235294117647059
+        ],
+        [
+          0.685,
+          0.7000000000000001
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0005463766434384333,
+        "z_v": 0.00015611138576940455,
+        "rho_h": 0.00013953157665938897,
+        "phi_h": 7.90121827513951e-05,
+        "z_h": 0.00031711065824355044
+      },
+      "maximum_null_aware_relative_error": 0.0005463766434384333,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 2,
+      "probe_over_Lg": [
+        0.803,
+        0.047,
+        0.453
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          0.029411764705882353,
+          0.058823529411764705
+        ],
+        [
+          0.445,
+          0.46
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0006310953525977595,
+        "z_v": 0.0005110776336314156,
+        "rho_h": 0.004090013755438427,
+        "phi_h": 0.0002979887553996037,
+        "z_h": 7.711868123261898e-05
+      },
+      "maximum_null_aware_relative_error": 0.004090013755438427,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 2,
+      "probe_over_Lg": [
+        0.897,
+        0.797,
+        0.903
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          0.895,
+          0.91
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0002181132262114558,
+        "z_v": 7.684997782055717e-05,
+        "rho_h": 2.0980272210467795e-05,
+        "phi_h": 1.4371214738372168e-05,
+        "z_h": 9.866528089019707e-05
+      },
+      "maximum_null_aware_relative_error": 0.0002181132262114558,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 3,
+      "probe_over_Lg": [
+        0.103,
+        0.097,
+        1.053
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          1.0299053739019934,
+          1.0598107478039869
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.000731808288894696,
+        "z_v": 9.322676222549968e-05,
+        "rho_h": 0.00023028319853314974,
+        "phi_h": 0.00037490474897997105,
+        "z_h": 0.0009641395824006717
+      },
+      "maximum_null_aware_relative_error": 0.0009641395824006717,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 4.259685755317278,
+          "intervals": 109,
+          "count": 110,
+          "step": 0.02990537390199338
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 3,
+      "probe_over_Lg": [
+        0.403,
+        0.297,
+        3.989131837625944
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.38235294117647056,
+          0.4117647058823529
+        ],
+        [
+          0.29411764705882354,
+          0.3235294117647059
+        ],
+        [
+          3.9606320162973443,
+          3.9905373901993375
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 8.90435246488781e-05,
+        "z_v": 7.813947301836951e-05,
+        "rho_h": 2.530489449018475e-05,
+        "phi_h": 4.683375395407604e-05,
+        "z_h": 0.00015661327293341564
+      },
+      "maximum_null_aware_relative_error": 0.00015661327293341564,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 4.259685755317278,
+          "intervals": 109,
+          "count": 110,
+          "step": 0.02990537390199338
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 3,
+      "probe_over_Lg": [
+        0.897,
+        0.047,
+        1.053
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.029411764705882353,
+          0.058823529411764705
+        ],
+        [
+          1.0299053739019934,
+          1.0598107478039869
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0009853578873913304,
+        "z_v": 0.0008273346472629763,
+        "rho_h": 0.0015474124874100905,
+        "phi_h": 0.00022410459933692743,
+        "z_h": 0.0003934311088867693
+      },
+      "maximum_null_aware_relative_error": 0.0015474124874100905,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 4.259685755317278,
+          "intervals": 109,
+          "count": 110,
+          "step": 0.02990537390199338
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "region": 3,
+      "probe_over_Lg": [
+        0.897,
+        0.803,
+        1.503
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          1.478485982431894,
+          1.5083913563338875
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0006606271623327396,
+        "z_v": 0.0002771492510797858,
+        "rho_h": 0.0005940393824221121,
+        "phi_h": 0.000592267806709185,
+        "z_h": 0.0009809669650150256
+      },
+      "maximum_null_aware_relative_error": 0.0009809669650150256,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 4.259685755317278,
+          "intervals": 109,
+          "count": 110,
+          "step": 0.02990537390199338
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 1,
+      "probe_over_Lg": [
+        0.083,
+        0.077,
+        0.073
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08,
+          0.1
+        ],
+        [
+          0.06,
+          0.08
+        ],
+        [
+          0.06,
+          0.08
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 4.108245782006552e-05,
+        "z_v": 4.494568824201507e-05,
+        "rho_h": 0.0002999725689770555,
+        "phi_h": 7.001650887507611e-05,
+        "z_h": 5.065909740453459e-05
+      },
+      "maximum_null_aware_relative_error": 0.0002999725689770555,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 1,
+      "probe_over_Lg": [
+        0.203,
+        0.797,
+        0.347
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.2,
+          0.22
+        ],
+        [
+          0.78,
+          0.8
+        ],
+        [
+          0.34,
+          0.36000000000000004
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00013003904648819866,
+        "z_v": 0.00011301346728896037,
+        "rho_h": 0.00016233164534383316,
+        "phi_h": 0.00015997828594562654,
+        "z_h": 0.00014704954048648183
+      },
+      "maximum_null_aware_relative_error": 0.00016233164534383316,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 1,
+      "probe_over_Lg": [
+        0.553,
+        0.047,
+        0.033
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.54,
+          0.56
+        ],
+        [
+          0.04,
+          0.06
+        ],
+        [
+          0.02,
+          0.04
+        ]
+      ],
+      "contours": [
+        "hankel"
+      ],
+      "component_errors": {
+        "rho_v": 4.1913509210692414e-05,
+        "z_v": 0.00027983786898395506,
+        "rho_h": 0.0002982254960399128,
+        "phi_h": 0.00021783204229105108,
+        "z_h": 0.0002832532539059896
+      },
+      "maximum_null_aware_relative_error": 0.0002982254960399128,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 1,
+      "probe_over_Lg": [
+        0.803,
+        0.797,
+        0.197
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8,
+          0.8200000000000001
+        ],
+        [
+          0.78,
+          0.8
+        ],
+        [
+          0.18,
+          0.19999999999999998
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00010477518210581318,
+        "z_v": 7.351905271842469e-05,
+        "rho_h": 0.00011735458314923719,
+        "phi_h": 0.00011116229781179855,
+        "z_h": 0.00010503163161359642
+      },
+      "maximum_null_aware_relative_error": 0.00011735458314923719,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 1,
+      "probe_over_Lg": [
+        0.897,
+        0.103,
+        0.023
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.88,
+          0.9
+        ],
+        [
+          0.1,
+          0.12000000000000001
+        ],
+        [
+          0.02,
+          0.04
+        ]
+      ],
+      "contours": [
+        "hankel"
+      ],
+      "component_errors": {
+        "rho_v": 2.244341334109501e-05,
+        "z_v": 0.00015598812906063043,
+        "rho_h": 0.00023426924469000063,
+        "phi_h": 0.00013057191109920385,
+        "z_h": 9.812021872148408e-05
+      },
+      "maximum_null_aware_relative_error": 0.00023426924469000063,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 2,
+      "probe_over_Lg": [
+        0.103,
+        0.097,
+        0.453
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.445,
+          0.46
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0026922401174595736,
+        "z_v": 0.0006221430322074636,
+        "rho_h": 0.0016464064567099782,
+        "phi_h": 0.0007495108108402075,
+        "z_h": 0.003120841897624949
+      },
+      "maximum_null_aware_relative_error": 0.003120841897624949,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 2,
+      "probe_over_Lg": [
+        0.403,
+        0.297,
+        0.697
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.38235294117647056,
+          0.4117647058823529
+        ],
+        [
+          0.29411764705882354,
+          0.3235294117647059
+        ],
+        [
+          0.685,
+          0.7000000000000001
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0003135854218286098,
+        "z_v": 0.0002423102599238291,
+        "rho_h": 0.0001524578082508553,
+        "phi_h": 4.562175946495378e-05,
+        "z_h": 0.00040444929301610506
+      },
+      "maximum_null_aware_relative_error": 0.00040444929301610506,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 2,
+      "probe_over_Lg": [
+        0.803,
+        0.047,
+        0.453
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          0.029411764705882353,
+          0.058823529411764705
+        ],
+        [
+          0.445,
+          0.46
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00027313360934014177,
+        "z_v": 9.488911267119709e-05,
+        "rho_h": 0.0003801534167822162,
+        "phi_h": 0.00026707864194033197,
+        "z_h": 0.0002953059435795722
+      },
+      "maximum_null_aware_relative_error": 0.0003801534167822162,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 2,
+      "probe_over_Lg": [
+        0.897,
+        0.797,
+        0.903
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          0.895,
+          0.91
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00014009726573439672,
+        "z_v": 0.0001029010235326528,
+        "rho_h": 4.700136674459891e-05,
+        "phi_h": 1.9483268748947795e-05,
+        "z_h": 9.472114647439459e-05
+      },
+      "maximum_null_aware_relative_error": 0.00014009726573439672,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 3,
+      "probe_over_Lg": [
+        0.103,
+        0.097,
+        1.053
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          1.0299145299145298,
+          1.0598290598290596
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0002313981359223391,
+        "z_v": 0.00017752575522580598,
+        "rho_h": 0.00020818725840867565,
+        "phi_h": 0.00013408369334482815,
+        "z_h": 0.0003624073629213675
+      },
+      "maximum_null_aware_relative_error": 0.0003624073629213675,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 3.3333333333333335,
+          "intervals": 78,
+          "count": 79,
+          "step": 0.029914529914529916
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 3,
+      "probe_over_Lg": [
+        0.403,
+        0.297,
+        3.139666666666667
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.38235294117647056,
+          0.4117647058823529
+        ],
+        [
+          0.29411764705882354,
+          0.3235294117647059
+        ],
+        [
+          3.123931623931624,
+          3.1538461538461537
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 4.468590684098392e-05,
+        "z_v": 6.295493173911526e-05,
+        "rho_h": 2.1500341389962812e-05,
+        "phi_h": 2.3160915778467685e-05,
+        "z_h": 6.64272340633546e-05
+      },
+      "maximum_null_aware_relative_error": 6.64272340633546e-05,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 3.3333333333333335,
+          "intervals": 78,
+          "count": 79,
+          "step": 0.029914529914529916
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 3,
+      "probe_over_Lg": [
+        0.897,
+        0.047,
+        1.053
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.029411764705882353,
+          0.058823529411764705
+        ],
+        [
+          1.0299145299145298,
+          1.0598290598290596
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00028108132720925104,
+        "z_v": 0.0003276756182067233,
+        "rho_h": 0.00019742431278780995,
+        "phi_h": 7.324373765721458e-05,
+        "z_h": 0.00015203879316929092
+      },
+      "maximum_null_aware_relative_error": 0.0003276756182067233,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 3.3333333333333335,
+          "intervals": 78,
+          "count": 79,
+          "step": 0.029914529914529916
+        }
+      }
+    },
+    {
+      "material": "lossless-er4",
+      "region": 3,
+      "probe_over_Lg": [
+        0.897,
+        0.803,
+        1.503
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          1.4786324786324787,
+          1.5085470085470085
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00022293706790252324,
+        "z_v": 0.00014375854577962927,
+        "rho_h": 0.00014166960944297983,
+        "phi_h": 0.00011048027763096313,
+        "z_h": 0.00030035947580428436
+      },
+      "maximum_null_aware_relative_error": 0.00030035947580428436,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 3.3333333333333335,
+          "intervals": 78,
+          "count": 79,
+          "step": 0.029914529914529916
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 1,
+      "probe_over_Lg": [
+        0.083,
+        0.077,
+        0.073
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08,
+          0.1
+        ],
+        [
+          0.06,
+          0.08
+        ],
+        [
+          0.06,
+          0.08
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 2.7342786775588043e-05,
+        "z_v": 0.00014811797402680799,
+        "rho_h": 0.0007141388659304322,
+        "phi_h": 0.0003205738545124277,
+        "z_h": 3.9504475345135344e-05
+      },
+      "maximum_null_aware_relative_error": 0.0007141388659304322,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 1,
+      "probe_over_Lg": [
+        0.203,
+        0.797,
+        0.347
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.2,
+          0.22
+        ],
+        [
+          0.78,
+          0.8
+        ],
+        [
+          0.34,
+          0.36000000000000004
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0014132950298617504,
+        "z_v": 0.0015889232872198765,
+        "rho_h": 0.001205994975025553,
+        "phi_h": 0.001213918475270704,
+        "z_h": 0.0007284363508515729
+      },
+      "maximum_null_aware_relative_error": 0.0015889232872198765,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 1,
+      "probe_over_Lg": [
+        0.553,
+        0.047,
+        0.033
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.54,
+          0.56
+        ],
+        [
+          0.04,
+          0.06
+        ],
+        [
+          0.02,
+          0.04
+        ]
+      ],
+      "contours": [
+        "hankel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00038113014421801815,
+        "z_v": 0.00010901521644468855,
+        "rho_h": 0.0016801251716246275,
+        "phi_h": 0.0007480099797121563,
+        "z_h": 0.0011304693451859842
+      },
+      "maximum_null_aware_relative_error": 0.0016801251716246275,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 1,
+      "probe_over_Lg": [
+        0.803,
+        0.797,
+        0.197
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8,
+          0.8200000000000001
+        ],
+        [
+          0.78,
+          0.8
+        ],
+        [
+          0.18,
+          0.19999999999999998
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0005647652625199661,
+        "z_v": 0.0006406372289166206,
+        "rho_h": 0.0009539575289461663,
+        "phi_h": 0.0007266745174224049,
+        "z_h": 0.00045108396037162187
+      },
+      "maximum_null_aware_relative_error": 0.0009539575289461663,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 1,
+      "probe_over_Lg": [
+        0.897,
+        0.103,
+        0.023
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.88,
+          0.9
+        ],
+        [
+          0.1,
+          0.12000000000000001
+        ],
+        [
+          0.02,
+          0.04
+        ]
+      ],
+      "contours": [
+        "hankel"
+      ],
+      "component_errors": {
+        "rho_v": 0.00014112812702630868,
+        "z_v": 9.767002954862568e-05,
+        "rho_h": 0.001954689566909795,
+        "phi_h": 0.0005648217588103397,
+        "z_h": 0.000768875258018329
+      },
+      "maximum_null_aware_relative_error": 0.001954689566909795,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 50,
+          "count": 51,
+          "step": 0.02
+        },
+        "source_depth": {
+          "start": 0.0,
+          "stop": 0.4,
+          "intervals": 20,
+          "count": 21,
+          "step": 0.02
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 2,
+      "probe_over_Lg": [
+        0.103,
+        0.097,
+        0.453
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.445,
+          0.46
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0018764875352880572,
+        "z_v": 0.0010038881274606643,
+        "rho_h": 0.0012126771820545428,
+        "phi_h": 0.00021937029817448465,
+        "z_h": 0.0014434070108567463
+      },
+      "maximum_null_aware_relative_error": 0.0018764875352880572,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 2,
+      "probe_over_Lg": [
+        0.403,
+        0.297,
+        0.697
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.38235294117647056,
+          0.4117647058823529
+        ],
+        [
+          0.29411764705882354,
+          0.3235294117647059
+        ],
+        [
+          0.685,
+          0.7000000000000001
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0007619164711161358,
+        "z_v": 0.0003732797100549367,
+        "rho_h": 0.00015329168255397821,
+        "phi_h": 0.0001047322962995343,
+        "z_h": 0.0005075636502384736
+      },
+      "maximum_null_aware_relative_error": 0.0007619164711161358,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 2,
+      "probe_over_Lg": [
+        0.803,
+        0.047,
+        0.453
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          0.029411764705882353,
+          0.058823529411764705
+        ],
+        [
+          0.445,
+          0.46
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0009098730605476951,
+        "z_v": 0.0012321114575068101,
+        "rho_h": 0.002233655850550364,
+        "phi_h": 0.00025348073208448965,
+        "z_h": 0.00019884713213152828
+      },
+      "maximum_null_aware_relative_error": 0.002233655850550364,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 2,
+      "probe_over_Lg": [
+        0.897,
+        0.797,
+        0.903
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          0.895,
+          0.91
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0002253429385071064,
+        "z_v": 0.0004976819121283278,
+        "rho_h": 7.958495603937016e-05,
+        "phi_h": 5.5056371312315004e-05,
+        "z_h": 0.00014091650086600112
+      },
+      "maximum_null_aware_relative_error": 0.0004976819121283278,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 0.4,
+          "stop": 1.0,
+          "intervals": 40,
+          "count": 41,
+          "step": 0.015
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 3,
+      "probe_over_Lg": [
+        0.103,
+        0.097,
+        1.053
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          0.08823529411764705,
+          0.11764705882352941
+        ],
+        [
+          1.0299785867237687,
+          1.0599571734475375
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0012274342507720048,
+        "z_v": 0.0003965500488151602,
+        "rho_h": 0.0003790644831883289,
+        "phi_h": 0.0005554029183121446,
+        "z_h": 0.0013808288261710957
+      },
+      "maximum_null_aware_relative_error": 0.0013808288261710957,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 14.999999999999998,
+          "intervals": 467,
+          "count": 468,
+          "step": 0.029978586723768734
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 3,
+      "probe_over_Lg": [
+        0.403,
+        0.297,
+        13.837999999999997
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.38235294117647056,
+          0.4117647058823529
+        ],
+        [
+          0.29411764705882354,
+          0.3235294117647059
+        ],
+        [
+          13.830835117773018,
+          13.860813704496787
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 5.9494300896284495e-05,
+        "z_v": 1.9170039301785257e-05,
+        "rho_h": 2.4826632346811292e-05,
+        "phi_h": 2.8459830948395476e-05,
+        "z_h": 7.527939799164863e-05
+      },
+      "maximum_null_aware_relative_error": 7.527939799164863e-05,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 14.999999999999998,
+          "intervals": 467,
+          "count": 468,
+          "step": 0.029978586723768734
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 3,
+      "probe_over_Lg": [
+        0.897,
+        0.047,
+        1.053
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.029411764705882353,
+          0.058823529411764705
+        ],
+        [
+          1.0299785867237687,
+          1.0599571734475375
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0007921965585585165,
+        "z_v": 0.001753926108965936,
+        "rho_h": 0.0023081188526289844,
+        "phi_h": 6.42922334042807e-05,
+        "z_h": 0.0009274350426671324
+      },
+      "maximum_null_aware_relative_error": 0.0023081188526289844,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 14.999999999999998,
+          "intervals": 467,
+          "count": 468,
+          "step": 0.029978586723768734
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "region": 3,
+      "probe_over_Lg": [
+        0.897,
+        0.803,
+        1.503
+      ],
+      "cell_bounds_over_Lg": [
+        [
+          0.8823529411764706,
+          0.9117647058823529
+        ],
+        [
+          0.7941176470588235,
+          0.8235294117647058
+        ],
+        [
+          1.4796573875802999,
+          1.5096359743040686
+        ]
+      ],
+      "contours": [
+        "bessel"
+      ],
+      "component_errors": {
+        "rho_v": 0.0010067722003101057,
+        "z_v": 0.000316369852537624,
+        "rho_h": 0.0007699370661473789,
+        "phi_h": 0.0008122427906644421,
+        "z_h": 0.0014247691257429128
+      },
+      "maximum_null_aware_relative_error": 0.0014247691257429128,
+      "layout": {
+        "rho": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "observer_z": {
+          "start": 0.0,
+          "stop": 1.0,
+          "intervals": 34,
+          "count": 35,
+          "step": 0.029411764705882353
+        },
+        "source_depth": {
+          "start": 1.0,
+          "stop": 14.999999999999998,
+          "intervals": 467,
+          "count": 468,
+          "step": 0.029978586723768734
+        }
+      }
+    }
+  ]
+}

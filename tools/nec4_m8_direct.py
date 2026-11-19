@@ -72,6 +72,9 @@ def bessel_contour(frequency_hz, lower, upper, geometry, precision_digits=60,
     """
     geometry.validate()
     height_sum = abs(geometry.source_z) + abs(geometry.observer_z)
+    if height_sum == 0:
+        raise ValueError(
+            "exact interface points require the Appendix-H physical-limit evaluator")
     if (not permit_outside_region and
             not height_sum > mp.mpf("0.5") * geometry.rho):
         raise ValueError("Figure 5-2 Bessel contour requires |z|+|z'| > 0.5*rho")
@@ -195,6 +198,9 @@ def hankel_contour(frequency_hz, lower, upper, geometry, precision_digits=70,
     if geometry.rho == 0:
         raise ValueError("Figure 5-3 Hankel form is singular on axis; use Bessel form")
     height_sum = abs(geometry.source_z) + abs(geometry.observer_z)
+    if height_sum == 0:
+        raise ValueError(
+            "exact interface points require the Appendix-H physical-limit evaluator")
     if not height_sum <= mp.mpf("0.6") * geometry.rho:
         raise ValueError("Figure 5-3 Hankel contour is restricted to the overlap/Hankel region")
     if precision_digits < 30 or cutoff_decay < 30:
@@ -244,7 +250,11 @@ def hankel_contour(frequency_hz, lower, upper, geometry, precision_digits=70,
         def continuous_root(lambda_value, wave_number, index):
             principal = mp.sqrt(lambda_value ** 2 - wave_number ** 2)
             if previous_roots[index] is None:
-                selected = outgoing_gamma(lambda_value, wave_number)
+                target = (-lambda_value if
+                          mp.re(lambda_value) < mp.re(wave_number)
+                          else lambda_value)
+                selected = (-principal if abs(-principal - target) <
+                            abs(principal - target) else principal)
             elif abs(-principal - previous_roots[index]) < abs(
                     principal - previous_roots[index]):
                 selected = -principal
@@ -281,14 +291,13 @@ def hankel_contour(frequency_hz, lower, upper, geometry, precision_digits=70,
                 add_segment(start + (end - start) * panel / count,
                             start + (end - start) * (panel + 1) / count)
 
-        # Along the asymptotic rays the phase is stationary and ``t`` is the
-        # meaningful smoothness variable.  Counting panels by complex path
-        # length would spuriously multiply work by sqrt(1+slope^2) for shallow
-        # geometries even though the integrand is exponentially damped.
-        ray_scale = max(abs(k1), abs(k2), 1 / radial_distance)
+        # Follow the actual complex-path extent at the same radial oscillation
+        # resolution as the central contour.  Since panel_length is measured
+        # in spectral coordinates, multiplying by an inverse physical length
+        # here would count that scale twice and explode as rho -> 0.
+        ray_extent = max(abs(p1 - left_end), abs(right_end - p3))
         ray_panels = max(4 * panel_subdivisions,
-                         int(mp.ceil(ray_parameter * ray_scale *
-                                     panel_subdivisions)))
+                         int(mp.ceil(ray_extent / panel_length)))
         # The principal sqrt representation has artificial cuts on the
         # imaginary axis and on the real interval around the lossless k2
         # branch point.  The physical root is continuous, but explicitly

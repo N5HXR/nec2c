@@ -42,8 +42,8 @@ class CrossGeometry:
             raise ValueError("rho must be nonnegative")
         if self.source_z > 0 or self.observer_z < 0:
             raise ValueError("canonical 12 geometry requires source_z <= 0 <= observer_z")
-        if self.source_z == 0 and self.observer_z == 0:
-            raise ValueError("source and observer cannot both lie at the interface")
+        if self.rho == 0 and self.source_z == 0 and self.observer_z == 0:
+            raise ValueError("source and observer cannot coincide at the interface")
 
 
 def material(frequency_hz, epsilon_real, conductivity=0, epsilon_loss=None):

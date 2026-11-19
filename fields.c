@@ -59,7 +59,7 @@ void efld( double xi, double yi, double zi, double ai, int ij )
   ijx= ij;
   rfl=-1.;
 
-  for( ip = 0; ip < gnd.ksymp; ip++ )
+  for( ip = 0; ip < (wire_operator_ground_direct_only()?1:gnd.ksymp); ip++ )
   {
 	if( ip == 1)
 	  ijx=1;
@@ -236,7 +236,7 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 
   /* A caller may request the direct field while retaining material state.
      Sommerfeld corrections require both the ground image and GN 2. */
-  if( gnd.ksymp == 1 || gnd.iperf != 2)
+  if( wire_operator_ground_direct_only() || gnd.ksymp == 1 || gnd.iperf != 2)
 	return;
 
   /* field due to ground using sommerfeld/norton */

@@ -96,6 +96,42 @@ It adds practical acceptance limits that should be part of this feature:
 
 The resulting objective is more precise: reproduce documented NEC4 behavior in its valid domain, improve the cases NEC4 was designed to fix, and diagnose known-invalid geometries. “NEC4 similarity” should not be presented as inheriting NEC5's open-surface, junction, close-wire, or electrically tiny-loop robustness.
 
+#### What the 2017 practitioner comparison adds
+
+Steve Stearns' *Antenna Modeling for Radio Amateurs* presentation
+(`reports/nec-tips.pdf`) is practitioner guidance rather than an implementation
+specification or a numerical oracle. It nevertheless sharpens the validation
+method in several useful ways:
+
+- Slide 55's NEC2 rules (`Delta < lambda/20`, `Delta > 2d` preferred, roughly
+  equal lengths at junctions, aligned segmentation on close parallel wires,
+  and clearance above ground) are useful stress-grid coordinates. They are not
+  automatically NEC4 hard limits; the NEC4 feature exists partly to extend
+  several of those boundaries.
+- Slide 63's `lambda/200` minimum height for horizontal wires with the NEC2
+  Sommerfeld-Norton model is a useful above-ground crossover witness, not a
+  restriction on the documented NEC4 buried/crossing formulation.
+- Slide 73 recommends geometry checks, average-gain checks, segmentation and
+  source perturbations, PEC-versus-real-ground loss comparison, and an
+  independent method. These become acceptance techniques rather than a single
+  universal percentage tolerance.
+- Slides 87--93 show that multiple solvers can have similar conductance while
+  their susceptance differs by an almost linear offset attributed to different
+  delta-gap shunt capacitances. Cross-solver validation must align the feed
+  model and compare admittance components before treating an impedance
+  difference as an antenna-operator error.
+- Slides 64--66 caution that soil conductivity and relative permittivity vary
+  with frequency and are not independent. A broad sweep with constant material
+  parameters is a declared numerical experiment, not a universal physical soil
+  prediction.
+- Slide 43 identifies the public multiradius bridge-current method as a useful
+  future comparator for very close wires, acute junctions, and wire grids. It
+  is not silently substituted for the documented NEC4 formulation.
+
+The presentation supplies no raw result tables or generally applicable error
+bars. It therefore supports perturbation tests and model-validity diagnostics,
+but cannot justify an arbitrary global `0.5%`, `1%`, or `5%` safe-error cutoff.
+
 #### Expanded feature framing: NEC4/5 similarity
 
 NEC5 techniques are useful enough to justify an umbrella **NEC4/5 similarity** project, provided it contains distinguishable numerical modes rather than a single ambiguous claim:

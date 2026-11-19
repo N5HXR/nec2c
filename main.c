@@ -37,6 +37,7 @@
 #include "dense_backend.h"
 #include "concurrency.h"
 #include "nec4_medium.h"
+#include "nec4_ground_runtime.h"
 
 #include <ctype.h>
 #include <getopt.h>
@@ -56,6 +57,21 @@ static int numerical_fork_safe = 1;
 static size_t classic_fill_processes = 1;
 static size_t classic_factor_threads = 1;
 static size_t classic_field_threads = 1;
+
+static int nec4_ground_cache_default(char *path,size_t capacity)
+{
+  const char *base=getenv("XDG_CACHE_HOME");
+  int length;
+  if(!path||capacity==0) return 0;
+  if(base&&*base)
+    length=snprintf(path,capacity,"%s/nec2c/nec4-ground",base);
+  else {
+    base=getenv("HOME");
+    if(!base||!*base) return 0;
+    length=snprintf(path,capacity,"%s/.cache/nec2c/nec4-ground",base);
+  }
+  return length>0&&(size_t)length<capacity;
+}
 
 static concurrency_plan plan_concurrency(size_t frequency_count,
     size_t worker_bytes, size_t automatic_thread_limit)
@@ -1024,9 +1040,10 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
   return 1;
 }
 
-static void enforce_nec4_m7_boundary(nec4_medium_state *state,
+static void enforce_nec4_m9_boundary(nec4_medium_state *state,
     const dielectric_model *dielectric,size_t coated_domain_count)
 {
+  int newly_prepared=0;
   if(!wire_operator_nec4_ground()) return;
   if(!wire_operator_nec4_basis())
   {
@@ -1047,26 +1064,95 @@ static void enforce_nec4_m7_boundary(nec4_medium_state *state,
     result_json_job_end(dielectric);result_json_finish("validation-error");
     stop(-1);
   }
-  if(!prepare_nec4_medium_preflight(state))
+  if(!state->valid)
   {
-    result_json_job_end(dielectric);
-    result_json_finish("validation-error");
-    fprintf(stderr,"nec2c: NEC4 M7 interface preflight failed\n");
-    stop(-1);
+    if(!prepare_nec4_medium_preflight(state))
+    {
+      result_json_job_end(dielectric);
+      result_json_finish("validation-error");
+      fprintf(stderr,"nec2c: NEC4 M7 interface preflight failed\n");
+      stop(-1);
+    }
+    newly_prepared=1;
   }
-  if(!result_json_validation_only())
-  {
-    result_json_diagnostic("error", "NEC4_M7_REFERENCE_ONLY",
-        "M7 validates geometry and homogeneous-medium constants only; production interface fields begin in M8/M9",
-        "{\"required_option\":\"--validate-only\"}");
-    fprintf(output_fp,"\n\n  NEC4 M7 REFERENCE-ONLY BOUNDARY: use "
-        "--validate-only with --ground-engine nec4. Production interface "
-        "fields begin in M8/M9; no NEC2 ground result was substituted.");
-    result_json_job_end(dielectric);
-    result_json_finish("validation-error");
-    fprintf(stderr,"nec2c: --ground-engine nec4 is preflight/reference-only in M7\n");
-    stop(-1);
-  }
+  if(newly_prepared)
+    result_json_diagnostic("info", "NEC4_M9_GROUND_ENGINE",
+        "NEC4 similarity interface-field engine enabled",
+        "{\"implementation\":\"documented-interface-integrals\"}");
+}
+
+static int prepare_nec4_ground_frequency(nec4_medium_state *medium,
+    nec4_ground_runtime *runtime,const char *cache_directory,int direct_model)
+{
+  const double pi=acos(-1.),c0=299792458.;
+  double complex epsilon,upper_k;
+  nec4_ground_runtime_options options;
+  concurrency_plan plan;
+  double started;
+  if(!wire_operator_nec4_ground()) return 1;
+  epsilon=medium->loss_is_epsilon?
+      medium->relative_permittivity+I*cimag(medium->epsilon_relative):
+      nec4_medium_epsilon(medium->relative_permittivity,
+          medium->conductivity_s_per_m,save.fmhz,0);
+  if(!nec4_medium_update_frequency(medium,save.fmhz,epsilon)) return 0;
+  memset(&options,0,sizeof(options));
+  plan=plan_concurrency(1,40u*1024u*1024u,16);
+  options.cache_directory=cache_directory;
+  options.workers=(int)plan.threads;
+  options.direct_model=direct_model;
+  upper_k=2.*pi*save.fmhz*1.e6/c0;
+  started=performance_now();
+  if(!nec4_ground_runtime_prepare(runtime,save.fmhz*1.e6,epsilon,
+      medium->wave_number_per_m,upper_k,&options)) return 0;
+  performance_add("nec4_ground_tables",performance_now()-started);
+  wire_operator_set_medium_state(medium);
+  wire_operator_set_ground_matrix_context(
+      nec4_ground_runtime_matrix_context(runtime));
+  fprintf(output_fp,"\n  NEC4 M9 INTERFACE FIELD: %s model region, "
+      "%lu/%lu cached tables, %d build workers",
+      direct_model?"direct":"level-3 interpolated",
+      (unsigned long)runtime->cache_hits,
+      (unsigned long)(runtime->cache_hits+runtime->cache_misses),
+      options.workers);
+  return 1;
+}
+
+static void audit_nec4_ground_routes(nec4_ground_runtime *runtime,
+    const nec4_medium_state *medium)
+{
+  static const double offsets[3]={-.5,0.,.5};
+  if(!runtime||!runtime->ready||!medium||!medium->valid) return;
+  for(size_t source=0;source<medium->segment_count;++source)
+    for(size_t observer=0;observer<medium->segment_count;++observer)
+      for(size_t si=0;si<3;++si) for(size_t oi=0;oi<3;++oi)
+      {
+        double sl=data.si[source]*data.wlam*offsets[si];
+        double ol=data.si[observer]*data.wlam*offsets[oi];
+        double sx=data.x[source]*data.wlam+sl*data.cab[source];
+        double sy=data.y[source]*data.wlam+sl*data.sab[source];
+        double sz=data.z[source]*data.wlam+sl*data.salp[source];
+        double ox=data.x[observer]*data.wlam+ol*data.cab[observer];
+        double oy=data.y[observer]*data.wlam+ol*data.sab[observer];
+        double oz=data.z[observer]*data.wlam+ol*data.salp[observer];
+        double rho=hypot(ox-sx,oy-sy),z,depth;
+        nec4_ground_dispatch route;
+        if(medium->segment_medium[source]==NEC4_MEDIUM_LOWER&&
+           medium->segment_medium[observer]==NEC4_MEDIUM_UPPER)
+        { z=fabs(oz);depth=fabs(sz); }
+        else if(medium->segment_medium[source]==NEC4_MEDIUM_UPPER&&
+                medium->segment_medium[observer]==NEC4_MEDIUM_LOWER)
+        { z=fabs(sz);depth=fabs(oz); }
+        else if(medium->segment_medium[source]==NEC4_MEDIUM_LOWER)
+        { z=0.;depth=fabs(sz)+fabs(oz); }
+        else { z=fabs(sz)+fabs(oz);depth=0.; }
+        if(!nec4_ground_route(rho,z,-depth,
+            runtime->matrix_context.lower_wave_number_per_m,
+            runtime->matrix_context.upper_wave_number_per_m,
+            runtime->wavelength0_m,&route)) continue;
+        if(route.grazing_risk) runtime->grazing_seen=1;
+        if(route.method==NEC4_GROUND_MODEL_FIT&&
+           z<.16*runtime->wavelength0_m) runtime->direct_strip_seen=1;
+      }
 }
 
 /*-------------------------------------------------------------------*/
@@ -1089,14 +1175,17 @@ int main( int argc, char **argv )
   coated_wire_model coated_wires;
   coated_wire_diagnostic coated_error;
   nec4_medium_state nec4_medium;
+  nec4_ground_runtime nec4_ground;
   int dielectric_excitation_seen, dielectric_any_excitation_seen;
   int dielectric_solved;
   int dielectric_iterative = 0;
   int capabilities_json = 0;
   int validate_only = 0;
   int coated_wire_experimental_junctions = 0;
+  int nec4_ground_direct_model = 0;
   char result_path[NEC2C_PATH_MAX * 4 + 1] = "";
   char timing_path[NEC2C_PATH_MAX * 4 + 1] = "";
+  char nec4_ground_cache[NEC2C_PATH_MAX * 4 + 1] = "";
 
 /* input card mnemonic list */
 #define NUM_CMNDS  21
@@ -1162,6 +1251,8 @@ int main( int argc, char **argv )
 #endif
 
   /*** command line arguments handler ***/
+  (void)nec4_ground_cache_default(nec4_ground_cache,
+      sizeof(nec4_ground_cache));
   if( argc == 1 )
   {
 	usage();
@@ -1183,6 +1274,8 @@ int main( int argc, char **argv )
       {"wire-engine", required_argument, NULL, 1009},
       {"ground-engine", required_argument, NULL, 1010},
       {"model-check", required_argument, NULL, 1011},
+      {"nec4-ground-model", required_argument, NULL, 1012},
+      {"nec4-ground-cache", required_argument, NULL, 1013},
       {NULL, 0, NULL, 0}
     };
   while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
@@ -1341,6 +1434,26 @@ int main( int argc, char **argv )
         }
         break;
 
+      case 1012:
+        if(!strcmp(optarg,"grid")) nec4_ground_direct_model=0;
+        else if(!strcmp(optarg,"direct")) nec4_ground_direct_model=1;
+        else
+        {
+          fprintf(stderr,"nec2c: --nec4-ground-model requires grid or direct\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1013:
+        if(!strcmp(optarg,"none")) nec4_ground_cache[0]='\0';
+        else if(strlen(optarg)>=sizeof(nec4_ground_cache))
+        {
+          fprintf(stderr,"nec2c: NEC4 ground cache path is too long\n");
+          exit(EXIT_FAILURE);
+        }
+        else snprintf(nec4_ground_cache,sizeof(nec4_ground_cache),"%s",optarg);
+        break;
+
 	  default: /* print usage and exit */
 		usage();
 		exit(-1);
@@ -1471,6 +1584,7 @@ int main( int argc, char **argv )
   dielectric_mesh_init( &dielectric_mesh );
   coated_wire_model_init( &coated_wires );
   nec4_medium_state_init( &nec4_medium );
+  nec4_ground_runtime_init( &nec4_ground );
   coated_wire_allow_experimental_junctions(&coated_wires,
       coated_wire_experimental_junctions);
 
@@ -1517,6 +1631,8 @@ int main( int argc, char **argv )
 	coated_wire_model_clear( &coated_wires );
 	nec4_medium_state_free( &nec4_medium );
 	wire_operator_set_medium_state( NULL );
+	nec4_ground_runtime_destroy( &nec4_ground );
+	wire_operator_set_ground_matrix_context( NULL );
 	result_json_job_begin();
 	ifrtmw=0;
 	ifrtmp=0;
@@ -2360,7 +2476,7 @@ int main( int argc, char **argv )
 		   *** normal exit of nec2c when all jobs complete ok ***
 		   ******************************************************/
 
-		  enforce_nec4_m7_boundary(&nec4_medium,&dielectric,
+		  enforce_nec4_m9_boundary(&nec4_medium,&dielectric,
 		      coated_wires.domain_count);
 
 		  if( dielectric.loaded && ! dielectric_mesh.built )
@@ -2468,7 +2584,7 @@ int main( int argc, char **argv )
 	  /* Cards that request an immediate calculation reach this point via a
 	     switch break.  Apply the same M7 gate used by EN before any classic
 	     matrix fill can silently substitute the NEC2 ground formulation. */
-	  enforce_nec4_m7_boundary(&nec4_medium,&dielectric,
+	  enforce_nec4_m9_boundary(&nec4_medium,&dielectric,
 	      coated_wires.domain_count);
 
 	  if( dielectric.loaded )
@@ -2666,6 +2782,9 @@ int main( int argc, char **argv )
 			size_t worker_bytes = ((size_t)iresrv +
 			    (size_t)smat.nop * (size_t)smat.nop) * sizeof(complex double);
 			worker_bytes = doubled_matrix_bytes(worker_bytes);
+			if(wire_operator_nec4_ground())
+			  worker_bytes=worker_bytes<=SIZE_MAX-40u*1024u*1024u?
+			      worker_bytes+40u*1024u*1024u:SIZE_MAX;
 			classic_parallel_mode = start_classic_frequency_workers(ifrq, &nfrq, save.fmhz,
 			    delfrq, worker_bytes, &mhz, &save.fmhz, output_fp,
 			    fnorm, &zpnorm, iped, !strcmp(dense_backend_name_for_order(
@@ -2759,6 +2878,16 @@ int main( int argc, char **argv )
 
 			wire_operator_set_model_features((size_t)data.m,
 			    coated_wires.domain_count,dielectric.loaded);
+			if(!prepare_nec4_ground_frequency(&nec4_medium,&nec4_ground,
+			    nec4_ground_cache,nec4_ground_direct_model))
+			{
+			  result_json_diagnostic("error","NEC4_M9_RUNTIME_PREPARE",
+			      "unable to prepare the NEC4 similarity interface-field tables",
+			      "{}");
+			  fprintf(stderr,"nec2c: NEC4 M9 ground runtime preparation failed\n");
+			  stop(-1);
+			}
+			audit_nec4_ground_routes(&nec4_ground,&nec4_medium);
 			if(!wire_operator_prepare_frequency(output_fp))
 			{
 			  fprintf(stderr,"nec2c: NEC4 model validity, combination, or junction charge check failed\n");
@@ -2877,6 +3006,19 @@ int main( int argc, char **argv )
 			coated_wire_activate(&coated_wires, data.wlam);
 			cmset_parallel_configure(classic_fill_processes, numerical_fork_safe);
 			cmset( netcx.neq, cm, rkh, iexk );
+			if(nec4_ground_runtime_grazing_seen(&nec4_ground))
+			{
+			  result_json_diagnostic("warning","NEC4_M9_GRAZING_INTERFERENCE",
+			      "one or more interface interactions entered the documented grazing-angle risk region",
+			      "{\"threshold_degrees\":15}");
+			  fprintf(output_fp,"\n  NEC4 M9 WARNING: an interface interaction "
+			      "entered the <=15 degree grazing region; compare with a refined "
+			      "or future NEC4.2-style treatment if this result is critical.");
+			}
+			if(!nec4_ground_direct_model&&
+			   nec4_ground_runtime_direct_strip_seen(&nec4_ground))
+			  fprintf(output_fp,"\n  NEC4 M9 ACCURACY: direct contour evaluation "
+			      "was used in the z < 0.16 wavelength interface strip.");
 			tim=(performance_now() - tmp1)*1000.0;
 			performance_add("matrix_fill", tim/1000.0);
 			performance_dense_backend((size_t)netcx.npeq);

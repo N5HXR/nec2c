@@ -1,0 +1,24 @@
+{
+  "schema": "nec2c-nec4-m9-production-acceptance",
+  "schema_version": 1,
+  "grid_direct": {
+    "impedance_relative_delta": 1.1226119816937045e-08,
+    "current_l2_relative_delta": 1.4166915420257876e-08,
+    "grid_matrix_fill_seconds": 0.005422784946858883,
+    "direct_matrix_fill_seconds": 1.0413453109795228,
+    "matrix_fill_speedup": 192.0314600678967
+  },
+  "cache": {
+    "cold_misses": 4,
+    "warm_hits": 4,
+    "warm_results_exact": true
+  },
+  "grazing_warning": {
+    "severity": "warning",
+    "code": "NEC4_M9_GRAZING_INTERFERENCE",
+    "message": "one or more interface interactions entered the documented grazing-angle risk region",
+    "context": {
+      "threshold_degrees": 15
+    }
+  }
+}

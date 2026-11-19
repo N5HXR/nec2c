@@ -1,0 +1,76 @@
+{
+  "schema": "nec2c-nec4-m9-table-equation-lock",
+  "schema_version": 1,
+  "medium_convention": "1=lower, 2=upper",
+  "boundary_ownership": "lowest-numbered table",
+  "scales": {
+    "lambda0": 2.0,
+    "Lg": 0.4,
+    "Lmax": 2.0
+  },
+  "sample_counts": {
+    "1": 32,
+    "2": 76,
+    "3": 88
+  },
+  "equation_5_10": {
+    "ray_terms": 36,
+    "supplemental_terms": 8,
+    "total_terms": 44,
+    "region_1_documented_samples": 32,
+    "region_1_documented_supplemental_terms": 0,
+    "rank_question": "36 printed basis terms but only 32 samples"
+  },
+  "sample_lattices": {
+    "1": {
+      "count": 32,
+      "unique_count": 32,
+      "rho_range": [
+        0.0,
+        1.2000000000000002
+      ],
+      "z_range": [
+        0.4,
+        1.6
+      ],
+      "depth_range": [
+        0.0,
+        0.16000000000000003
+      ]
+    },
+    "2": {
+      "count": 76,
+      "unique_count": 74,
+      "rho_range": [
+        0.4,
+        1.2
+      ],
+      "z_range": [
+        0.0,
+        0.6000000000000001
+      ],
+      "depth_range": [
+        0.0,
+        0.4
+      ]
+    },
+    "3": {
+      "count": 88,
+      "unique_count": 86,
+      "rho_range": [
+        1.2,
+        2.8
+      ],
+      "z_range": [
+        0.0,
+        1.2000000000000002
+      ],
+      "depth_range": [
+        0.0,
+        0.4
+      ]
+    }
+  },
+  "maximum_transform_roundtrip_error": 1.1102230246251565e-16,
+  "affine_interpolation_error": 0.0
+}

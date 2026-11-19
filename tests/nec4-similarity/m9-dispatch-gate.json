@@ -1,0 +1,18 @@
+{
+  "schema": "nec2c-nec4-m9-dispatch-gate",
+  "schema_version": 1,
+  "frequency_hz": 7100000.0,
+  "lg_lambda0": 0.23475910136134348,
+  "lmax_lambda0": 1.0,
+  "outer_extent_lambda0": {
+    "rho": 3.0,
+    "z": 2.0,
+    "source_depth_lg": 0.8
+  },
+  "grazing_warning_envelope": {
+    "maximum_direct_ray_angle_degrees": 15.0,
+    "method": "asymptotic",
+    "witness_angle_degrees": 0.5729386976834859
+  },
+  "boundary_policy": "lowest-numbered/nearer method owns exact boundary"
+}

@@ -1,0 +1,80 @@
+#ifndef NEC2C_NEC4_GROUND_DIRECT_H
+#define NEC2C_NEC4_GROUND_DIRECT_H 1
+
+#include <complex.h>
+
+enum { NEC4_GROUND_COMPONENT_COUNT=5 };
+
+typedef enum {
+  NEC4_GROUND_RHO_VERTICAL=0,
+  NEC4_GROUND_Z_VERTICAL=1,
+  NEC4_GROUND_RHO_HORIZONTAL=2,
+  NEC4_GROUND_PHI_HORIZONTAL=3,
+  NEC4_GROUND_Z_HORIZONTAL=4
+} nec4_ground_component;
+
+typedef struct {
+  double complex value[NEC4_GROUND_COMPONENT_COUNT];
+  unsigned int panels;
+  unsigned int quadrature_order;
+} nec4_ground_direct_result;
+
+typedef struct {
+  double complex total[NEC4_GROUND_COMPONENT_COUNT];
+  double complex finite_remainder[NEC4_GROUND_COMPONENT_COUNT];
+  unsigned int panels;
+  unsigned int quadrature_order;
+} nec4_ground_table1_result;
+
+typedef struct {
+  nec4_ground_table1_result field;
+  double refinement_error;
+  double approach_path_error;
+} nec4_ground_interface_result;
+
+/* Direct Section 5.1 cross-interface Bessel-contour evaluator.
+   lower_k and upper_k use the exp(+j omega t) passive-medium convention.
+   source_depth and observer_z are nonnegative distances from z=0. */
+int nec4_ground_direct_cross_bessel(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int quadrature_order,
+    double cutoff_decay,nec4_ground_direct_result *result);
+
+/* Figure 5-3a full-line Hankel-contour evaluator.  Both endpoints cannot be
+   exactly on the interface; use the physical-limit entry point below. */
+int nec4_ground_direct_cross_hankel(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int panel_subdivisions,
+    unsigned int quadrature_order,double cutoff_decay,
+    nec4_ground_direct_result *result);
+
+/* Appendix-H two-stage subtraction used to generate linear table 1. */
+int nec4_ground_direct_cross_table1(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int quadrature_order,
+    double cutoff_decay,nec4_ground_table1_result *result);
+
+/* Figure 5-3a evaluation of the Appendix-H finite table-1 quantity at a
+   positive total endpoint height. */
+int nec4_ground_direct_cross_table1_hankel(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int panel_subdivisions,
+    unsigned int quadrature_order,double cutoff_decay,
+    nec4_ground_table1_result *result);
+
+/* Physical z=z'=0 table-1 limit for rho>0.  Richardson extrapolation is
+   independently checked along symmetric and source-only approaches. */
+int nec4_ground_direct_cross_interface(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    unsigned int panel_subdivisions,unsigned int quadrature_order,
+    double cutoff_decay,nec4_ground_interface_result *result);
+
+/* Reconstruct the physical table-1 field from Appendix H's finite E'' value
+   by adding the residual 1/R field and V0 field in that order. */
+int nec4_ground_direct_table1_restore(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,
+    const double complex finite_remainder[NEC4_GROUND_COMPONENT_COUNT],
+    double complex total[NEC4_GROUND_COMPONENT_COUNT]);
+
+#endif

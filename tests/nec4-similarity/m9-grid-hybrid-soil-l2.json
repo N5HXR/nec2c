@@ -1,0 +1,54 @@
+{
+  "schema": "nec2c-nec4-m9-grid-screen",
+  "schema_version": 1,
+  "results": [
+    {
+      "material": "m9-grid-fixed-soil-l2.csv",
+      "transform": "f2",
+      "heldout_points": 3756,
+      "direct_strip_lambda0": 0.16,
+      "rms_vector_error": 0.00040412200706994324,
+      "maximum_vector_error": 0.004883714982443259,
+      "p95_vector_error": 0.0007689928783226435,
+      "p99_vector_error": 0.0015527975839828572,
+      "maximum_null_aware_component_error": 0.15618476612773954,
+      "maximum_component_error_relative_to_local_peak": 0.005444640405469216,
+      "worst_point_m": {
+        "rho": 1.4844476903609154,
+        "z": 11.120800621341214,
+        "source_depth": 4.263183630378561
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.03515625,
+        "z_lambda0": 0.2633744855967078,
+        "source_depth_lg": 0.43008000000000013
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.010": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.020": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.050": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        }
+      }
+    }
+  ]
+}

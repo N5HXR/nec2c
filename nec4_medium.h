@@ -51,6 +51,8 @@ int nec4_medium_classify(const nec4_medium_geometry *geometry,
     double frequency_mhz,int loss_is_epsilon,nec4_medium_state *state);
 int nec4_medium_endpoint_factor(const nec4_medium_state *state,size_t segment,int end,
     double complex *factor);
+int nec4_medium_update_frequency(nec4_medium_state *state,double frequency_mhz,
+    double complex epsilon_relative);
 void nec4_medium_print(FILE *stream,const nec4_medium_state *state);
 
 #endif

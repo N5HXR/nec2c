@@ -554,6 +554,8 @@ void evlua(complex double *erv, complex double *ezv, complex double *erh, comple
 void fbar(complex double p, complex double *r);
 void gshank(complex double start, complex double dela, complex double *sum, int nans, complex double *seed, int ibk, complex double bk, complex double delb);
 void hankel(complex double z, complex double *h0, complex double *h0p);
+void hankel2(complex double z, complex double *h0, complex double *h0p);
+void hankel2(complex double z, complex double *h0, complex double *h0p);
 void lambda(double t, complex double *xlam, complex double *dxlam);
 void rom1(int n, complex double *sum, int nx);
 void saoa(double t, complex double *ans);

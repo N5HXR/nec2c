@@ -33,6 +33,9 @@ static wire_operator_validity last_validity;
 static size_t model_patches, model_coated_domains;
 static int model_dielectric_loaded;
 static const nec4_medium_state *medium_state;
+static _Thread_local int ground_direct_only;
+static const nec4_ground_matrix_context *ground_matrix_context;
+static _Thread_local size_t matrix_source_segment=(size_t)-1;
 
 static double dot3(double ax,double ay,double az,
                    double bx,double by,double bz)
@@ -310,6 +313,16 @@ void wire_operator_set_model_features(size_t patches,size_t coated_domains,
 void wire_operator_set_medium_state(const nec4_medium_state *state)
 { medium_state=state; }
 
+void wire_operator_set_ground_matrix_context(
+    const nec4_ground_matrix_context *context)
+{ ground_matrix_context=context; }
+
+void wire_operator_set_source_segment(size_t segment)
+{ matrix_source_segment=segment; }
+
+int wire_operator_ground_direct_only(void)
+{ return ground_direct_only; }
+
 const char *wire_operator_requested_engine(void) { return requested_engine; }
 const char *wire_operator_resolved_engine(void) { return active_operator->name; }
 const char *wire_operator_requested_ground_engine(void)
@@ -419,7 +432,45 @@ void wire_operator_trio(int j)
 
 void wire_operator_efld(double xi, double yi, double zi, double ai, int ij)
 {
-  active_operator->efld(xi, yi, zi, ai, ij);
+  if(wire_operator_nec4_ground()&&ground_matrix_context&&medium_state&&
+     matrix_source_segment<medium_state->segment_count)
+  {
+    size_t observer_segment=(size_t)((long)matrix_source_segment+(long)ij);
+    nec4_ground_segment_field correction;
+    double center[3]={dataj.xj*data.wlam,dataj.yj*data.wlam,
+      dataj.zj*data.wlam};
+    double direction[3]={dataj.cabj,dataj.sabj,dataj.salpj};
+    double observer[3]={xi*data.wlam,yi*data.wlam,zi*data.wlam};
+    /* The established reduced wire kernel supplies the finite-radius direct
+       term.  The new adapter adds complete-interface minus free-space field. */
+    ground_direct_only=1;
+    active_operator->efld(xi,yi,zi,ai,ij);
+    ground_direct_only=0;
+    if(observer_segment>=medium_state->segment_count||
+       !nec4_ground_matrix_segment_correction(ground_matrix_context,
+         medium_state->segment_medium[matrix_source_segment],
+         medium_state->segment_medium[observer_segment],center,direction,
+         dataj.s*data.wlam,observer,ai*data.wlam,&correction))
+    {
+      fprintf(stderr,"nec2c: NEC4 ground matrix evaluation failed "
+          "(source=%lu observer=%lu source_xyz=%.17g,%.17g,%.17g "
+          "observer_xyz=%.17g,%.17g,%.17g)\n",
+          (unsigned long)matrix_source_segment,
+          (unsigned long)observer_segment,center[0],center[1],center[2],
+          observer[0],observer[1],observer[2]);
+      stop(-1);
+    }
+    dataj.exk+=correction.constant[0];
+    dataj.eyk+=correction.constant[1];
+    dataj.ezk+=correction.constant[2];
+    dataj.exs+=correction.sine[0];
+    dataj.eys+=correction.sine[1];
+    dataj.ezs+=correction.sine[2];
+    dataj.exc+=correction.cosine[0];
+    dataj.eyc+=correction.cosine[1];
+    dataj.ezc+=correction.cosine[2];
+  }
+  else active_operator->efld(xi, yi, zi, ai, ij);
   if(wire_operator_nec4_basis())
   {
     dataj.exc -= dataj.exk;

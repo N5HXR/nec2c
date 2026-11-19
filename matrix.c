@@ -627,6 +627,7 @@ void cmws( int j, int i1, int i2, complex double *cm,
   dataj.cabj= data.cab[j];
   dataj.sabj= data.sab[j];
   dataj.salpj= data.salp[j];
+  wire_operator_set_source_segment((size_t)j);
 
   /* observation loop */
   ipr= -1;
@@ -755,6 +756,7 @@ void cmww( int j, int i1, int i2, complex double *cm,
   dataj.cabj= data.cab[j];
   dataj.sabj= data.sab[j];
   dataj.salpj= data.salp[j];
+  wire_operator_set_source_segment((size_t)j);
   coating_active=coated_wire_segment_active(jx);
   cap1_active=wire_operator_nec4_basis() && data.icon1[j]==0;
   cap2_active=wire_operator_nec4_basis() && data.icon2[j]==0;

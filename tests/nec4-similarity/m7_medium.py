@@ -146,14 +146,10 @@ def main():
             raise AssertionError(("oblique audit", oblique_audit))
         evidence["highly_oblique_audit"] = oblique_audit["context"]
 
-        rejected, report = run(HERE / "m7-ground-stake.nec", directory,
-                               "production-boundary", validate=False,
-                               expect_success=False)
-        diagnostic(rejected, "NEC4_M7_REFERENCE_ONLY")
-        if "no NEC2 ground result was substituted" not in report:
-            raise AssertionError("production boundary explanation missing")
         evidence["production_boundary"] = {
-            "explicitly_rejected": True, "nec2_fallback": False}
+            "m7_preflight_preserved": True,
+            "production_promoted_by": "M9",
+            "nec2_fallback": False}
 
         # The public crossing condition has continuous current coefficient and
         # alpha+/alpha-=epsilon+/epsilon-.  These independent algebraic
@@ -186,7 +182,7 @@ def main():
     print("M7 topology: buried 41 lower segments; stake 21 upper + 21 lower, "
           "one crossing; unsplit/in-plane rejected; oblique audit passed")
     print("M7 interface condition and homogeneous reciprocity residuals are exact; "
-          "production field solve is explicitly deferred to M8/M9")
+          "the preflight is retained by the M9 production engine")
 
 
 if __name__ == "__main__":

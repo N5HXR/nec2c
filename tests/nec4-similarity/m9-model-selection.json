@@ -1,0 +1,202 @@
+{
+  "schema": "nec2c-nec4-m9-model-selection",
+  "schema_version": 1,
+  "source": "tests/nec4-similarity/m9-model-fit-er16.json",
+  "frequency_hz": 7100000.0,
+  "lower_medium": {
+    "epsilon_r": 16.0,
+    "conductivity_s_per_m": 0.0
+  },
+  "training_rows": 88,
+  "calibration_points": 9,
+  "selection_metric": "minimum training_rms + calibration_rms",
+  "phase_modes": {
+    "ordinary-ray": {
+      "rho_v": {
+        "selected": {
+          "rank": 25,
+          "training_rms": 0.12211756891740869,
+          "calibration_rms": 0.0774374769756479
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.11027701804511784,
+          "calibration_rms": 9.155987836074338
+        }
+      },
+      "z_v": {
+        "selected": {
+          "rank": 27,
+          "training_rms": 0.05349498805742888,
+          "calibration_rms": 0.0870173423208681
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.027407540623583384,
+          "calibration_rms": 10.288394444491749
+        }
+      },
+      "rho_h": {
+        "selected": {
+          "rank": 27,
+          "training_rms": 0.1262734097434885,
+          "calibration_rms": 0.08223546814530144
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.08436153056754651,
+          "calibration_rms": 2.735912860497194
+        }
+      },
+      "phi_h": {
+        "selected": {
+          "rank": 27,
+          "training_rms": 0.03597678148936993,
+          "calibration_rms": 0.05918452079702018
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.03306928165825816,
+          "calibration_rms": 0.769680792341175
+        }
+      },
+      "z_h": {
+        "selected": {
+          "rank": 28,
+          "training_rms": 0.08755556318685101,
+          "calibration_rms": 0.029043805177585615
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.039256139316467764,
+          "calibration_rms": 1.46874021674434
+        }
+      }
+    },
+    "literal-phase-root": {
+      "rho_v": {
+        "selected": {
+          "rank": 9,
+          "training_rms": 0.9250643753900611,
+          "calibration_rms": 1.587498832790607
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.5618911256171077,
+          "calibration_rms": 120.09010230144793
+        }
+      },
+      "z_v": {
+        "selected": {
+          "rank": 14,
+          "training_rms": 0.8196221625120205,
+          "calibration_rms": 0.5037976821378934
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.5159621287774566,
+          "calibration_rms": 536.5938556060232
+        }
+      },
+      "rho_h": {
+        "selected": {
+          "rank": 22,
+          "training_rms": 0.5408997945900229,
+          "calibration_rms": 0.27936735999891205
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.39303144868321155,
+          "calibration_rms": 7.083997863808882
+        }
+      },
+      "phi_h": {
+        "selected": {
+          "rank": 9,
+          "training_rms": 0.8742519462548497,
+          "calibration_rms": 0.24904521871776933
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.514784183086531,
+          "calibration_rms": 22.40710662338647
+        }
+      },
+      "z_h": {
+        "selected": {
+          "rank": 23,
+          "training_rms": 0.23061220034968763,
+          "calibration_rms": 0.07836558969086412
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.1548871129716329,
+          "calibration_rms": 3.8235582817695977
+        }
+      }
+    },
+    "literal-exponential-root": {
+      "rho_v": {
+        "selected": {
+          "rank": 24,
+          "training_rms": 0.5097735682898694,
+          "calibration_rms": 0.8833911380118922
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.4104574840052094,
+          "calibration_rms": 60.43291028261855
+        }
+      },
+      "z_v": {
+        "selected": {
+          "rank": 31,
+          "training_rms": 0.4098077614013793,
+          "calibration_rms": 0.2530611805265385
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.36987441606517274,
+          "calibration_rms": 67.83702211253716
+        }
+      },
+      "rho_h": {
+        "selected": {
+          "rank": 25,
+          "training_rms": 0.36674402605745615,
+          "calibration_rms": 0.2116517091784968
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.27372334483512567,
+          "calibration_rms": 5.308940247631163
+        }
+      },
+      "phi_h": {
+        "selected": {
+          "rank": 23,
+          "training_rms": 0.47646609556325975,
+          "calibration_rms": 0.29598230982047824
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.3652719645348629,
+          "calibration_rms": 12.813453631581845
+        }
+      },
+      "z_h": {
+        "selected": {
+          "rank": 28,
+          "training_rms": 0.15403583888737032,
+          "calibration_rms": 0.04690415212394927
+        },
+        "full_rank": {
+          "rank": 44,
+          "training_rms": 0.1240023127588084,
+          "calibration_rms": 2.1387862511345297
+        }
+      }
+    }
+  },
+  "production_status": "characterization-only"
+}

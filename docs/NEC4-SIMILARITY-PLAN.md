@@ -114,8 +114,12 @@ M1 freezes exact tolerances after the independent oracles and representative con
 | Production ground field vs direct oracle | original NEC4 engine: characterized envelope; adaptive target `<= 0.5%` E and `<= 1%` H outside field nulls |
 | Region-switch continuity | adaptive target `<= 0.5%` scaled field discontinuity |
 | Ordinary-model performance | no unexplained regression above 10% versus the same operator's accepted baseline |
+| Model perturbation stability | per-case convergence under segmentation-density and source-position/type sweeps; no universal percentage is inferred from cross-solver agreement alone |
 
 Convergence is judged against a stable limit or independent solution, not by agreement between two adjacent coarse meshes alone. Every frequency-domain comparison covers complex impedance/current/field, not only magnitudes.
+Where feed models differ, validation also compares admittance components so a
+source-model shunt susceptance is not mistaken for an error in the antenna
+operator.
 
 ## Milestones
 
@@ -316,6 +320,11 @@ The direct engine may be too slow for general matrix fill. It is retained as a c
 
 ### M9 - documented NEC4 ground tables and asymptotics
 
+**Status:** implementation complete and awaiting user acceptance. The direct
+oracle, three documented near tables, second-order saddle/pole path, measured
+level-3 model grid, exact-key cache, matrix integration, CLI controls, and
+deduplicated grazing warning all pass their automated gates.
+
 Goal: implement the original documented NEC4 production ground evaluator for above, buried, and crossing interactions.
 
 Work:
@@ -329,6 +338,10 @@ Acceptance metrics:
 
 - characterize error against M8 across the complete qualification grid, including field-null-aware metrics;
 - no unexplained discontinuities at table/subregion/asymptotic switches;
+- preserve the documented original-NEC4 grazing result, but issue a
+  deduplicated warning and machine-readable diagnostic when an interaction
+  enters the characterized near-interface grazing-risk envelope;
+- do not classify short segment length alone as a grazing-risk condition;
 - reproduce documented ground-report trends and sufficiently specified values within their uncertainty;
 - cached and freshly generated tables give identical results and corrupt/incompatible caches are rejected;
 - user runs the 5 m seawater whip/ground-stake witness and one near-interface field sweep.
@@ -345,12 +358,28 @@ Cases include:
 - radial ground screens above and at small burial depth;
 - a long wire supporting a surface-attached mode;
 - near-ground horizontal wires;
+- height sweeps through the NEC2 Sommerfeld-rule boundary near `lambda/200`,
+  retained as a practitioner baseline rather than a NEC4 validity limit;
+- the 1984 Burke/King/Miller surface-wave report's ground-stake,
+  radial-screen, Beverage, and vertical-half-rhombic trends, including its
+  Relative Communication Efficiency comparisons where the model description
+  is sufficiently complete;
 - loss and power deposition in the lower medium;
 - near E/H fields, far fields where physically defined, VSWR sweeps, and radiation grids.
+
+Broadband ground cases record whether `epsilon_r` and conductivity are held
+constant as a numerical experiment or supplied per frequency from a documented
+material model. The project will not infer a universal dispersive-soil law from
+nominal ground-category tables.
 
 Acceptance metrics:
 
 - convergence, reciprocity, residual, passivity, and power meet frozen per-case limits;
+- results are stable under small source-position/type and segmentation-density
+  perturbations, with conductance and susceptance reported separately when
+  comparing unlike source implementations;
+- average-gain and power diagnostics distinguish conductor/ground loss and
+  expose nonphysical gain or loss before comparison with a published witness;
 - direct M8 and accelerated M9 results agree within the characterized envelope;
 - published NEC4/5 witnesses and analytical limits are met within declared uncertainty;
 - 1/2/4/8/16/32-worker tests retain numerical identity and useful scaling on large cases;
@@ -395,6 +424,9 @@ Work:
 - run end-to-end performance and memory characterization;
 - freeze automatic engine-selection and fallback rules;
 - publish validity guidance, examples, diagnostics, source provenance, and machine-result schema additions;
+- label validity guidance as theory-mandated, empirically qualified, or
+  practitioner-advisory; practitioner rules do not become strict errors until
+  this project independently qualifies a failure boundary;
 - prepare a compact manual acceptance bundle;
 - only after user PASS, commit, push, and merge through the agreed workflow.
 
@@ -440,6 +472,12 @@ The final portfolio will be assembled incrementally and retained as ordinary NEC
 3. **Validity handling:** warn and continue by default, provide `--model-check strict` to turn validated-envelope warnings into errors, and `off` only to silence warnings. Numerically undefined geometry remains an error in every mode.
 4. **Interface scope:** use one planar homogeneous half-space, matching documented NEC4. Multilayer soil and terrain remain future projects.
 5. **Release granularity:** allow an accepted M5 free-space preview and M10 documented-ground preview on the feature branch, but merge only once M12 is accepted.
+6. **Original-NEC4 grazing behavior:** M9 preserves the documented legacy
+   asymptotic result. Detectable grazing-risk interactions within 15 degrees
+   of the interface warn
+   and continue; they do not silently fall back to the M8 oracle. Short segment
+   length alone is not evidence of this condition. An accuracy correction is
+   deferred to the separately reviewed M11 adaptive/NEC4.2-like effort.
 
 ## Project completion rule
 

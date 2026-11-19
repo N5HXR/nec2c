@@ -1,0 +1,630 @@
+{
+  "schema": "nec2c-nec4-m9-grid-screen",
+  "schema_version": 1,
+  "results": [
+    {
+      "material": "m9-grid-fixed-er16-l1.csv",
+      "transform": "raw",
+      "heldout_points": 4055,
+      "rms_vector_error": 0.1063400567216264,
+      "maximum_vector_error": 0.9293602618803802,
+      "p95_vector_error": 0.11733231723636992,
+      "p99_vector_error": 0.37389536819686603,
+      "maximum_null_aware_component_error": 9.767041980553161,
+      "worst_point_m": {
+        "rho": 19.205041994044343,
+        "z": 0.05148518806176489,
+        "source_depth": 2.821258151229296
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.454833984375,
+        "z_lambda0": 0.0012193263222069807,
+        "source_depth_lg": 0.267264
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 4054,
+          "fraction": 0.9997533908754624,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.00030483158055174517,
+            5.1200000000000004e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7997440000000001
+          ]
+        },
+        "0.010": {
+          "count": 4052,
+          "fraction": 0.9992601726263872,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.00030483158055174517,
+            5.1200000000000004e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7997440000000001
+          ]
+        },
+        "0.020": {
+          "count": 4028,
+          "fraction": 0.9933415536374846,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.00030483158055174517,
+            5.1200000000000004e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7997440000000001
+          ]
+        },
+        "0.050": {
+          "count": 3640,
+          "fraction": 0.8976572133168927,
+          "minimum_normalized": [
+            0.000732421875,
+            0.00030483158055174517,
+            0.00025600000000000004
+          ],
+          "maximum_normalized": [
+            2.99853515625,
+            1.9990855052583447,
+            0.799488
+          ]
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-er16-l1.csv",
+      "transform": "f1",
+      "heldout_points": 4055,
+      "rms_vector_error": 0.04976503388414512,
+      "maximum_vector_error": 0.5950565393144076,
+      "p95_vector_error": 0.0488299766212974,
+      "p99_vector_error": 0.2343730185212333,
+      "maximum_null_aware_component_error": 4.245528181817069,
+      "worst_point_m": {
+        "rho": 15.865034690732283,
+        "z": 1.6990112060382412,
+        "source_depth": 3.534679752689578
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.375732421875,
+        "z_lambda0": 0.04023776863283036,
+        "source_depth_lg": 0.33484800000000003
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 3833,
+          "fraction": 0.9452527743526511,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.00030483158055174517,
+            0.0026112
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.79872
+          ]
+        },
+        "0.010": {
+          "count": 3517,
+          "fraction": 0.867324290998767,
+          "minimum_normalized": [
+            0.000732421875,
+            0.00030483158055174517,
+            0.0026112
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.79872
+          ]
+        },
+        "0.020": {
+          "count": 2750,
+          "fraction": 0.6781750924784217,
+          "minimum_normalized": [
+            0.00146484375,
+            0.00030483158055174517,
+            0.0026112
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7964160000000001
+          ]
+        },
+        "0.050": {
+          "count": 199,
+          "fraction": 0.04907521578298397,
+          "minimum_normalized": [
+            0.25048828125,
+            0.00030483158055174517,
+            0.0026112
+          ],
+          "maximum_normalized": [
+            2.99267578125,
+            0.2267946959304984,
+            0.7964160000000001
+          ]
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-er16-l1.csv",
+      "transform": "f2",
+      "heldout_points": 4055,
+      "rms_vector_error": 0.04024001442235217,
+      "maximum_vector_error": 0.5250993658082436,
+      "p95_vector_error": 0.032160498722359876,
+      "p99_vector_error": 0.22429523862633238,
+      "maximum_null_aware_component_error": 5.497076571785598,
+      "worst_point_m": {
+        "rho": 19.205041994044343,
+        "z": 0.05148518806176489,
+        "source_depth": 2.821258151229296
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.454833984375,
+        "z_lambda0": 0.0012193263222069807,
+        "source_depth_lg": 0.267264
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 422,
+          "fraction": 0.10406905055487053,
+          "minimum_normalized": [
+            0.02197265625,
+            0.00030483158055174517,
+            0.0026112
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            0.43895747599451307,
+            0.79872
+          ]
+        },
+        "0.010": {
+          "count": 297,
+          "fraction": 0.07324290998766954,
+          "minimum_normalized": [
+            0.03515625,
+            0.00030483158055174517,
+            0.0026112
+          ],
+          "maximum_normalized": [
+            2.99267578125,
+            0.34141137021795454,
+            0.7964160000000001
+          ]
+        },
+        "0.020": {
+          "count": 230,
+          "fraction": 0.05672009864364982,
+          "minimum_normalized": [
+            0.25488281249999994,
+            0.00030483158055174517,
+            0.0026112
+          ],
+          "maximum_normalized": [
+            2.99267578125,
+            0.2121627800640146,
+            0.7964160000000001
+          ]
+        },
+        "0.050": {
+          "count": 166,
+          "fraction": 0.04093711467324291,
+          "minimum_normalized": [
+            0.263671875,
+            0.00030483158055174517,
+            0.0026112
+          ],
+          "maximum_normalized": [
+            2.99267578125,
+            0.12802926383173296,
+            0.7964160000000001
+          ]
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-er16-l1.csv",
+      "transform": "f3",
+      "heldout_points": 4055,
+      "rms_vector_error": 0.5172088585637584,
+      "maximum_vector_error": 1.2267613569515066,
+      "p95_vector_error": 0.7627001238000307,
+      "p99_vector_error": 0.8569955579265732,
+      "maximum_null_aware_component_error": 22.492409251178692,
+      "worst_point_m": {
+        "rho": 18.370040168216327,
+        "z": 2.9346557195205984,
+        "source_depth": 5.93437059396507
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.43505859374999994,
+        "z_lambda0": 0.06950160036579789,
+        "source_depth_lg": 0.562176
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 4054,
+          "fraction": 0.9997533908754624,
+          "minimum_normalized": [
+            0.000732421875,
+            0.00030483158055174517,
+            5.1200000000000004e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7997440000000001
+          ]
+        },
+        "0.010": {
+          "count": 4050,
+          "fraction": 0.998766954377312,
+          "minimum_normalized": [
+            0.002197265625,
+            0.00030483158055174517,
+            5.1200000000000004e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7997440000000001
+          ]
+        },
+        "0.020": {
+          "count": 4044,
+          "fraction": 0.9972872996300863,
+          "minimum_normalized": [
+            0.0029296875,
+            0.00030483158055174517,
+            5.1200000000000004e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7997440000000001
+          ]
+        },
+        "0.050": {
+          "count": 4003,
+          "fraction": 0.9871763255240444,
+          "minimum_normalized": [
+            0.003662109375,
+            0.00030483158055174517,
+            5.1200000000000004e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7997440000000001
+          ]
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-soil-l1.csv",
+      "transform": "raw",
+      "heldout_points": 4059,
+      "rms_vector_error": 0.07914340774135806,
+      "maximum_vector_error": 0.3716635396442559,
+      "p95_vector_error": 0.10738782235004089,
+      "p99_vector_error": 0.11181711393304228,
+      "maximum_null_aware_component_error": 0.9882775885832703,
+      "worst_point_m": {
+        "rho": 12.803361329362895,
+        "z": 0.3089111283705893,
+        "source_depth": 7.430120041516918
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.30322265625,
+        "z_lambda0": 0.007315957933241884,
+        "source_depth_lg": 0.749568
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 4058,
+          "fraction": 0.9997536338999754,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.00030483158055174517,
+            5.120000000000002e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.799744
+          ]
+        },
+        "0.010": {
+          "count": 4052,
+          "fraction": 0.9982754372998276,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.00030483158055174517,
+            5.120000000000002e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.799744
+          ]
+        },
+        "0.020": {
+          "count": 4016,
+          "fraction": 0.9894062576989406,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.00030483158055174517,
+            5.120000000000002e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.799744
+          ]
+        },
+        "0.050": {
+          "count": 3520,
+          "fraction": 0.8672086720867209,
+          "minimum_normalized": [
+            0.000732421875,
+            0.00030483158055174517,
+            0.00025600000000000004
+          ],
+          "maximum_normalized": [
+            2.99853515625,
+            1.9990855052583447,
+            0.7994880000000001
+          ]
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-soil-l1.csv",
+      "transform": "f1",
+      "heldout_points": 4059,
+      "rms_vector_error": 0.02726220773581023,
+      "maximum_vector_error": 0.17116448970155276,
+      "p95_vector_error": 0.04030920340948044,
+      "p99_vector_error": 0.04272196096086043,
+      "maximum_null_aware_component_error": 3.2574554257943897,
+      "worst_point_m": {
+        "rho": 12.803361329362895,
+        "z": 0.3089111283705893,
+        "source_depth": 7.430120041516918
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.30322265625,
+        "z_lambda0": 0.007315957933241884,
+        "source_depth_lg": 0.749568
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 3800,
+          "fraction": 0.9361911800936191,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.0009144947416552355,
+            0.003072
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7987200000000001
+          ]
+        },
+        "0.010": {
+          "count": 3468,
+          "fraction": 0.8543976348854397,
+          "minimum_normalized": [
+            0.000732421875,
+            0.0009144947416552355,
+            0.006144
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7987200000000001
+          ]
+        },
+        "0.020": {
+          "count": 2713,
+          "fraction": 0.6683912293668391,
+          "minimum_normalized": [
+            0.00146484375,
+            0.0009144947416552355,
+            0.016128
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.7956480000000001
+          ]
+        },
+        "0.050": {
+          "count": 11,
+          "fraction": 0.0027100271002710027,
+          "minimum_normalized": [
+            0.25488281249999994,
+            0.007315957933241884,
+            0.239616
+          ],
+          "maximum_normalized": [
+            0.441650390625,
+            0.19021490626428897,
+            0.749568
+          ]
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-soil-l1.csv",
+      "transform": "f2",
+      "heldout_points": 4059,
+      "rms_vector_error": 0.00361252458479692,
+      "maximum_vector_error": 0.13251886220556625,
+      "p95_vector_error": 0.004397787553805138,
+      "p99_vector_error": 0.009792980143598059,
+      "maximum_null_aware_component_error": 1.1865612718335448,
+      "worst_point_m": {
+        "rho": 12.803361329362895,
+        "z": 0.3089111283705893,
+        "source_depth": 7.430120041516918
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.30322265625,
+        "z_lambda0": 0.007315957933241884,
+        "source_depth_lg": 0.749568
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 143,
+          "fraction": 0.03523035230352303,
+          "minimum_normalized": [
+            0.02197265625,
+            0.0012193263222069807,
+            0.006144
+          ],
+          "maximum_normalized": [
+            1.979736328125,
+            0.4804145709495503,
+            0.7987200000000001
+          ]
+        },
+        "0.010": {
+          "count": 41,
+          "fraction": 0.010101010101010102,
+          "minimum_normalized": [
+            0.03515625,
+            0.0012193263222069807,
+            0.009216000000000002
+          ],
+          "maximum_normalized": [
+            0.533935546875,
+            0.3706752019509221,
+            0.7987200000000001
+          ]
+        },
+        "0.020": {
+          "count": 12,
+          "fraction": 0.0029563932002956393,
+          "minimum_normalized": [
+            0.24829101562499997,
+            0.0012193263222069807,
+            0.12165120000000003
+          ],
+          "maximum_normalized": [
+            0.454833984375,
+            0.12437128486511201,
+            0.7833600000000002
+          ]
+        },
+        "0.050": {
+          "count": 3,
+          "fraction": 0.0007390983000739098,
+          "minimum_normalized": [
+            0.27685546875,
+            0.007315957933241884,
+            0.387072
+          ],
+          "maximum_normalized": [
+            0.366943359375,
+            0.063404968754763,
+            0.749568
+          ]
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-soil-l1.csv",
+      "transform": "f3",
+      "heldout_points": 4059,
+      "rms_vector_error": 0.6586789714742893,
+      "maximum_vector_error": 1.1831880106566695,
+      "p95_vector_error": 0.96408241891907,
+      "p99_vector_error": 1.0559470358262246,
+      "maximum_null_aware_component_error": 12.617398753359783,
+      "worst_point_m": {
+        "rho": 2.3503755097381163,
+        "z": 80.31689337635322,
+        "source_depth": 0.14210612101261869
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.0556640625,
+        "z_lambda0": 1.9021490626428896,
+        "source_depth_lg": 0.014336000000000003
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 4059,
+          "fraction": 1.0,
+          "minimum_normalized": [
+            0.0003662109375,
+            0.00030483158055174517,
+            5.120000000000002e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.799744
+          ]
+        },
+        "0.010": {
+          "count": 4055,
+          "fraction": 0.9990145355999015,
+          "minimum_normalized": [
+            0.00146484375,
+            0.00030483158055174517,
+            5.120000000000002e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.799744
+          ]
+        },
+        "0.020": {
+          "count": 4050,
+          "fraction": 0.9977827050997783,
+          "minimum_normalized": [
+            0.002197265625,
+            0.00030483158055174517,
+            5.120000000000002e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.799744
+          ]
+        },
+        "0.050": {
+          "count": 4015,
+          "fraction": 0.989159891598916,
+          "minimum_normalized": [
+            0.003662109375,
+            0.00030483158055174517,
+            5.120000000000002e-05
+          ],
+          "maximum_normalized": [
+            2.9992675781249996,
+            1.9990855052583447,
+            0.799744
+          ]
+        }
+      }
+    }
+  ]
+}

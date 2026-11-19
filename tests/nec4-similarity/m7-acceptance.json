@@ -84,7 +84,8 @@
     "oblique_crossings": 1
   },
   "production_boundary": {
-    "explicitly_rejected": true,
+    "m7_preflight_preserved": true,
+    "production_promoted_by": "M9",
     "nec2_fallback": false
   },
   "interface_condition": {
