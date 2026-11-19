@@ -33,7 +33,7 @@ static void gauss_legendre(int n,double *x,double *w)
   }
 }
 
-static void disk_quadrature(double a,double rho,double z,double k,int nr,
+static void disk_quadrature(double a,double rho,double z,double complex k,int nr,
                             double complex *radial,double complex *axial)
 {
   double xr[64],wr[64],xp[128],wp[128];
@@ -57,17 +57,88 @@ static void disk_quadrature(double a,double rho,double z,double k,int nr,
   *radial=er;*axial=ez;
 }
 
+/* Preserve the accepted M5 free-space arithmetic.  Keeping k real here is
+   intentional: routing a real k through complex multiplication changes a few
+   last-place bits and needlessly perturbs the frozen free-space evidence. */
+static void disk_quadrature_real(double a,double rho,double z,double k,int nr,
+                            double complex *radial,double complex *axial)
+{
+  double xr[64],wr[64],xp[128],wp[128];
+  double complex er=0.,ez=0.;
+  int i,j,np=2*nr;
+  gauss_legendre(nr,xr,wr);gauss_legendre(np,xp,wp);
+  for(i=0;i<nr;++i)
+  {
+    double rp=.5*a*(xr[i]+1.),rw=.5*a*wr[i]*rp;
+    for(j=0;j<np;++j)
+    {
+      double phi=M_PI*(xp[j]+1.),c=cos(phi);
+      double dx=rho-rp*c,r2=dx*dx+rp*rp*(1.-c*c)+z*z;
+      double r=sqrt(r2),weight=rw*M_PI*wp[j];
+      double complex q=cexp(-I*k*r)*(1.+I*k*r)/(r2*r)*weight;
+      er+=q*dx;ez+=q*z;
+    }
+  }
+  *radial=er;*axial=ez;
+}
+
 static double scaled_delta(double complex a,double complex b)
 {
   return cabs(a-b)/(1.+fmax(cabs(a),cabs(b)));
 }
 
-int nec4_endcap_disk_field(double a,double rho,double z,double k,
+static int disk_field_real(double a,double rho,double z,double k,
+                           nec4_endcap_field *f)
+{
+  double r0=hypot(rho,z);
+  if(rho<=64.*DBL_EPSILON*fmax(a,fabs(z)))
+  {
+    double az=fabs(z),ra=hypot(a,z),sgn=z<0.?-1.:1.;
+    if(az<=DBL_MIN) return 0;
+    f->radial=0.;
+    f->axial=2.*M_PI*sgn*cexp(-I*k*az)*
+      (1.-az/ra*cexp(-I*k*(ra-az)));
+    f->branch=NEC4_ENDCAP_AXIS;
+  }
+  else if(r0>1000.*a)
+  {
+    double r2=r0*r0,a2=a*a,r4=r2*r2,r3=r2*r0;
+    double complex e=cexp(-I*k*r0),base=1.+I*k*r0;
+    double complex q=I*k*k*k*r3+6.*k*k*r2-15.*base;
+    f->axial=M_PI*z*a2*e/r3*(base-a2/(4.*r2)*
+      (3.*base-k*k*r2)-rho*rho*a2/(8.*r4)*q);
+    f->radial=M_PI*rho*a2*e/r3*(base-a2/(2.*r2)*
+      (3.*base-k*k*r2)-rho*rho*a2/(8.*r4)*q);
+    f->branch=NEC4_ENDCAP_FAR;
+  }
+  else
+  {
+    double complex er0,ez0,er1,ez1;int n=12;
+    if(fabs(z)<16.*a&&rho<2.*a) n=24;
+    if(n>32) n=32;
+    disk_quadrature_real(a,rho,z,k,n,&er0,&ez0);
+    for(;;)
+    {
+      int next=2*n;if(next>64) next=64;
+      disk_quadrature_real(a,rho,z,k,next,&er1,&ez1);
+      if((scaled_delta(er0,er1)<=2.e-13&&
+          scaled_delta(ez0,ez1)<=2.e-13)||next==64) break;
+      er0=er1;ez0=ez1;n=next;
+    }
+    f->radial=er1;f->axial=ez1;f->branch=NEC4_ENDCAP_QUADRATURE;
+  }
+  return isfinite(creal(f->radial))&&isfinite(cimag(f->radial))&&
+    isfinite(creal(f->axial))&&isfinite(cimag(f->axial));
+}
+
+int nec4_endcap_disk_field(double a,double rho,double z,double complex k,
                            nec4_endcap_field *f)
 {
   double r0;
-  if(!f || !(a>0.) || rho<0. || !(k>0.) ||
-     !isfinite(a) || !isfinite(rho) || !isfinite(z)) return 0;
+  if(!f || !(a>0.) || rho<0. || !(cabs(k)>0.) ||
+     !isfinite(a) || !isfinite(rho) || !isfinite(z)||
+     !isfinite(creal(k))||!isfinite(cimag(k))) return 0;
+  if(cimag(k)==0.) return disk_field_real(a,rho,z,creal(k),f);
   r0=hypot(rho,z);
   if(rho<=64.*DBL_EPSILON*fmax(a,fabs(z)))
   {

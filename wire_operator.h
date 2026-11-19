@@ -49,10 +49,15 @@ int wire_operator_prepare_frequency(FILE *report);
 const wire_operator_validity *wire_operator_last_validity(void);
 double complex wire_operator_charge_factor(size_t segment, int end,
                                            double complex fallback);
-double wire_operator_end_parameter(double radius);
+double complex wire_operator_segment_wave_number(size_t segment);
+double complex wire_operator_source_wave_number(void);
+double complex wire_operator_source_intrinsic_impedance(void);
+double complex wire_operator_segment_phase(size_t segment,
+                                            double offset_wavelengths);
+double complex wire_operator_end_parameter(size_t segment,double radius);
 
 /* Representation-aware operations for A + B sin(x) + C f_cos(x). */
-double wire_operator_cosine_shape(double angle);
+double complex wire_operator_cosine_shape(double complex angle);
 double complex wire_operator_center_basis(double complex constant,
                                           double complex cosine);
 double wire_operator_cosine_integral(double constant_integral,
@@ -60,7 +65,7 @@ double wire_operator_cosine_integral(double constant_integral,
 double complex wire_operator_current(double complex constant,
                                      double complex sine,
                                      double complex cosine,
-                                     double angle);
+                                     size_t segment,double offset_wavelengths);
 
 void wire_operator_sbf(int i, int is, double complex *aa,
                        double complex *bb, double complex *cc);

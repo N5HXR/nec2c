@@ -24,7 +24,8 @@ typedef struct
  * gives the electric field of the disk (NEC4 theory (4-37), Appendix E).
  */
 int nec4_endcap_disk_field(double radius, double rho, double z,
-                           double wave_number, nec4_endcap_field *field);
+                           double complex wave_number,
+                           nec4_endcap_field *field);
 
 const char *nec4_endcap_branch_name(nec4_endcap_branch branch);
 

@@ -1,0 +1,71 @@
+{
+  "schema": "nec2c-nec4-m10a-normalization",
+  "schema_version": 1,
+  "seawater_5m_whip_1m_stake": {
+    "grid_impedance_ohm": {
+      "re": 37.43748937855265,
+      "im": -38.54759116396924
+    },
+    "direct_impedance_ohm": {
+      "re": 37.33979127374693,
+      "im": -38.571303521591894
+    },
+    "impedance_relative_delta": 0.001872698810992512,
+    "current_l2_relative_delta": 0.00191798176368513,
+    "passive": true,
+    "thread_identity": {
+      "impedance_relative_delta": 0.0,
+      "current_l2_relative_delta": 0.0
+    },
+    "segmentation_sweep": [
+      {
+        "upper_rest_segments": 49,
+        "lower_rest_segments": 9,
+        "fixed_feed_and_interface_segments": 2,
+        "impedance_ohm": {
+          "re": 36.88088563838587,
+          "im": -37.924199445887176
+        }
+      },
+      {
+        "upper_rest_segments": 98,
+        "lower_rest_segments": 18,
+        "fixed_feed_and_interface_segments": 2,
+        "impedance_ohm": {
+          "re": 38.733416025023544,
+          "im": -39.24076103448991
+        }
+      },
+      {
+        "upper_rest_segments": 147,
+        "lower_rest_segments": 27,
+        "fixed_feed_and_interface_segments": 2,
+        "impedance_ohm": {
+          "re": 38.81582712589088,
+          "im": -38.96882955873489
+        }
+      }
+    ],
+    "two_finest_impedance_relative_delta": 0.0051660673612423874,
+    "two_finest_resistance_relative_delta": 0.002123131386587483,
+    "two_finest_reactance_relative_delta": 0.0069781791969182804
+  },
+  "identical_media_null": {
+    "free_space_impedance_ohm": {
+      "re": 68.82423458398908,
+      "im": -18.119240754702332
+    },
+    "buried_impedance_ohm": {
+      "re": 68.8242345850403,
+      "im": -18.119240755903803
+    },
+    "impedance_relative_delta": 2.2431440337695872e-11,
+    "current_l2_relative_delta": 2.2563775280796972e-11,
+    "crossing_impedance_relative_delta": 1.3196006902182942e-11,
+    "crossing_current_l2_relative_delta": 1.324389502882644e-11
+  },
+  "unit_gates": {
+    "si_to_nec_maxwell_similarity": "tests/nec4_ground_matrix_test.c",
+    "complex_medium_kernel_similarity": "tests/nec4_kernel_test.c"
+  }
+}

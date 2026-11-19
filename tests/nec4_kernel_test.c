@@ -61,6 +61,24 @@ int main(int argc,char **argv)
     print_field(cases[i].name,cases[i].length,cases[i].z,cases[i].rho,
                 2.*acos(-1.),&field);
   }
+  {
+    const double eta0=376.730313668;
+    nec4_segment_fields vacuum,dielectric;
+    double worst=0.;
+    if(!nec4_reduced_segment_field_medium(.1,.03,.02,2.*acos(-1.),eta0,
+         &vacuum) ||
+       !nec4_reduced_segment_field_medium(.05,.015,.01,4.*acos(-1.),
+         eta0/2.,&dielectric)) return 3;
+    {
+      double complex a[6]={vacuum.ezs,vacuum.ers,vacuum.ezc,vacuum.erc,
+        vacuum.ezk,vacuum.erk};
+      double complex b[6]={dielectric.ezs,dielectric.ers,dielectric.ezc,
+        dielectric.erc,dielectric.ezk,dielectric.erk};
+      for(i=0;i<6;++i)
+        worst=fmax(worst,cabs(a[i]-b[i])/fmax(1.,cabs(a[i])));
+    }
+    if(worst>2.e-12) return 4;
+  }
   puts("\n]");
   return 0;
 }

@@ -320,7 +320,7 @@ The direct engine may be too slow for general matrix fill. It is retained as a c
 
 ### M9 - documented NEC4 ground tables and asymptotics
 
-**Status:** implementation complete and awaiting user acceptance. The direct
+**Status:** accepted by the user on 2026-11-19. The direct
 oracle, three documented near tables, second-order saddle/pole path, measured
 level-3 model grid, exact-key cache, matrix integration, CLI controls, and
 deduplicated grazing warning all pass their automated gates.
@@ -347,6 +347,10 @@ Acceptance metrics:
 - user runs the 5 m seawater whip/ground-stake witness and one near-interface field sweep.
 
 ### M10 - end-to-end buried and interface-crossing antennas
+
+**Status:** M10A absolute-normalization implementation complete on 2026-11-19;
+pending user acceptance.  The frozen contract and results are in
+`NEC4-SIMILARITY-M10A-SPEC.md` and `NEC4-SIMILARITY-M10A-RESULTS.md`.
 
 Goal: qualify the complete documented NEC4-similarity feature on realistic antennas.
 

@@ -28,6 +28,7 @@ typedef struct {
   int direct_model;
   int grazing_seen;
   int direct_strip_seen;
+  int identical_media;
   int ready;
 } nec4_ground_runtime;
 

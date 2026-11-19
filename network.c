@@ -695,7 +695,8 @@ void netwk( complex double *cm, int *ip, complex double *einc )
 	  ymit= cmplx( crnt.bir[isc1], crnt.bii[isc1]);
 	  netcx.zped= cmplx( crnt.cir[isc1], crnt.cii[isc1]);
 	  pwr= data.si[isc1]* TP*.5;
-	  cux=wire_operator_current(cux,ymit,netcx.zped,-pwr)*data.wlam;
+	  cux=wire_operator_current(cux,ymit,netcx.zped,(size_t)isc1,
+	    -.5*data.si[isc1])*data.wlam;
 	  ymit= cux/ vlt;
 	  netcx.zped= vlt/ cux;
 	  pwr=.5* creal( vlt* conj( cux));

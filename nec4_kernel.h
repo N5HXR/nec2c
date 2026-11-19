@@ -30,6 +30,10 @@ int nec4_reduced_segment_field(double s, double z, double rho,
                                double wave_number,
                                nec4_segment_fields *field);
 
+int nec4_reduced_segment_field_medium(double s,double z,double rho,
+    double complex wave_number,double complex intrinsic_impedance,
+    nec4_segment_fields *field);
+
 const char *nec4_field_branch_name(nec4_field_branch branch);
 
 #endif

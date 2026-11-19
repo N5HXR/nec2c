@@ -86,6 +86,7 @@ int main(void)
   }
   assert(worst<2.e-5);
 
+
   /* Independent high-precision Python/M8 fixtures for epsilon_r=4 exercise
      the non-null Appendix-G transformations, not merely their vacuum limit. */
   {
@@ -146,7 +147,8 @@ int main(void)
        refinement while preserving the parent sine/cosine basis exactly. */
     {
       double center[3]={0.,0.,-.7},observer[3]={2.,0.,.4};
-      double left_center[3],right_center[3],half=.04,phase;
+      double left_center[3],right_center[3],half=.04;
+      double complex phase;
       nec4_ground_segment_field whole,left,right;
       double quadrature_worst=0.;
       for(int axis=0;axis<3;++axis)
@@ -163,17 +165,17 @@ int main(void)
       assert(nec4_ground_matrix_segment_correction(&nonnull,
         NEC4_MEDIUM_LOWER,NEC4_MEDIUM_UPPER,right_center,direction,half,
         observer,.001,&right));
-      phase=2.*acos(-1.)*.02*nonnull.frequency_hz/C0;
+      phase=nonnull.lower_wave_number_per_m*.02;
       for(int component=0;component<3;++component)
       {
         double complex refined_constant=left.constant[component]+
           right.constant[component];
         double complex refined_sine=
-          left.sine[component]*cos(phase)-left.cosine[component]*sin(phase)+
-          right.sine[component]*cos(phase)+right.cosine[component]*sin(phase);
+          left.sine[component]*ccos(phase)-left.cosine[component]*csin(phase)+
+          right.sine[component]*ccos(phase)+right.cosine[component]*csin(phase);
         double complex refined_cosine=
-          left.cosine[component]*cos(phase)+left.sine[component]*sin(phase)+
-          right.cosine[component]*cos(phase)-right.sine[component]*sin(phase);
+          left.cosine[component]*ccos(phase)+left.sine[component]*csin(phase)+
+          right.cosine[component]*ccos(phase)-right.sine[component]*csin(phase);
         quadrature_worst=fmax(quadrature_worst,
           cabs(whole.constant[component]-refined_constant)/
           fmax(1.,cabs(refined_constant)));
@@ -186,6 +188,88 @@ int main(void)
       assert(quadrature_worst<1.e-8);
       printf("NEC4 matrix segment quadrature refinement passed; worst %.3e\n",
         quadrature_worst);
+    }
+
+    /* Maxwell similarity is an absolute units gate, not a comparison of two
+       evaluators sharing an adapter.  Doubling frequency and halving every
+       length doubles physical E/I (ohm/m), while the NEC matrix coefficient
+       in ohms remains invariant after multiplication by wavelength. */
+    {
+      material_context scaled_material={20.e6,4.*k0,2.*k0};
+      nec4_ground_matrix_context scaled={20.e6,4.,4.*k0,2.*k0,
+        material_cross,&scaled_material};
+      double center[3]={0.,0.,-.7},observer[3]={2.,0.,.4};
+      double scaled_center[3]={0.,0.,-.35},scaled_observer[3]={1.,0.,.2};
+      nec4_ground_segment_field physical,physical_scaled,matrix_value,
+        matrix_scaled;
+      double physical_worst=0.,matrix_worst=0.;
+      assert(nec4_ground_matrix_segment_correction(&nonnull,
+        NEC4_MEDIUM_LOWER,NEC4_MEDIUM_UPPER,center,direction,.08,observer,
+        .001,&physical));
+      assert(nec4_ground_matrix_segment_correction(&scaled,
+        NEC4_MEDIUM_LOWER,NEC4_MEDIUM_UPPER,scaled_center,direction,.04,
+        scaled_observer,.0005,&physical_scaled));
+      assert(nec4_ground_matrix_segment_nec_correction(&nonnull,
+        NEC4_MEDIUM_LOWER,NEC4_MEDIUM_UPPER,center,direction,.08,observer,
+        .001,C0/10.e6,&matrix_value));
+      assert(nec4_ground_matrix_segment_nec_correction(&scaled,
+        NEC4_MEDIUM_LOWER,NEC4_MEDIUM_UPPER,scaled_center,direction,.04,
+        scaled_observer,.0005,C0/20.e6,&matrix_scaled));
+      for(int component=0;component<3;++component)
+      {
+        const double complex *a[3]={physical.constant,physical.sine,
+          physical.cosine};
+        const double complex *b[3]={physical_scaled.constant,
+          physical_scaled.sine,physical_scaled.cosine};
+        const double complex *m[3]={matrix_value.constant,matrix_value.sine,
+          matrix_value.cosine};
+        const double complex *n[3]={matrix_scaled.constant,
+          matrix_scaled.sine,matrix_scaled.cosine};
+        for(int basis=0;basis<3;++basis)
+        {
+          physical_worst=fmax(physical_worst,
+            cabs(b[basis][component]-2.*a[basis][component])/
+            fmax(1.,cabs(2.*a[basis][component])));
+          matrix_worst=fmax(matrix_worst,
+            cabs(n[basis][component]-m[basis][component])/
+            fmax(1.,cabs(m[basis][component])));
+        }
+      }
+      assert(physical_worst<2.e-5);
+      assert(matrix_worst<2.e-5);
+      printf("NEC4 SI/NEC normalization similarity passed; physical %.3e, "
+        "matrix %.3e\n",physical_worst,matrix_worst);
+    }
+
+    /* The interface-junction endpoint charges obey the same Maxwell scaling,
+       and opposite ends must carry exactly opposite signs under exp(+jwt). */
+    {
+      nec4_ground_matrix_context scaled=nonnull;
+      double endpoint[3]={0.,0.,-.2},observer[3]={.3,-.1,.4};
+      double scaled_endpoint[3]={0.,0.,-.1},
+        scaled_observer[3]={.15,-.05,.2};
+      double complex positive[3],negative[3],scaled_field[3];
+      double charge_worst=0.;
+      scaled.frequency_hz*=2.;
+      scaled.lower_wave_number_per_m*=2.;
+      scaled.upper_wave_number_per_m*=2.;
+      assert(nec4_ground_matrix_endpoint_charge_nec(&nonnull,
+        NEC4_MEDIUM_LOWER,endpoint,observer,C0/10.e6,1,positive));
+      assert(nec4_ground_matrix_endpoint_charge_nec(&nonnull,
+        NEC4_MEDIUM_LOWER,endpoint,observer,C0/10.e6,-1,negative));
+      assert(nec4_ground_matrix_endpoint_charge_nec(&scaled,
+        NEC4_MEDIUM_LOWER,scaled_endpoint,scaled_observer,C0/20.e6,1,
+        scaled_field));
+      for(int component=0;component<3;++component)
+      {
+        charge_worst=fmax(charge_worst,relative(positive[component],
+          scaled_field[component]));
+        assert(cabs(positive[component]+negative[component])<1.e-13*
+          fmax(1.,cabs(positive[component])));
+      }
+      assert(charge_worst<2.e-12);
+      printf("NEC4 interface endpoint-charge sign and similarity passed; "
+        "worst %.3e\n",charge_worst);
     }
   }
 

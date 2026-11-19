@@ -4,6 +4,7 @@
 #include "nec4_ground_asymptotic.h"
 
 #include <errno.h>
+#include <float.h>
 #include <inttypes.h>
 #include <math.h>
 #include <stdio.h>
@@ -14,7 +15,14 @@
 
 static int runtime_cross(void *opaque,double rho,double z,double depth,
     double complex field[NEC4_GROUND_COMPONENT_COUNT])
-{ return nec4_ground_runtime_evaluate(opaque,rho,z,depth,field,NULL); }
+{
+  nec4_ground_runtime *runtime=opaque;
+  if(runtime&&runtime->identical_media)
+    return nec4_ground_matrix_homogeneous_components(
+      runtime->matrix_context.frequency_hz,
+      runtime->matrix_context.upper_wave_number_per_m,rho,-depth,z,field);
+  return nec4_ground_runtime_evaluate(opaque,rho,z,depth,field,NULL);
+}
 
 void nec4_ground_runtime_init(nec4_ground_runtime *runtime)
 { if(runtime) memset(runtime,0,sizeof(*runtime)); }
@@ -84,6 +92,19 @@ int nec4_ground_runtime_prepare(nec4_ground_runtime *runtime,
   runtime->direct_options=selected->direct_options?*selected->direct_options:
                           direct_defaults;
   runtime->direct_model=selected->direct_model!=0;
+  if(cabs(epsilon-1.)<=64.*DBL_EPSILON&&
+     cabs(lower_k-upper_k)<=64.*DBL_EPSILON*fmax(1.,cabs(upper_k)))
+  {
+    runtime->identical_media=1;
+    runtime->matrix_context.frequency_hz=frequency;
+    runtime->matrix_context.lower_epsilon_relative=epsilon;
+    runtime->matrix_context.lower_wave_number_per_m=lower_k;
+    runtime->matrix_context.upper_wave_number_per_m=upper_k;
+    runtime->matrix_context.cross=runtime_cross;
+    runtime->matrix_context.cross_context=runtime;
+    runtime->ready=1;
+    return 1;
+  }
   for(int index=0;index<3;++index) {
     char path[4096];
     nec4_ground_cache_status status=NEC4_CACHE_NOT_FOUND;

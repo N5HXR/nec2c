@@ -31,6 +31,10 @@ typedef struct {
   double complex upper_wave_number_per_m;
 } nec4_ground_matrix_tables;
 
+int nec4_ground_matrix_homogeneous_components(double frequency_hz,
+    double complex wave_number_per_m,double rho_m,double source_z_m,
+    double observer_z_m,double complex field[5]);
+
 /* Canonical callback for a complete three-table M9 bank.  Shared depth
    boundaries belong to the lower-numbered table. */
 int nec4_ground_matrix_table_cross(void *context,double rho_m,
@@ -45,7 +49,7 @@ int nec4_ground_matrix_point(const nec4_ground_matrix_context *context,
     const double source_direction[3],double complex field[3]);
 
 /* Integrate the difference between the complete interface dyadic and the
-   upper-medium homogeneous dyadic over one straight source segment.  This is
+   source-medium homogeneous dyadic over one straight source segment.  This is
    the correction added to NEC's finite-radius direct wire field. */
 int nec4_ground_matrix_segment_correction(
     const nec4_ground_matrix_context *context,
@@ -53,5 +57,37 @@ int nec4_ground_matrix_segment_correction(
     const double source_center_m[3],const double source_direction[3],
     double source_length_m,const double observer_m[3],
     double regularization_radius_m,nec4_ground_segment_field *field);
+
+/* Convert the physical E/I segment correction (ohm/m) to NEC's matrix
+   normalization (ohm).  NEC solves for current per metre and multiplies the
+   solved coefficient by wavelength before reporting amperes. */
+int nec4_ground_matrix_segment_nec_correction(
+    const nec4_ground_matrix_context *context,
+    nec4_segment_medium source_medium,nec4_segment_medium observer_medium,
+    const double source_center_m[3],const double source_direction[3],
+    double source_length_m,const double observer_m[3],
+    double regularization_radius_m,double normalization_length_m,
+    nec4_ground_segment_field *field);
+
+/* Complete interface field for a source segment, in NEC matrix units.  This
+   path is required for lower-medium sources whose complex current basis and
+   homogeneous direct kernel are not the free-space NEC kernel. */
+int nec4_ground_matrix_segment_nec_complete(
+    const nec4_ground_matrix_context *context,
+    nec4_segment_medium source_medium,nec4_segment_medium observer_medium,
+    const double source_center_m[3],const double source_direction[3],
+    double source_length_m,const double observer_m[3],
+    double regularization_radius_m,double normalization_length_m,
+    nec4_ground_segment_field *field);
+
+/* Homogeneous-medium point-charge field omitted by the reduced segment
+   kernel.  The sign is +1 at source end 1 and -1 at source end 2 for the
+   exp(+j omega t) convention.  Returned units are NEC matrix ohms for unit
+   endpoint current shape and current-per-metre matrix unknown. */
+int nec4_ground_matrix_endpoint_charge_nec(
+    const nec4_ground_matrix_context *context,
+    nec4_segment_medium source_medium,const double endpoint_m[3],
+    const double observer_m[3],double normalization_length_m,int end_sign,
+    double complex field[3]);
 
 #endif

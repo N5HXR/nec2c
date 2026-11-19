@@ -57,7 +57,8 @@ static int endcap_disk_global_image(size_t segment,int end,int image,
   double rz=dz-axial*salp;
   double radial=hypot(hypot(rx,ry),rz);
   nec4_endcap_field field;
-  if(!nec4_endcap_disk_field(data.bi[segment],radial,axial,TP,&field))
+  if(!nec4_endcap_disk_field(data.bi[segment],radial,axial,
+      wire_operator_segment_wave_number(segment),&field))
     return 0;
   if(radial>0.)
   {
@@ -113,12 +114,26 @@ int wire_operator_endcap_current_field(size_t segment,int end,
     double xi,double yi,double zi,double complex *ex,
     double complex *ey,double complex *ez)
 {
-  double complex scale;
+  double complex scale,k,eta=ETA;
+  int lower=0;
   if(!wire_operator_nec4_basis() || segment>=(size_t)data.n ||
      (end!=0 && end!=1)) return 0;
   if(!endcap_disk_global(segment,end,xi,yi,zi,ex,ey,ez)) return 0;
-  /* Equations (4-35), (4-37), with lengths normalized by wavelength. */
-  scale=I*(end?-1.:1.)*ETA/(8.*PI*PI*PI*data.bi[segment]*data.bi[segment]);
+  /* Equations (4-35), (4-37), generalized to the segment medium.  With
+     lengths normalized by lambda0 the free-space expression reduces to
+     I*eta0/(8*pi^3*a^2). */
+  k=wire_operator_segment_wave_number(segment);
+  if(wire_operator_nec4_ground()&&medium_state&&
+     segment<medium_state->segment_count&&
+     medium_state->segment_medium[segment]==NEC4_MEDIUM_LOWER)
+  { eta=medium_state->intrinsic_impedance_ohm;lower=1; }
+  if(lower)
+    scale=I*(end?-1.:1.)*eta/
+      (4.*PI*PI*k*data.bi[segment]*data.bi[segment]);
+  else
+    /* Keep the accepted free-space M5 arithmetic bit-for-bit. */
+    scale=I*(end?-1.:1.)*ETA/
+      (8.*PI*PI*PI*data.bi[segment]*data.bi[segment]);
   *ex*=scale;*ey*=scale;*ez*=scale;
   return 1;
 }
@@ -380,17 +395,52 @@ double complex wire_operator_charge_factor(size_t segment,int end,
   return junction_charge_factor(segment,end,fallback);
 }
 
-double wire_operator_end_parameter(double radius)
+double complex wire_operator_segment_wave_number(size_t segment)
 {
-  double ka=PI*radius;
+  if(wire_operator_nec4_ground()&&medium_state&&
+     segment<medium_state->segment_count&&
+     medium_state->segment_medium[segment]==NEC4_MEDIUM_LOWER)
+    /* Geometry is normalized with NEC's historical free-space wavelength.
+       Use the exact medium/free-space ratio here, rather than multiplying a
+       modern-SI k by that historical wavelength.  Besides avoiding a small
+       mixed-constant scale error, this makes an er=1 invisible interface an
+       exact algebraic null. */
+    return TP*medium_state->refractive_index;
+  return TP;
+}
+
+double complex wire_operator_source_wave_number(void)
+{ return wire_operator_segment_wave_number(matrix_source_segment); }
+
+double complex wire_operator_source_intrinsic_impedance(void)
+{
+  if(wire_operator_nec4_ground()&&medium_state&&
+     matrix_source_segment<medium_state->segment_count&&
+     medium_state->segment_medium[matrix_source_segment]==NEC4_MEDIUM_LOWER)
+    return ETA/medium_state->refractive_index;
+  return ETA;
+}
+
+double complex wire_operator_segment_phase(size_t segment,
+    double offset_wavelengths)
+{ return wire_operator_segment_wave_number(segment)*offset_wavelengths; }
+
+double complex wire_operator_end_parameter(size_t segment,double radius)
+{
+  double complex ka=.5*wire_operator_segment_wave_number(segment)*radius;
   if(wire_operator_nec4_basis()) return ka;
   return ka*(1.-.5*ka*ka)/(1.-ka*ka);
 }
 
-double wire_operator_cosine_shape(double angle)
+double complex wire_operator_cosine_shape(double complex angle)
 {
-  if(!wire_operator_nec4_basis()) return cos(angle);
-  return -2.0*sin(0.5*angle)*sin(0.5*angle);
+  if(!wire_operator_nec4_basis()) return cos(creal(angle));
+  if(cimag(angle)==0.)
+  {
+    double sine=sin(.5*creal(angle));
+    return -2.*sine*sine;
+  }
+  return -2.0*csin(0.5*angle)*csin(0.5*angle);
 }
 
 double complex wire_operator_center_basis(double complex constant,
@@ -409,9 +459,11 @@ double wire_operator_cosine_integral(double constant_integral,
 double complex wire_operator_current(double complex constant,
                                      double complex sine,
                                      double complex cosine,
-                                     double angle)
+                                     size_t segment,double offset_wavelengths)
 {
-  return constant+sine*sin(angle)+cosine*wire_operator_cosine_shape(angle);
+  double complex angle=wire_operator_segment_phase(segment,offset_wavelengths);
+  double complex sine_shape=cimag(angle)==0.?sin(creal(angle)):csin(angle);
+  return constant+sine*sine_shape+cosine*wire_operator_cosine_shape(angle);
 }
 
 void wire_operator_sbf(int i, int is, double complex *aa,
@@ -436,21 +488,24 @@ void wire_operator_efld(double xi, double yi, double zi, double ai, int ij)
      matrix_source_segment<medium_state->segment_count)
   {
     size_t observer_segment=(size_t)((long)matrix_source_segment+(long)ij);
+    nec4_segment_medium source_medium=
+      medium_state->segment_medium[matrix_source_segment];
     nec4_ground_segment_field correction;
     double center[3]={dataj.xj*data.wlam,dataj.yj*data.wlam,
       dataj.zj*data.wlam};
     double direction[3]={dataj.cabj,dataj.sabj,dataj.salpj};
     double observer[3]={xi*data.wlam,yi*data.wlam,zi*data.wlam};
-    /* The established reduced wire kernel supplies the finite-radius direct
-       term.  The new adapter adds complete-interface minus free-space field. */
+    /* The reduced kernel supplies the finite-radius direct field in the
+       source medium.  The adapter adds complete-interface minus that same
+       homogeneous-medium field. */
     ground_direct_only=1;
     active_operator->efld(xi,yi,zi,ai,ij);
     ground_direct_only=0;
     if(observer_segment>=medium_state->segment_count||
-       !nec4_ground_matrix_segment_correction(ground_matrix_context,
-         medium_state->segment_medium[matrix_source_segment],
-         medium_state->segment_medium[observer_segment],center,direction,
-         dataj.s*data.wlam,observer,ai*data.wlam,&correction))
+       !nec4_ground_matrix_segment_nec_correction(ground_matrix_context,
+         source_medium,medium_state->segment_medium[observer_segment],
+         center,direction,dataj.s*data.wlam,observer,ai*data.wlam,
+         data.wlam,&correction))
     {
       fprintf(stderr,"nec2c: NEC4 ground matrix evaluation failed "
           "(source=%lu observer=%lu source_xyz=%.17g,%.17g,%.17g "
@@ -460,6 +515,8 @@ void wire_operator_efld(double xi, double yi, double zi, double ai, int ij)
           observer[0],observer[1],observer[2]);
       stop(-1);
     }
+    /* The matrix adapter has converted physical E/I in ohm/m to NEC's ohm
+       normalization using data.wlam. */
     dataj.exk+=correction.constant[0];
     dataj.eyk+=correction.constant[1];
     dataj.ezk+=correction.constant[2];
@@ -469,6 +526,40 @@ void wire_operator_efld(double xi, double yi, double zi, double ai, int ij)
     dataj.exc+=correction.cosine[0];
     dataj.eyc+=correction.cosine[1];
     dataj.ezc+=correction.cosine[2];
+    /* Reduced segment fields omit artificial endpoint charges because they
+       cancel at ordinary same-medium junctions.  At an interface crossing
+       the two charges occupy different media and section 4.1 requires both
+       endpoint fields to be restored.  The interface correction already
+       contains complete-minus-homogeneous endpoint fields; add the omitted
+       homogeneous part here. */
+    for(int end=0;end<2;++end)
+    {
+      size_t endpoint_index=2*matrix_source_segment+(size_t)end;
+      if(medium_state->endpoint_factor_assigned[endpoint_index])
+      {
+        double endpoint[3]={
+          (end?data.x2[matrix_source_segment]:data.x1[matrix_source_segment])*
+            data.wlam,
+          (end?data.y2[matrix_source_segment]:data.y1[matrix_source_segment])*
+            data.wlam,
+          (end?data.z2[matrix_source_segment]:data.z1[matrix_source_segment])*
+            data.wlam};
+        double complex charge[3];
+        double offset=(end?1.:-1.)*.5*dataj.s;
+        double complex phase=wire_operator_segment_phase(
+          matrix_source_segment,offset);
+        if(!nec4_ground_matrix_endpoint_charge_nec(ground_matrix_context,
+            source_medium,endpoint,observer,data.wlam,end? -1:1,charge))
+          stop(-1);
+        dataj.exk+=charge[0];dataj.eyk+=charge[1];dataj.ezk+=charge[2];
+        dataj.exs+=charge[0]*csin(phase);
+        dataj.eys+=charge[1]*csin(phase);
+        dataj.ezs+=charge[2]*csin(phase);
+        dataj.exc+=charge[0]*ccos(phase);
+        dataj.eyc+=charge[1]*ccos(phase);
+        dataj.ezc+=charge[2]*ccos(phase);
+      }
+    }
   }
   else active_operator->efld(xi, yi, zi, ai, ij);
   if(wire_operator_nec4_basis())

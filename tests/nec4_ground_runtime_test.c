@@ -42,13 +42,14 @@ int main(void)
   const double complex upper_k=2.*acos(-1.)/wavelength;
   const double complex lower_k=upper_k*csqrt(epsilon);
   double bias=1.25;
-  nec4_ground_runtime first,second,changed;
+  nec4_ground_runtime first,second,changed,identical;
   nec4_ground_runtime_options options={
     .cache_directory=directory,.workers=4,.sampler=sample,
     .sampler_context=&bias,.direct_options=NULL};
   assert(mkdtemp(directory));
   nec4_ground_runtime_init(&first);nec4_ground_runtime_init(&second);
   nec4_ground_runtime_init(&changed);
+  nec4_ground_runtime_init(&identical);
   assert(nec4_ground_runtime_prepare(&first,frequency,epsilon,lower_k,upper_k,
       &options));
   assert(first.ready&&first.cache_hits==0&&first.cache_misses==4&&
@@ -117,9 +118,24 @@ int main(void)
   assert(nec4_ground_runtime_prepare(&changed,frequency*1.01,epsilon,
       lower_k*1.01,upper_k*1.01,&options));
   assert(changed.cache_hits==0&&changed.generated_tables==4);
+  assert(nec4_ground_runtime_prepare(&identical,frequency,1.,upper_k,upper_k,
+      &options));
+  assert(identical.ready&&identical.identical_media&&
+      identical.cache_hits==0&&identical.cache_misses==0&&
+      identical.generated_tables==0&&identical.payload_bytes==0);
+  {
+    const nec4_ground_matrix_context *matrix=
+      nec4_ground_runtime_matrix_context(&identical);
+    double complex actual[5],expected[5];
+    assert(matrix&&matrix->cross(matrix->cross_context,.3,.4,.2,actual));
+    assert(nec4_ground_matrix_homogeneous_components(frequency,upper_k,.3,
+      -.2,.4,expected));
+    assert(!memcmp(actual,expected,sizeof(actual)));
+  }
   printf("NEC4 frequency table runtime passed: %zu bytes, first 0/4 hits, "
       "repeat 4/4 hits, changed frequency 0/4 hits\n",first.payload_bytes);
-  nec4_ground_runtime_destroy(&changed);nec4_ground_runtime_destroy(&second);
+  nec4_ground_runtime_destroy(&identical);nec4_ground_runtime_destroy(&changed);
+  nec4_ground_runtime_destroy(&second);
   nec4_ground_runtime_destroy(&first);remove_directory(directory);
   return 0;
 }

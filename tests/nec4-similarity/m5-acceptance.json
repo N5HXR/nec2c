@@ -54,46 +54,46 @@
         "segments": 10,
         "length_radius": 2.5,
         "impedance_ohm": {
-          "re": 50.53233926308503,
-          "im": 62.17494310207132
+          "re": 50.53233927396908,
+          "im": 62.174943115548224
         },
-        "current_ripple": 0.01890990826197125
+        "current_ripple": 0.018909908262264317
       },
       {
         "segments": 20,
         "length_radius": 1.25,
         "impedance_ohm": {
-          "re": 53.529163927368074,
-          "im": 27.10330382212917
+          "re": 53.52916393904055,
+          "im": 27.10330382914051
         },
-        "current_ripple": 0.03894981345207295
+        "current_ripple": 0.038949813452291884
       },
       {
         "segments": 40,
         "length_radius": 0.625,
         "impedance_ohm": {
-          "re": 56.04347513488684,
-          "im": 21.63764825910211
+          "re": 56.04347514688261,
+          "im": 21.637648264704794
         },
-        "current_ripple": 0.06833284794942979
+        "current_ripple": 0.06833284794961772
       },
       {
         "segments": 80,
         "length_radius": 0.3125,
         "impedance_ohm": {
-          "re": 58.235536400804655,
-          "im": 20.980377942583218
+          "re": 58.23553641298386,
+          "im": 20.980377947670835
         },
-        "current_ripple": 0.08336303863517841
+        "current_ripple": 0.08336303863503806
       },
       {
         "segments": 120,
         "length_radius": 0.20833333333333334,
         "impedance_ohm": {
-          "re": 59.434847592031396,
-          "im": 20.73824279929955
+          "re": 59.434847604342146,
+          "im": 20.738242804189053
         },
-        "current_ripple": 0.20193459355678764
+        "current_ripple": 0.20193459356807222
       }
     ]
   },
@@ -108,27 +108,27 @@
   "reciprocity": {
     "transfer_currents_a": [
       {
-        "re": -0.0025432991323926426,
-        "im": 0.010545765716105127
+        "re": -0.0025432991318251785,
+        "im": 0.010545765714097247
       },
       {
-        "re": -0.0025432991323926365,
-        "im": 0.010545765716105132
+        "re": -0.0025432991318251803,
+        "im": 0.010545765714097243
       }
     ],
-    "scaled_defect": 7.996680103938911e-18
+    "scaled_defect": 3.878959614448864e-18
   },
   "loaded_network": {
     "serial_parallel_scaled_delta": 0.0,
     "power_balance_relative": 0.0,
     "power": {
       "basis": "driven-accepted-power",
-      "accepted_w": 0.008954118408663692,
-      "air_radiated_w": 0.00052305036501411,
+      "accepted_w": 0.008954118408556222,
+      "air_radiated_w": 0.0005230503649281527,
       "lower_halfspace_flux_w": null,
       "dielectric_absorbed_w": null,
-      "structure_loss_w": 5.8410995344657266e-05,
-      "network_loss_w": 0.008372657048304925,
+      "structure_loss_w": 5.841099532405743e-05,
+      "network_loss_w": 0.008372657048304012,
       "balance_defect_w": null,
       "balance_defect_relative": null,
       "angular_quadrature": {

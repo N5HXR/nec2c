@@ -41,8 +41,12 @@ void qdsrc( int is, complex double v, complex double *e )
   wire_operator_tbf( is+1,0);
   data.icon1[is]= i;
   dataj.s= data.si[is]*.5;
-  curd= CCJ* v/(( log(2.* dataj.s/ data.bi[is])-1.)*( segj.bx[segj.jsno-1]*
-		cos( TP* dataj.s)+ segj.cx[segj.jsno-1]* sin( TP* dataj.s))* data.wlam);
+  {
+    complex double phase=wire_operator_segment_phase((size_t)is,dataj.s);
+    curd= CCJ*v/((log(2.*dataj.s/data.bi[is])-1.)*
+      (segj.bx[segj.jsno-1]*ccos(phase)+
+       segj.cx[segj.jsno-1]*csin(phase))*data.wlam);
+  }
   vsorc.vqds[vsorc.nqds]= v;
   vsorc.iqds[vsorc.nqds]= is+1;
   vsorc.nqds++;

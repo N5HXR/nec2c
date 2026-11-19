@@ -725,13 +725,14 @@ static complex double cmww_basis_value(int segment,int basis,
 {
   complex double value=etk*segj.ax[basis]+ets*segj.bx[basis]+
     etc*segj.cx[basis];
-  double d=PI*data.si[segment];
   if(cap1_active)
     value+=cap1*wire_operator_current(segj.ax[basis],segj.bx[basis],
-                                      segj.cx[basis],-d);
+                                      segj.cx[basis],(size_t)segment,
+                                      -.5*data.si[segment]);
   if(cap2_active)
     value+=cap2*wire_operator_current(segj.ax[basis],segj.bx[basis],
-                                      segj.cx[basis],d);
+                                      segj.cx[basis],(size_t)segment,
+                                      .5*data.si[segment]);
   if(cabs(gap)>1.e-30)
     value+=gap*wire_operator_center_basis(segj.ax[basis],segj.cx[basis]);
   return value;

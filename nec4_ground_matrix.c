@@ -47,6 +47,11 @@ static int homogeneous(double frequency_hz,double complex wave_number,
   return 1;
 }
 
+int nec4_ground_matrix_homogeneous_components(double frequency,
+    double complex wave_number,double rho,double source_z,double observer_z,
+    double complex value[5])
+{ return homogeneous(frequency,wave_number,rho,source_z,observer_z,value); }
+
 static int canonical(const nec4_ground_matrix_context *context,double rho,
     double observer_z,double source_depth,double complex value[5])
 {
@@ -153,7 +158,9 @@ static int correction_point(const nec4_ground_matrix_context *context,
         rho,source[2],observer[2]);
     return 0;
   }
-  if(!homogeneous(context->frequency_hz,context->upper_wave_number_per_m,rho,
+  if(!homogeneous(context->frequency_hz,
+       source_medium==NEC4_MEDIUM_LOWER?context->lower_wave_number_per_m:
+       context->upper_wave_number_per_m,rho,
        source[2],observer[2],free_components)) {
     fprintf(stderr,"nec2c: NEC4 free-space subtraction failed at "
         "rho=%.17g source_z=%.17g observer_z=%.17g\n",
@@ -165,11 +172,12 @@ static int correction_point(const nec4_ground_matrix_context *context,
   return 1;
 }
 
-int nec4_ground_matrix_segment_correction(
+static int segment_integral(
     const nec4_ground_matrix_context *context,
     nec4_segment_medium source_medium,nec4_segment_medium observer_medium,
     const double center[3],const double direction[3],double length,
-    const double observer[3],double radius,nec4_ground_segment_field *result)
+    const double observer[3],double radius,int subtract_free,
+    nec4_ground_segment_field *result)
 {
   /* 16-point Gauss-Legendre is deterministic and resolves the smooth ground
      correction.  The singular direct wire term is deliberately not here. */
@@ -182,6 +190,7 @@ int nec4_ground_matrix_segment_correction(
     .149595988816576733,.124628971255533872,.095158511682492785,
     .062253523938647893,.027152459411754095};
   double shifted[3]={observer[0],observer[1],observer[2]};
+  int panels=1;
   if(!context||!center||!direction||!observer||!result||!(length>0.)||radius<0.)
     return 0;
   memset(result,0,sizeof(*result));
@@ -199,22 +208,125 @@ int nec4_ground_matrix_segment_correction(
       shifted[0]+=radius*nx/n;shifted[1]+=radius*ny/n;shifted[2]+=radius*nz/n;
     }
   }
-  for(int q=0;q<8;++q) for(int sign=-1;sign<=1;sign+=2)
+  /* A point-current representation at the wire radius has a narrow but
+     finite near-self peak.  One panel is sufficient for smooth ground
+     corrections and separated segments; subdivide only when the observer's
+     projection lies on the source and its transverse distance is small. */
   {
-    double t=.5*length*sign*x[q],source[3],basis_sine,basis_cosine;
+    double vx=shifted[0]-center[0],vy=shifted[1]-center[1],
+      vz=shifted[2]-center[2];
+    double axial=vx*direction[0]+vy*direction[1]+vz*direction[2];
+    double tx=vx-axial*direction[0],ty=vy-axial*direction[1],
+      tz=vz-axial*direction[2],transverse=hypot(hypot(tx,ty),tz);
+    if(fabs(axial)<=.5*length&&transverse<length)
+    {
+      double scale=fmax(radius,transverse);
+      if(scale>0.) panels=(int)ceil(length/(4.*scale));
+      if(panels<1) panels=1;
+      if(panels>128) panels=128;
+    }
+  }
+  for(int panel=0;panel<panels;++panel)
+    for(int q=0;q<8;++q) for(int sign=-1;sign<=1;sign+=2)
+  {
+    double panel_length=length/panels;
+    double middle=-.5*length+(panel+.5)*panel_length;
+    double half=.5*panel_length;
+    double t=middle+half*sign*x[q],source[3];
+    double complex source_wave_number=
+      source_medium==NEC4_MEDIUM_LOWER?
+      context->lower_wave_number_per_m:context->upper_wave_number_per_m;
+    double complex basis_sine=csin(source_wave_number*t);
+    double complex basis_cosine=ccos(source_wave_number*t);
     double complex value[3];
     for(int k=0;k<3;++k) source[k]=center[k]+t*direction[k];
-    if(!correction_point(context,source_medium,observer_medium,source,shifted,
-        direction,value)) return 0;
-    basis_sine=sin(2.*acos(-1.)*t*context->frequency_hz/NEC4_C0);
-    basis_cosine=cos(2.*acos(-1.)*t*context->frequency_hz/NEC4_C0);
+    if(subtract_free)
+    {
+      if(!correction_point(context,source_medium,observer_medium,source,
+          shifted,direction,value)) return 0;
+    }
+    else if(!nec4_ground_matrix_point(context,source_medium,observer_medium,
+        source,shifted,direction,value)) return 0;
     for(int k=0;k<3;++k)
     {
-      double complex weighted=.5*length*w[q]*value[k];
+      double complex weighted=half*w[q]*value[k];
       result->constant[k]+=weighted;
       result->sine[k]+=weighted*basis_sine;
       result->cosine[k]+=weighted*basis_cosine;
     }
   }
   return 1;
+}
+
+int nec4_ground_matrix_segment_correction(
+    const nec4_ground_matrix_context *context,
+    nec4_segment_medium source_medium,nec4_segment_medium observer_medium,
+    const double center[3],const double direction[3],double length,
+    const double observer[3],double radius,nec4_ground_segment_field *result)
+{
+  return segment_integral(context,source_medium,observer_medium,center,
+    direction,length,observer,radius,1,result);
+}
+
+int nec4_ground_matrix_segment_nec_correction(
+    const nec4_ground_matrix_context *context,
+    nec4_segment_medium source_medium,nec4_segment_medium observer_medium,
+    const double center[3],const double direction[3],double length,
+    const double observer[3],double radius,double normalization_length,
+    nec4_ground_segment_field *result)
+{
+  if(!(normalization_length>0.)||!isfinite(normalization_length)||
+     !nec4_ground_matrix_segment_correction(context,source_medium,
+       observer_medium,center,direction,length,observer,radius,result)) return 0;
+  for(int component=0;component<3;++component)
+  {
+    result->constant[component]*=normalization_length;
+    result->sine[component]*=normalization_length;
+    result->cosine[component]*=normalization_length;
+  }
+  return 1;
+}
+
+int nec4_ground_matrix_segment_nec_complete(
+    const nec4_ground_matrix_context *context,
+    nec4_segment_medium source_medium,nec4_segment_medium observer_medium,
+    const double center[3],const double direction[3],double length,
+    const double observer[3],double radius,double normalization_length,
+    nec4_ground_segment_field *result)
+{
+  if(!(normalization_length>0.)||!isfinite(normalization_length)||
+     !segment_integral(context,source_medium,observer_medium,center,direction,
+       length,observer,radius,0,result)) return 0;
+  for(int component=0;component<3;++component)
+  {
+    result->constant[component]*=normalization_length;
+    result->sine[component]*=normalization_length;
+    result->cosine[component]*=normalization_length;
+  }
+  return 1;
+}
+
+int nec4_ground_matrix_endpoint_charge_nec(
+    const nec4_ground_matrix_context *context,
+    nec4_segment_medium source_medium,const double endpoint[3],
+    const double observer[3],double normalization_length,int end_sign,
+    double complex field[3])
+{
+  const double eps0=8.8541878128e-12;
+  double dx,dy,dz,r,omega;
+  double complex epsilon,k,common;
+  if(!context||!endpoint||!observer||!field||!(normalization_length>0.)||
+     (end_sign!=1&&end_sign!=-1)||!(context->frequency_hz>0.)) return 0;
+  dx=observer[0]-endpoint[0];dy=observer[1]-endpoint[1];
+  dz=observer[2]-endpoint[2];r=hypot(hypot(dx,dy),dz);
+  if(!(r>0.)) return 0;
+  omega=2.*acos(-1.)*context->frequency_hz;
+  if(source_medium==NEC4_MEDIUM_LOWER)
+  { epsilon=context->lower_epsilon_relative;k=context->lower_wave_number_per_m; }
+  else { epsilon=1.;k=context->upper_wave_number_per_m; }
+  common=end_sign*I*normalization_length/omega/(4.*acos(-1.)*eps0*epsilon)*
+    cexp(-I*k*r)*(1.+I*k*r)/(r*r*r);
+  field[0]=common*dx;field[1]=common*dy;field[2]=common*dz;
+  return finite_complex(field[0])&&finite_complex(field[1])&&
+    finite_complex(field[2]);
 }

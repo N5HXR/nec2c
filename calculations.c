@@ -51,15 +51,34 @@ static void segj_reserve( size_t count )
 }
 
 /* Cancellation-resistant forms used by the NEC4 coefficient representation. */
-static double basis_one_minus_cos( double angle )
+static complex double basis_one_minus_cos( complex double angle )
 {
-  double sine=sin(0.5*angle);
+  complex double sine;
+  if(cimag(angle)==0.) sine=sin(0.5*creal(angle));
+  else sine=csin(0.5*angle);
   return 2.0*sine*sine;
 }
 
-static double basis_cos_minus_cos2( double angle )
+static complex double basis_cos_minus_cos2( complex double angle )
 {
-  return 2.0*sin(1.5*angle)*sin(0.5*angle);
+  if(cimag(angle)==0.)
+    return 2.0*sin(1.5*creal(angle))*sin(0.5*creal(angle));
+  return 2.0*csin(1.5*angle)*csin(0.5*angle);
+}
+
+static void segment_basis_phase(size_t segment,complex double *half_phase,
+    complex double *sine_half,complex double *cosine_half)
+{
+  if(!wire_operator_nec4_ground())
+  {
+    double d=PI*data.si[segment];
+    *half_phase=d;*sine_half=sin(d);*cosine_half=cos(d);
+  }
+  else
+  {
+    *half_phase=.5*wire_operator_segment_wave_number(segment)*data.si[segment];
+    *sine_half=csin(*half_phase);*cosine_half=ccos(*half_phase);
+  }
 }
 
 /*-----------------------------------------------------------------------*/
@@ -112,9 +131,12 @@ void cabc( complex double *curx)
 		wire_operator_tbf(i+1,0);
 		data.icon1[i]= jx;
 		sh= data.si[i]*.5;
-		curd= CCJ* vsorc.vqds[is]/( (log(2.* sh/ data.bi[i])-1.)*
-			(segj.bx[segj.jsno-1]* cos(TP* sh)+ segj.cx[segj.jsno-1]*
-			 sin(TP* sh))* data.wlam );
+		{
+		  complex double phase=wire_operator_segment_phase((size_t)i,sh);
+		  curd= CCJ* vsorc.vqds[is]/( (log(2.* sh/ data.bi[i])-1.)*
+			(segj.bx[segj.jsno-1]*ccos(phase)+segj.cx[segj.jsno-1]*
+			 csin(phase))*data.wlam );
+		}
 		for( jx = 0; jx < segj.jsno; jx++ )
 		{
 		  j= segj.jco[jx]-1;
@@ -921,7 +943,8 @@ void sbf( int i, int is, double complex *aa, double complex *bb,
 	  double complex *cc )
 {
   int ix, jsno, june, jcox, jcoxx, jend, iend, njun1=0, njun2, charge_end;
-  double d, sig, sdh, cdh, sd, omc, cd, xxi, legacy_charge;
+  double sig, legacy_charge;
+  double complex d, sdh, cdh, sd, omc, cd, xxi;
   double complex pp, aj, pm=0, ap, qp, qm;
 
   *aa=0.;
@@ -956,18 +979,17 @@ void sbf( int i, int is, double complex *aa, double complex *bb,
 	  jcoxx = jcox-1;
 
 	  jsno++;
-	  d= PI* data.si[jcoxx];
-	  sdh= sin( d);
-	  cdh= cos( d);
+	  segment_basis_phase((size_t)jcoxx,&d,&sdh,&cdh);
 	  sd=2.* sdh* cdh;
 
-	  if( d <= 0.015)
+	  if(!wire_operator_nec4_ground()&&creal(d)<=0.015)
 	  {
-		omc=4.* d* d;
+		omc=4.* creal(d)*creal(d);
 		omc=((1.3888889e-3* omc -4.1666666667e-2)* omc +.5)* omc;
 	  }
 	  else
-		omc=1.- cdh* cdh+ sdh* sdh;
+		omc=!wire_operator_nec4_ground()?
+		  1.-cdh*cdh+sdh*sdh:2.*sdh*sdh;
 
 	  legacy_charge=1./( log(1./( PI* data.bi[jcoxx]))-.577215664);
 	  aj=wire_operator_charge_factor((size_t)jcoxx,charge_end,legacy_charge);
@@ -1028,15 +1050,13 @@ void sbf( int i, int is, double complex *aa, double complex *bb,
   while( jcox != 0 );
 
   njun2= jsno- njun1;
-  d= PI* data.si[ix];
-  sdh= sin( d);
-  cdh= cos( d);
+  segment_basis_phase((size_t)ix,&d,&sdh,&cdh);
   sd=2.* sdh* cdh;
   cd= cdh* cdh- sdh* sdh;
 
-  if( d <= 0.015)
+  if(!wire_operator_nec4_ground()&&creal(d)<=0.015)
   {
-	omc=4.* d* d;
+	omc=4.* creal(d)*creal(d);
 	omc=((1.3888889e-3* omc -4.1666666667e-2)* omc +.5)* omc;
   }
   else
@@ -1051,14 +1071,14 @@ void sbf( int i, int is, double complex *aa, double complex *bb,
 	if( njun2 == 0)
 	{
 	  *aa =-1.;
-	  xxi=wire_operator_end_parameter(data.bi[ix]);
+	  xxi=wire_operator_end_parameter((size_t)ix,data.bi[ix]);
 	  *cc=1./( cdh- xxi* sdh);
 	  if(wire_operator_nec4_basis())
 		*aa=(basis_one_minus_cos(d)+xxi*sdh)/(cdh-xxi*sdh);
 	  return;
 	}
 
-	xxi=wire_operator_end_parameter(data.bi[ix]);
+	xxi=wire_operator_end_parameter((size_t)ix,data.bi[ix]);
 	qp=-( omc+ xxi* sd)/( sd*( ap+ xxi* pp)+ cd*( xxi* ap- pp));
 
 	if( june == 1)
@@ -1084,7 +1104,7 @@ void sbf( int i, int is, double complex *aa, double complex *bb,
 
   if( njun2 == 0)
   {
-	xxi=wire_operator_end_parameter(data.bi[ix]);
+	xxi=wire_operator_end_parameter((size_t)ix,data.bi[ix]);
 	qm=( omc+ xxi* sd)/( sd*( aj- xxi* pm)+ cd*( pm+ xxi* aj));
 
 	if( june == -1)
@@ -1149,8 +1169,8 @@ void sbf( int i, int is, double complex *aa, double complex *bb,
 void tbf( int i, int icap )
 {
   int ix, jcox, jcoxx, jend, iend, njun1=0, njun2, jsnop, jsnox, charge_end;
-  double sdh, cdh, sd, omc, cd, xxi;
-  double d, sig, legacy_charge; /*** also global ***/
+  double sig, legacy_charge; /*** also global ***/
+  double complex d, sdh, cdh, sd, omc, cd, xxi;
   double complex pp, aj, pm=0, ap, qp, qm;
 
   segj.jsno=0;
@@ -1184,18 +1204,17 @@ void tbf( int i, int icap )
 	  segj.jsno++;
 	  jsnox = segj.jsno-1;
 	  segj.jco[jsnox]= jcox;
-	  d= PI* data.si[jcoxx];
-	  sdh= sin( d);
-	  cdh= cos( d);
+	  segment_basis_phase((size_t)jcoxx,&d,&sdh,&cdh);
 	  sd=2.* sdh* cdh;
 
-	  if( d <= 0.015)
+	  if(!wire_operator_nec4_ground()&&creal(d)<=0.015)
 	  {
-		omc=4.* d* d;
+		omc=4.* creal(d)*creal(d);
 		omc=((1.3888889e-3* omc-4.1666666667e-2)* omc+.5)* omc;
 	  }
 	  else
-		omc=1.- cdh* cdh+ sdh* sdh;
+		omc=!wire_operator_nec4_ground()?
+		  1.-cdh*cdh+sdh*sdh:2.*sdh*sdh;
 
 	  legacy_charge=1./( log(1./( PI* data.bi[jcoxx]))-.577215664);
 	  aj=wire_operator_charge_factor((size_t)jcoxx,charge_end,legacy_charge);
@@ -1253,15 +1272,13 @@ void tbf( int i, int icap )
   jsnop= segj.jsno;
   segj_reserve( (size_t)jsnop+1 );
   segj.jco[jsnop]= i;
-  d= PI* data.si[ix];
-  sdh= sin( d);
-  cdh= cos( d);
+  segment_basis_phase((size_t)ix,&d,&sdh,&cdh);
   sd=2.* sdh* cdh;
   cd= cdh* cdh- sdh* sdh;
 
-  if( d <= 0.015)
+  if(!wire_operator_nec4_ground()&&creal(d)<=0.015)
   {
-	omc=4.* d* d;
+	omc=4.* creal(d)*creal(d);
 	omc=((1.3888889e-3* omc-4.1666666667e-2)* omc+.5)* omc;
   }
   else
@@ -1281,7 +1298,7 @@ void tbf( int i, int icap )
 		xxi=0.;
 	  else
 	  {
-		xxi=wire_operator_end_parameter(data.bi[ix]);
+		xxi=wire_operator_end_parameter((size_t)ix,data.bi[ix]);
 	  }
 
 	  segj.cx[jsnop]=1./( cdh- xxi* sdh);
@@ -1299,7 +1316,7 @@ void tbf( int i, int icap )
 	  xxi=0.;
 	else
 	{
-	  xxi=wire_operator_end_parameter(data.bi[ix]);
+	  xxi=wire_operator_end_parameter((size_t)ix,data.bi[ix]);
 	}
 
 	qp=-( omc+ xxi* sd)/( sd*( ap+ xxi* pp)+ cd*( xxi* ap- pp));
@@ -1316,7 +1333,8 @@ void tbf( int i, int icap )
 
 	segj.jsno= jsnop+1;
 	if(wire_operator_nec4_basis())
-	  segj.ax[jsnop]=(basis_cos_minus_cos2(PI*data.si[ix])+xxi*sd+
+	  segj.ax[jsnop]=(basis_cos_minus_cos2(.5*
+		wire_operator_segment_wave_number((size_t)ix)*data.si[ix])+xxi*sd+
 		ap*qp*(sdh+xxi*cdh))/d;
 	else
 	  segj.ax[jsnop]=-1.;
@@ -1330,7 +1348,7 @@ void tbf( int i, int icap )
 	  xxi=0.;
 	else
 	{
-	  xxi=wire_operator_end_parameter(data.bi[ix]);
+	  xxi=wire_operator_end_parameter((size_t)ix,data.bi[ix]);
 	}
 
 	qm=( omc+ xxi* sd)/( sd*( aj- xxi* pm)+ cd*( pm+ xxi* aj));
@@ -1347,7 +1365,8 @@ void tbf( int i, int icap )
 
 	segj.jsno= jsnop+1;
 	if(wire_operator_nec4_basis())
-	  segj.ax[jsnop]=(basis_cos_minus_cos2(PI*data.si[ix])+xxi*sd-
+	  segj.ax[jsnop]=(basis_cos_minus_cos2(.5*
+		wire_operator_segment_wave_number((size_t)ix)*data.si[ix])+xxi*sd-
 		aj*qm*(sdh+xxi*cdh))/d;
 	else
 	  segj.ax[jsnop]=-1.;

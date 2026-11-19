@@ -116,7 +116,9 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 	  if(wire_operator_nec4_basis())
 	  {
 		nec4_segment_fields field;
-		if(!nec4_reduced_segment_field(dataj.s,zp,rh,TP,&field))
+		if(!nec4_reduced_segment_field_medium(dataj.s,zp,rh,
+		    wire_operator_source_wave_number(),
+		    wire_operator_source_intrinsic_impedance(),&field))
 		{
 		  fprintf(stderr,"nec2c: NEC4 reduced wire kernel failed\n");
 		  stop(-1);
@@ -1292,8 +1294,8 @@ void nefld( double xob, double yob, double zob,
 			if(wire_operator_endcap_current_field((size_t)i,end,xob,yob,zob,
 			     &cx,&cy,&cz))
 			{
-			  current=wire_operator_current(acx,bcx,ccx,
-			    (end?1.:-1.)*PI*data.si[i]);
+			  current=wire_operator_current(acx,bcx,ccx,(size_t)i,
+			    (end?1.:-1.)*.5*data.si[i]);
 			  *ex+=cx*current/data.wlam;
 			  *ey+=cy*current/data.wlam;
 			  *ez+=cz*current/data.wlam;
