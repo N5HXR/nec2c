@@ -482,7 +482,8 @@ void wire_operator_trio(int j)
   active_operator->trio(j);
 }
 
-void wire_operator_efld(double xi, double yi, double zi, double ai, int ij)
+static void wire_operator_efld_impl(double xi,double yi,double zi,double ai,
+                                   int ij,int point_observer)
 {
   if(wire_operator_nec4_ground()&&ground_matrix_context&&medium_state&&
      matrix_source_segment<medium_state->segment_count)
@@ -490,28 +491,66 @@ void wire_operator_efld(double xi, double yi, double zi, double ai, int ij)
     size_t observer_segment=(size_t)((long)matrix_source_segment+(long)ij);
     nec4_segment_medium source_medium=
       medium_state->segment_medium[matrix_source_segment];
+    nec4_segment_medium observer_medium=point_observer?
+      (zi*data.wlam>=-medium_state->interface_tolerance_m?
+        NEC4_MEDIUM_UPPER:NEC4_MEDIUM_LOWER):
+      (observer_segment<medium_state->segment_count?
+        medium_state->segment_medium[observer_segment]:NEC4_MEDIUM_UPPER);
     nec4_ground_segment_field correction;
     double center[3]={dataj.xj*data.wlam,dataj.yj*data.wlam,
       dataj.zj*data.wlam};
     double direction[3]={dataj.cabj,dataj.sabj,dataj.salpj};
     double observer[3]={xi*data.wlam,yi*data.wlam,zi*data.wlam};
-    /* The reduced kernel supplies the finite-radius direct field in the
-       source medium.  The adapter adds complete-interface minus that same
-       homogeneous-medium field. */
+    /* Matrix matching retains the reduced finite-radius direct kernel and
+       adds complete-interface minus homogeneous-medium field.  For an
+       arbitrary field point, use the complete interface field directly:
+       subtracting one far-field implementation and adding another loses the
+       grazing direct/image cancellation after many wavelengths. */
+    if(point_observer)
+    {
+      if(!nec4_ground_matrix_segment_nec_complete(ground_matrix_context,
+          source_medium,observer_medium,center,direction,dataj.s*data.wlam,
+          observer,ai*data.wlam,data.wlam,&correction))
+      {
+        fprintf(stderr,"nec2c: NEC4 complete point-field evaluation failed "
+            "(source=%lu source_xyz=%.17g,%.17g,%.17g "
+            "observer_xyz=%.17g,%.17g,%.17g)\n",
+            (unsigned long)matrix_source_segment,
+            center[0],center[1],center[2],observer[0],observer[1],observer[2]);
+        stop(-1);
+      }
+      dataj.exk=correction.constant[0];
+      dataj.eyk=correction.constant[1];
+      dataj.ezk=correction.constant[2];
+      dataj.exs=correction.sine[0];
+      dataj.eys=correction.sine[1];
+      dataj.ezs=correction.sine[2];
+      dataj.exc=correction.cosine[0];
+      dataj.eyc=correction.cosine[1];
+      dataj.ezc=correction.cosine[2];
+      if(wire_operator_nec4_basis())
+      {
+        dataj.exc-=dataj.exk;
+        dataj.eyc-=dataj.eyk;
+        dataj.ezc-=dataj.ezk;
+      }
+      return;
+    }
     ground_direct_only=1;
     active_operator->efld(xi,yi,zi,ai,ij);
     ground_direct_only=0;
     if(observer_segment>=medium_state->segment_count||
        !nec4_ground_matrix_segment_nec_correction(ground_matrix_context,
-         source_medium,medium_state->segment_medium[observer_segment],
-         center,direction,dataj.s*data.wlam,observer,ai*data.wlam,
-         data.wlam,&correction))
+         source_medium,observer_medium,center,direction,
+         dataj.s*data.wlam,observer,ai*data.wlam,data.wlam,&correction))
     {
       fprintf(stderr,"nec2c: NEC4 ground matrix evaluation failed "
           "(source=%lu observer=%lu source_xyz=%.17g,%.17g,%.17g "
           "observer_xyz=%.17g,%.17g,%.17g)\n",
           (unsigned long)matrix_source_segment,
-          (unsigned long)observer_segment,center[0],center[1],center[2],
+          point_observer?(unsigned long)medium_state->segment_count:
+            (unsigned long)observer_segment,
+          center[0],center[1],center[2],
           observer[0],observer[1],observer[2]);
       stop(-1);
     }
@@ -568,6 +607,16 @@ void wire_operator_efld(double xi, double yi, double zi, double ai, int ij)
     dataj.eyc -= dataj.eyk;
     dataj.ezc -= dataj.ezk;
   }
+}
+
+void wire_operator_efld(double xi,double yi,double zi,double ai,int ij)
+{ wire_operator_efld_impl(xi,yi,zi,ai,ij,0); }
+
+void wire_operator_efld_point(double xi,double yi,double zi,double ai)
+{
+  /* nefld historically evaluates an arbitrary observation point with ij=1;
+     retain that basis/end-condition selector for every wire engine. */
+  wire_operator_efld_impl(xi,yi,zi,ai,1,1);
 }
 
 void wire_operator_hsfld(double xi, double yi, double zi, double ai)

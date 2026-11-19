@@ -140,7 +140,15 @@ int nec4_ground_matrix_point(const nec4_ground_matrix_context *context,
   if(!pairing(context,source_medium,observer_medium,rho,source[2],observer[2],
       components)) return 0;
   assemble(components,cosine,sine,direction,field);
-  return finite_complex(field[0])&&finite_complex(field[1])&&finite_complex(field[2]);
+  if(!finite_complex(field[0])||!finite_complex(field[1])||
+     !finite_complex(field[2]))
+  {
+    fprintf(stderr,"nec2c: NEC4 non-finite assembled field at "
+        "rho=%.17g source_z=%.17g observer_z=%.17g\n",
+        rho,source[2],observer[2]);
+    return 0;
+  }
+  return 1;
 }
 
 static int correction_point(const nec4_ground_matrix_context *context,

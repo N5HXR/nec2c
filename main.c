@@ -989,20 +989,22 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
       loss_is_epsilon,state))
   {
     snprintf(context,sizeof(context),
-        "{\"segments\":%lu,\"unsupported_interface_junctions\":%lu,"
+        "{\"segments\":%lu,\"one_sided_interface_ends\":%lu,"
+        "\"unsupported_interface_junctions\":%lu,"
         "\"unsplit_crossings\":%lu,"
         "\"in_plane_segments\":%lu}",
         (unsigned long)geometry.count,
+        (unsigned long)state->one_sided_interface_ends,
         (unsigned long)state->unsupported_interface_junctions,
         (unsigned long)state->unsplit_crossings,
         (unsigned long)state->in_plane_segments);
     result_json_diagnostic("error", "NEC4_M7_INTERFACE_TOPOLOGY",
-        "wires must form a simple one-above/one-below split at every interface crossing and may not lie in the interface plane",
+        "wires may end freely at the interface or form a simple one-above/one-below split crossing, and may not lie in the interface plane",
         context);
     nec4_medium_print(output_fp,state);
     fprintf(output_fp, "\n  NEC4 M7 PREFLIGHT ERROR: split every crossing "
-        "at z=0 as one segment on each side; branches, one-sided endpoints, "
-        "and complete segments in the interface plane are deferred.");
+        "at z=0 as one segment on each side; branches and complete segments "
+        "in the interface plane are deferred.");
     return 0;
   }
 
@@ -1011,7 +1013,8 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
   snprintf(context,sizeof(context),
       "{\"frequency_mhz\":%.17g,\"upper_segments\":%lu,"
       "\"lower_segments\":%lu,\"interface_endpoints\":%lu,"
-      "\"crossing_junctions\":%lu,\"unsupported_interface_junctions\":%lu,"
+      "\"crossing_junctions\":%lu,\"one_sided_interface_ends\":%lu,"
+      "\"unsupported_interface_junctions\":%lu,"
       "\"oblique_crossings\":%lu,"
       "\"interface_tolerance_m\":%.17g,\"relative_permittivity\":%.17g,"
       "\"epsilon_relative\":{\"real\":%.17g,\"imag\":%.17g},"
@@ -1021,6 +1024,7 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
       (unsigned long)state->lower_segments,
       (unsigned long)state->interface_endpoints,
       (unsigned long)state->crossing_junctions,
+      (unsigned long)state->one_sided_interface_ends,
       (unsigned long)state->unsupported_interface_junctions,
       (unsigned long)state->oblique_crossings,state->interface_tolerance_m,
       state->relative_permittivity,creal(state->epsilon_relative),
@@ -1153,6 +1157,17 @@ static void audit_nec4_ground_routes(nec4_ground_runtime *runtime,
         if(route.method==NEC4_GROUND_MODEL_FIT&&
            z<.16*runtime->wavelength0_m) runtime->direct_strip_seen=1;
       }
+}
+
+static void report_nec4_ground_grazing(nec4_ground_runtime *runtime)
+{
+  if(!nec4_ground_runtime_claim_grazing_warning(runtime)) return;
+  result_json_diagnostic("warning","NEC4_M9_GRAZING_INTERFERENCE",
+      "one or more interface interactions entered the documented grazing-angle risk region",
+      "{\"threshold_degrees\":15}");
+  fprintf(output_fp,"\n  NEC4 M9 WARNING: an interface interaction "
+      "entered the <=15 degree grazing region; compare with a refined "
+      "or future NEC4.2-style treatment if this result is critical.");
 }
 
 /*-------------------------------------------------------------------*/
@@ -2278,6 +2293,7 @@ int main( int argc, char **argv )
 		  break;
 
 		case 9: /* "nx" card, do next job */
+		  report_nec4_ground_grazing(&nec4_ground);
 		  result_json_job_end(&dielectric);
 		  next_job = TRUE;
 		  continue; /* continue card input loop */
@@ -2575,6 +2591,7 @@ int main( int argc, char **argv )
 		  secnds( &tmp1 );
 		  tmp1 -= extim;
 		  fprintf( output_fp, "\n\n  TOTAL RUN TIME: %d msec", (int)tmp1 );
+		  report_nec4_ground_grazing(&nec4_ground);
 		  result_json_job_end(&dielectric);
 		  if(!result_json_finish("ok")) stop(-1);
 		  stop(0);
@@ -3006,15 +3023,7 @@ int main( int argc, char **argv )
 			coated_wire_activate(&coated_wires, data.wlam);
 			cmset_parallel_configure(classic_fill_processes, numerical_fork_safe);
 			cmset( netcx.neq, cm, rkh, iexk );
-			if(nec4_ground_runtime_grazing_seen(&nec4_ground))
-			{
-			  result_json_diagnostic("warning","NEC4_M9_GRAZING_INTERFERENCE",
-			      "one or more interface interactions entered the documented grazing-angle risk region",
-			      "{\"threshold_degrees\":15}");
-			  fprintf(output_fp,"\n  NEC4 M9 WARNING: an interface interaction "
-			      "entered the <=15 degree grazing region; compare with a refined "
-			      "or future NEC4.2-style treatment if this result is critical.");
-			}
+			report_nec4_ground_grazing(&nec4_ground);
 			if(!nec4_ground_direct_model&&
 			   nec4_ground_runtime_direct_strip_seen(&nec4_ground))
 			  fprintf(output_fp,"\n  NEC4 M9 ACCURACY: direct contour evaluation "

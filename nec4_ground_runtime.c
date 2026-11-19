@@ -290,5 +290,12 @@ int nec4_ground_runtime_evaluate(const nec4_ground_runtime *runtime,
 int nec4_ground_runtime_grazing_seen(const nec4_ground_runtime *runtime)
 { return runtime&&runtime->grazing_seen; }
 
+int nec4_ground_runtime_claim_grazing_warning(nec4_ground_runtime *runtime)
+{
+  if(!runtime||!runtime->grazing_seen||runtime->grazing_reported) return 0;
+  runtime->grazing_reported=1;
+  return 1;
+}
+
 int nec4_ground_runtime_direct_strip_seen(const nec4_ground_runtime *runtime)
 { return runtime&&runtime->direct_strip_seen; }

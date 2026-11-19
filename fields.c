@@ -1277,7 +1277,8 @@ void nefld( double xob, double yob, double zob,
 
 	  } /* if( dataj.iexk != 0) */
 
-	  wire_operator_efld( xob, yob, zob, ax,1);
+	  wire_operator_set_source_segment((size_t)i);
+	  wire_operator_efld_point(xob,yob,zob,ax);
 	  acx= cmplx( crnt.air[i], crnt.aii[i]);
 	  bcx= cmplx( crnt.bir[i], crnt.bii[i]);
 	  ccx= cmplx( crnt.cir[i], crnt.cii[i]);

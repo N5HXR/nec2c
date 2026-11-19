@@ -184,8 +184,16 @@ def second_order_cross_reference(frequency_hz, k_lower, k_upper,
         radial = mp.mpf(rho)
         z = mp.mpf(observer_z)
         source_z = -mp.mpf(source_depth)
-        saddle = mp.mpc(saddle_lambda1(
-            rho, observer_z, source_depth, k_lower, k_upper))
+        # Preserve the stationary point at oracle precision.  Importing the
+        # production-double saddle is harmless in ordinary geometry but its
+        # tiny residual is amplified by the Appendix-J derivatives when a
+        # source or observer approaches the interface.  For z'=0, (5-18)
+        # has this exact closed form.
+        if source_depth == 0:
+            saddle = k2 * radial / mp.sqrt(radial * radial + z * z)
+        else:
+            saddle = mp.mpc(saddle_lambda1(
+                rho, observer_z, source_depth, k_lower, k_upper))
 
         def gamma(value, wave_number):
             beta = mp.sqrt(wave_number * wave_number - value * value)
@@ -245,6 +253,90 @@ def second_order_cross_reference(frequency_hz, k_lower, k_upper,
                   - 12 * g1 * f2 * f3 + 12 * g2 * f2 * f2) / (24 * f2 ** 3)
             result[component] = complex(prefactor * (g0 + q2))
         return result
+
+
+def second_order_zv_interface_reference(frequency_hz, k_lower, k_upper,
+                                        rho, observer_z,
+                                        precision_digits=80):
+    """Appendix-J equation (J-10) for a source on the interface.
+
+    This is the algebraically stabilized form obtained by writing
+    ``Gamma_2 = z Lambda_2`` before taking derivatives.  It is an oracle for
+    the grazing/interface limit, not a production evaluator.
+    """
+    if rho <= 0 or observer_z <= 0:
+        raise ValueError("J-10 oracle requires rho > 0 and observer_z > 0")
+    with mp.workdps(precision_digits):
+        k1 = mp.mpc(k_lower)
+        k2 = mp.mpc(k_upper)
+        radial = mp.mpf(rho)
+        z = mp.mpf(observer_z)
+        saddle = k2 * radial / mp.sqrt(radial * radial + z * z)
+
+        def gamma(value, wave_number):
+            beta = mp.sqrt(wave_number * wave_number - value * value)
+            if (mp.re(beta) < 0 or
+                    (abs(mp.re(beta)) < mp.mpf("1e-60") and mp.im(beta) > 0)):
+                beta = -beta
+            return 1j * beta
+
+        gamma1 = gamma(saddle, k1)
+        gamma2 = gamma(saddle, k2)
+        lambda2 = gamma2 / z
+
+        def phase(value):
+            return gamma(value, k2) * z + 1j * value * radial
+
+        phase0 = phase(saddle)
+        phase2 = mp.diff(phase, saddle, 2)
+        phase3 = mp.diff(phase, saddle, 3)
+        phase4 = mp.diff(phase, saddle, 4)
+        coefficient0 = (1 / mp.sqrt(phase2)
+                        + (5 * phase3 * phase3 - 3 * phase2 * phase4)
+                        / (24 * phase2 ** (mp.mpf(7) / 2)))
+        coefficient1 = -phase3 / (2 * z * phase2 ** (mp.mpf(5) / 2))
+        coefficient2 = 1 / (2 * z ** 3 * phase2 ** (mp.mpf(3) / 2))
+
+        denominator = k1 * k1 * z * lambda2 + k2 * k2 * gamma1
+        dv = 1 / denominator
+        dv1 = (-saddle * (k1 * k1 / lambda2
+                          + k2 * k2 * z / gamma1) / denominator ** 2)
+        dv2 = (k1 * k1 * k2 * k2
+               * (z ** 3 / gamma1 ** 3 + 1 / lambda2 ** 3)
+               / denominator ** 2
+               + 2 * saddle ** 2 * z
+               * (k1 * k1 / lambda2 + k2 * k2 / gamma1) ** 2
+               / denominator ** 3)
+
+        root = mp.sqrt(saddle)
+        g0 = (saddle ** 2 * root
+              + 1j * saddle * root / (8 * radial)) * dv
+        g1 = (z * (mp.mpf(5) / 2 * saddle * root
+                   + 3j * root / (16 * radial)) * dv
+              + (saddle ** 2 * root
+                 + 1j * saddle * root / (8 * radial)) * dv1)
+        g2 = (3 * z ** 3 / 4
+              * (5 * root + 1j / (8 * radial * root)) * dv
+              + z ** 2 * (5 * saddle * root
+                          + 3j * root / (8 * radial)) * dv1
+              + (saddle ** 2 * root
+                 + 1j * saddle * root / (8 * radial)) * dv2)
+
+        omega = 2 * mp.pi * mp.mpf(frequency_hz)
+        value = (omega * MU0 / (4 * mp.pi) * mp.exp(-1j * mp.pi / 4)
+                 * 2 / mp.sqrt(radial)
+                 * (coefficient0 * g0 + coefficient1 * g1
+                    + coefficient2 * g2) * mp.exp(-phase0))
+        # Choose the steepest-descent square-root continuation by matching
+        # the first-order field, as in the generic oracle above.
+        first = first_order_cross(frequency_hz, k_lower, k_upper,
+                                  rho, observer_z, 0)["z_v"]
+        leading = (omega * MU0 / (4 * mp.pi) * mp.exp(-1j * mp.pi / 4)
+                   * 2 / mp.sqrt(radial) * coefficient0 * g0
+                   * mp.exp(-phase0))
+        if abs(complex(leading) - first) > abs(complex(-leading) - first):
+            value = -value
+        return complex(value)
 
 
 def second_order_uniform_cross_reference(frequency_hz, k_lower, k_upper,

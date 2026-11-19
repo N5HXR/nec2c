@@ -27,6 +27,7 @@ typedef struct {
   size_t cache_hits,cache_misses,generated_tables,payload_bytes;
   int direct_model;
   int grazing_seen;
+  int grazing_reported;
   int direct_strip_seen;
   int identical_media;
   int ready;
@@ -47,6 +48,7 @@ int nec4_ground_runtime_prepare(nec4_ground_runtime *runtime,
 const nec4_ground_matrix_context *nec4_ground_runtime_matrix_context(
     const nec4_ground_runtime *runtime);
 int nec4_ground_runtime_grazing_seen(const nec4_ground_runtime *runtime);
+int nec4_ground_runtime_claim_grazing_warning(nec4_ground_runtime *runtime);
 int nec4_ground_runtime_direct_strip_seen(const nec4_ground_runtime *runtime);
 
 /* Evaluate the accepted production regions.  The geometry dispatcher retains

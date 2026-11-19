@@ -135,6 +135,12 @@ int nec4_medium_classify(const nec4_medium_geometry *g,double er,double loss,
           state->endpoint_factor_assigned[ep]=1;
         }
     }
+    else if(upper_count+lower_count==1)
+      /* A free wire end may terminate at the interface without electrical
+         contact.  Its current already goes to zero through the ordinary NEC4
+         free-end basis/cap treatment; it is not an interface junction and
+         receives no crossing charge-ratio factor. */
+      ++state->one_sided_interface_ends;
     else ++state->unsupported_interface_junctions;
   }
   state->valid=state->unsplit_crossings==0&&state->in_plane_segments==0&&
@@ -191,7 +197,7 @@ void nec4_medium_print(FILE *stream,const nec4_medium_state *s)
 {
   if(!stream||!s) return;
   fprintf(stream,"\n  NEC4 INTERFACE PREFLIGHT: %lu UPPER, %lu LOWER, "
-      "%lu INTERFACE ENDPOINTS, %lu CROSSING JUNCTIONS"
+      "%lu INTERFACE ENDPOINTS, %lu CROSSING JUNCTIONS, %lu ONE-SIDED ENDS"
       "\n                            %lu UNSUPPORTED INTERFACE JUNCTIONS, "
       "%lu UNSPLIT CROSSINGS, %lu IN-PLANE "
       "SEGMENTS, %lu OBLIQUE CROSSINGS; TOLERANCE %.6E M"
@@ -199,6 +205,7 @@ void nec4_medium_print(FILE *stream,const nec4_medium_state *s)
       "K %.9G%+.9GJ 1/M, ETA %.9G%+.9GJ OHM\n",
       (unsigned long)s->upper_segments,(unsigned long)s->lower_segments,
       (unsigned long)s->interface_endpoints,(unsigned long)s->crossing_junctions,
+      (unsigned long)s->one_sided_interface_ends,
       (unsigned long)s->unsupported_interface_junctions,
       (unsigned long)s->unsplit_crossings,(unsigned long)s->in_plane_segments,
       (unsigned long)s->oblique_crossings,s->interface_tolerance_m,

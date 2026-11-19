@@ -1,0 +1,70 @@
+{
+  "schema": "nec2c-nec4-m10b-surface-reference",
+  "source": "Burke-King-Miller 1984 surface-wave report, Table 1",
+  "reference_radius_lambda": 0.0001,
+  "reference_radius_status": "inferred-report-omits-radius",
+  "appendix_j_decomposition": {
+    "rho_lambda": 1000.0,
+    "observer_z_lambda": 0.05,
+    "second_order_saddle_generic": [
+      -6.616402905888836e-05,
+      -6.982346781209754e-06
+    ],
+    "second_order_saddle_j10": [
+      -6.616402836627948e-05,
+      -6.982346696512787e-06
+    ],
+    "second_order_pole": [
+      2.6416111143562108e-08,
+      3.017912497761304e-07
+    ],
+    "generic_j10_relative_delta": 1.0487799168864496e-08
+  },
+  "classic_external_table": [
+    {
+      "ground_imaginary_epsilon": 1.0,
+      "published_v2_per_m2_w": 3.088e-10,
+      "classic_v2_per_m2_w": 3.558851409918764e-10,
+      "relative_error": 0.15247778818612834
+    },
+    {
+      "ground_imaginary_epsilon": 10.0,
+      "published_v2_per_m2_w": 2.872e-10,
+      "classic_v2_per_m2_w": 2.8632991649165177e-10,
+      "relative_error": 0.003029538678092747
+    },
+    {
+      "ground_imaginary_epsilon": 100.0,
+      "published_v2_per_m2_w": 2.763e-08,
+      "classic_v2_per_m2_w": 2.6479487065503673e-08,
+      "relative_error": 0.041639990390746506
+    },
+    {
+      "ground_imaginary_epsilon": 1000.0,
+      "published_v2_per_m2_w": 1.209e-05,
+      "classic_v2_per_m2_w": 1.2164731677010835e-05,
+      "relative_error": 0.006181280149779589
+    },
+    {
+      "ground_imaginary_epsilon": "perfect",
+      "published_v2_per_m2_w": 0.0001814,
+      "classic_v2_per_m2_w": 0.0001839018527779883,
+      "relative_error": 0.01379191167579008
+    }
+  ],
+  "nec4_one_sided": {
+    "input_impedance_relative_delta_vs_classic": 0.0004556695081175897,
+    "vertical_field_v2_per_m2_w": 2.974526789687749e-10,
+    "published_vertical_field_v2_per_m2_w": 3.088e-10,
+    "field_ratio_to_published": 0.9632534940698669,
+    "warning": {
+      "severity": "warning",
+      "code": "NEC4_M9_GRAZING_INTERFERENCE",
+      "message": "one or more interface interactions entered the documented grazing-angle risk region",
+      "context": {
+        "threshold_degrees": 15
+      }
+    },
+    "worker_identity": "exact"
+  }
+}

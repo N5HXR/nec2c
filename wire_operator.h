@@ -72,6 +72,7 @@ void wire_operator_sbf(int i, int is, double complex *aa,
 void wire_operator_tbf(int i, int icap);
 void wire_operator_trio(int j);
 void wire_operator_efld(double xi, double yi, double zi, double ai, int ij);
+void wire_operator_efld_point(double xi,double yi,double zi,double ai);
 void wire_operator_hsfld(double xi, double yi, double zi, double ai);
 
 /* NEC4 flat-cap fields in wavelength-normalized coordinates. */

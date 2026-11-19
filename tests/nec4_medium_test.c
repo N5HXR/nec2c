@@ -18,6 +18,7 @@ int main(void)
   assert(nec4_medium_classify(&geometry,4.,0.,100.,0,&state));
   assert(state.upper_segments==1&&state.lower_segments==1);
   assert(state.crossing_junctions==1&&state.interface_endpoints==2);
+  assert(state.one_sided_interface_ends==0);
   assert(close_complex(state.refractive_index,2.,1e-14));
   assert(close_complex(state.intrinsic_impedance_ohm,376.730313668/2.,1e-14));
   assert(nec4_medium_endpoint_factor(&state,0,1,&upper));
@@ -31,6 +32,19 @@ int main(void)
   assert(close_complex(lower,9.-.3*I,1e-14));
   assert(!nec4_medium_update_frequency(&state,150.,9.+.3*I));
   nec4_medium_state_free(&state);
+
+  /* A single free end on the interface is a supported non-contacting
+     topology, distinct from a crossing junction or an in-plane segment. */
+  {
+    double fx1[]={0.},fy1[]={0.},fz1[]={0.};
+    double fx2[]={0.},fy2[]={0.},fz2[]={1.};
+    nec4_medium_geometry free_end={1,fx1,fy1,fz1,fx2,fy2,fz2};
+    assert(nec4_medium_classify(&free_end,4.,0.,100.,0,&state));
+    assert(state.upper_segments==1&&state.interface_endpoints==1&&
+      state.one_sided_interface_ends==1&&state.crossing_junctions==0&&
+      state.unsupported_interface_junctions==0);
+    nec4_medium_state_free(&state);
+  }
 
   /* Endpoint classification is scale-aware and deterministic around z=0.
      Both interface endpoints below are inside the documented tolerance and

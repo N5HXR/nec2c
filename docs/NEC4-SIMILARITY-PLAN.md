@@ -348,9 +348,14 @@ Acceptance metrics:
 
 ### M10 - end-to-end buried and interface-crossing antennas
 
-**Status:** M10A absolute-normalization implementation complete on 2026-11-19;
-pending user acceptance.  The frozen contract and results are in
+**Status:** M10A absolute-normalization accepted on 2026-11-19.  The frozen
+contract and results are in
 `NEC4-SIMILARITY-M10A-SPEC.md` and `NEC4-SIMILARITY-M10A-RESULTS.md`.
+
+**M10B status:** one-sided interface endpoint and published surface-wave
+reference accepted by the user on 2026-11-19.
+The frozen contract and results are in `NEC4-SIMILARITY-M10B-SPEC.md` and
+`NEC4-SIMILARITY-M10B-RESULTS.md`.
 
 Goal: qualify the complete documented NEC4-similarity feature on realistic antennas.
 
