@@ -33,6 +33,7 @@ typedef struct {
   unsigned int maximum_depth;
   size_t maximum_cells;
   int workers;
+  int anisotropic;
 } nec4_ground_adaptive;
 
 void nec4_ground_adaptive_init(nec4_ground_adaptive *table);
@@ -43,6 +44,15 @@ void nec4_ground_adaptive_destroy(nec4_ground_adaptive *table);
    and 5/6 tensor witnesses.  A zero-width axis is retained exactly and does
    not create duplicate samples or children. */
 int nec4_ground_adaptive_build(nec4_ground_adaptive *table,
+    const nec4_ground_adaptive_bounds *bounds,double tolerance,
+    unsigned int maximum_depth,size_t maximum_cells,int workers,
+    nec4_ground_adaptive_sampler sampler,void *sampler_context);
+
+/* Accuracy-first k-d refinement.  Each rejected cell is bisected only along
+   the active axis with the largest center-line withheld error.  This avoids
+   spending 4x/8x cells when phase variation is strongly directional.  The
+   representation is not yet persistent; store() rejects these tables. */
+int nec4_ground_adaptive_build_anisotropic(nec4_ground_adaptive *table,
     const nec4_ground_adaptive_bounds *bounds,double tolerance,
     unsigned int maximum_depth,size_t maximum_cells,int workers,
     nec4_ground_adaptive_sampler sampler,void *sampler_context);

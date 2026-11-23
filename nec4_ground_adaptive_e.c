@@ -115,6 +115,25 @@ int nec4_ground_adaptive_e_build(nec4_ground_adaptive_e *table,
       maximum_depth,maximum_cells,workers,direct_sample,table);
 }
 
+int nec4_ground_adaptive_e_build_anisotropic(nec4_ground_adaptive_e *table,
+    double frequency,double complex lower_k,double complex upper_k,
+    const nec4_ground_adaptive_bounds *bounds,double tolerance,
+    unsigned int maximum_depth,size_t maximum_cells,int workers,
+    const nec4_ground_table_direct_options *options)
+{
+  const nec4_ground_table_direct_options defaults={3,48,80.};
+  if(!table||!(frequency>0.)||cabs(lower_k)==0.||cabs(upper_k)==0.) return 0;
+  nec4_ground_adaptive_e_destroy(table);
+  table->frequency_hz=frequency;table->lower_wave_number_per_m=lower_k;
+  table->upper_wave_number_per_m=upper_k;
+  table->direct_options=options?*options:defaults;
+  if(table->direct_options.panel_subdivisions<1||
+     table->direct_options.quadrature_order<12||
+     table->direct_options.cutoff_decay<30.) return 0;
+  return nec4_ground_adaptive_build_anisotropic(&table->table,bounds,tolerance,
+      maximum_depth,maximum_cells,workers,direct_sample,table);
+}
+
 int nec4_ground_adaptive_e_evaluate(const nec4_ground_adaptive_e *table,
     double rho,double z,double depth,double complex values[5])
 {

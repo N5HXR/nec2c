@@ -24,6 +24,13 @@ int nec4_ground_adaptive_e_build(nec4_ground_adaptive_e *table,
     unsigned int maximum_depth,size_t maximum_cells,int workers,
     const nec4_ground_table_direct_options *direct_options);
 
+int nec4_ground_adaptive_e_build_anisotropic(nec4_ground_adaptive_e *table,
+    double frequency_hz,double complex lower_wave_number_per_m,
+    double complex upper_wave_number_per_m,
+    const nec4_ground_adaptive_bounds *bounds,double tolerance,
+    unsigned int maximum_depth,size_t maximum_cells,int workers,
+    const nec4_ground_table_direct_options *direct_options);
+
 int nec4_ground_adaptive_e_evaluate(const nec4_ground_adaptive_e *table,
     double rho_m,double observer_z_m,double source_depth_m,
     double complex values[NEC4_GROUND_COMPONENT_COUNT]);

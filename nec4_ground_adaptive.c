@@ -19,7 +19,8 @@ struct nec4_ground_adaptive_node {
   struct nec4_ground_adaptive_node *children[8];
   double withheld_error;
   unsigned int depth;
-  unsigned char active_mask,child_count,accepted;
+  unsigned char active_mask,split_mask,child_count,accepted;
+  double axis_error[3];
 };
 
 typedef struct {
@@ -174,7 +175,20 @@ static int measure_withheld(build_context *context,
     if(!context->sampler(context->sampler_context,point[0],point[1],point[2],
                          expected)||
        !interpolate_node(node,point[0],point[1],point[2],actual)) failed=1;
-    else worst=fmax(worst,scaled_error(actual,expected,cell_scale));
+    else {
+      double error=scaled_error(actual,expected,cell_scale);
+      worst=fmax(worst,error);
+#ifdef _OPENMP
+#pragma omp critical(nec4_adaptive_axis_error)
+#endif
+      for(unsigned int axis=0;axis<3;++axis) {
+        int on_axis=node->active_mask&(1u<<axis);
+        for(unsigned int other=0;other<3&&on_axis;++other)
+          if(other!=axis&&(node->active_mask&(1u<<other))&&at[other]!=1)
+            on_axis=0;
+        if(on_axis) node->axis_error[axis]=fmax(node->axis_error[axis],error);
+      }
+    }
   }
   if(failed) return 0;
   node->withheld_error=worst;
@@ -187,7 +201,7 @@ static int measure_withheld(build_context *context,
 static int build_node(build_context *context,nec4_ground_adaptive_node *node)
 {
   double cell_scale;
-  unsigned int active_axes=0;
+  unsigned int split_axes=0;
   node->active_mask=active_mask(&node->bounds);
   if(context->table->maximum_cells&&
      context->table->stats.cells>=context->table->maximum_cells) {
@@ -210,9 +224,18 @@ static int build_node(build_context *context,nec4_ground_adaptive_node *node)
     context->table->stats.leaves++;
     context->table->stats.unresolved_leaves++;return 1;
   }
+  if(context->table->anisotropic) {
+    unsigned int selected=3;double largest=-1.;
+    for(unsigned int axis=0;axis<3;++axis)
+      if((node->active_mask&(1u<<axis))&&node->axis_error[axis]>largest) {
+        selected=axis;largest=node->axis_error[axis];
+      }
+    if(selected==3) return 0;
+    node->split_mask=(unsigned char)(1u<<selected);
+  } else node->split_mask=node->active_mask;
   for(unsigned int axis=0;axis<3;++axis)
-    if(node->active_mask&(1u<<axis)) active_axes++;
-  node->child_count=(unsigned char)(1u<<active_axes);
+    if(node->split_mask&(1u<<axis)) split_axes++;
+  node->child_count=(unsigned char)(1u<<split_axes);
   for(unsigned int child=0;child<node->child_count;++child) {
     nec4_ground_adaptive_node *next=calloc(1,sizeof(*next));
     unsigned int bit=0;
@@ -220,14 +243,16 @@ static int build_node(build_context *context,nec4_ground_adaptive_node *node)
     next->depth=node->depth+1;
     for(unsigned int axis=0;axis<3;++axis) {
       double middle=.5*(node->bounds.lower[axis]+node->bounds.upper[axis]);
-      if(node->active_mask&(1u<<axis)) {
+      if(node->split_mask&(1u<<axis)) {
         if(child&(1u<<bit)) { next->bounds.lower[axis]=middle;
           next->bounds.upper[axis]=node->bounds.upper[axis]; }
         else { next->bounds.lower[axis]=node->bounds.lower[axis];
           next->bounds.upper[axis]=middle; }
         bit++;
-      } else next->bounds.lower[axis]=next->bounds.upper[axis]=
-          node->bounds.lower[axis];
+      } else {
+        next->bounds.lower[axis]=node->bounds.lower[axis];
+        next->bounds.upper[axis]=node->bounds.upper[axis];
+      }
     }
     node->children[child]=next;
     if(!build_node(context,next)) return 0;
@@ -249,7 +274,34 @@ int nec4_ground_adaptive_build(nec4_ground_adaptive *table,
   nec4_ground_adaptive_destroy(table);
   table->bounds=*bounds;table->tolerance=tolerance;
   table->maximum_depth=maximum_depth;table->maximum_cells=maximum_cells;
+  table->anisotropic=0;
   table->workers=workers>0?workers:1;
+  table->root=calloc(1,sizeof(*table->root));
+  if(!table->root) return 0;
+  table->root->bounds=*bounds;
+  memset(&context,0,sizeof(context));context.table=table;
+  context.sampler=sampler;context.sampler_context=sampler_context;
+  if(!build_node(&context,table->root)) {
+    nec4_ground_adaptive_destroy(table);return 0;
+  }
+  return 1;
+}
+
+int nec4_ground_adaptive_build_anisotropic(nec4_ground_adaptive *table,
+    const nec4_ground_adaptive_bounds *bounds,double tolerance,
+    unsigned int maximum_depth,size_t maximum_cells,int workers,
+    nec4_ground_adaptive_sampler sampler,void *sampler_context)
+{
+  build_context context;
+  if(!table||!bounds||!sampler||!(tolerance>0.)||!isfinite(tolerance)||
+     maximum_depth>60) return 0;
+  for(unsigned int axis=0;axis<3;++axis)
+    if(!isfinite(bounds->lower[axis])||!isfinite(bounds->upper[axis])||
+       bounds->upper[axis]<bounds->lower[axis]) return 0;
+  nec4_ground_adaptive_destroy(table);
+  table->bounds=*bounds;table->tolerance=tolerance;
+  table->maximum_depth=maximum_depth;table->maximum_cells=maximum_cells;
+  table->workers=workers>0?workers:1;table->anisotropic=1;
   table->root=calloc(1,sizeof(*table->root));
   if(!table->root) return 0;
   table->root->bounds=*bounds;
@@ -266,7 +318,7 @@ static const nec4_ground_adaptive_node *find_leaf(
 {
   if(!node||node->child_count==0) return node;
   unsigned int child=0,bit=0;
-  for(unsigned int axis=0;axis<3;++axis) if(node->active_mask&(1u<<axis)) {
+  for(unsigned int axis=0;axis<3;++axis) if(node->split_mask&(1u<<axis)) {
     double middle=.5*(node->bounds.lower[axis]+node->bounds.upper[axis]);
     if(point[axis]>=middle) child|=1u<<bit;
     bit++;
@@ -357,7 +409,7 @@ int nec4_ground_adaptive_store(const nec4_ground_adaptive *table,
   uint32_t double_size=sizeof(double),identity_bytes=(uint32_t)identity_size;
   uint32_t maximum_depth;uint64_t maximum_cells,hash=FNV_OFFSET;
   if(!table||!table->root||!path||!*path||(!identity&&identity_size)||
-     identity_size>UINT32_MAX) return 0;
+     identity_size>UINT32_MAX||table->anisotropic) return 0;
   length=strlen(path);temporary=malloc(length+12);if(!temporary)return 0;
   memcpy(temporary,path,length);memcpy(temporary+length,".tmp.XXXXXX",12);
   descriptor=mkstemp(temporary);if(descriptor<0){free(temporary);return 0;}
@@ -417,6 +469,7 @@ static nec4_ground_adaptive_node *load_node(FILE *stream,uint64_t *hash,
      !read_hashed(stream,flags,sizeof(flags),hash)||
      !read_hashed(stream,&values,sizeof(values),hash)) goto failed;
   node->depth=depth;node->active_mask=flags[0];node->child_count=flags[1];
+  node->split_mask=node->child_count?node->active_mask:0;
   node->accepted=flags[2];
   if(node->depth>maximum_depth||node->active_mask!=active_mask(&node->bounds)||
      node->child_count>8||flags[3]>1||node->accepted>1||

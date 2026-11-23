@@ -277,5 +277,35 @@ int main(void)
         "approach path %.3e, overlap %.3e\n",worst_refinement,worst_path,
         overlap_error);
   }
+  {
+    const double complex media[]={
+      cases[1].lower_k,cases[2].lower_k,9.*upper_k
+    };
+    double worst_recomposition=0.,worst_refinement=0.;
+    for(unsigned int material=0;material<3;++material)
+      for(unsigned int index=0;index<12;++index) {
+        double rho=(1.5+.3*index)*299792458./frequency;
+        double z=(.01+.015*(index%4))*299792458./frequency;
+        double depth=(.002+.003*(index%3))*299792458./frequency;
+        nec4_ground_direct_split_result coarse,fine;
+        assert(nec4_ground_direct_cross_hankel_split(frequency,
+            media[material],upper_k,rho,z,depth,3,48,80.,&coarse));
+        assert(nec4_ground_direct_cross_hankel_split(frequency,
+            media[material],upper_k,rho,z,depth,5,80,120.,&fine));
+        for(unsigned int component=0;
+            component<NEC4_GROUND_COMPONENT_COUNT;++component) {
+          double scale=fmax(cabs(fine.value[component]),1.e-300);
+          worst_recomposition=fmax(worst_recomposition,cabs(
+              coarse.value[component]-coarse.lower_spectral[component]-
+              coarse.upper_spectral[component])/scale);
+          worst_refinement=fmax(worst_refinement,cabs(
+              coarse.value[component]-fine.value[component])/scale);
+        }
+      }
+    printf("NEC4 exact spectral split passed: recomposition %.3e, "
+        "refinement %.3e\n",worst_recomposition,worst_refinement);
+    assert(worst_recomposition<3.e-13);
+    assert(worst_refinement<3.e-4);
+  }
   return 0;
 }

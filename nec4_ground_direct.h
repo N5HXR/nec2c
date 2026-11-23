@@ -19,6 +19,18 @@ typedef struct {
   unsigned int quadrature_order;
 } nec4_ground_direct_result;
 
+/* Exact partition of the documented Figure 5-3a contour at P2, on the
+   upper-medium branch transition.  The two arrays are numerical contour
+   contributions, not a claim to reproduce NEC-4.2 GN3's unpublished
+   branch-cut representation.  Their ordered sum is value[]. */
+typedef struct {
+  double complex value[NEC4_GROUND_COMPONENT_COUNT];
+  double complex lower_spectral[NEC4_GROUND_COMPONENT_COUNT];
+  double complex upper_spectral[NEC4_GROUND_COMPONENT_COUNT];
+  unsigned int panels;
+  unsigned int quadrature_order;
+} nec4_ground_direct_split_result;
+
 typedef struct {
   double complex total[NEC4_GROUND_COMPONENT_COUNT];
   double complex finite_remainder[NEC4_GROUND_COMPONENT_COUNT];
@@ -47,6 +59,12 @@ int nec4_ground_direct_cross_hankel(double frequency_hz,
     double observer_z,double source_depth,unsigned int panel_subdivisions,
     unsigned int quadrature_order,double cutoff_decay,
     nec4_ground_direct_result *result);
+
+int nec4_ground_direct_cross_hankel_split(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int panel_subdivisions,
+    unsigned int quadrature_order,double cutoff_decay,
+    nec4_ground_direct_split_result *result);
 
 /* Appendix-H two-stage subtraction used to generate linear table 1. */
 int nec4_ground_direct_cross_table1(double frequency_hz,

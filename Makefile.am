@@ -65,6 +65,7 @@ EXTRA_DIST = \
   docs/NEC4-SIMILARITY-M11-RESEARCH.md \
   docs/NEC4-SIMILARITY-M11A-RESULTS.md \
   docs/NEC4-SIMILARITY-M11B-RESULTS.md \
+  docs/NEC4-SIMILARITY-M11C-RESULTS.md \
   tests/nec4-similarity/m0-baseline.json \
   tests/nec4-similarity/m0_baseline.py \
   tests/nec4-similarity/m1-witnesses.json \
@@ -174,6 +175,9 @@ EXTRA_DIST = \
   tests/nec4-similarity/m11b-adaptive.json \
   tests/nec4-similarity/m11b-adaptive.png \
   tests/nec4-similarity/m11b_adaptive.py \
+  tests/nec4-similarity/m11c-interference.json \
+  tests/nec4-similarity/m11c-interference.png \
+  tests/nec4-similarity/m11c_interference.py \
   tests/nec4-similarity/m10d_closure.py \
   tests/nec4-similarity/m10d_radial_screen.py \
   tests/nec4-similarity/m11a-measurement.json \
@@ -549,7 +553,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/nec4-similarity/m8_equations.py tests/nec4-similarity/m8_bessel.py tests/nec4-similarity/m8_hankel.py tests/nec4-similarity/m8_limits.py tests/nec4-similarity/m8_pairings.py tests/nec4-similarity/m8_oracle.py tests/nec4-similarity/m8_qualification.py tests/nec4-similarity/m8_singularity.py tests/nec4-similarity/m9_tables.py tests/nec4-similarity/m9_linear.py tests/nec4-similarity/m9_linear_outer.py tests/nec4-similarity/m9_linear_qualification.py tests/nec4-similarity/m9_table_layout.py tests/nec4-similarity/m9_model_rank.py tests/nec4-similarity/m9_model_fit.py tests/nec4-similarity/m9_asymptotic.py tests/nec4-similarity/m9_dispatch.py tests/nec4-similarity/m9_grazing_warning.py tests/nec4-similarity/m9_production.py tests/nec4-similarity/m10a_normalization.py tests/nec4-similarity/m10b_surface_reference.py tests/nec4-similarity/m10c_ground_stake.py tests/nec4-similarity/m10d_radial_screen.py tests/nec4-similarity/m10d_closure.py tests/nec4-similarity/m11a_measurement.py tests/nec4-similarity/m11b_adaptive.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/nec4-similarity/m8_equations.py tests/nec4-similarity/m8_bessel.py tests/nec4-similarity/m8_hankel.py tests/nec4-similarity/m8_limits.py tests/nec4-similarity/m8_pairings.py tests/nec4-similarity/m8_oracle.py tests/nec4-similarity/m8_qualification.py tests/nec4-similarity/m8_singularity.py tests/nec4-similarity/m9_tables.py tests/nec4-similarity/m9_linear.py tests/nec4-similarity/m9_linear_outer.py tests/nec4-similarity/m9_linear_qualification.py tests/nec4-similarity/m9_table_layout.py tests/nec4-similarity/m9_model_rank.py tests/nec4-similarity/m9_model_fit.py tests/nec4-similarity/m9_asymptotic.py tests/nec4-similarity/m9_dispatch.py tests/nec4-similarity/m9_grazing_warning.py tests/nec4-similarity/m9_production.py tests/nec4-similarity/m10a_normalization.py tests/nec4-similarity/m10b_surface_reference.py tests/nec4-similarity/m10c_ground_stake.py tests/nec4-similarity/m10d_radial_screen.py tests/nec4-similarity/m10d_closure.py tests/nec4-similarity/m11a_measurement.py tests/nec4-similarity/m11b_adaptive.py tests/nec4-similarity/m11c_interference.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -611,7 +615,7 @@ tests_vie_ground_test_LDADD = -lm
 tests_dielectric_fft_test_SOURCES = tests/dielectric_fft_test.c vie_ground.c vie_ground.h dielectric_fft.c dielectric_fft.h dielectric.h vie_fft.c vie_fft.h vie_kernel.c vie_kernel.h vie_iterative.c vie_iterative.h
 tests_dielectric_fft_test_LDADD = -lm
 noinst_PROGRAMS = tools/m9_fft_benchmark tools/nec4_m9_grid_oracle \
-	tools/nec4_m11_measure tools/nec4_m11b_qualify
+	tools/nec4_m11_measure tools/nec4_m11b_qualify tools/nec4_m11c_qualify
 
 tests_vie_fft_test_SOURCES = tests/vie_fft_test.c vie_fft.c vie_fft.h vie_kernel.c vie_kernel.h vie_iterative.c vie_iterative.h
 tests_vie_fft_test_LDADD = -lm
@@ -624,6 +628,8 @@ tools_nec4_m11_measure_SOURCES = tools/nec4_m11_measure.c nec4_ground_direct.c n
 tools_nec4_m11_measure_LDADD = -lm $(OPENMP_LIBS)
 tools_nec4_m11b_qualify_SOURCES = tools/nec4_m11b_qualify.c nec4_ground_adaptive_e.c nec4_ground_adaptive_e.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_table.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
 tools_nec4_m11b_qualify_LDADD = -lm $(OPENMP_LIBS)
+tools_nec4_m11c_qualify_SOURCES = tools/nec4_m11c_qualify.c nec4_ground_adaptive_e.c nec4_ground_adaptive_e.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_table.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tools_nec4_m11c_qualify_LDADD = -lm $(OPENMP_LIBS)
 tests_vie_kernel_test_SOURCES = tests/vie_kernel_test.c vie_kernel.c vie_kernel.h
 tests_vie_kernel_test_LDADD = -lm
 

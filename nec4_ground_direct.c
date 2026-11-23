@@ -370,7 +370,8 @@ static int integrate_hankel_segment(hankel_context *context,
     double complex start,double complex end,unsigned int order,
     const double *nodes,const double *weights,
     hankel_density_function evaluate_density,
-    double complex sum[NEC4_GROUND_COMPONENT_COUNT])
+    double complex sum[NEC4_GROUND_COMPONENT_COUNT],
+    double complex contribution[NEC4_GROUND_COMPONENT_COUNT])
 {
   unsigned int node,component;
   double complex midpoint=(start+end)/2.,half_width=(end-start)/2.;
@@ -379,8 +380,11 @@ static int integrate_hankel_segment(hankel_context *context,
     double complex values[NEC4_GROUND_COMPONENT_COUNT];
     double complex lambda=midpoint+half_width*nodes[node];
     if(!evaluate_density(context,lambda,values)) return 0;
-    for(component=0;component<NEC4_GROUND_COMPONENT_COUNT;++component)
-      sum[component]+=half_width*weights[node]*values[component];
+    for(component=0;component<NEC4_GROUND_COMPONENT_COUNT;++component) {
+      double complex increment=half_width*weights[node]*values[component];
+      sum[component]+=increment;
+      if(contribution) contribution[component]+=increment;
+    }
   }
   return 1;
 }
@@ -389,7 +393,9 @@ static int integrate_hankel_line(hankel_context *context,
     double complex start,double complex end,unsigned int panels,
     unsigned int order,const double *nodes,const double *weights,
     hankel_density_function evaluate_density,
-    double complex sum[NEC4_GROUND_COMPONENT_COUNT],unsigned int *total)
+    double complex sum[NEC4_GROUND_COMPONENT_COUNT],
+    double complex contribution[NEC4_GROUND_COMPONENT_COUNT],
+    unsigned int *total)
 {
   unsigned int panel;
   if(panels<1) panels=1;
@@ -397,7 +403,7 @@ static int integrate_hankel_line(hankel_context *context,
     if(!integrate_hankel_segment(context,
         start+(end-start)*(double)panel/panels,
         start+(end-start)*(double)(panel+1)/panels,
-        order,nodes,weights,evaluate_density,sum)) return 0;
+        order,nodes,weights,evaluate_density,sum,contribution)) return 0;
   *total+=panels;
   return 1;
 }
@@ -416,6 +422,8 @@ static int cross_hankel_integrate(double frequency_hz,
     unsigned int quadrature_order,double cutoff_decay,
     hankel_density_function evaluate_density,
     double complex result[NEC4_GROUND_COMPONENT_COUNT],
+    double complex lower_spectral[NEC4_GROUND_COMPONENT_COUNT],
+    double complex upper_spectral[NEC4_GROUND_COMPONENT_COUNT],
     unsigned int *used_panels)
 {
   hankel_context context;
@@ -464,7 +472,11 @@ static int cross_hankel_integrate(double frequency_hz,
   context.direct.rho=rho;context.direct.observer_z=observer_z;
   context.direct.source_z=-source_depth;
   for(index=0;index<NEC4_GROUND_COMPONENT_COUNT;++index)
+  {
     result[index]=0.;
+    if(lower_spectral) lower_spectral[index]=0.;
+    if(upper_spectral) upper_spectral[index]=0.;
+  }
 
   delta=p1-left_end;
   if(creal(delta)!=0.)
@@ -496,19 +508,20 @@ static int cross_hankel_integrate(double frequency_hz,
     if(panels<2*panel_subdivisions) panels=2*panel_subdivisions;
     if(!integrate_hankel_line(&context,left_end+delta*fractions[index],
         left_end+delta*fractions[index+1],panels,quadrature_order,
-        nodes,weights,evaluate_density,result,&total_panels)) goto failure;
+        nodes,weights,evaluate_density,result,lower_spectral,
+        &total_panels)) goto failure;
   }
   if(!integrate_hankel_line(&context,p1,p2,
       line_panel_count(p1,p2,panel_length,2*panel_subdivisions),
       quadrature_order,nodes,weights,evaluate_density,result,
-      &total_panels)) goto failure;
+      lower_spectral,&total_panels)) goto failure;
   if(!integrate_hankel_line(&context,p2,p3,
       line_panel_count(p2,p3,panel_length,2*panel_subdivisions),
       quadrature_order,nodes,weights,evaluate_density,result,
-      &total_panels)) goto failure;
+      upper_spectral,&total_panels)) goto failure;
   if(!integrate_hankel_line(&context,p3,right_end,ray_panels,
       quadrature_order,nodes,weights,evaluate_density,result,
-      &total_panels)) goto failure;
+      upper_spectral,&total_panels)) goto failure;
   free(nodes);free(weights);
   *used_panels=total_panels;
   return 1;
@@ -524,7 +537,21 @@ int nec4_ground_direct_cross_hankel(double frequency_hz,
 {
   if(!result||!cross_hankel_integrate(frequency_hz,lower_k,upper_k,rho,
       observer_z,source_depth,panel_subdivisions,quadrature_order,cutoff_decay,
-      hankel_density,result->value,&result->panels)) return 0;
+      hankel_density,result->value,NULL,NULL,&result->panels)) return 0;
+  result->quadrature_order=quadrature_order;
+  return 1;
+}
+
+int nec4_ground_direct_cross_hankel_split(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int panel_subdivisions,
+    unsigned int quadrature_order,double cutoff_decay,
+    nec4_ground_direct_split_result *result)
+{
+  if(!result||!cross_hankel_integrate(frequency_hz,lower_k,upper_k,rho,
+      observer_z,source_depth,panel_subdivisions,quadrature_order,cutoff_decay,
+      hankel_density,result->value,result->lower_spectral,
+      result->upper_spectral,&result->panels)) return 0;
   result->quadrature_order=quadrature_order;
   return 1;
 }
@@ -610,7 +637,7 @@ int nec4_ground_direct_cross_table1_hankel(double frequency_hz,
   double complex first[NEC4_GROUND_COMPONENT_COUNT];
   if(!result||!cross_hankel_integrate(frequency_hz,lower_k,upper_k,rho,
       observer_z,source_depth,panel_subdivisions,quadrature_order,cutoff_decay,
-      appendix_h_hankel_density,first,&result->panels)) return 0;
+      appendix_h_hankel_density,first,NULL,NULL,&result->panels)) return 0;
   context.frequency_hz=frequency_hz;
   context.lower_k=lower_k;context.upper_k=upper_k;
   context.rho=rho;context.observer_z=observer_z;

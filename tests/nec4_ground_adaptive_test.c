@@ -30,6 +30,16 @@ static int sample(void *opaque,double x,double y,double z,double complex value[5
   return 1;
 }
 
+static int directional_sample(void *opaque,double x,double y,double z,
+    double complex value[5])
+{
+  (void)opaque;
+  for(unsigned int component=0;component<5;++component)
+    value[component]=(1.+.1*component)*cexp(I*(18.+component)*x)+
+      .1*y*y*y+I*.05*z*z*z;
+  return 1;
+}
+
 static double error(const double complex actual[5],const double complex expected[5])
 {
   double difference=0.,scale=0.;
@@ -42,7 +52,8 @@ static double error(const double complex actual[5],const double complex expected
 
 int main(void)
 {
-  nec4_ground_adaptive serial,parallel,curve,limited,loaded;
+  nec4_ground_adaptive serial,parallel,curve,limited,loaded,directional,
+    directional_serial;
   nec4_ground_adaptive_bounds volume={{0.,0.,0.},{1.,1.,1.}};
   nec4_ground_adaptive_bounds line={{0.,.25,.1},{1.,.25,.1}};
   fixture cubic={0},oscillatory={1};
@@ -93,6 +104,32 @@ int main(void)
     assert(nec4_ground_adaptive_evaluate(&curve,x,.25,.1,actual));
     assert(error(actual,expected)<1.e-4);
   }
+  nec4_ground_adaptive_init(&directional);
+  nec4_ground_adaptive_init(&directional_serial);
+  assert(nec4_ground_adaptive_build_anisotropic(&directional,&volume,1.e-4,
+      30,0,4,directional_sample,NULL));
+  assert(nec4_ground_adaptive_build_anisotropic(&directional_serial,&volume,
+      1.e-4,30,0,1,directional_sample,NULL));
+  assert(directional.anisotropic&&directional.stats.unresolved_leaves==0&&
+         directional.stats.cells<128);
+  assert(!memcmp(&directional.stats,&directional_serial.stats,
+                 sizeof(directional.stats)));
+  for(unsigned int index=1;index<=257;++index) {
+    double x=fmod(index*.6180339887498948,1.);
+    double y=fmod(index*.4142135623730950,1.);
+    double z=fmod(index*.7320508075688772,1.);
+    double complex expected[5],actual[5];
+    assert(directional_sample(NULL,x,y,z,expected));
+    assert(nec4_ground_adaptive_evaluate(&directional,x,y,z,actual));
+    assert(error(actual,expected)<1.e-4);
+    {
+      double complex one[5];
+      assert(nec4_ground_adaptive_evaluate(&directional_serial,x,y,z,one));
+      assert(!memcmp(one,actual,sizeof(one)));
+    }
+  }
+  assert(!nec4_ground_adaptive_store(&directional,cache,identity,
+                                      sizeof(identity)));
   {
     int descriptor=mkstemp(cache);double complex original[5],restored[5];
     FILE *stream;
@@ -117,6 +154,8 @@ int main(void)
          worst);
   nec4_ground_adaptive_destroy(&curve);nec4_ground_adaptive_destroy(&parallel);
   nec4_ground_adaptive_destroy(&limited);
+  nec4_ground_adaptive_destroy(&directional);
+  nec4_ground_adaptive_destroy(&directional_serial);
   nec4_ground_adaptive_destroy(&serial);
   return 0;
 }
