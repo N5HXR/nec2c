@@ -1,0 +1,43 @@
+{
+  "schema": "nec2c-nec4-m11d-direct-adaptive-h",
+  "schema_version": 1,
+  "time_convention": "exp(+j omega t)",
+  "derivation": "four cylindrical magnetic spectral kernels derived analytically from curl(E)=-j omega mu H; no numerical differentiation in production sampling",
+  "direct_gates": {
+    "numerical_curl_scaled_error": 0.00002415,
+    "homogeneous_closed_form_scaled_error": 0.00003083,
+    "bessel_hankel_overlap_scaled_error": 0.00002283,
+    "interface_refinement_scaled_error": 1.374e-07,
+    "interface_path_scaled_error": 2.971e-09,
+    "pec_transmission_ratio": 1.466e-07,
+    "axis_limit": "passed",
+    "worker_identity": "bit-identical"
+  },
+  "adaptive_cell_tolerance": 0.0003,
+  "external_accuracy_gate": 0.0003,
+  "independent_points_per_region": 128,
+  "cell_budget": 4096,
+  "direct_settings": {
+    "panel_subdivisions": 5,
+    "quadrature_order": 80,
+    "cutoff_decay": 120.0
+  },
+  "results": [
+    {
+      "region": "grazing-sheet",
+      "cells": 2671,
+      "unresolved_leaves": 0,
+      "fallbacks": 0,
+      "independent_worst_error": 0.00020243963103764236,
+      "build_seconds": 82.8509405
+    },
+    {
+      "region": "switch-volume",
+      "cells": 2815,
+      "unresolved_leaves": 0,
+      "fallbacks": 0,
+      "independent_worst_error": 0.0002915380551813211,
+      "build_seconds": 234.340795
+    }
+  ]
+}

@@ -409,15 +409,16 @@ Acceptance metrics:
 
 ### M11 - conditional adaptive ground update
 
-**Status:** research contract and M11A-M11C were accepted on 2026-11-23.
-M11D is in progress. The engine is named `adaptive`,
+**Status:** research contract and M11A-M11D were accepted on 2026-11-23.
+M11E is in progress. The engine is named `adaptive`,
 accuracy-first direct fallback is approved, and direct H is best-effort and
 independently deferrable with the 1992 NEC4 theory as the governing baseline
 rather than inferred NEC4.2 behavior. See
 `NEC4-SIMILARITY-M11-RESEARCH.md` and
 `NEC4-SIMILARITY-M11A-RESULTS.md`; M11B results are in
-`NEC4-SIMILARITY-M11B-RESULTS.md`, and M11C results are in
-`NEC4-SIMILARITY-M11C-RESULTS.md`.
+`NEC4-SIMILARITY-M11B-RESULTS.md`, M11C results are in
+`NEC4-SIMILARITY-M11C-RESULTS.md`, and M11D results are in
+`NEC4-SIMILARITY-M11D-RESULTS.md`.
 
 Goal: determine whether the public GN3 description and public field mathematics support a materially more accurate production evaluator without claiming exact NEC4.2 GN3 reproduction.
 

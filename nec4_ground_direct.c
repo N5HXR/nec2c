@@ -129,6 +129,59 @@ static int density(const direct_context *context,double complex lambda,
   return 1;
 }
 
+/* Direct magnetic kernels obtained by applying
+   H=j curl(E)/(omega mu) to the spectral electric kernels above.  The E
+   normalization contains frequency rather than angular frequency, hence the
+   explicit 1/(2 pi) factor.  Slot four is unused so the existing vector
+   quadrature can integrate E and H without two subtly different contour
+   implementations. */
+static int magnetic_density(const direct_context *context,
+    double complex lambda,
+    double complex value[NEC4_GROUND_COMPONENT_COUNT])
+{
+  double complex gamma1=outgoing_gamma(lambda,context->lower_k);
+  double complex gamma2=outgoing_gamma(lambda,context->upper_k);
+  double complex denominator=context->lower_k*context->lower_k*gamma2+
+    context->upper_k*context->upper_k*gamma1;
+  double complex gamma_sum=gamma1+gamma2;
+  double complex exponential=cexp(gamma1*context->source_z-
+    gamma2*context->observer_z);
+  double complex j0,j0_prime,j0_second,argument=lambda*context->rho;
+  double scale=-1./(2.*NEC4_PI);
+  if(cabs(denominator)==0.||cabs(gamma_sum)==0.) return 0;
+  if(context->rho==0.)
+  {
+    j0=1.;j0_prime=0.;j0_second=-.5;
+  }
+  else
+  {
+    bessel(argument,&j0,&j0_prime);
+    j0_second=-j0-j0_prime/argument;
+  }
+  value[NEC4_GROUND_H_PHI_VERTICAL]=scale*exponential*j0_prime*
+    lambda*lambda*context->upper_k*context->upper_k/denominator;
+  value[NEC4_GROUND_H_RHO_HORIZONTAL]=scale*exponential*(
+    (gamma2-gamma1)*j0_prime*lambda*lambda/
+      (context->rho==0.?1.:context->rho)/denominator+
+    gamma2*j0*lambda/gamma_sum);
+  value[NEC4_GROUND_H_PHI_HORIZONTAL]=scale*exponential*(
+    (gamma2-gamma1)*j0_second*lambda*lambda*lambda/denominator+
+    gamma2*j0*lambda/gamma_sum);
+  value[NEC4_GROUND_H_Z_HORIZONTAL]=scale*exponential*j0_prime*
+    lambda*lambda/gamma_sum;
+  value[4]=0.;
+  if(context->rho==0.)
+  {
+    /* The horizontal-source rho/phi basis is direction-dependent on axis.
+       Its Cartesian limit is finite and equal in the two transverse
+       directions.  Evaluate J0'(x)/rho -> -lambda/2 explicitly. */
+    value[NEC4_GROUND_H_RHO_HORIZONTAL]=scale*exponential*(
+      (gamma2-gamma1)*(-.5)*lambda*lambda*lambda/denominator+
+      gamma2*j0*lambda/gamma_sum);
+  }
+  return 1;
+}
+
 static double complex continuous_gamma(hankel_context *context,
     double complex lambda,double complex wave_number,unsigned int medium)
 {
@@ -181,6 +234,38 @@ static int hankel_density(hankel_context *context,double complex lambda,
     lambda*lambda/(direct->rho*denominator)+u);
   value[NEC4_GROUND_Z_HORIZONTAL]=common*gamma1*exponential*h0_prime*
     lambda*lambda/denominator;
+  return 1;
+}
+
+static int hankel_magnetic_density(hankel_context *context,
+    double complex lambda,
+    double complex value[NEC4_GROUND_COMPONENT_COUNT])
+{
+  const direct_context *direct=&context->direct;
+  double complex gamma1=continuous_gamma(context,lambda,direct->lower_k,0);
+  double complex gamma2=continuous_gamma(context,lambda,direct->upper_k,1);
+  double complex denominator=direct->lower_k*direct->lower_k*gamma2+
+    direct->upper_k*direct->upper_k*gamma1;
+  double complex gamma_sum=gamma1+gamma2;
+  double complex exponential=cexp(gamma1*direct->source_z-
+    gamma2*direct->observer_z);
+  double complex h0,h0_prime,h0_second,argument=lambda*direct->rho;
+  double scale=-1./(4.*NEC4_PI);
+  if(cabs(denominator)==0.||cabs(gamma_sum)==0.||cabs(argument)==0.)
+    return 0;
+  hankel2(argument,&h0,&h0_prime);
+  h0_second=-h0-h0_prime/argument;
+  value[NEC4_GROUND_H_PHI_VERTICAL]=scale*exponential*h0_prime*
+    lambda*lambda*direct->upper_k*direct->upper_k/denominator;
+  value[NEC4_GROUND_H_RHO_HORIZONTAL]=scale*exponential*(
+    (gamma2-gamma1)*h0_prime*lambda*lambda/
+      (direct->rho*denominator)+gamma2*h0*lambda/gamma_sum);
+  value[NEC4_GROUND_H_PHI_HORIZONTAL]=scale*exponential*(
+    (gamma2-gamma1)*h0_second*lambda*lambda*lambda/denominator+
+    gamma2*h0*lambda/gamma_sum);
+  value[NEC4_GROUND_H_Z_HORIZONTAL]=scale*exponential*h0_prime*
+    lambda*lambda/gamma_sum;
+  value[4]=0.;
   return 1;
 }
 
@@ -316,17 +401,20 @@ static int integrate_segment(const direct_context *context,
   return 1;
 }
 
-int nec4_ground_direct_cross_bessel(double frequency_hz,
+static int cross_bessel_integrate(double frequency_hz,
     double complex lower_k,double complex upper_k,double rho,
     double observer_z,double source_depth,unsigned int quadrature_order,
-    double cutoff_decay,nec4_ground_direct_result *result)
+    double cutoff_decay,density_function evaluate_density,
+    double complex result[NEC4_GROUND_COMPONENT_COUNT],
+    unsigned int *used_panels)
 {
   direct_context context;
   double height_sum,scale,panel_width,cutoff,left,right;
   double complex p0;
   double *nodes=NULL,*weights=NULL;
   unsigned int panel,panels,component;
-  if(!result||!(frequency_hz>0.)||rho<0.||observer_z<0.||source_depth<0.||
+  if(!result||!used_panels||!evaluate_density||!(frequency_hz>0.)||rho<0.||
+     observer_z<0.||source_depth<0.||
      observer_z+source_depth<=0.||quadrature_order<12||cutoff_decay<30.||
      !isfinite(frequency_hz)||!isfinite(rho)||!isfinite(observer_z)||
      !isfinite(source_depth)||!(cabs(lower_k)>0.)||!(cabs(upper_k)>0.))
@@ -345,20 +433,47 @@ int nec4_ground_direct_cross_bessel(double frequency_hz,
   context.lower_k=lower_k;context.upper_k=upper_k;
   context.rho=rho;context.observer_z=observer_z;context.source_z=-source_depth;
   for(component=0;component<NEC4_GROUND_COMPONENT_COUNT;++component)
-    result->value[component]=0.;
-  if(!integrate_segment(&context,0.,p0,quadrature_order,nodes,weights,density,
-      result->value)) { free(nodes);free(weights);return 0; }
+    result[component]=0.;
+  if(!integrate_segment(&context,0.,p0,quadrature_order,nodes,weights,
+      evaluate_density,result)) { free(nodes);free(weights);return 0; }
   left=scale;
   for(panel=0;panel<panels;++panel)
   {
     right=fmin(left+panel_width,cutoff);
     if(!integrate_segment(&context,left+I*scale,right+I*scale,
-        quadrature_order,nodes,weights,density,result->value))
+        quadrature_order,nodes,weights,evaluate_density,result))
     { free(nodes);free(weights);return 0; }
     left=right;
   }
   free(nodes);free(weights);
-  result->panels=panels+1;
+  *used_panels=panels+1;
+  return 1;
+}
+
+int nec4_ground_direct_cross_bessel(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int quadrature_order,
+    double cutoff_decay,nec4_ground_direct_result *result)
+{
+  if(!result||!cross_bessel_integrate(frequency_hz,lower_k,upper_k,rho,
+      observer_z,source_depth,quadrature_order,cutoff_decay,density,
+      result->value,&result->panels)) return 0;
+  result->quadrature_order=quadrature_order;
+  return 1;
+}
+
+int nec4_ground_direct_cross_h_bessel(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int quadrature_order,
+    double cutoff_decay,nec4_ground_direct_h_result *result)
+{
+  double complex work[NEC4_GROUND_COMPONENT_COUNT];
+  unsigned int component;
+  if(!result||!cross_bessel_integrate(frequency_hz,lower_k,upper_k,rho,
+      observer_z,source_depth,quadrature_order,cutoff_decay,
+      magnetic_density,work,&result->panels)) return 0;
+  for(component=0;component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+    result->value[component]=work[component];
   result->quadrature_order=quadrature_order;
   return 1;
 }
@@ -539,6 +654,81 @@ int nec4_ground_direct_cross_hankel(double frequency_hz,
       observer_z,source_depth,panel_subdivisions,quadrature_order,cutoff_decay,
       hankel_density,result->value,NULL,NULL,&result->panels)) return 0;
   result->quadrature_order=quadrature_order;
+  return 1;
+}
+
+int nec4_ground_direct_cross_h_hankel(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    double observer_z,double source_depth,unsigned int panel_subdivisions,
+    unsigned int quadrature_order,double cutoff_decay,
+    nec4_ground_direct_h_result *result)
+{
+  double complex work[NEC4_GROUND_COMPONENT_COUNT];
+  unsigned int component;
+  if(!result||!cross_hankel_integrate(frequency_hz,lower_k,upper_k,rho,
+      observer_z,source_depth,panel_subdivisions,quadrature_order,
+      cutoff_decay,hankel_magnetic_density,work,NULL,NULL,
+      &result->panels)) return 0;
+  for(component=0;component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+    result->value[component]=work[component];
+  result->quadrature_order=quadrature_order;
+  return 1;
+}
+
+static double h_interface_error(
+    const double complex actual[NEC4_GROUND_H_COMPONENT_COUNT],
+    const double complex expected[NEC4_GROUND_H_COMPONENT_COUNT])
+{
+  double scale=0.,error=0.;
+  unsigned int component;
+  for(component=0;component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+    scale=fmax(scale,cabs(expected[component]));
+  if(!(scale>0.)) scale=1.;
+  for(component=0;component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+    error=fmax(error,cabs(actual[component]-expected[component])/scale);
+  return error;
+}
+
+int nec4_ground_direct_cross_h_interface(double frequency_hz,
+    double complex lower_k,double complex upper_k,double rho,
+    unsigned int panel_subdivisions,unsigned int quadrature_order,
+    double cutoff_decay,nec4_ground_h_interface_result *result)
+{
+  const double coarse_ratio=.0005;
+  nec4_ground_direct_h_result symmetric[3],source_only[2];
+  double complex coarse[NEC4_GROUND_H_COMPONENT_COUNT];
+  double complex path[NEC4_GROUND_H_COMPONENT_COUNT];
+  unsigned int component,index,total_panels=0;
+  if(!result||!(rho>0.)) return 0;
+  for(index=0;index<3;++index)
+  {
+    double height=coarse_ratio*rho/(1u<<index);
+    if(!nec4_ground_direct_cross_h_hankel(frequency_hz,lower_k,upper_k,rho,
+        height/2.,height/2.,panel_subdivisions,quadrature_order,cutoff_decay,
+        &symmetric[index])) return 0;
+    total_panels+=symmetric[index].panels;
+  }
+  for(index=0;index<2;++index)
+  {
+    double height=coarse_ratio*rho/(2u<<index);
+    if(!nec4_ground_direct_cross_h_hankel(frequency_hz,lower_k,upper_k,rho,
+        0.,height,panel_subdivisions,quadrature_order,cutoff_decay,
+        &source_only[index])) return 0;
+    total_panels+=source_only[index].panels;
+  }
+  for(component=0;component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+  {
+    coarse[component]=2.*symmetric[1].value[component]-
+      symmetric[0].value[component];
+    result->field.value[component]=2.*symmetric[2].value[component]-
+      symmetric[1].value[component];
+    path[component]=2.*source_only[1].value[component]-
+      source_only[0].value[component];
+  }
+  result->refinement_error=h_interface_error(result->field.value,coarse);
+  result->approach_path_error=h_interface_error(result->field.value,path);
+  result->field.panels=total_panels;
+  result->field.quadrature_order=quadrature_order;
   return 1;
 }
 

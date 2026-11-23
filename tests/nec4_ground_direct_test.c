@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define NEC4_TEST_MU0 1.2566370621238373306e-6
+
 typedef struct {
   const char *name;
   double complex lower_k;
@@ -43,6 +45,29 @@ static double maximum_array_error(
     maximum=fmax(maximum,cabs(actual[component]-expected[component])/
         fmax(cabs(expected[component]),scale*1.e-12));
   return maximum;
+}
+
+static double maximum_h_error(
+    const double complex actual[NEC4_GROUND_H_COMPONENT_COUNT],
+    const double complex expected[NEC4_GROUND_H_COMPONENT_COUNT])
+{
+  double scale=0.,maximum=0.;
+  unsigned int component;
+  for(component=0;component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+    scale=fmax(scale,cabs(expected[component]));
+  for(component=0;component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+    maximum=fmax(maximum,cabs(actual[component]-expected[component])/
+      fmax(cabs(expected[component]),scale*1.e-12));
+  return maximum;
+}
+
+static double h_scale(const double complex value[NEC4_GROUND_H_COMPONENT_COUNT])
+{
+  double scale=0.;
+  for(unsigned int component=0;
+      component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+    scale=fmax(scale,cabs(value[component]));
+  return scale;
 }
 
 int main(void)
@@ -86,6 +111,172 @@ int main(void)
           cases[index].name,error);
       return 1;
     }
+  }
+  {
+    /* M11D: the production H integrand is independently analytic.  Compare
+       its integrated result with a centered numerical curl of integrated E;
+       the latter is a qualification oracle only and is never used by H. */
+    const double rho=.5,observer_z=.6,source_depth=.7,step=1.e-4;
+    const double omega=2.*acos(-1.)*frequency;
+    nec4_ground_direct_result rp,rm,zp,zm,center;
+    nec4_ground_direct_h_result magnetic;
+    double complex curl[NEC4_GROUND_H_COMPONENT_COUNT];
+    double complex d_rho_vertical_dz,d_z_vertical_drho;
+    double complex d_rho_horizontal_dz,d_phi_horizontal_dz;
+    double complex d_z_horizontal_drho,d_phi_horizontal_drho;
+    double complex maxwell=I/(omega*NEC4_TEST_MU0);
+    double error;
+    assert(nec4_ground_direct_cross_bessel(frequency,cases[1].lower_k,
+        upper_k,rho+step,observer_z,source_depth,72,140.,&rp));
+    assert(nec4_ground_direct_cross_bessel(frequency,cases[1].lower_k,
+        upper_k,rho-step,observer_z,source_depth,72,140.,&rm));
+    assert(nec4_ground_direct_cross_bessel(frequency,cases[1].lower_k,
+        upper_k,rho,observer_z+step,source_depth,72,140.,&zp));
+    assert(nec4_ground_direct_cross_bessel(frequency,cases[1].lower_k,
+        upper_k,rho,observer_z-step,source_depth,72,140.,&zm));
+    assert(nec4_ground_direct_cross_bessel(frequency,cases[1].lower_k,
+        upper_k,rho,observer_z,source_depth,72,140.,&center));
+    assert(nec4_ground_direct_cross_h_bessel(frequency,cases[1].lower_k,
+        upper_k,rho,observer_z,source_depth,72,140.,&magnetic));
+    d_rho_vertical_dz=(zp.value[NEC4_GROUND_RHO_VERTICAL]-
+      zm.value[NEC4_GROUND_RHO_VERTICAL])/(2.*step);
+    d_z_vertical_drho=(rp.value[NEC4_GROUND_Z_VERTICAL]-
+      rm.value[NEC4_GROUND_Z_VERTICAL])/(2.*step);
+    d_rho_horizontal_dz=(zp.value[NEC4_GROUND_RHO_HORIZONTAL]-
+      zm.value[NEC4_GROUND_RHO_HORIZONTAL])/(2.*step);
+    d_phi_horizontal_dz=(zp.value[NEC4_GROUND_PHI_HORIZONTAL]-
+      zm.value[NEC4_GROUND_PHI_HORIZONTAL])/(2.*step);
+    d_z_horizontal_drho=(rp.value[NEC4_GROUND_Z_HORIZONTAL]-
+      rm.value[NEC4_GROUND_Z_HORIZONTAL])/(2.*step);
+    d_phi_horizontal_drho=(rp.value[NEC4_GROUND_PHI_HORIZONTAL]-
+      rm.value[NEC4_GROUND_PHI_HORIZONTAL])/(2.*step);
+    curl[NEC4_GROUND_H_PHI_VERTICAL]=maxwell*(d_rho_vertical_dz-
+      d_z_vertical_drho);
+    curl[NEC4_GROUND_H_RHO_HORIZONTAL]=maxwell*(
+      -center.value[NEC4_GROUND_Z_HORIZONTAL]/rho-
+      d_phi_horizontal_dz);
+    curl[NEC4_GROUND_H_PHI_HORIZONTAL]=maxwell*(
+      d_rho_horizontal_dz-d_z_horizontal_drho);
+    curl[NEC4_GROUND_H_Z_HORIZONTAL]=maxwell*(
+      d_phi_horizontal_drho+
+      (center.value[NEC4_GROUND_PHI_HORIZONTAL]+
+       center.value[NEC4_GROUND_RHO_HORIZONTAL])/rho);
+    error=maximum_h_error(magnetic.value,curl);
+    if(error>5.e-4)
+    {
+      fprintf(stderr,"direct H numerical-curl error %.12e\n",error);
+      for(unsigned int component=0;
+          component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+        fprintf(stderr,"  %u analytic %.12e%+.12ei curl %.12e%+.12ei\n",
+          component,creal(magnetic.value[component]),
+          cimag(magnetic.value[component]),creal(curl[component]),
+          cimag(curl[component]));
+      return 1;
+    }
+    printf("NEC4 direct H numerical-curl agreement %.3e\n",error);
+  }
+  {
+    /* In the identical-medium limit the interface disappears.  This is an
+       independent closed-form magnetic Green-function check. */
+    const double rho=.74,observer_z=.10,source_depth=.12;
+    const double dz=observer_z+source_depth,distance=hypot(rho,dz);
+    const double complex wave_number=cases[1].lower_k;
+    const double complex factor=cexp(-I*wave_number*distance)*
+      (1.+I*wave_number*distance)/(4.*acos(-1.)*distance*distance*distance);
+    const double complex expected[NEC4_GROUND_H_COMPONENT_COUNT]={
+      factor*rho,-factor*dz,-factor*dz,factor*rho};
+    nec4_ground_direct_h_result magnetic;
+    double bessel_error;
+    assert(nec4_ground_direct_cross_h_bessel(frequency,wave_number,
+        wave_number,rho,observer_z,source_depth,72,140.,&magnetic));
+    bessel_error=maximum_h_error(magnetic.value,expected);
+    if(bessel_error>5.e-5)
+    {
+      fprintf(stderr,"direct H homogeneous error %.12e\n",bessel_error);
+      for(unsigned int component=0;
+          component<NEC4_GROUND_H_COMPONENT_COUNT;++component)
+        fprintf(stderr,"  %u analytic %.12e%+.12ei closed %.12e%+.12ei\n",
+          component,creal(magnetic.value[component]),
+          cimag(magnetic.value[component]),creal(expected[component]),
+          cimag(expected[component]));
+      return 1;
+    }
+    printf("NEC4 direct H homogeneous agreement %.3e\n",bessel_error);
+  }
+  {
+    nec4_ground_direct_h_result bessel_result,hankel_result;
+    double overlap_error;
+    assert(nec4_ground_direct_cross_h_bessel(frequency,cases[1].lower_k,
+        upper_k,1.,.12,.18,64,100.,&bessel_result));
+    assert(nec4_ground_direct_cross_h_hankel(frequency,cases[1].lower_k,
+        upper_k,1.,.12,.18,4,56,90.,&hankel_result));
+    overlap_error=maximum_h_error(hankel_result.value,bessel_result.value);
+    if(overlap_error>5.e-5)
+    {
+      fprintf(stderr,"direct H Bessel/Hankel overlap error %.12e\n",
+        overlap_error);
+      return 1;
+    }
+    printf("NEC4 direct H contour overlap %.3e\n",overlap_error);
+  }
+  {
+    nec4_ground_h_interface_result interface;
+    assert(nec4_ground_direct_cross_h_interface(frequency,cases[1].lower_k,
+      upper_k,1.,4,64,90.,&interface));
+    if(interface.refinement_error>5.e-4||
+       interface.approach_path_error>5.e-4)
+    {
+      fprintf(stderr,"direct H interface errors refinement %.12e path %.12e\n",
+        interface.refinement_error,interface.approach_path_error);
+      return 1;
+    }
+    printf("NEC4 direct H interface refinement %.3e, path %.3e\n",
+      interface.refinement_error,interface.approach_path_error);
+  }
+  {
+    /* A source buried at fixed positive depth in a medium approaching PEC
+       cannot transmit a finite field through the interface. */
+    nec4_ground_direct_h_result moderate,pec;
+    double moderate_scale,pec_scale;
+    assert(nec4_ground_direct_cross_h_bessel(frequency,
+        10.-10.*I,upper_k,.7,.2,.15,64,100.,&moderate));
+    assert(nec4_ground_direct_cross_h_bessel(frequency,
+        100.-100.*I,upper_k,.7,.2,.15,64,100.,&pec));
+    moderate_scale=h_scale(moderate.value);pec_scale=h_scale(pec.value);
+    if(!(pec_scale<1.e-3*moderate_scale))
+    {
+      fprintf(stderr,"direct H PEC suppression ratio %.12e\n",
+        pec_scale/moderate_scale);
+      return 1;
+    }
+    printf("NEC4 direct H PEC transmission ratio %.3e\n",
+      pec_scale/moderate_scale);
+  }
+  {
+    nec4_ground_direct_h_result axis,serial,parallel[12];
+    int success[12];
+    assert(nec4_ground_direct_cross_h_bessel(frequency,cases[1].lower_k,
+        upper_k,0.,.4,.7,64,100.,&axis));
+    assert(axis.value[NEC4_GROUND_H_PHI_VERTICAL]==0.);
+    assert(axis.value[NEC4_GROUND_H_Z_HORIZONTAL]==0.);
+    assert(cabs(axis.value[NEC4_GROUND_H_RHO_HORIZONTAL]-
+      axis.value[NEC4_GROUND_H_PHI_HORIZONTAL])<2.e-13*
+      fmax(1.,cabs(axis.value[NEC4_GROUND_H_RHO_HORIZONTAL])));
+    assert(nec4_ground_direct_cross_h_bessel(frequency,cases[1].lower_k,
+        upper_k,.8,.3,.5,64,100.,&serial));
+#ifdef _OPENMP
+#pragma omp parallel for num_threads(4) schedule(static)
+#endif
+    for(int item=0;item<12;++item)
+      success[item]=nec4_ground_direct_cross_h_bessel(frequency,
+        cases[1].lower_k,upper_k,.8,.3,.5,64,100.,&parallel[item]);
+    for(int item=0;item<12;++item)
+    {
+      assert(success[item]);
+      assert(!memcmp(serial.value,parallel[item].value,
+        sizeof(serial.value)));
+    }
+    printf("NEC4 direct H axis and worker identity passed\n");
   }
   {
     const double complex expected_total[NEC4_GROUND_COMPONENT_COUNT]={
