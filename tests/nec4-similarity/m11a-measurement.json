@@ -1,0 +1,3472 @@
+{
+  "schema": "nec2c-nec4-m11a-difficult-domain",
+  "schema_version": 1,
+  "purpose": "condition the public direct-contour oracle and map the accepted original-NEC4 production path before adaptive implementation",
+  "normalization": "maximum component absolute difference divided by maximum fine-direct component magnitude",
+  "contour_sequences": {
+    "medium": {
+      "panel_subdivisions": 3,
+      "quadrature_order": 48,
+      "cutoff_decay": 80.0
+    },
+    "fine": {
+      "panel_subdivisions": 5,
+      "quadrature_order": 80,
+      "cutoff_decay": 120.0
+    },
+    "alternate": "fine settings with Bessel and Hankel contour ownership exchanged where both representations are available"
+  },
+  "provisional_scaled_error_target": 0.0001,
+  "summary": {
+    "witness_count": 80,
+    "selected_oracle_worst": 7.313669374223293e-05,
+    "alternate_oracle_worst": 4.5930705085654405e-06,
+    "accepted_direct_path_worst": 7.313669374223293e-05,
+    "current_asymptotic_worst": 1763.498038316186,
+    "current_asymptotic_median": 11.801692709585826,
+    "current_asymptotic_above_target": 56,
+    "current_asymptotic_count": 56
+  },
+  "witnesses": [
+    {
+      "material": "average-soil",
+      "family": "switch",
+      "rho_lambda": 2.9,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.6098604606185081,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 2.1743933636433947e-15,
+      "alternate_to_fine_scaled_error": 4.5930705085654405e-06,
+      "production_to_fine_scaled_error": 2.1743933636433947e-15,
+      "wall_seconds": {
+        "medium": 0.00310481386,
+        "fine": 0.00745197409,
+        "alternate": 0.041354235
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.00025298662925221947,
+          "im": -0.0003779950452740956
+        },
+        "z_vertical": {
+          "re": 0.0005002853987785918,
+          "im": -0.0020883155734747086
+        },
+        "rho_horizontal": {
+          "re": -0.0003527002803299199,
+          "im": 0.0018186805082426557
+        },
+        "phi_horizontal": {
+          "re": 7.625395756075817e-05,
+          "im": 0.00032804529050753595
+        },
+        "z_horizontal": {
+          "re": 0.0013081931848973273,
+          "im": 0.008680000337216259
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "switch",
+      "rho_lambda": 3.0,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.589533238095046,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 2.0705015298855735e-15,
+      "alternate_to_fine_scaled_error": 4.493565099755159e-06,
+      "production_to_fine_scaled_error": 2.0705015298855735e-15,
+      "wall_seconds": {
+        "medium": 0.00161978393,
+        "fine": 0.00588885695,
+        "alternate": 0.0391302009
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -2.195545541411071e-05,
+          "im": -0.0004344154832222974
+        },
+        "z_vertical": {
+          "re": -0.0008063244728076616,
+          "im": -0.0018834914541407388
+        },
+        "rho_horizontal": {
+          "re": 0.0007685189329392106,
+          "im": 0.0015976899921084557
+        },
+        "phi_horizontal": {
+          "re": 0.00023563220443066705,
+          "im": 0.0002057067814221243
+        },
+        "z_horizontal": {
+          "re": 0.005949080414289317,
+          "im": 0.005899488364782853
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "switch",
+      "rho_lambda": 3.01,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.587574793453933,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.102852559794624e-14,
+      "alternate_to_fine_scaled_error": 4.483980262398877e-06,
+      "production_to_fine_scaled_error": 3.640783948365741,
+      "wall_seconds": {
+        "medium": 0.00161291799,
+        "fine": 0.00588321686,
+        "alternate": 0.0483750459
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -4.948355170496183e-05,
+          "im": -0.0004302237609630077
+        },
+        "z_vertical": {
+          "re": -0.0009207803092578322,
+          "im": -0.0018196743556557885
+        },
+        "rho_horizontal": {
+          "re": 0.0008653415378014589,
+          "im": 0.0015386087309282972
+        },
+        "phi_horizontal": {
+          "re": 0.00024622204583681073,
+          "im": 0.00018921605871884405
+        },
+        "z_horizontal": {
+          "re": 0.00628524974274498,
+          "im": 0.0054817980084861445
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "switch",
+      "rho_lambda": 3.1,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.5705173148252046,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.3441758580033591e-14,
+      "alternate_to_fine_scaled_error": 4.400513946391206e-06,
+      "production_to_fine_scaled_error": 3.562124673412066,
+      "wall_seconds": {
+        "medium": 0.00234952196,
+        "fine": 0.00647902605,
+        "alternate": 0.0405797001
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.00026527798051354787,
+          "im": -0.0003210465184809924
+        },
+        "z_vertical": {
+          "re": -0.00169193957253242,
+          "im": -0.0009841995469771117
+        },
+        "rho_horizontal": {
+          "re": 0.0015045443360288846,
+          "im": 0.0007885248378303669
+        },
+        "phi_horizontal": {
+          "re": 0.000289947683655737,
+          "im": 2.7024359019125485e-05
+        },
+        "z_horizontal": {
+          "re": 0.007927332039617242,
+          "im": 0.001128590488600059
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.069816,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 1.0671706413835162,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 5.594561114359704e-15,
+      "alternate_to_fine_scaled_error": 3.837274350504901e-06,
+      "production_to_fine_scaled_error": 3.1034742476974735,
+      "wall_seconds": {
+        "medium": 0.00174361002,
+        "fine": 0.00626823213,
+        "alternate": 0.0216648811
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -3.6807667756546484e-05,
+          "im": -0.00026436789484254804
+        },
+        "z_vertical": {
+          "re": -0.0005566897914459181,
+          "im": -0.00123473480898737
+        },
+        "rho_horizontal": {
+          "re": 0.0005662371351089234,
+          "im": 0.0009411227614409567
+        },
+        "phi_horizontal": {
+          "re": 8.794984219517438e-05,
+          "im": 0.0002516706953443598
+        },
+        "z_horizontal": {
+          "re": 0.004031039582259657,
+          "im": 0.003826674223470414
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.349955,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 5.0667407469185965,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 8.217664107495065e-15,
+      "alternate_to_fine_scaled_error": 3.883191999496416e-06,
+      "production_to_fine_scaled_error": 6.722559977933319,
+      "wall_seconds": {
+        "medium": 0.00175841083,
+        "fine": 0.00632591103,
+        "alternate": 0.00455514784
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -4.515091933750014e-05,
+          "im": -7.90903889447236e-05
+        },
+        "z_vertical": {
+          "re": -0.00025164124859026137,
+          "im": -0.0013031984043723633
+        },
+        "rho_horizontal": {
+          "re": 0.0003630743440574721,
+          "im": 0.00022092266920898008
+        },
+        "phi_horizontal": {
+          "re": -8.406911775520414e-06,
+          "im": 0.001064244667713937
+        },
+        "z_horizontal": {
+          "re": 0.0029940893484802535,
+          "im": 0.004588099447276929
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.705308,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 10.06521353976924,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 5.366051671925594e-15,
+      "alternate_to_fine_scaled_error": 3.5832939155186647e-06,
+      "production_to_fine_scaled_error": 22.48872514455016,
+      "wall_seconds": {
+        "medium": 0.00176825211,
+        "fine": 0.00631311489,
+        "alternate": 0.0023273949
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -2.128631663166119e-05,
+          "im": 0.00014046789098148404
+        },
+        "z_vertical": {
+          "re": -0.0003184340726231718,
+          "im": -0.0013747962842348158
+        },
+        "rho_horizontal": {
+          "re": -1.923698173401448e-05,
+          "im": -0.0006246679481313292
+        },
+        "phi_horizontal": {
+          "re": 0.00044804631315635855,
+          "im": 0.0019756410244106504
+        },
+        "z_horizontal": {
+          "re": 0.0034248984218008655,
+          "im": 0.0048276785939528576
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 1.071797,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 15.062733038966556,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 7.490275933565827e-15,
+      "alternate_to_fine_scaled_error": 3.3447821045259368e-06,
+      "production_to_fine_scaled_error": 15.455693978187783,
+      "wall_seconds": {
+        "medium": 0.00172945904,
+        "fine": 0.00624025799,
+        "alternate": 0.00155398482
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.00015387210086095681,
+          "im": 0.00029134153411512824
+        },
+        "z_vertical": {
+          "re": -0.0008149934260135045,
+          "im": -0.0012264095044612767
+        },
+        "rho_horizontal": {
+          "re": -0.0009552941863843019,
+          "im": -0.001041133620822793
+        },
+        "phi_horizontal": {
+          "re": 0.0018713039075013383,
+          "im": 0.0022018813823633456
+        },
+        "z_horizontal": {
+          "re": 0.00525172091761263,
+          "im": 0.0035207656362659765
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 1.455881,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 20.05936473928113,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.0642100604234564e-14,
+      "alternate_to_fine_scaled_error": 3.244324778138158e-06,
+      "production_to_fine_scaled_error": 2.7337194562499603,
+      "wall_seconds": {
+        "medium": 0.00172401196,
+        "fine": 0.00611069798,
+        "alternate": 0.00115918298
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.00046429943287360225,
+          "im": 0.00017117930586473643
+        },
+        "z_vertical": {
+          "re": -0.0013833607877241536,
+          "im": -0.0004906229991917547
+        },
+        "rho_horizontal": {
+          "re": -0.002170188311376492,
+          "im": -0.000156890806688007
+        },
+        "phi_horizontal": {
+          "re": 0.003595334483142316,
+          "im": 0.0005310953711023808
+        },
+        "z_horizontal": {
+          "re": 0.006488928595178532,
+          "im": -0.0003795858589228832
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "grazing-range",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.35372793196061436,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 4.901217309267724e-15,
+      "alternate_to_fine_scaled_error": 3.7638003976137892e-06,
+      "production_to_fine_scaled_error": 2.9404343042765686,
+      "wall_seconds": {
+        "medium": 0.00173975597,
+        "fine": 0.00626462419,
+        "alternate": 0.0647840241
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -3.904955552997e-05,
+          "im": -0.00029887738385647077
+        },
+        "z_vertical": {
+          "re": -0.0006460424545540138,
+          "im": -0.0012214813147000264
+        },
+        "rho_horizontal": {
+          "re": 0.0006186330712300763,
+          "im": 0.0010684849418877622
+        },
+        "phi_horizontal": {
+          "re": 0.00012396606758884022,
+          "im": 0.0001040415974862801
+        },
+        "z_horizontal": {
+          "re": 0.004349178728614076,
+          "im": 0.0036365694061488135
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "grazing-range",
+      "rho_lambda": 6.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.23582028579246989,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.2303353456686918e-14,
+      "alternate_to_fine_scaled_error": 3.050711096203375e-06,
+      "production_to_fine_scaled_error": 2.1869505378173666,
+      "wall_seconds": {
+        "medium": 0.0020310781,
+        "fine": 0.00702427304,
+        "alternate": 0.097039989
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -4.924169000005997e-05,
+          "im": -0.00015936030636096052
+        },
+        "z_vertical": {
+          "re": -0.00045679766804942036,
+          "im": -0.0005973756702138584
+        },
+        "rho_horizontal": {
+          "re": 0.000439758767472049,
+          "im": 0.0005280604705423221
+        },
+        "phi_horizontal": {
+          "re": 4.870036003793604e-05,
+          "im": 4.5813164888670124e-05
+        },
+        "z_horizontal": {
+          "re": 0.0026788701314607727,
+          "im": 0.0015582414279053543
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "grazing-range",
+      "rho_lambda": 10.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.1414926828152176,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 5.0447631291814914e-14,
+      "alternate_to_fine_scaled_error": 2.508541115231757e-06,
+      "production_to_fine_scaled_error": 1.496577342622156,
+      "wall_seconds": {
+        "medium": 0.00259105302,
+        "fine": 0.00857481197,
+        "alternate": 0.162033097
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -3.742282391250628e-05,
+          "im": -6.350806939081668e-05
+        },
+        "z_vertical": {
+          "re": -0.00025277429181190026,
+          "im": -0.00020768502735948088
+        },
+        "rho_horizontal": {
+          "re": 0.00024448838217207346,
+          "im": 0.00018287719488094088
+        },
+        "phi_horizontal": {
+          "re": 1.4935830764699826e-05,
+          "im": 1.689458677397323e-05
+        },
+        "z_horizontal": {
+          "re": 0.0012968714355529683,
+          "im": 0.00039164102620570343
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "interface",
+      "rho_lambda": 0.5,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.1794102356272023e-08,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 1.1794102356272023e-08,
+      "wall_seconds": {
+        "medium": 0.00722027803,
+        "fine": 0.0283904171,
+        "alternate": 1.34110451e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.0018539020927962262,
+          "im": 0.004532019048532468
+        },
+        "z_vertical": {
+          "re": 0.0015866513122518647,
+          "im": 0.020970422351021808
+        },
+        "rho_horizontal": {
+          "re": -0.0011161363208684123,
+          "im": -0.017017164288716913
+        },
+        "phi_horizontal": {
+          "re": -0.014084914413256449,
+          "im": -0.004079523606213941
+        },
+        "z_horizontal": {
+          "re": -0.033267647452129546,
+          "im": -0.08238468549230994
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "interface",
+      "rho_lambda": 1.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 2.3058884902518344e-14,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 2.3058884902518344e-14,
+      "wall_seconds": {
+        "medium": 0.00768737099,
+        "fine": 0.0297558219,
+        "alternate": 9.89530236e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.0007238958990020163,
+          "im": -0.0019334360249426816
+        },
+        "z_vertical": {
+          "re": -0.00046442841767700693,
+          "im": -0.009187467499581967
+        },
+        "rho_horizontal": {
+          "re": 0.0003509322201897371,
+          "im": 0.00798228986250915
+        },
+        "phi_horizontal": {
+          "re": 0.00298418248864021,
+          "im": 0.001170677958018313
+        },
+        "z_horizontal": {
+          "re": 0.015063342861947831,
+          "im": 0.034298672421809506
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "interface",
+      "rho_lambda": 2.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.0935247010565991e-14,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 1.0935247010565991e-14,
+      "wall_seconds": {
+        "medium": 0.00847608713,
+        "fine": 0.032012281,
+        "alternate": 2.52155587e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.00018446395607844973,
+          "im": -0.0008354125201434481
+        },
+        "z_vertical": {
+          "re": -0.0006629206819875697,
+          "im": -0.0037543081713527957
+        },
+        "rho_horizontal": {
+          "re": 0.0005970403218107149,
+          "im": 0.0033863767976800366
+        },
+        "phi_horizontal": {
+          "re": 0.000652859637436707,
+          "im": 0.00027893243046498193
+        },
+        "z_horizontal": {
+          "re": 0.00817650978844402,
+          "im": 0.013195826676702684
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "interface",
+      "rho_lambda": 3.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 9.905472357329685e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 9.905472357329685e-15,
+      "wall_seconds": {
+        "medium": 0.00930239703,
+        "fine": 0.034097119,
+        "alternate": 1.00815669e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 4.48528418833133e-05,
+          "im": -0.0004945631567421973
+        },
+        "z_vertical": {
+          "re": -0.0006437238668675913,
+          "im": -0.002107425175331484
+        },
+        "rho_horizontal": {
+          "re": 0.0005985746316225734,
+          "im": 0.0019284141925415578
+        },
+        "phi_horizontal": {
+          "re": 0.00026595231627497996,
+          "im": 0.00011631004736195918
+        },
+        "z_horizontal": {
+          "re": 0.005676781728105519,
+          "im": 0.006997472777795484
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "interface",
+      "rho_lambda": 3.1,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.0463612359612922e-14,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 3.49156684785139,
+      "wall_seconds": {
+        "medium": 0.00938518206,
+        "fine": 0.0342047838,
+        "alternate": 2.30502337e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.00024783358722131344,
+          "im": -0.0004047713992557905
+        },
+        "z_vertical": {
+          "re": -0.0016950593991443522,
+          "im": -0.0012485236768836182
+        },
+        "rho_horizontal": {
+          "re": 0.0015605868852357442,
+          "im": 0.0011377115627381352
+        },
+        "phi_horizontal": {
+          "re": 0.000263671614720306,
+          "im": -5.762981255741311e-05
+        },
+        "z_horizontal": {
+          "re": 0.008345404663608417,
+          "im": 0.002125463201516622
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "axis",
+      "rho_lambda": 0.01,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 89.81049767786024,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 2.442332706465912e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 20.981871059194216,
+      "wall_seconds": {
+        "medium": 0.000147643033,
+        "fine": 0.000365965068,
+        "alternate": 1.45984814e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 5.147177173727903e-07,
+          "im": 8.411391863094499e-06
+        },
+        "z_vertical": {
+          "re": 0.00026744533732876464,
+          "im": 1.2129931673858667e-05
+        },
+        "rho_horizontal": {
+          "re": -0.0033847882749155826,
+          "im": -0.010141040021416964
+        },
+        "phi_horizontal": {
+          "re": 0.003384790236691475,
+          "im": 0.01014106813773845
+        },
+        "z_horizontal": {
+          "re": 1.2168192787671978e-05,
+          "im": 3.383503636118376e-05
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "axis",
+      "rho_lambda": 0.1,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 88.1056604214307,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.6956972876913763e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 107.68162909501737,
+      "wall_seconds": {
+        "medium": 0.000148548977,
+        "fine": 0.000374691095,
+        "alternate": 5.0989911e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 6.0013088169758305e-06,
+          "im": 8.390936654437883e-05
+        },
+        "z_vertical": {
+          "re": 0.00026701423781198456,
+          "im": 6.573448253509933e-06
+        },
+        "rho_horizontal": {
+          "re": -0.0034853222135413768,
+          "im": -0.010093032769997014
+        },
+        "phi_horizontal": {
+          "re": 0.0034855469239238974,
+          "im": 0.010095837331301904
+        },
+        "z_horizontal": {
+          "re": 0.00012502824133654993,
+          "im": 0.0003366587838815144
+        }
+      }
+    },
+    {
+      "material": "average-soil",
+      "family": "axis",
+      "rho_lambda": 0.5,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 80.60983488062016,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.4837140630963492e-10,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 0.18246588949659256,
+      "wall_seconds": {
+        "medium": 0.000171534019,
+        "fine": 0.000441181008,
+        "alternate": 9.70903784e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.00012650327266844813,
+          "im": 0.0003829991130093186
+        },
+        "z_vertical": {
+          "re": 0.00023220556010037437,
+          "im": -0.00011909182956746056
+        },
+        "rho_horizontal": {
+          "re": -0.005697864617079534,
+          "im": -0.008662519485331494
+        },
+        "phi_horizontal": {
+          "re": 0.005719582836870652,
+          "im": 0.008726388295258932
+        },
+        "z_horizontal": {
+          "re": 0.0009919477577940118,
+          "im": 0.001434184041584175
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "switch",
+      "rho_lambda": 2.9,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.5463812308611693,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 8.116255007396186e-15,
+      "alternate_to_fine_scaled_error": 3.7690380961932666e-06,
+      "production_to_fine_scaled_error": 8.116255007396186e-15,
+      "wall_seconds": {
+        "medium": 0.00225989707,
+        "fine": 0.00766597502,
+        "alternate": 0.0420312739
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 1.542254407815519e-05,
+          "im": -2.241267145211567e-05
+        },
+        "z_vertical": {
+          "re": 0.00011363134616479154,
+          "im": -0.00026880644534277054
+        },
+        "rho_horizontal": {
+          "re": -9.46177888706688e-05,
+          "im": 0.00023280129384510096
+        },
+        "phi_horizontal": {
+          "re": 1.0145160492936856e-05,
+          "im": 4.866992513343071e-05
+        },
+        "z_horizontal": {
+          "re": -0.0005359368939439938,
+          "im": 0.002658268767897247
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "switch",
+      "rho_lambda": 3.0,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.5281695727099099,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.2006275880551151e-14,
+      "alternate_to_fine_scaled_error": 3.6645258143447603e-06,
+      "production_to_fine_scaled_error": 1.2006275880551151e-14,
+      "wall_seconds": {
+        "medium": 0.00228682789,
+        "fine": 0.00776154897,
+        "alternate": 0.043480708
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -8.179895190419886e-07,
+          "im": -2.6219867905942147e-05
+        },
+        "z_vertical": {
+          "re": -6.472351859417731e-05,
+          "im": -0.0002728030599658528
+        },
+        "rho_horizontal": {
+          "re": 5.928181840288586e-05,
+          "im": 0.00023505741371579466
+        },
+        "phi_horizontal": {
+          "re": 3.423266908857446e-05,
+          "im": 3.120698976642258e-05
+        },
+        "z_horizontal": {
+          "re": 0.0010958710722212275,
+          "im": 0.002363609302422707
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "switch",
+      "rho_lambda": 3.01,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.5264149554320559,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 9.97854374415298e-15,
+      "alternate_to_fine_scaled_error": 3.6544476406868846e-06,
+      "production_to_fine_scaled_error": 13.476078360474691,
+      "wall_seconds": {
+        "medium": 0.00229815999,
+        "fine": 0.00778206787,
+        "alternate": 0.04375659
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -2.468276227714358e-06,
+          "im": -2.602184953157465e-05
+        },
+        "z_vertical": {
+          "re": -8.152617934256031e-05,
+          "im": -0.00026710929579708097
+        },
+        "rho_horizontal": {
+          "re": 7.377233528708885e-05,
+          "im": 0.00023001960557599978
+        },
+        "phi_horizontal": {
+          "re": 3.586849047153465e-05,
+          "im": 2.8803095405304152e-05
+        },
+        "z_horizontal": {
+          "re": 0.0012383276124733088,
+          "im": 0.002280548731499664
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "switch",
+      "rho_lambda": 3.1,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.5111327635540348,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.4194931712957077e-15,
+      "alternate_to_fine_scaled_error": 3.566599463899989e-06,
+      "production_to_fine_scaled_error": 13.124196437996368,
+      "wall_seconds": {
+        "medium": 0.0023247411,
+        "fine": 0.00786944502,
+        "alternate": 0.044993361
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.562296454922143e-05,
+          "im": -1.992420776316378e-05
+        },
+        "z_vertical": {
+          "re": -0.0002054082934261863,
+          "im": -0.00017476139313088568
+        },
+        "rho_horizontal": {
+          "re": 0.00018043136170814848,
+          "im": 0.00014912045371785423
+        },
+        "phi_horizontal": {
+          "re": 4.298342926254222e-05,
+          "im": 4.877652857524952e-06
+        },
+        "z_horizontal": {
+          "re": 0.002194986702288767,
+          "im": 0.0012093462380621065
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.069816,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 1.0303612727195781,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 5.7192397801383996e-15,
+      "alternate_to_fine_scaled_error": 2.911545706524155e-06,
+      "production_to_fine_scaled_error": 12.083343234531688,
+      "wall_seconds": {
+        "medium": 0.00265327608,
+        "fine": 0.00878683804,
+        "alternate": 0.022312653
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.026411942216419e-06,
+          "im": -1.593123928122706e-05
+        },
+        "z_vertical": {
+          "re": -4.401272860472956e-05,
+          "im": -0.0001942183186672093
+        },
+        "rho_horizontal": {
+          "re": 4.266732403098201e-05,
+          "im": 0.00014216209305383022
+        },
+        "phi_horizontal": {
+          "re": 1.6720944652442366e-05,
+          "im": 4.870497999786245e-05
+        },
+        "z_horizontal": {
+          "re": 0.0007643064771683051,
+          "im": 0.0016864881030535228
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.349955,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 5.030204179999032,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 4.349139361746799e-15,
+      "alternate_to_fine_scaled_error": 2.901999801253534e-06,
+      "production_to_fine_scaled_error": 305.94775909312017,
+      "wall_seconds": {
+        "medium": 0.00268530287,
+        "fine": 0.00888845604,
+        "alternate": 0.004600605
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.0536222472994317e-06,
+          "im": 4.000716322046252e-06
+        },
+        "z_vertical": {
+          "re": -3.339463093452645e-05,
+          "im": -0.00019556767621501173
+        },
+        "rho_horizontal": {
+          "re": 1.8738946896924262e-05,
+          "im": -4.18895651208735e-05
+        },
+        "phi_horizontal": {
+          "re": 3.0199383834436284e-05,
+          "im": 0.00023493130827625865
+        },
+        "z_horizontal": {
+          "re": 0.0006734990394804075,
+          "im": 0.0017262593125382767
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.705308,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 10.029512579754098,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 5.739421537407778e-15,
+      "alternate_to_fine_scaled_error": 2.828882669422469e-06,
+      "production_to_fine_scaled_error": 13.32708469347374,
+      "wall_seconds": {
+        "medium": 0.00266924081,
+        "fine": 0.00890667201,
+        "alternate": 0.00232678396
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 7.3671306243119405e-06,
+          "im": 2.6343186631685283e-05
+        },
+        "z_vertical": {
+          "re": -6.722219973133381e-05,
+          "im": -0.00018859470580687577
+        },
+        "rho_horizontal": {
+          "re": -8.889818616155849e-05,
+          "im": -0.0002442621544476244
+        },
+        "phi_horizontal": {
+          "re": 0.00017132188314257838,
+          "im": 0.0004275447140509064
+        },
+        "z_horizontal": {
+          "re": 0.0009857484659168499,
+          "im": 0.0016185261125367945
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 1.071797,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 15.028392581922668,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 2.6527387626236445e-15,
+      "alternate_to_fine_scaled_error": 2.7933294865491476e-06,
+      "production_to_fine_scaled_error": 1.155601594239134,
+      "wall_seconds": {
+        "medium": 0.00263653207,
+        "fine": 0.00876381807,
+        "alternate": 0.00155988685
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 3.3764012292744795e-05,
+          "im": 3.4733025118838807e-05
+        },
+        "z_vertical": {
+          "re": -0.00013780740477561634,
+          "im": -0.0001420840064304964
+        },
+        "rho_horizontal": {
+          "re": -0.0003586184024233556,
+          "im": -0.0003003118206177048
+        },
+        "phi_horizontal": {
+          "re": 0.0005081236741368327,
+          "im": 0.0004311078482886431
+        },
+        "z_horizontal": {
+          "re": 0.0015874585669653917,
+          "im": 0.001068450123593324
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 1.455881,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 20.02686818321749,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 3.5653982018392815e-15,
+      "alternate_to_fine_scaled_error": 2.826397280300739e-06,
+      "production_to_fine_scaled_error": 0.26266224785981845,
+      "wall_seconds": {
+        "medium": 0.00263422891,
+        "fine": 0.00866117701,
+        "alternate": 0.00116250897
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 6.612355510588108e-05,
+          "im": 5.483240528830595e-06
+        },
+        "z_vertical": {
+          "re": -0.00018813938701745027,
+          "im": -2.2604716886153206e-05
+        },
+        "rho_horizontal": {
+          "re": -0.0006582782971918039,
+          "im": 2.0454055126228778e-05
+        },
+        "phi_horizontal": {
+          "re": 0.0008482855711467146,
+          "im": -1.3755202499386884e-05
+        },
+        "z_horizontal": {
+          "re": 0.0018774411055182837,
+          "im": -0.00017673728780753575
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "grazing-range",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.3169074886470764,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 2.9834174737016437e-15,
+      "alternate_to_fine_scaled_error": 2.8989457272111393e-06,
+      "production_to_fine_scaled_error": 10.415826849056748,
+      "wall_seconds": {
+        "medium": 0.0026409321,
+        "fine": 0.00876978599,
+        "alternate": 0.0764003231
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -9.964677598420627e-07,
+          "im": -1.955992055844866e-05
+        },
+        "z_vertical": {
+          "re": -4.9609824245937154e-05,
+          "im": -0.00019388921210111896
+        },
+        "rho_horizontal": {
+          "re": 4.6760501848710184e-05,
+          "im": 0.000175403569072598
+        },
+        "phi_horizontal": {
+          "re": 1.8199834128043756e-05,
+          "im": 1.4692439590535416e-05
+        },
+        "z_horizontal": {
+          "re": 0.000814539297453586,
+          "im": 0.0016727185244687945
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "grazing-range",
+      "rho_lambda": 6.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.2112728560287153,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.1179944207911579e-14,
+      "alternate_to_fine_scaled_error": 2.1183560812749026e-06,
+      "production_to_fine_scaled_error": 7.449978830514367,
+      "wall_seconds": {
+        "medium": 0.00702618295,
+        "fine": 0.0165050891,
+        "alternate": 0.108866645
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.6493886244409345e-06,
+          "im": -1.2032800283365202e-05
+        },
+        "z_vertical": {
+          "re": -3.9603959803144176e-05,
+          "im": -0.00011475288031457802
+        },
+        "rho_horizontal": {
+          "re": 3.805843122735349e-05,
+          "im": 0.0001062961699053144
+        },
+        "phi_horizontal": {
+          "re": 7.610099261968146e-06,
+          "im": 6.409031658066342e-06
+        },
+        "z_horizontal": {
+          "re": 0.0005775736671475589,
+          "im": 0.000970980817880819
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "grazing-range",
+      "rho_lambda": 10.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.12676408131999878,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.3538621044006721e-14,
+      "alternate_to_fine_scaled_error": 1.4722865723391144e-06,
+      "production_to_fine_scaled_error": 4.959928897032562,
+      "wall_seconds": {
+        "medium": 0.00483171106,
+        "fine": 0.01478924,
+        "alternate": 0.180535416
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.7005644062179167e-06,
+          "im": -6.166572674241513e-06
+        },
+        "z_vertical": {
+          "re": -2.8056182038676258e-05,
+          "im": -5.6106994838543685e-05
+        },
+        "rho_horizontal": {
+          "re": 2.73281148402876e-05,
+          "im": 5.297403777942019e-05
+        },
+        "phi_horizontal": {
+          "re": 2.5104080493470696e-06,
+          "im": 2.2532566286798777e-06
+        },
+        "z_horizontal": {
+          "re": 0.0003628928825259837,
+          "im": 0.00045848668332446534
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "interface",
+      "rho_lambda": 0.5,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 2.2649166295067346e-09,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 2.2649166295067346e-09,
+      "wall_seconds": {
+        "medium": 0.00787146413,
+        "fine": 0.030139606,
+        "alternate": 3.60887498e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -2.7409573651427712e-05,
+          "im": 0.00023827713677740503
+        },
+        "z_vertical": {
+          "re": 0.0003309269627371045,
+          "im": 0.002109728169176845
+        },
+        "rho_horizontal": {
+          "re": -0.0002716940959492114,
+          "im": -0.0019440914172103867
+        },
+        "phi_horizontal": {
+          "re": -0.0014986721326487513,
+          "im": -2.9272784588321274e-05
+        },
+        "z_horizontal": {
+          "re": -0.006345721037636193,
+          "im": -0.02028668425387877
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "interface",
+      "rho_lambda": 1.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.4513379419881538e-14,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 1.4513379419881538e-14,
+      "wall_seconds": {
+        "medium": 0.00894944696,
+        "fine": 0.0331252581,
+        "alternate": 1.3038516e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 2.027059510554306e-05,
+          "im": -0.00010611689840567182
+        },
+        "z_vertical": {
+          "re": -4.13838920065611e-05,
+          "im": -0.0010167956761501125
+        },
+        "rho_horizontal": {
+          "re": 1.831443502573943e-05,
+          "im": 0.0009633816661276148
+        },
+        "phi_horizontal": {
+          "re": 0.0003485597595558427,
+          "im": 4.729505151336066e-05
+        },
+        "z_horizontal": {
+          "re": 0.0021723996207829665,
+          "im": 0.009324719121753708
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "interface",
+      "rho_lambda": 2.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.8222549662160143e-14,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 1.8222549662160143e-14,
+      "wall_seconds": {
+        "medium": 0.0110775512,
+        "fine": 0.039015671,
+        "alternate": 6.30971044e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 8.154485068618913e-06,
+          "im": -4.828015594898726e-05
+        },
+        "z_vertical": {
+          "re": -2.418775988214888e-05,
+          "im": -0.0004660777229745244
+        },
+        "rho_horizontal": {
+          "re": 1.6169391018112624e-05,
+          "im": 0.0004485776282538436
+        },
+        "phi_horizontal": {
+          "re": 8.172763100013014e-05,
+          "im": 1.4582093280517156e-05
+        },
+        "z_horizontal": {
+          "re": 0.0010744887270598652,
+          "im": 0.004204212005698209
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "interface",
+      "rho_lambda": 3.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.4044098602765265e-14,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 1.4044098602765265e-14,
+      "wall_seconds": {
+        "medium": 0.013210698,
+        "fine": 0.044921957,
+        "alternate": 1.3038516e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 3.6479509977711334e-06,
+          "im": -3.0301714476740914e-05
+        },
+        "z_vertical": {
+          "re": -2.8025016791246606e-05,
+          "im": -0.00028974568642251106
+        },
+        "rho_horizontal": {
+          "re": 2.3601580323270307e-05,
+          "im": 0.0002807733377019515
+        },
+        "phi_horizontal": {
+          "re": 3.495994825159623e-05,
+          "im": 6.3151426057613905e-06
+        },
+        "z_horizontal": {
+          "re": 0.0007931764472051655,
+          "im": 0.0025859045010134495
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "interface",
+      "rho_lambda": 3.1,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.9318222338783764e-14,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 12.629754682918847,
+      "wall_seconds": {
+        "medium": 0.013444599,
+        "fine": 0.045510262,
+        "alternate": 5.19212335e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.4419756678506174e-05,
+          "im": -2.557687544955984e-05
+        },
+        "z_vertical": {
+          "re": -0.0001866229007340892,
+          "im": -0.0002087884875050109
+        },
+        "rho_horizontal": {
+          "re": 0.00017821787154571433,
+          "im": 0.0002043941563902544
+        },
+        "phi_horizontal": {
+          "re": 2.9859998152025145e-05,
+          "im": -1.4421229745899471e-05
+        },
+        "z_horizontal": {
+          "re": 0.002087121079322166,
+          "im": 0.0015539988096422578
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "axis",
+      "rho_lambda": 0.01,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 89.8096886447767,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 2.3214883107698727e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 21.437356161320455,
+      "wall_seconds": {
+        "medium": 0.000149244908,
+        "fine": 0.000366556924,
+        "alternate": 8.19563866e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 3.956524826116644e-07,
+          "im": 9.73609119570664e-07
+        },
+        "z_vertical": {
+          "re": 3.207530699079483e-05,
+          "im": -9.213738118538809e-06
+        },
+        "rho_horizontal": {
+          "re": -0.0013610053603206403,
+          "im": -0.002621504175629898
+        },
+        "phi_horizontal": {
+          "re": 0.0013610066959345172,
+          "im": 0.0026215074213756617
+        },
+        "z_horizontal": {
+          "re": 4.64333918182572e-06,
+          "im": 8.713378013676524e-06
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "axis",
+      "rho_lambda": 0.1,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 88.09757888010002,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 3.090010756665846e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 107.01510312418216,
+      "wall_seconds": {
+        "medium": 0.000149410916,
+        "fine": 0.000376549084,
+        "alternate": 2.70083547e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 4.0495097979339925e-06,
+          "im": 9.678379512508779e-06
+        },
+        "z_vertical": {
+          "re": 3.1806220539717354e-05,
+          "im": -9.853496429401684e-06
+        },
+        "rho_horizontal": {
+          "re": -0.0013864334521843224,
+          "im": -0.0026042709076445274
+        },
+        "phi_horizontal": {
+          "re": 0.0013865701123635162,
+          "im": 0.0026045935413543096
+        },
+        "z_horizontal": {
+          "re": 4.727761541104186e-05,
+          "im": 8.654859571305756e-05
+        }
+      }
+    },
+    {
+      "material": "low-loss-water",
+      "family": "axis",
+      "rho_lambda": 0.5,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 80.57046410079919,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 9.83946934958884e-11,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 0.1788501465979305,
+      "wall_seconds": {
+        "medium": 0.000173231121,
+        "fine": 0.000440709991,
+        "alternate": 2.79396772e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 3.0230916762606496e-05,
+          "im": 4.0277898397575396e-05
+        },
+        "z_vertical": {
+          "re": 2.275252219393904e-05,
+          "im": -2.3350331692381025e-05
+        },
+        "rho_horizontal": {
+          "re": -0.001931157016493589,
+          "im": -0.002122672154902151
+        },
+        "phi_horizontal": {
+          "re": 0.0019362356968425664,
+          "im": 0.0021293755823588085
+        },
+        "z_horizontal": {
+          "re": 0.00032661379478285955,
+          "im": 0.00035125948517718774
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "switch",
+      "rho_lambda": 2.9,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.49803548292387134,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 9.017597983276524e-15,
+      "alternate_to_fine_scaled_error": 2.997249088225725e-06,
+      "production_to_fine_scaled_error": 9.017597983276524e-15,
+      "wall_seconds": {
+        "medium": 0.023733034,
+        "fine": 0.067223062,
+        "alternate": 0.0458487209
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.1422427111459995e-08,
+          "im": 1.0870376969144944e-08
+        },
+        "z_vertical": {
+          "re": 2.060864932809637e-06,
+          "im": 9.005356653781487e-07
+        },
+        "rho_horizontal": {
+          "re": 1.4931340585128796e-07,
+          "im": -1.6456955526659372e-06
+        },
+        "phi_horizontal": {
+          "re": -2.3092516355651506e-06,
+          "im": 9.717532552296079e-07
+        },
+        "z_horizontal": {
+          "re": -0.0002518607640364336,
+          "im": 9.781301906697428e-05
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "switch",
+      "rho_lambda": 3.0,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.4814350950282855,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 5.886957075087577e-15,
+      "alternate_to_fine_scaled_error": 2.8977697107426883e-06,
+      "production_to_fine_scaled_error": 5.886957075087577e-15,
+      "wall_seconds": {
+        "medium": 0.0242883191,
+        "fine": 0.0687268551,
+        "alternate": 0.0474038539
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -2.1888092669209896e-09,
+          "im": 1.4733916889468287e-08
+        },
+        "z_vertical": {
+          "re": 2.1239872789450115e-06,
+          "im": -4.6439408438375763e-07
+        },
+        "rho_horizontal": {
+          "re": -8.591628802584326e-07,
+          "im": -1.3104062238251473e-06
+        },
+        "phi_horizontal": {
+          "re": -1.2155153801869609e-06,
+          "im": 2.0005407980249893e-06
+        },
+        "z_horizontal": {
+          "re": -0.00014160971499837705,
+          "im": 0.00021941835259292201
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "switch",
+      "rho_lambda": 3.01,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.47983571779484285,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 6.946979577708783e-15,
+      "alternate_to_fine_scaled_error": 2.8881834197929256e-06,
+      "production_to_fine_scaled_error": 1727.372327463763,
+      "wall_seconds": {
+        "medium": 0.0243582849,
+        "fine": 0.0688651849,
+        "alternate": 0.047564642
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.2021663910728283e-09,
+          "im": 1.4765192313961032e-08
+        },
+        "z_vertical": {
+          "re": 2.0837614111151848e-06,
+          "im": -5.946476023079482e-07
+        },
+        "rho_horizontal": {
+          "re": -9.401822091166437e-07,
+          "im": -1.2435761770002932e-06
+        },
+        "phi_horizontal": {
+          "re": -1.0806369068543002e-06,
+          "im": 2.058952391040167e-06
+        },
+        "z_horizontal": {
+          "re": -0.00012715071118533065,
+          "im": 0.0002271042424542022
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "switch",
+      "rho_lambda": 3.1,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.46590562667016483,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 6.701360191732437e-15,
+      "alternate_to_fine_scaled_error": 2.8046753730183623e-06,
+      "production_to_fine_scaled_error": 1763.498038316186,
+      "wall_seconds": {
+        "medium": 0.0247762471,
+        "fine": 0.0699912331,
+        "alternate": 0.0489732521
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 6.950902945685307e-09,
+          "im": 1.2293075608976894e-08
+        },
+        "z_vertical": {
+          "re": 1.4003630863555242e-06,
+          "im": -1.5704351650981536e-06
+        },
+        "rho_horizontal": {
+          "re": -1.4154535405948656e-06,
+          "im": -4.704460281238858e-07
+        },
+        "phi_horizontal": {
+          "re": 1.7655483103128765e-07,
+          "im": 2.1849133487400406e-06
+        },
+        "z_horizontal": {
+          "re": 1.3693863135791428e-05,
+          "im": 0.00025232099139552687
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.069816,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 1.0023272313033578,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.7812123670342573e-15,
+      "alternate_to_fine_scaled_error": 2.1784266147367014e-06,
+      "production_to_fine_scaled_error": 140.48988471846593,
+      "wall_seconds": {
+        "medium": 0.0296140921,
+        "fine": 0.0834219041,
+        "alternate": 0.022758577
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.696201598363023e-08,
+          "im": 1.4081670563877612e-08
+        },
+        "z_vertical": {
+          "re": 1.634917037262997e-06,
+          "im": -3.1135372734724784e-07
+        },
+        "rho_horizontal": {
+          "re": 4.805987166845547e-07,
+          "im": -2.468833281282095e-06
+        },
+        "phi_horizontal": {
+          "re": -2.090733150374768e-06,
+          "im": 2.9103813394307432e-06
+        },
+        "z_horizontal": {
+          "re": -0.00011278154587668217,
+          "im": 0.0001648242973227883
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.349955,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 5.002375719431567,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 7.455314502180129e-15,
+      "alternate_to_fine_scaled_error": 2.202783695942757e-06,
+      "production_to_fine_scaled_error": 0.9669359235795676,
+      "wall_seconds": {
+        "medium": 0.0291007811,
+        "fine": 0.0818442029,
+        "alternate": 0.00461339788
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.2573598302434987e-07,
+          "im": 5.0761766120677306e-08
+        },
+        "z_vertical": {
+          "re": 1.5764042551415542e-06,
+          "im": -4.363866385090008e-07
+        },
+        "rho_horizontal": {
+          "re": 7.611400796411411e-06,
+          "im": -1.42999419393454e-05
+        },
+        "phi_horizontal": {
+          "re": -9.152871745152342e-06,
+          "im": 1.4862308573454157e-05
+        },
+        "z_horizontal": {
+          "re": -9.749242430543673e-05,
+          "im": 0.0001711923974260138
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.705308,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 10.002317977468632,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 7.516222831177679e-15,
+      "alternate_to_fine_scaled_error": 2.254321107034046e-06,
+      "production_to_fine_scaled_error": 0.10682794293472533,
+      "wall_seconds": {
+        "medium": 0.0286967691,
+        "fine": 0.0806326149,
+        "alternate": 0.00232053106
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -2.1929369919740592e-07,
+          "im": 1.619645999179229e-07
+        },
+        "z_vertical": {
+          "re": 1.3428393534405116e-06,
+          "im": -8.232043531501504e-07
+        },
+        "rho_horizontal": {
+          "re": 7.633575723644788e-06,
+          "im": -3.215929484684805e-05
+        },
+        "phi_horizontal": {
+          "re": -8.909620038088207e-06,
+          "im": 3.3090929679849126e-05
+        },
+        "z_horizontal": {
+          "re": -4.488450372958698e-05,
+          "im": 0.0001865893446029268
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 1.071797,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 15.002231982271418,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 2.2471881870599825e-15,
+      "alternate_to_fine_scaled_error": 2.3378012717343538e-06,
+      "production_to_fine_scaled_error": 0.026212249814638003,
+      "wall_seconds": {
+        "medium": 0.0282897812,
+        "fine": 0.0793985601,
+        "alternate": 0.0015454588
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.7185204958518662e-07,
+          "im": 3.556933082548264e-07
+        },
+        "z_vertical": {
+          "re": 7.542656519990578e-07,
+          "im": -1.2794118117866797e-06
+        },
+        "rho_horizontal": {
+          "re": -1.227981850551129e-05,
+          "im": -4.7313802271135924e-05
+        },
+        "phi_horizontal": {
+          "re": 1.163134934745272e-05,
+          "im": 4.86548483893682e-05
+        },
+        "z_horizontal": {
+          "re": 4.656066814502798e-05,
+          "im": 0.0001785381340681891
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 1.455881,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 20.002110270654534,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 9.294920443245208e-15,
+      "alternate_to_fine_scaled_error": 2.461977956918158e-06,
+      "production_to_fine_scaled_error": 0.008860719460823232,
+      "wall_seconds": {
+        "medium": 0.0300618699,
+        "fine": 0.084126404,
+        "alternate": 0.00115118083
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 1.3114286433077413e-07,
+          "im": 4.78939240184584e-07
+        },
+        "z_vertical": {
+          "re": -2.4950286433723205e-07,
+          "im": -1.3450643986787062e-06
+        },
+        "rho_horizontal": {
+          "re": -5.2266283293936314e-05,
+          "im": -3.5525248842225007e-05
+        },
+        "phi_horizontal": {
+          "re": 5.262956499708584e-05,
+          "im": 3.684808144167696e-05
+        },
+        "z_horizontal": {
+          "re": 0.00014465545428343223,
+          "im": 9.795238004459226e-05
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "grazing-range",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.28886540796187665,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 3.023542007488329e-15,
+      "alternate_to_fine_scaled_error": 2.1752045612092606e-06,
+      "production_to_fine_scaled_error": 1737.61116322998,
+      "wall_seconds": {
+        "medium": 0.0293115361,
+        "fine": 0.082524447,
+        "alternate": 0.0790418719
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 3.3503478191366095e-09,
+          "im": 9.590446455169648e-09
+        },
+        "z_vertical": {
+          "re": 1.6388387956105866e-06,
+          "im": -3.0929690820747014e-07
+        },
+        "rho_horizontal": {
+          "re": -1.0272932209116915e-06,
+          "im": -4.856134561803434e-07
+        },
+        "phi_horizontal": {
+          "re": -5.869327019826467e-07,
+          "im": 9.25399172219392e-07
+        },
+        "z_horizontal": {
+          "re": -0.0001132765537314369,
+          "im": 0.00016495584631346044
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "grazing-range",
+      "rho_lambda": 6.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.19257784512036275,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 9.702925750894527e-15,
+      "alternate_to_fine_scaled_error": 1.451494709125463e-06,
+      "production_to_fine_scaled_error": 885.4763907206392,
+      "wall_seconds": {
+        "medium": 0.039445525,
+        "fine": 0.110448274,
+        "alternate": 0.118489402
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 4.0091552853921025e-09,
+          "im": 5.859686771655997e-09
+        },
+        "z_vertical": {
+          "re": 1.0926771556624486e-06,
+          "im": -2.043909109377168e-07
+        },
+        "rho_horizontal": {
+          "re": -8.159577411182053e-07,
+          "im": -1.451706949690466e-07
+        },
+        "phi_horizontal": {
+          "re": -2.658805688027595e-07,
+          "im": 4.0752217725152717e-07
+        },
+        "z_horizontal": {
+          "re": -7.562223069005624e-05,
+          "im": 0.00010975508944271076
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "grazing-range",
+      "rho_lambda": 10.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.11554698554616821,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 9.586074464270049e-15,
+      "alternate_to_fine_scaled_error": 8.716926669712647e-07,
+      "production_to_fine_scaled_error": 328.795468441657,
+      "wall_seconds": {
+        "medium": 0.05959981,
+        "fine": 0.166224302,
+        "alternate": 0.197423579
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 3.2970337830649404e-09,
+          "im": 3.2794717318762773e-09
+        },
+        "z_vertical": {
+          "re": 6.541977887634842e-07,
+          "im": -1.2777332493506606e-07
+        },
+        "rho_horizontal": {
+          "re": -5.530660438088554e-07,
+          "im": 2.9867046696765934e-09
+        },
+        "phi_horizontal": {
+          "re": -9.706680473582572e-08,
+          "im": 1.4560208513434692e-07
+        },
+        "z_horizontal": {
+          "re": -4.480598876429717e-05,
+          "im": 6.615465370950648e-05
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "interface",
+      "rho_lambda": 0.5,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.4909901728719442e-09,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 1.4909901728719442e-09,
+      "wall_seconds": {
+        "medium": 0.021135824,
+        "fine": 0.0668221682,
+        "alternate": 1.15949661e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.1486330808822035e-07,
+          "im": -5.500261615772682e-08
+        },
+        "z_vertical": {
+          "re": -1.3028262391770724e-05,
+          "im": 5.088025980560132e-06
+        },
+        "rho_horizontal": {
+          "re": 1.289160088583372e-05,
+          "im": -5.0672692958594274e-06
+        },
+        "phi_horizontal": {
+          "re": -3.1173976770115323e-06,
+          "im": -9.227801717597718e-06
+        },
+        "z_horizontal": {
+          "re": 0.0007975561939928922,
+          "im": -0.0016574900367670854
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "interface",
+      "rho_lambda": 1.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.9662961985849345e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 1.9662961985849345e-15,
+      "wall_seconds": {
+        "medium": 0.0356218398,
+        "fine": 0.106866751,
+        "alternate": 5.79748303e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 5.14237599232373e-08,
+          "im": 3.2708816481214875e-08
+        },
+        "z_vertical": {
+          "re": 7.024504295229878e-06,
+          "im": -1.6041230573982754e-06
+        },
+        "rho_horizontal": {
+          "re": -6.930202960617077e-06,
+          "im": 1.5767497515838893e-06
+        },
+        "phi_horizontal": {
+          "re": 4.1837495415360623e-07,
+          "im": 2.3170883526963258e-06
+        },
+        "z_horizontal": {
+          "re": -0.0004754640137891765,
+          "im": 0.0007451860680836338
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "interface",
+      "rho_lambda": 2.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 6.408665246578817e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 6.408665246578817e-15,
+      "wall_seconds": {
+        "medium": 0.113410188,
+        "fine": 0.283400317,
+        "alternate": 1.18976459e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 2.497167845698382e-08,
+          "im": 1.5615964539478233e-08
+        },
+        "z_vertical": {
+          "re": 3.471592672739311e-06,
+          "im": -8.146703139935216e-07
+        },
+        "rho_horizontal": {
+          "re": -3.411882985042823e-06,
+          "im": 7.875749542857109e-07
+        },
+        "phi_horizontal": {
+          "re": 7.024494939523167e-08,
+          "im": 5.823614710806403e-07
+        },
+        "z_horizontal": {
+          "re": -0.00022761224661684424,
+          "im": 0.0003644396315501591
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "interface",
+      "rho_lambda": 3.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 8.463668694055813e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 8.463668694055813e-15,
+      "wall_seconds": {
+        "medium": 0.127629554,
+        "fine": 0.361673249,
+        "alternate": 1.96043402e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 1.6756703353637057e-08,
+          "im": 8.587493944157435e-09
+        },
+        "z_vertical": {
+          "re": 2.1807484564282926e-06,
+          "im": -7.167693821154023e-07
+        },
+        "rho_horizontal": {
+          "re": -2.1390752539269195e-06,
+          "im": 6.881869603444753e-07
+        },
+        "phi_horizontal": {
+          "re": 3.4452111673196854e-08,
+          "im": 2.603531664786861e-07
+        },
+        "z_horizontal": {
+          "re": -0.0001250712281599697,
+          "im": 0.00024571442249421183
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "interface",
+      "rho_lambda": 3.1,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 8.02744907584239e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 1569.6088447375653,
+      "wall_seconds": {
+        "medium": 0.13036614,
+        "fine": 0.369320287,
+        "alternate": 1.45984814e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 1.7884396025030542e-08,
+          "im": -2.982138045934547e-09
+        },
+        "z_vertical": {
+          "re": 1.2745372990278262e-06,
+          "im": -1.807226385570776e-06
+        },
+        "rho_horizontal": {
+          "re": -1.25885937379274e-06,
+          "im": 1.7604315891877095e-06
+        },
+        "phi_horizontal": {
+          "re": 1.7013178891101657e-07,
+          "im": 1.7788937887995276e-07
+        },
+        "z_horizontal": {
+          "re": 4.445609338156726e-05,
+          "im": 0.0002618272292032965
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "axis",
+      "rho_lambda": 0.01,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 89.80906784825163,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 2.5880766813702828e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 21.86973886032602,
+      "wall_seconds": {
+        "medium": 0.000147885876,
+        "fine": 0.000362418825,
+        "alternate": 8.40518624e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -4.2363884593621365e-09,
+          "im": 3.004304587943506e-09
+        },
+        "z_vertical": {
+          "re": 8.058597578213819e-08,
+          "im": 1.4381014900758214e-07
+        },
+        "rho_horizontal": {
+          "re": 5.1116322529730086e-05,
+          "im": -0.00017903730221246808
+        },
+        "phi_horizontal": {
+          "re": -5.111633665433304e-05,
+          "im": 0.00017903731223340366
+        },
+        "z_horizontal": {
+          "re": -1.7017121750872004e-07,
+          "im": 5.972870551532614e-07
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "axis",
+      "rho_lambda": 0.1,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 88.09137771012774,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 4.809428708414868e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 106.86283822877647,
+      "wall_seconds": {
+        "medium": 0.00014786399,
+        "fine": 0.000373471063,
+        "alternate": 4.61004674e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -4.198318054121036e-08,
+          "im": 3.042649577455558e-08
+        },
+        "z_vertical": {
+          "re": 8.336367343578115e-08,
+          "im": 1.4180687766481125e-07
+        },
+        "rho_horizontal": {
+          "re": 4.920828064349422e-05,
+          "im": -0.00017935803176919907
+        },
+        "phi_horizontal": {
+          "re": -4.920968040668565e-05,
+          "im": 0.0001793590466474254
+        },
+        "z_horizontal": {
+          "re": -1.638061269719064e-06,
+          "im": 5.983536191003135e-06
+        }
+      }
+    },
+    {
+      "material": "seawater",
+      "family": "axis",
+      "rho_lambda": 0.5,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 80.54025975086473,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 7.965025148014612e-11,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 0.17568290277927606,
+      "wall_seconds": {
+        "medium": 0.00017105299,
+        "fine": 0.000436041038,
+        "alternate": 2.49128789e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -1.5978425952042057e-07,
+          "im": 1.9120038365804908e-07
+        },
+        "z_vertical": {
+          "re": 1.382726043926492e-07,
+          "im": 8.326223340553075e-08
+        },
+        "rho_horizontal": {
+          "re": 3.4133591677566884e-06,
+          "im": -0.00018110723753682204
+        },
+        "phi_horizontal": {
+          "re": -3.4399936166400437e-06,
+          "im": 0.00018113912204150454
+        },
+        "z_horizontal": {
+          "re": -5.523499099944521e-07,
+          "im": 3.0205466727209113e-05
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "switch",
+      "rho_lambda": 2.9,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.5487933653461707,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.8376486370429218e-06,
+      "alternate_to_fine_scaled_error": 4.1743591437701435e-06,
+      "production_to_fine_scaled_error": 1.8376486370429218e-06,
+      "wall_seconds": {
+        "medium": 0.00219748612,
+        "fine": 0.00751491706,
+        "alternate": 0.04187112
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.021005296856780903,
+          "im": -0.07883751613144649
+        },
+        "z_vertical": {
+          "re": 0.06544371453783811,
+          "im": -1.1007611355903781
+        },
+        "rho_horizontal": {
+          "re": 0.14767561864134274,
+          "im": 0.820349951837291
+        },
+        "phi_horizontal": {
+          "re": -0.09493812513551088,
+          "im": 0.28635499066537295
+        },
+        "z_horizontal": {
+          "re": -0.5767076515358268,
+          "im": 9.451586025850155
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "switch",
+      "rho_lambda": 3.0,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.5305013166738103,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.5023535227178466e-06,
+      "alternate_to_fine_scaled_error": 4.061497219625381e-06,
+      "production_to_fine_scaled_error": 1.5023535227178466e-06,
+      "wall_seconds": {
+        "medium": 0.00222633383,
+        "fine": 0.00761917001,
+        "alternate": 0.043305919
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.05865381028630905,
+          "im": -0.05197310292652519
+        },
+        "z_vertical": {
+          "re": -0.5516987907549111,
+          "im": -0.8592648510427239
+        },
+        "rho_horizontal": {
+          "re": 0.7041632143042681,
+          "im": 0.7331920875411551
+        },
+        "phi_horizontal": {
+          "re": -0.06111279319105641,
+          "im": 0.0660232243915468
+        },
+        "z_horizontal": {
+          "re": 5.089465212800365,
+          "im": 7.520054359092731
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "switch",
+      "rho_lambda": 3.01,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.5287389540540464,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.4429820699376859e-06,
+      "alternate_to_fine_scaled_error": 4.065226424355955e-06,
+      "production_to_fine_scaled_error": 13.049898709615528,
+      "wall_seconds": {
+        "medium": 0.00223793904,
+        "fine": 0.00764586311,
+        "alternate": 0.043446867
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.047160840892523606,
+          "im": -0.052842552899152795
+        },
+        "z_vertical": {
+          "re": -0.6072192249587728,
+          "im": -0.8339287457026432
+        },
+        "rho_horizontal": {
+          "re": 0.7186316851506974,
+          "im": 0.599308782892517
+        },
+        "phi_horizontal": {
+          "re": -0.024507148502013132,
+          "im": 0.16934962028262532
+        },
+        "z_horizontal": {
+          "re": 5.445778194181534,
+          "im": 7.182610410225797
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "switch",
+      "rho_lambda": 3.1,
+      "observer_z_lambda": 0.025,
+      "source_depth_lg": 0.025,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.5133893021958642,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.2866668468085771e-06,
+      "alternate_to_fine_scaled_error": 3.875570389657114e-06,
+      "production_to_fine_scaled_error": 12.368229204725838,
+      "wall_seconds": {
+        "medium": 0.00227477495,
+        "fine": 0.00771976192,
+        "alternate": 0.044743726
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.10971246756209393,
+          "im": -0.007491847015365178
+        },
+        "z_vertical": {
+          "re": -0.9157363534040649,
+          "im": -0.31862442317940354
+        },
+        "rho_horizontal": {
+          "re": 0.9601738044811988,
+          "im": 0.3732783800978544
+        },
+        "phi_horizontal": {
+          "re": -0.009275896836355957,
+          "im": -0.1498800368007902
+        },
+        "z_horizontal": {
+          "re": 8.417300457613079,
+          "im": 2.9454421123790846
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.069816,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 1.0317599854677861,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.9189288640918914e-08,
+      "alternate_to_fine_scaled_error": 3.1943508486525756e-06,
+      "production_to_fine_scaled_error": 11.38116758356346,
+      "wall_seconds": {
+        "medium": 0.00258708,
+        "fine": 0.00859222305,
+        "alternate": 0.0223489229
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.03769098653492202,
+          "im": -0.04688073887357996
+        },
+        "z_vertical": {
+          "re": -0.39366826772662605,
+          "im": -0.6127092684574298
+        },
+        "rho_horizontal": {
+          "re": 0.3506201405655023,
+          "im": 0.42440876343309175
+        },
+        "phi_horizontal": {
+          "re": 0.09184999515580569,
+          "im": 0.15754087680251427
+        },
+        "z_horizontal": {
+          "re": 3.4563181592088923,
+          "im": 5.477879814707923
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.349955,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 5.031592586135126,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.1288435830912675e-14,
+      "alternate_to_fine_scaled_error": 3.083118157992142e-06,
+      "production_to_fine_scaled_error": 529.2961258246106,
+      "wall_seconds": {
+        "medium": 0.00259918114,
+        "fine": 0.00864702114,
+        "alternate": 0.00464697205
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.006682777032533775,
+          "im": 0.02290367525737737
+        },
+        "z_vertical": {
+          "re": -0.37157028449146445,
+          "im": -0.6503487485365493
+        },
+        "rho_horizontal": {
+          "re": 0.1205032992633214,
+          "im": -0.22821594953640817
+        },
+        "phi_horizontal": {
+          "re": 0.3030512878026838,
+          "im": 0.8495125123980063
+        },
+        "z_horizontal": {
+          "re": 3.263223212513678,
+          "im": 5.844036469382492
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.705308,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 10.030869303016162,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.760852793604506e-14,
+      "alternate_to_fine_scaled_error": 2.9355107215391745e-06,
+      "production_to_fine_scaled_error": 24.104486282896307,
+      "wall_seconds": {
+        "medium": 0.00258868583,
+        "fine": 0.00860291393,
+        "alternate": 0.00234385207
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.06032085754233936,
+          "im": 0.09208327503632122
+        },
+        "z_vertical": {
+          "re": -0.49960843229710306,
+          "im": -0.5910381690699661
+        },
+        "rho_horizontal": {
+          "re": -0.43844200527570193,
+          "im": -0.9125753918729944
+        },
+        "phi_horizontal": {
+          "re": 0.9859561398795165,
+          "im": 1.4637143411984792
+        },
+        "z_horizontal": {
+          "re": 4.483481750563148,
+          "im": 5.3867490553215225
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 1.071797,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 15.029697666430753,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 4.158924836848715e-15,
+      "alternate_to_fine_scaled_error": 2.862103773671599e-06,
+      "production_to_fine_scaled_error": 1.588421948418239,
+      "wall_seconds": {
+        "medium": 0.00257949904,
+        "fine": 0.00853698188,
+        "alternate": 0.00156922196
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.17391795853707773,
+          "im": 0.08356208939461891
+        },
+        "z_vertical": {
+          "re": -0.7038450733359398,
+          "im": -0.3242978828422786
+        },
+        "rho_horizontal": {
+          "re": -1.5210405745290578,
+          "im": -0.9469830190408912
+        },
+        "phi_horizontal": {
+          "re": 2.251752861562881,
+          "im": 1.213480492319502
+        },
+        "z_horizontal": {
+          "re": 6.498381020449397,
+          "im": 3.022702489314853
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "grazing-angle",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 1.455881,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 20.028103246021054,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 4.3857449537587984e-15,
+      "alternate_to_fine_scaled_error": 2.875170972372589e-06,
+      "production_to_fine_scaled_error": 0.3344531672789685,
+      "wall_seconds": {
+        "medium": 0.00254844199,
+        "fine": 0.00842498103,
+        "alternate": 0.001165997
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.25338137055078863,
+          "im": -0.07455236975340296
+        },
+        "z_vertical": {
+          "re": -0.7228669848398576,
+          "im": 0.18988060107519134
+        },
+        "rho_horizontal": {
+          "re": -2.4713735825905534,
+          "im": 0.4708533504716364
+        },
+        "phi_horizontal": {
+          "re": 3.1780454475570457,
+          "im": -0.7218736100533935
+        },
+        "z_horizontal": {
+          "re": 6.877173493128227,
+          "im": -1.820332954453363
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "grazing-range",
+      "rho_lambda": 4.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.31830661145136596,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 3.2124237606649185e-07,
+      "alternate_to_fine_scaled_error": 3.2585033981274345e-06,
+      "production_to_fine_scaled_error": 10.050260033010362,
+      "wall_seconds": {
+        "medium": 0.00257117301,
+        "fine": 0.00857162196,
+        "alternate": 0.0721271909
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.043040190895880744,
+          "im": -0.041994427630607255
+        },
+        "z_vertical": {
+          "re": -0.3930633491723662,
+          "im": -0.600013022092228
+        },
+        "rho_horizontal": {
+          "re": 0.5162280724967796,
+          "im": 0.5401252517830266
+        },
+        "phi_horizontal": {
+          "re": -0.0753687295682082,
+          "im": 0.027930277238290037
+        },
+        "z_horizontal": {
+          "re": 3.608483767450324,
+          "im": 5.236996866969782
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "grazing-range",
+      "rho_lambda": 6.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.21220562048812272,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 1.2767621988667797e-07,
+      "alternate_to_fine_scaled_error": 2.406160934893022e-06,
+      "production_to_fine_scaled_error": 7.126043289055322,
+      "wall_seconds": {
+        "medium": 0.00326666282,
+        "fine": 0.0104883751,
+        "alternate": 0.125392075
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.028556207391577146,
+          "im": -0.026946294517252712
+        },
+        "z_vertical": {
+          "re": -0.25934090746802213,
+          "im": -0.34169138286408
+        },
+        "rho_horizontal": {
+          "re": 0.31280306657559975,
+          "im": 0.31483570502720065
+        },
+        "phi_horizontal": {
+          "re": -0.035312014587124844,
+          "im": 0.012913458240216787
+        },
+        "z_horizontal": {
+          "re": 2.35798606247033,
+          "im": 2.9999778096757685
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "grazing-range",
+      "rho_lambda": 10.0,
+      "observer_z_lambda": 0.02,
+      "source_depth_lg": 0.02,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.12732374488738094,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": true,
+      "medium_to_fine_scaled_error": 2.119177353568242e-08,
+      "alternate_to_fine_scaled_error": 1.7036425567753501e-06,
+      "production_to_fine_scaled_error": 4.685418087079996,
+      "wall_seconds": {
+        "medium": 0.00522623304,
+        "fine": 0.0152699689,
+        "alternate": 0.180250527
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.016459478319268847,
+          "im": -0.013572529092019827
+        },
+        "z_vertical": {
+          "re": -0.14906967140952287,
+          "im": -0.1579450525250672
+        },
+        "rho_horizontal": {
+          "re": 0.1676454868833192,
+          "im": 0.14828861918121353
+        },
+        "phi_horizontal": {
+          "re": -0.013537887497232295,
+          "im": 0.004873421111636116
+        },
+        "z_horizontal": {
+          "re": 1.3466821282508852,
+          "im": 1.3940100400865798
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "interface",
+      "rho_lambda": 0.5,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 7.313669374223293e-05,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 7.313669374223293e-05,
+      "wall_seconds": {
+        "medium": 0.00785921793,
+        "fine": 0.0300790251,
+        "alternate": 1.2293458e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.4310915484238799,
+          "im": 0.49776831511759456
+        },
+        "z_vertical": {
+          "re": 3.951219631567975,
+          "im": 6.758827208200725
+        },
+        "rho_horizontal": {
+          "re": -30.32825155647967,
+          "im": -5.475752380828233
+        },
+        "phi_horizontal": {
+          "re": 21.594749288989828,
+          "im": 1.2889791162533286
+        },
+        "z_horizontal": {
+          "re": -34.95018572827898,
+          "im": -40.53124556743451
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "interface",
+      "rho_lambda": 1.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 6.0471987461419684e-05,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 6.0471987461419684e-05,
+      "wall_seconds": {
+        "medium": 0.00887089013,
+        "fine": 0.0329064871,
+        "alternate": 1.21071935e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.16316897411734074,
+          "im": -0.2988070167236613
+        },
+        "z_vertical": {
+          "re": -1.4940905202566044,
+          "im": -3.4089456925300663
+        },
+        "rho_horizontal": {
+          "re": 8.044689276273907,
+          "im": 3.1711808253175606
+        },
+        "phi_horizontal": {
+          "re": -5.443972830759283,
+          "im": -0.23765453830049582
+        },
+        "z_horizontal": {
+          "re": 13.230826451378604,
+          "im": 24.41392802915676
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "interface",
+      "rho_lambda": 2.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 2.5215456807556936e-06,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 2.5215456807556936e-06,
+      "wall_seconds": {
+        "medium": 0.0176775011,
+        "fine": 0.051853023,
+        "alternate": 1.27125531e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.07375216403525303,
+          "im": -0.14710163274325128
+        },
+        "z_vertical": {
+          "re": -0.6748268880321839,
+          "im": -1.5392076611369814
+        },
+        "rho_horizontal": {
+          "re": 2.2979089798961203,
+          "im": 1.4859047888634227
+        },
+        "phi_horizontal": {
+          "re": -1.3776570110325557,
+          "im": -0.05324348879006037
+        },
+        "z_horizontal": {
+          "re": 5.979374294439865,
+          "im": 12.121339961438371
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "interface",
+      "rho_lambda": 3.0,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "model-fit",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 5.616258827691095e-06,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 5.616258827691095e-06,
+      "wall_seconds": {
+        "medium": 0.0129535869,
+        "fine": 0.044149329,
+        "alternate": 1.01979822e-07
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.04893448565503645,
+          "im": -0.09138783889603544
+        },
+        "z_vertical": {
+          "re": -0.4463428783227985,
+          "im": -0.9334057363091168
+        },
+        "rho_horizontal": {
+          "re": 1.1634238115131454,
+          "im": 0.9098595913059567
+        },
+        "phi_horizontal": {
+          "re": -0.6180696812230823,
+          "im": -0.023493359559523655
+        },
+        "z_horizontal": {
+          "re": 3.9662731741907358,
+          "im": 7.604179652910122
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "interface",
+      "rho_lambda": 3.1,
+      "observer_z_lambda": 0.0,
+      "source_depth_lg": 0.0,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 0.0,
+      "grazing_warning": true,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 4.50372046396334e-06,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 11.801692709585826,
+      "wall_seconds": {
+        "medium": 0.013138806,
+        "fine": 0.044739801,
+        "alternate": 1.3038516e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": -0.1029422658927357,
+          "im": -0.04300039782391102
+        },
+        "z_vertical": {
+          "re": -0.8756904561319335,
+          "im": -0.4573262980912546
+        },
+        "rho_horizontal": {
+          "re": 1.4104045370902325,
+          "im": 0.871509100500094
+        },
+        "phi_horizontal": {
+          "re": -0.48641437371558827,
+          "im": -0.5038595963609238
+        },
+        "z_horizontal": {
+          "re": 8.222594710689458,
+          "im": 3.650376472069887
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "axis",
+      "rho_lambda": 0.01,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 89.80971951297421,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.9792747726688528e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 21.420062227799324,
+      "wall_seconds": {
+        "medium": 0.000149309868,
+        "fine": 0.000366769964,
+        "alternate": 9.01054591e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.0033434624391042106,
+          "im": 0.003260855366093235
+        },
+        "z_vertical": {
+          "re": 0.11422389835344544,
+          "im": -0.09460403089376988
+        },
+        "rho_horizontal": {
+          "re": -7.9189892194556215,
+          "im": -9.765362225728856
+        },
+        "phi_horizontal": {
+          "re": 7.919000428705475,
+          "im": 9.765373053194168
+        },
+        "z_horizontal": {
+          "re": 0.026783934863752152,
+          "im": 0.032259600499992734
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "axis",
+      "rho_lambda": 0.1,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 88.09788722534307,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 1.1402737242098947e-15,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 106.98780179916102,
+      "wall_seconds": {
+        "medium": 0.000149737112,
+        "fine": 0.000377780059,
+        "alternate": 2.00234354e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.033710229167371826,
+          "im": 0.03220837640262054
+        },
+        "z_vertical": {
+          "re": 0.11199078998025466,
+          "im": -0.09672783813610437
+        },
+        "rho_horizontal": {
+          "re": -8.010121596619644,
+          "im": -9.671822003577898
+        },
+        "phi_horizontal": {
+          "re": 8.01125166135935,
+          "im": 9.672891348053545
+        },
+        "z_horizontal": {
+          "re": 0.27084427436427005,
+          "im": 0.3194406840498749
+        }
+      }
+    },
+    {
+      "material": "lossless-water",
+      "family": "axis",
+      "rho_lambda": 0.5,
+      "observer_z_lambda": 3.0,
+      "source_depth_lg": 0.1,
+      "production_method": "asymptotic",
+      "grazing_angle_degrees": 80.57196610596193,
+      "grazing_warning": false,
+      "medium_ok": true,
+      "fine_ok": true,
+      "alternate_ok": false,
+      "medium_to_fine_scaled_error": 9.76227674882231e-11,
+      "alternate_to_fine_scaled_error": null,
+      "production_to_fine_scaled_error": 0.17907020264785567,
+      "wall_seconds": {
+        "medium": 0.000173202949,
+        "fine": 0.00044121989,
+        "alternate": 2.09547579e-08
+      },
+      "fine_direct_field": {
+        "rho_vertical": {
+          "re": 0.19473606493742696,
+          "im": 0.11027923848032255
+        },
+        "z_vertical": {
+          "re": 0.05115129803907335,
+          "im": -0.13553352961379747
+        },
+        "rho_horizontal": {
+          "re": -9.866463735082005,
+          "im": -7.2001414167621025
+        },
+        "phi_horizontal": {
+          "re": 9.89904691940012,
+          "im": 7.218381012888873
+        },
+        "z_horizontal": {
+          "re": 1.6591743707887006,
+          "im": 1.1813468875234538
+        }
+      }
+    }
+  ]
+}
