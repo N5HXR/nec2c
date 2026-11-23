@@ -361,6 +361,15 @@ The frozen contract and results are in `NEC4-SIMILARITY-M10B-SPEC.md` and
 published monopole/ground-stake contract and measured curves are in
 `NEC4-SIMILARITY-M10C-SPEC.md` and `NEC4-SIMILARITY-M10C-RESULTS.md`.
 
+**M10D status:** accepted by the user on 2026-11-23.  M10D.1 review identified and fixed
+the mixed-path RCE denominator while retaining the absolute grazing-field
+discrepancy as a separate warning-backed limitation.  A three-level mesh study
+freezes the `0.01 lambda` precision threshold and nine Appendix A impedance
+anchors as retained regressions.  The
+frozen buried radial-wire ground-screen contract and measured qualification
+boundary are in `NEC4-SIMILARITY-M10D-SPEC.md` and
+`NEC4-SIMILARITY-M10D-RESULTS.md`.
+
 Goal: qualify the complete documented NEC4-similarity feature on realistic antennas.
 
 Cases include:

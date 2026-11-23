@@ -999,12 +999,13 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
         (unsigned long)state->unsplit_crossings,
         (unsigned long)state->in_plane_segments);
     result_json_diagnostic("error", "NEC4_M7_INTERFACE_TOPOLOGY",
-        "wires may end freely at the interface or form a simple one-above/one-below split crossing, and may not lie in the interface plane",
+        "wires may end freely at the interface, form a simple split crossing, or form one upper wire feeding buried radial wires; they may not lie in the interface plane",
         context);
     nec4_medium_print(output_fp,state);
     fprintf(output_fp, "\n  NEC4 M7 PREFLIGHT ERROR: split every crossing "
-        "at z=0 as one segment on each side; branches and complete segments "
-        "in the interface plane are deferred.");
+        "at z=0; only a simple crossing or one upper wire feeding lower-medium "
+        "radials is supported, and complete segments in the interface plane "
+        "are deferred.");
     return 0;
   }
 
@@ -1014,6 +1015,7 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
       "{\"frequency_mhz\":%.17g,\"upper_segments\":%lu,"
       "\"lower_segments\":%lu,\"interface_endpoints\":%lu,"
       "\"crossing_junctions\":%lu,\"one_sided_interface_ends\":%lu,"
+      "\"radial_screen_junctions\":%lu,"
       "\"unsupported_interface_junctions\":%lu,"
       "\"oblique_crossings\":%lu,"
       "\"interface_tolerance_m\":%.17g,\"relative_permittivity\":%.17g,"
@@ -1025,6 +1027,7 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
       (unsigned long)state->interface_endpoints,
       (unsigned long)state->crossing_junctions,
       (unsigned long)state->one_sided_interface_ends,
+      (unsigned long)state->radial_screen_junctions,
       (unsigned long)state->unsupported_interface_junctions,
       (unsigned long)state->oblique_crossings,state->interface_tolerance_m,
       state->relative_permittivity,creal(state->epsilon_relative),

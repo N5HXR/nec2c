@@ -20,9 +20,9 @@
       "expected_quarter_ground_wavelength_lambda": 0.07895855013936923,
       "measured_peak": {
         "depth_lambda": 0.065,
-        "vertical_field_v2_per_m2_w": 1.7210106500145325e-10,
-        "absolute_delta_from_published_reference_db": -2.538937338124703,
-        "rce_db": -2.538937338124703,
+        "vertical_field_v2_per_m2_w": 1.7209766798754628e-10,
+        "absolute_delta_from_published_reference_db": -2.5390230621122365,
+        "rce_db": -2.5390230621122365,
         "impedance_ohm": {
           "re": 16.20966209173979,
           "im": -507.51839810108356
@@ -30,9 +30,9 @@
       },
       "measured_minimum_excluding_zero": {
         "depth_lambda": 0.155,
-        "vertical_field_v2_per_m2_w": 3.0280957249085803e-12,
-        "absolute_delta_from_published_reference_db": -20.085076915944263,
-        "rce_db": -20.085076915944263,
+        "vertical_field_v2_per_m2_w": 3.027989030152188e-12,
+        "absolute_delta_from_published_reference_db": -20.085229942019126,
+        "rce_db": -20.085229942019126,
         "impedance_ohm": {
           "re": 283.4354300966878,
           "im": -533.0635286940334
@@ -41,9 +41,9 @@
       "samples": [
         {
           "depth_lambda": 0.0,
-          "vertical_field_v2_per_m2_w": 5.27092060492803e-11,
-          "absolute_delta_from_published_reference_db": -7.677908171109182,
-          "rce_db": -7.677908171109182,
+          "vertical_field_v2_per_m2_w": 5.2709242713548615e-11,
+          "absolute_delta_from_published_reference_db": -7.677905150178862,
+          "rce_db": -7.677905150178862,
           "impedance_ohm": {
             "re": 61.754944065449294,
             "im": -14462.751529660607
@@ -51,9 +51,9 @@
         },
         {
           "depth_lambda": 0.005,
-          "vertical_field_v2_per_m2_w": 4.334619948253072e-11,
-          "absolute_delta_from_published_reference_db": -8.527262663479293,
-          "rce_db": -8.527262663479293,
+          "vertical_field_v2_per_m2_w": 4.3345287476205414e-11,
+          "absolute_delta_from_published_reference_db": -8.527354040228834,
+          "rce_db": -8.527354040228834,
           "impedance_ohm": {
             "re": 55.722029353415316,
             "im": -929.6093115994538
@@ -61,9 +61,9 @@
         },
         {
           "depth_lambda": 0.01,
-          "vertical_field_v2_per_m2_w": 6.832518193871247e-11,
-          "absolute_delta_from_published_reference_db": -6.5509649484274455,
-          "rce_db": -6.5509649484274455,
+          "vertical_field_v2_per_m2_w": 6.832374883020579e-11,
+          "absolute_delta_from_published_reference_db": -6.551056041875882,
+          "rce_db": -6.551056041875882,
           "impedance_ohm": {
             "re": 35.92316911607053,
             "im": -750.342377893178
@@ -71,9 +71,9 @@
         },
         {
           "depth_lambda": 0.015,
-          "vertical_field_v2_per_m2_w": 8.88528524852023e-11,
-          "absolute_delta_from_published_reference_db": -5.410059169371484,
-          "rce_db": -5.410059169371484,
+          "vertical_field_v2_per_m2_w": 8.885099916873962e-11,
+          "absolute_delta_from_published_reference_db": -5.410149756615993,
+          "rce_db": -5.410149756615993,
           "impedance_ohm": {
             "re": 28.024376078157886,
             "im": -675.4729450091736
@@ -81,9 +81,9 @@
         },
         {
           "depth_lambda": 0.02,
-          "vertical_field_v2_per_m2_w": 1.0629586242849031e-10,
-          "absolute_delta_from_published_reference_db": -4.631609317447985,
-          "rce_db": -4.631609317447985,
+          "vertical_field_v2_per_m2_w": 1.0629365815757272e-10,
+          "absolute_delta_from_published_reference_db": -4.631699378584915,
+          "rce_db": -4.631699378584915,
           "impedance_ohm": {
             "re": 23.73773457834756,
             "im": -632.6332906949389
@@ -91,9 +91,9 @@
         },
         {
           "depth_lambda": 0.025,
-          "vertical_field_v2_per_m2_w": 1.2125515997113716e-10,
-          "absolute_delta_from_published_reference_db": -4.059770627456067,
-          "rce_db": -4.059770627456067,
+          "vertical_field_v2_per_m2_w": 1.2125265994827694e-10,
+          "absolute_delta_from_published_reference_db": -4.059860170641373,
+          "rce_db": -4.059860170641373,
           "impedance_ohm": {
             "re": 21.069927097785126,
             "im": -604.1196919850887
@@ -101,9 +101,9 @@
         },
         {
           "depth_lambda": 0.03,
-          "vertical_field_v2_per_m2_w": 1.34062475758345e-10,
-          "absolute_delta_from_published_reference_db": -3.6237005632955026,
-          "rce_db": -3.6237005632955026,
+          "vertical_field_v2_per_m2_w": 1.340597272891885e-10,
+          "absolute_delta_from_published_reference_db": -3.6237896006803094,
+          "rce_db": -3.6237896006803094,
           "impedance_ohm": {
             "re": 19.285251759405718,
             "im": -583.2915553260563
@@ -111,9 +111,9 @@
         },
         {
           "depth_lambda": 0.035,
-          "vertical_field_v2_per_m2_w": 1.4491230952175637e-10,
-          "absolute_delta_from_published_reference_db": -3.2857201364378645,
-          "rce_db": -3.2857201364378645,
+          "vertical_field_v2_per_m2_w": 1.4490935511327035e-10,
+          "absolute_delta_from_published_reference_db": -3.2858086793909553,
+          "rce_db": -3.2858086793909553,
           "impedance_ohm": {
             "re": 18.047765841325873,
             "im": -567.0607129985975
@@ -121,9 +121,9 @@
         },
         {
           "depth_lambda": 0.04,
-          "vertical_field_v2_per_m2_w": 1.5391622154532312e-10,
-          "absolute_delta_from_published_reference_db": -3.0239289823657938,
-          "rce_db": -3.0239289823657938,
+          "vertical_field_v2_per_m2_w": 1.5391310074985946e-10,
+          "absolute_delta_from_published_reference_db": -3.0240170405299063,
+          "rce_db": -3.0240170405299063,
           "impedance_ohm": {
             "re": 17.183466791712465,
             "im": -553.7818041126411
@@ -131,9 +131,9 @@
         },
         {
           "depth_lambda": 0.045,
-          "vertical_field_v2_per_m2_w": 1.6113061091823274e-10,
-          "absolute_delta_from_published_reference_db": -2.824992379607389,
-          "rce_db": -2.824992379607389,
+          "vertical_field_v2_per_m2_w": 1.6112736153788457e-10,
+          "absolute_delta_from_published_reference_db": -2.825079960866845,
+          "rce_db": -2.825079960866845,
           "impedance_ohm": {
             "re": 16.595246815371272,
             "im": -542.489389069633
@@ -141,9 +141,9 @@
         },
         {
           "depth_lambda": 0.05,
-          "vertical_field_v2_per_m2_w": 1.6657331116511154e-10,
-          "absolute_delta_from_published_reference_db": -2.6807187287760534,
-          "rce_db": -2.6807187287760534,
+          "vertical_field_v2_per_m2_w": 1.6656997007596493e-10,
+          "absolute_delta_from_published_reference_db": -2.680805839437542,
+          "rce_db": -2.680805839437542,
           "impedance_ohm": {
             "re": 16.227213774611915,
             "im": -532.5731059282341
@@ -151,9 +151,9 @@
         },
         {
           "depth_lambda": 0.055,
-          "vertical_field_v2_per_m2_w": 1.702351901000619e-10,
-          "absolute_delta_from_published_reference_db": -2.586279516227099,
-          "rce_db": -2.586279516227099,
+          "vertical_field_v2_per_m2_w": 1.7023179381436741e-10,
+          "absolute_delta_from_published_reference_db": -2.5863661612297455,
+          "rce_db": -2.5863661612297455,
           "impedance_ohm": {
             "re": 16.04808064719927,
             "im": -523.6221976272913
@@ -161,9 +161,9 @@
         },
         {
           "depth_lambda": 0.06,
-          "vertical_field_v2_per_m2_w": 1.720896031387565e-10,
-          "absolute_delta_from_published_reference_db": -2.539226586159826,
-          "rce_db": -2.539226586159826,
+          "vertical_field_v2_per_m2_w": 1.7208618815868697e-10,
+          "absolute_delta_from_published_reference_db": -2.5393127692695954,
+          "rce_db": -2.5393127692695954,
           "impedance_ohm": {
             "re": 16.043001696185808,
             "im": -515.344080447332
@@ -171,9 +171,9 @@
         },
         {
           "depth_lambda": 0.065,
-          "vertical_field_v2_per_m2_w": 1.7210106500145325e-10,
-          "absolute_delta_from_published_reference_db": -2.538937338124703,
-          "rce_db": -2.538937338124703,
+          "vertical_field_v2_per_m2_w": 1.7209766798754628e-10,
+          "absolute_delta_from_published_reference_db": -2.5390230621122365,
+          "rce_db": -2.5390230621122365,
           "impedance_ohm": {
             "re": 16.20966209173979,
             "im": -507.51839810108356
@@ -181,9 +181,9 @@
         },
         {
           "depth_lambda": 0.07,
-          "vertical_field_v2_per_m2_w": 1.7023414565830399e-10,
-          "absolute_delta_from_published_reference_db": -2.5863061615219602,
-          "rce_db": -2.5863061615219602,
+          "vertical_field_v2_per_m2_w": 1.7023080341429048e-10,
+          "absolute_delta_from_published_reference_db": -2.5863914283393665,
+          "rce_db": -2.5863914283393665,
           "impedance_ohm": {
             "re": 16.556836765012942,
             "im": -499.9692782725779
@@ -191,9 +191,9 @@
         },
         {
           "depth_lambda": 0.075,
-          "vertical_field_v2_per_m2_w": 1.6646327084495375e-10,
-          "absolute_delta_from_published_reference_db": -2.6835886780940585,
-          "rce_db": -2.6835886780940585,
+          "vertical_field_v2_per_m2_w": 1.6646002010697523e-10,
+          "absolute_delta_from_published_reference_db": -2.683673489076324,
+          "rce_db": -2.683673489076324,
           "impedance_ohm": {
             "re": 17.104700560479465,
             "im": -492.5473709053607
@@ -201,9 +201,9 @@
         },
         {
           "depth_lambda": 0.08,
-          "vertical_field_v2_per_m2_w": 1.6078380188546516e-10,
-          "absolute_delta_from_published_reference_db": -2.8343499791112166,
-          "rce_db": -2.8343499791112166,
+          "vertical_field_v2_per_m2_w": 1.60780678896687e-10,
+          "absolute_delta_from_published_reference_db": -2.8344343352434693,
+          "rce_db": -2.8344343352434693,
           "impedance_ohm": {
             "re": 17.886740692725695,
             "im": -485.1172956972972
@@ -211,9 +211,9 @@
         },
         {
           "depth_lambda": 0.085,
-          "vertical_field_v2_per_m2_w": 1.5322453145360364e-10,
-          "absolute_delta_from_published_reference_db": -3.0434898966973907,
-          "rce_db": -3.0434898966973907,
+          "vertical_field_v2_per_m2_w": 1.532215713032718e-10,
+          "absolute_delta_from_published_reference_db": -3.0435737990177785,
+          "rce_db": -3.0435737990177785,
           "impedance_ohm": {
             "re": 18.953524365354024,
             "im": -477.5481215362596
@@ -221,9 +221,9 @@
         },
         {
           "depth_lambda": 0.09,
-          "vertical_field_v2_per_m2_w": 1.4386172864533462e-10,
-          "absolute_delta_from_published_reference_db": -3.3173201717662115,
-          "rce_db": -3.3173201717662115,
+          "vertical_field_v2_per_m2_w": 1.438589643491825e-10,
+          "absolute_delta_from_published_reference_db": -3.3174036220424323,
+          "rce_db": -3.3174036220424323,
           "impedance_ohm": {
             "re": 20.37893786673412,
             "im": -469.7058932516467
@@ -231,9 +231,9 @@
         },
         {
           "depth_lambda": 0.095,
-          "vertical_field_v2_per_m2_w": 1.328377618242078e-10,
-          "absolute_delta_from_published_reference_db": -3.6635574207839916,
-          "rce_db": -3.6635574207839916,
+          "vertical_field_v2_per_m2_w": 1.328352230613619e-10,
+          "absolute_delta_from_published_reference_db": -3.6636404228773616,
+          "rce_db": -3.6636404228773616,
           "impedance_ohm": {
             "re": 22.269367975927196,
             "im": -461.4509791867389
@@ -241,9 +241,9 @@
         },
         {
           "depth_lambda": 0.1,
-          "vertical_field_v2_per_m2_w": 1.2047151834230293e-10,
-          "absolute_delta_from_published_reference_db": -4.087929077307101,
-          "rce_db": -4.087929077307101,
+          "vertical_field_v2_per_m2_w": 1.2046922804106284e-10,
+          "absolute_delta_from_published_reference_db": -4.088011642436115,
+          "rce_db": -4.088011642436115,
           "impedance_ohm": {
             "re": 24.75754330663724,
             "im": -452.7132558076502
@@ -251,9 +251,9 @@
         },
         {
           "depth_lambda": 0.105,
-          "vertical_field_v2_per_m2_w": 1.0683759973772014e-10,
-          "absolute_delta_from_published_reference_db": -4.609531692628183,
-          "rce_db": -4.609531692628183,
+          "vertical_field_v2_per_m2_w": 1.068355791470413e-10,
+          "absolute_delta_from_published_reference_db": -4.6096138303477225,
+          "rce_db": -4.6096138303477225,
           "impedance_ohm": {
             "re": 28.117955928684662,
             "im": -443.13692920859825
@@ -261,9 +261,9 @@
         },
         {
           "depth_lambda": 0.11,
-          "vertical_field_v2_per_m2_w": 9.224183407820193e-11,
-          "absolute_delta_from_published_reference_db": -5.247493620548141,
-          "rce_db": -5.247493620548141,
+          "vertical_field_v2_per_m2_w": 9.224009816492325e-11,
+          "absolute_delta_from_published_reference_db": -5.247575351864466,
+          "rce_db": -5.247575351864466,
           "impedance_ohm": {
             "re": 32.74509593914921,
             "im": -432.4285619554951
@@ -271,9 +271,9 @@
         },
         {
           "depth_lambda": 0.115,
-          "vertical_field_v2_per_m2_w": 7.724973704864673e-11,
-          "absolute_delta_from_published_reference_db": -6.017802818647693,
-          "rce_db": -6.017802818647693,
+          "vertical_field_v2_per_m2_w": 7.724828964789477e-11,
+          "absolute_delta_from_published_reference_db": -6.017884191617062,
+          "rce_db": -6.017884191617062,
           "impedance_ohm": {
             "re": 39.1971199294604,
             "im": -420.4170159213874
@@ -281,9 +281,9 @@
         },
         {
           "depth_lambda": 0.12,
-          "vertical_field_v2_per_m2_w": 6.237088417734964e-11,
-          "absolute_delta_from_published_reference_db": -6.946953909567679,
-          "rce_db": -6.946953909567679,
+          "vertical_field_v2_per_m2_w": 6.236971935489931e-11,
+          "absolute_delta_from_published_reference_db": -6.947035018035694,
+          "rce_db": -6.947035018035694,
           "impedance_ohm": {
             "re": 48.42081099031819,
             "im": -406.84409839602785
@@ -291,9 +291,9 @@
         },
         {
           "depth_lambda": 0.125,
-          "vertical_field_v2_per_m2_w": 4.815180342459581e-11,
-          "absolute_delta_from_published_reference_db": -8.070647343114853,
-          "rce_db": -8.070647343114853,
+          "vertical_field_v2_per_m2_w": 4.815090499388452e-11,
+          "absolute_delta_from_published_reference_db": -8.070728375830694,
+          "rce_db": -8.070728375830694,
           "impedance_ohm": {
             "re": 61.98767559031533,
             "im": -391.59867253348244
@@ -301,9 +301,9 @@
         },
         {
           "depth_lambda": 0.13,
-          "vertical_field_v2_per_m2_w": 3.514292040092539e-11,
-          "absolute_delta_from_published_reference_db": -9.438394428337766,
-          "rce_db": -9.438394428337766,
+          "vertical_field_v2_per_m2_w": 3.5142262082803036e-11,
+          "absolute_delta_from_published_reference_db": -9.43847578372955,
+          "rce_db": -9.43847578372955,
           "impedance_ohm": {
             "re": 82.52285433071408,
             "im": -375.15238073325065
@@ -311,9 +311,9 @@
         },
         {
           "depth_lambda": 0.135,
-          "vertical_field_v2_per_m2_w": 2.385967172711833e-11,
-          "absolute_delta_from_published_reference_db": -11.120128275214046,
-          "rce_db": -11.120128275214046,
+          "vertical_field_v2_per_m2_w": 2.3859218038829955e-11,
+          "absolute_delta_from_published_reference_db": -11.120210856481599,
+          "rce_db": -11.120210856481599,
           "impedance_ohm": {
             "re": 114.20814445748961,
             "im": -359.82220269359755
@@ -321,9 +321,9 @@
         },
         {
           "depth_lambda": 0.14,
-          "vertical_field_v2_per_m2_w": 1.474283570164284e-11,
-          "absolute_delta_from_published_reference_db": -13.21096266001635,
-          "rce_db": -13.21096266001635,
+          "vertical_field_v2_per_m2_w": 1.4742543565177787e-11,
+          "absolute_delta_from_published_reference_db": -13.211048718434382,
+          "rce_db": -13.211048718434382,
           "impedance_ohm": {
             "re": 162.269065933285,
             "im": -352.98429886667964
@@ -331,9 +331,9 @@
         },
         {
           "depth_lambda": 0.145,
-          "vertical_field_v2_per_m2_w": 8.123989939870934e-12,
-          "absolute_delta_from_published_reference_db": -15.799079147277347,
-          "rce_db": -15.799079147277347,
+          "vertical_field_v2_per_m2_w": 8.123810890216676e-12,
+          "absolute_delta_from_published_reference_db": -15.799174865187293,
+          "rce_db": -15.799174865187293,
           "impedance_ohm": {
             "re": 226.5517572046768,
             "im": -372.18273554477895
@@ -341,9 +341,9 @@
         },
         {
           "depth_lambda": 0.15,
-          "vertical_field_v2_per_m2_w": 4.201186127351507e-12,
-          "absolute_delta_from_published_reference_db": -18.663053689233628,
-          "rce_db": -18.663053689233628,
+          "vertical_field_v2_per_m2_w": 4.20106891145241e-12,
+          "absolute_delta_from_published_reference_db": -18.66317486198532,
+          "rce_db": -18.66317486198532,
           "impedance_ohm": {
             "re": 282.40862133708583,
             "im": -438.4131518933094
@@ -351,9 +351,9 @@
         },
         {
           "depth_lambda": 0.155,
-          "vertical_field_v2_per_m2_w": 3.0280957249085803e-12,
-          "absolute_delta_from_published_reference_db": -20.085076915944263,
-          "rce_db": -20.085076915944263,
+          "vertical_field_v2_per_m2_w": 3.027989030152188e-12,
+          "absolute_delta_from_published_reference_db": -20.085229942019126,
+          "rce_db": -20.085229942019126,
           "impedance_ohm": {
             "re": 283.4354300966878,
             "im": -533.0635286940334
@@ -361,9 +361,9 @@
         },
         {
           "depth_lambda": 0.16,
-          "vertical_field_v2_per_m2_w": 4.517314855535323e-12,
-          "absolute_delta_from_published_reference_db": -18.347969298479082,
-          "rce_db": -18.347969298479082,
+          "vertical_field_v2_per_m2_w": 4.517169903883726e-12,
+          "absolute_delta_from_published_reference_db": -18.348108657178805,
+          "rce_db": -18.348108657178805,
           "impedance_ohm": {
             "re": 231.61505631356846,
             "im": -598.6211815298841
@@ -371,9 +371,9 @@
         },
         {
           "depth_lambda": 0.165,
-          "vertical_field_v2_per_m2_w": 8.455993888836566e-12,
-          "absolute_delta_from_published_reference_db": -15.625126312296926,
-          "rce_db": -15.625126312296926,
+          "vertical_field_v2_per_m2_w": 8.455766676112161e-12,
+          "absolute_delta_from_published_reference_db": -15.625243008878638,
+          "rce_db": -15.625243008878638,
           "impedance_ohm": {
             "re": 171.95511930462138,
             "im": -619.9223801405384
@@ -381,9 +381,9 @@
         },
         {
           "depth_lambda": 0.17,
-          "vertical_field_v2_per_m2_w": 1.4530152138858334e-11,
-          "absolute_delta_from_published_reference_db": -13.274071300345865,
-          "rce_db": -13.274071300345865,
+          "vertical_field_v2_per_m2_w": 1.4529805172938737e-11,
+          "absolute_delta_from_published_reference_db": -13.27417500688795,
+          "rce_db": -13.27417500688795,
           "impedance_ohm": {
             "re": 126.54946067454777,
             "im": -616.7128081940717
@@ -391,9 +391,9 @@
         },
         {
           "depth_lambda": 0.17500000000000002,
-          "vertical_field_v2_per_m2_w": 2.2353303339852214e-11,
-          "absolute_delta_from_published_reference_db": -11.403355800229821,
-          "rce_db": -11.403355800229821,
+          "vertical_field_v2_per_m2_w": 2.235280681583573e-11,
+          "absolute_delta_from_published_reference_db": -11.403452269209007,
+          "rce_db": -11.403452269209007,
           "impedance_ohm": {
             "re": 95.77806419021937,
             "im": -604.7942163673981
@@ -401,9 +401,9 @@
         },
         {
           "depth_lambda": 0.18,
-          "vertical_field_v2_per_m2_w": 3.1495314120289164e-11,
-          "absolute_delta_from_published_reference_db": -9.914313474957325,
-          "rce_db": -9.914313474957325,
+          "vertical_field_v2_per_m2_w": 3.149464654607603e-11,
+          "absolute_delta_from_published_reference_db": -9.914405528927187,
+          "rce_db": -9.914405528927187,
           "impedance_ohm": {
             "re": 75.25466267539394,
             "im": -591.0305933533391
@@ -411,9 +411,9 @@
         },
         {
           "depth_lambda": 0.185,
-          "vertical_field_v2_per_m2_w": 4.150842123449093e-11,
-          "absolute_delta_from_published_reference_db": -8.715410762853699,
-          "rce_db": -8.715410762853699,
+          "vertical_field_v2_per_m2_w": 4.150756957449459e-11,
+          "absolute_delta_from_published_reference_db": -8.715499871285285,
+          "rce_db": -8.715499871285285,
           "impedance_ohm": {
             "re": 61.34350995456342,
             "im": -577.7860828294176
@@ -421,9 +421,9 @@
         },
         {
           "depth_lambda": 0.19,
-          "vertical_field_v2_per_m2_w": 5.194861997718928e-11,
-          "absolute_delta_from_published_reference_db": -7.741032767147229,
-          "rce_db": -7.741032767147229,
+          "vertical_field_v2_per_m2_w": 5.194757941102216e-11,
+          "absolute_delta_from_published_reference_db": -7.741119760155079,
+          "rce_db": -7.741119760155079,
           "impedance_ohm": {
             "re": 51.69155356158911,
             "im": -565.6958856175262
@@ -431,9 +431,9 @@
         },
         {
           "depth_lambda": 0.195,
-          "vertical_field_v2_per_m2_w": 6.239184552621598e-11,
-          "absolute_delta_from_published_reference_db": -6.945494595836217,
-          "rce_db": -6.945494595836217,
+          "vertical_field_v2_per_m2_w": 6.239061892573837e-11,
+          "absolute_delta_from_published_reference_db": -6.945579977355372,
+          "rce_db": -6.945579977355372,
           "impedance_ohm": {
             "re": 44.85177949037873,
             "im": -554.7965559421427
@@ -441,9 +441,9 @@
         },
         {
           "depth_lambda": 0.2,
-          "vertical_field_v2_per_m2_w": 7.244528774937866e-11,
-          "absolute_delta_from_published_reference_db": -6.296671499034182,
-          "rce_db": -6.296671499034182,
+          "vertical_field_v2_per_m2_w": 7.244388496762613e-11,
+          "absolute_delta_from_published_reference_db": -6.296755593706411,
+          "rce_db": -6.296755593706411,
           "impedance_ohm": {
             "re": 39.932951139196646,
             "im": -544.9404614129542
@@ -451,8 +451,8 @@
         }
       ],
       "height_separation_db": {
-        "minimum": 3.8464309671605497,
-        "maximum": 11.804526882015182
+        "minimum": 3.846488680528145,
+        "maximum": 11.804645364049183
       }
     },
     {
@@ -464,9 +464,9 @@
       "expected_quarter_ground_wavelength_lambda": 0.07895855013936923,
       "measured_peak": {
         "depth_lambda": 0.055,
-        "vertical_field_v2_per_m2_w": 4.2030286408776576e-10,
-        "absolute_delta_from_published_reference_db": 1.3388505778326667,
-        "rce_db": 1.3388505778326667,
+        "vertical_field_v2_per_m2_w": 4.203001392789304e-10,
+        "absolute_delta_from_published_reference_db": 1.338822422581337,
+        "rce_db": 1.338822422581337,
         "impedance_ohm": {
           "re": 60.71682363729614,
           "im": -22.408377040119547
@@ -474,9 +474,9 @@
       },
       "measured_minimum_excluding_zero": {
         "depth_lambda": 0.155,
-        "vertical_field_v2_per_m2_w": 4.5879881579184204e-11,
-        "absolute_delta_from_published_reference_db": -8.280550033929082,
-        "rce_db": -8.280550033929082,
+        "vertical_field_v2_per_m2_w": 4.5879516649334305e-11,
+        "absolute_delta_from_published_reference_db": -8.280584577969943,
+        "rce_db": -8.280584577969943,
         "impedance_ohm": {
           "re": 370.3197148844681,
           "im": -70.46149200913912
@@ -485,9 +485,9 @@
       "samples": [
         {
           "depth_lambda": 0.0,
-          "vertical_field_v2_per_m2_w": 2.684813003525361e-10,
-          "absolute_delta_from_published_reference_db": -0.6076324906394754,
-          "rce_db": -0.6076324906394754,
+          "vertical_field_v2_per_m2_w": 2.684813576612144e-10,
+          "absolute_delta_from_published_reference_db": -0.6076315636162506,
+          "rce_db": -0.6076315636162506,
           "impedance_ohm": {
             "re": 122.31404629169536,
             "im": -13773.321540531631
@@ -495,9 +495,9 @@
         },
         {
           "depth_lambda": 0.005,
-          "vertical_field_v2_per_m2_w": 2.4173323466246144e-10,
-          "absolute_delta_from_published_reference_db": -1.06340928230535,
-          "rce_db": -1.06340928230535,
+          "vertical_field_v2_per_m2_w": 2.417316241112571e-10,
+          "absolute_delta_from_published_reference_db": -1.063438217334988,
+          "rce_db": -1.063438217334988,
           "impedance_ohm": {
             "re": 98.1042455362479,
             "im": -446.3027259894792
@@ -505,9 +505,9 @@
         },
         {
           "depth_lambda": 0.01,
-          "vertical_field_v2_per_m2_w": 3.059115911988737e-10,
-          "absolute_delta_from_published_reference_db": -0.04081358653071707,
-          "rce_db": -0.04081358653071707,
+          "vertical_field_v2_per_m2_w": 3.059095543307052e-10,
+          "absolute_delta_from_published_reference_db": -0.040842503498115586,
+          "rce_db": -0.040842503498115586,
           "impedance_ohm": {
             "re": 78.39797398030736,
             "im": -264.2614388834295
@@ -515,9 +515,9 @@
         },
         {
           "depth_lambda": 0.015,
-          "vertical_field_v2_per_m2_w": 3.4288260268277494e-10,
-          "absolute_delta_from_published_reference_db": 0.4546815859984281,
-          "rce_db": 0.4546815859984281,
+          "vertical_field_v2_per_m2_w": 3.428803267063729e-10,
+          "absolute_delta_from_published_reference_db": 0.4546527584269744,
+          "rce_db": 0.4546527584269744,
           "impedance_ohm": {
             "re": 70.61322254949627,
             "im": -186.85947590038558
@@ -525,9 +525,9 @@
         },
         {
           "depth_lambda": 0.02,
-          "vertical_field_v2_per_m2_w": 3.6728353247862376e-10,
-          "absolute_delta_from_published_reference_db": 0.7532416509436428,
-          "rce_db": 0.7532416509436428,
+          "vertical_field_v2_per_m2_w": 3.6728110259760173e-10,
+          "absolute_delta_from_published_reference_db": 0.7532129187158945,
+          "rce_db": 0.7532129187158945,
           "impedance_ohm": {
             "re": 66.4707803304988,
             "im": -141.84443442004252
@@ -535,9 +535,9 @@
         },
         {
           "depth_lambda": 0.025,
-          "vertical_field_v2_per_m2_w": 3.844570849948783e-10,
-          "absolute_delta_from_published_reference_db": 0.9517057707688391,
-          "rce_db": 0.9517057707688391,
+          "vertical_field_v2_per_m2_w": 3.8445454968053055e-10,
+          "absolute_delta_from_published_reference_db": 0.9516771309881032,
+          "rce_db": 0.9516771309881032,
           "impedance_ohm": {
             "re": 63.97736698057143,
             "im": -111.43413490358807
@@ -545,9 +545,9 @@
         },
         {
           "depth_lambda": 0.03,
-          "vertical_field_v2_per_m2_w": 3.9691518455465714e-10,
-          "absolute_delta_from_published_reference_db": 1.090204221140969,
-          "rce_db": 1.090204221140969,
+          "vertical_field_v2_per_m2_w": 3.9691257516315504e-10,
+          "absolute_delta_from_published_reference_db": 1.090175669750151,
+          "rce_db": 1.090175669750151,
           "impedance_ohm": {
             "re": 62.39773121230926,
             "im": -88.91451059643006
@@ -555,9 +555,9 @@
         },
         {
           "depth_lambda": 0.035,
-          "vertical_field_v2_per_m2_w": 4.060043438545315e-10,
-          "absolute_delta_from_published_reference_db": 1.1885338847005036,
-          "rce_db": 1.1885338847005036,
+          "vertical_field_v2_per_m2_w": 4.0600168262204553e-10,
+          "absolute_delta_from_published_reference_db": 1.1885054179515873,
+          "rce_db": 1.1885054179515873,
           "impedance_ohm": {
             "re": 61.39715477624333,
             "im": -71.14350428558801
@@ -565,9 +565,9 @@
         },
         {
           "depth_lambda": 0.04,
-          "vertical_field_v2_per_m2_w": 4.125041737489258e-10,
-          "absolute_delta_from_published_reference_db": 1.2575105546941403,
-          "rce_db": 1.2575105546941403,
+          "vertical_field_v2_per_m2_w": 4.125014776486491e-10,
+          "absolute_delta_from_published_reference_db": 1.2574821693983345,
+          "rce_db": 1.2574821693983345,
           "impedance_ohm": {
             "re": 60.80364774708717,
             "im": -56.43670220438704
@@ -575,9 +575,9 @@
         },
         {
           "depth_lambda": 0.045,
-          "vertical_field_v2_per_m2_w": 4.168845611606731e-10,
-          "absolute_delta_from_published_reference_db": 1.303385201647309,
-          "rce_db": 1.303385201647309,
+          "vertical_field_v2_per_m2_w": 4.168818439938069e-10,
+          "absolute_delta_from_published_reference_db": 1.3033568951439733,
+          "rce_db": 1.3033568951439733,
           "impedance_ohm": {
             "re": 60.52292810858485,
             "im": -43.79965603535679
@@ -585,9 +585,9 @@
         },
         {
           "depth_lambda": 0.05,
-          "vertical_field_v2_per_m2_w": 4.194296994439983e-10,
-          "absolute_delta_from_published_reference_db": 1.3298188756046325,
-          "rce_db": 1.3298188756046325,
+          "vertical_field_v2_per_m2_w": 4.1942697308315114e-10,
+          "absolute_delta_from_published_reference_db": 1.329790645669522,
+          "rce_db": 1.329790645669522,
           "impedance_ohm": {
             "re": 60.5028266046546,
             "im": -32.59972041745251
@@ -595,9 +595,9 @@
         },
         {
           "depth_lambda": 0.055,
-          "vertical_field_v2_per_m2_w": 4.2030286408776576e-10,
-          "absolute_delta_from_published_reference_db": 1.3388505778326667,
-          "rce_db": 1.3388505778326667,
+          "vertical_field_v2_per_m2_w": 4.203001392789304e-10,
+          "absolute_delta_from_published_reference_db": 1.338822422581337,
+          "rce_db": 1.338822422581337,
           "impedance_ohm": {
             "re": 60.71682363729614,
             "im": -22.408377040119547
@@ -605,9 +605,9 @@
         },
         {
           "depth_lambda": 0.06,
-          "vertical_field_v2_per_m2_w": 4.195819359586692e-10,
-          "absolute_delta_from_published_reference_db": 1.3313949080743037,
-          "rce_db": 1.3313949080743037,
+          "vertical_field_v2_per_m2_w": 4.1957922288103347e-10,
+          "absolute_delta_from_published_reference_db": 1.331366825872601,
+          "rce_db": 1.331366825872601,
           "impedance_ohm": {
             "re": 61.15611431914044,
             "im": -12.918311920939422
@@ -615,9 +615,9 @@
         },
         {
           "depth_lambda": 0.065,
-          "vertical_field_v2_per_m2_w": 4.1727912070544355e-10,
-          "absolute_delta_from_published_reference_db": 1.3074936290358463,
-          "rce_db": 1.3074936290358463,
+          "vertical_field_v2_per_m2_w": 4.1727642939582475e-10,
+          "absolute_delta_from_published_reference_db": 1.3074656184159086,
+          "rce_db": 1.3074656184159086,
           "impedance_ohm": {
             "re": 61.826031122157225,
             "im": -3.8964418837296435
@@ -625,9 +625,9 @@
         },
         {
           "depth_lambda": 0.07,
-          "vertical_field_v2_per_m2_w": 4.1335160635508375e-10,
-          "absolute_delta_from_published_reference_db": 1.2664233804605363,
-          "rce_db": 1.2664233804605363,
+          "vertical_field_v2_per_m2_w": 4.133489470575983e-10,
+          "absolute_delta_from_published_reference_db": 1.2663954400359434,
+          "rce_db": 1.2663954400359434,
           "impedance_ohm": {
             "re": 62.74507181477672,
             "im": 4.844563043477958
@@ -635,9 +635,9 @@
         },
         {
           "depth_lambda": 0.075,
-          "vertical_field_v2_per_m2_w": 4.0770672466162137e-10,
-          "absolute_delta_from_published_reference_db": 1.206705830441601,
-          "rce_db": 1.206705830441601,
+          "vertical_field_v2_per_m2_w": 4.077041081388228e-10,
+          "absolute_delta_from_published_reference_db": 1.2066779588125398,
+          "rce_db": 1.2066779588125398,
           "impedance_ohm": {
             "re": 63.9458744664955,
             "im": 13.464799054087468
@@ -645,9 +645,9 @@
         },
         {
           "depth_lambda": 0.08,
-          "vertical_field_v2_per_m2_w": 4.0020373330402385e-10,
-          "absolute_delta_from_published_reference_db": 1.1260384397526069,
-          "rce_db": 1.1260384397526069,
+          "vertical_field_v2_per_m2_w": 4.002011711312454e-10,
+          "absolute_delta_from_published_reference_db": 1.1260106353877606,
+          "rce_db": 1.1260106353877606,
           "impedance_ohm": {
             "re": 65.47808074158878,
             "im": 22.11014024332921
@@ -655,9 +655,9 @@
         },
         {
           "depth_lambda": 0.085,
-          "vertical_field_v2_per_m2_w": 3.90653685248119e-10,
-          "absolute_delta_from_published_reference_db": 1.0211463393664726,
-          "rce_db": 1.0211463393664726,
+          "vertical_field_v2_per_m2_w": 3.9065119010277064e-10,
+          "absolute_delta_from_published_reference_db": 1.0211186004417456,
+          "rce_db": 1.0211186004417456,
           "impedance_ohm": {
             "re": 67.41351104846649,
             "im": 30.922253472206247
@@ -665,9 +665,9 @@
         },
         {
           "depth_lambda": 0.09,
-          "vertical_field_v2_per_m2_w": 3.788187982553227e-10,
-          "absolute_delta_from_published_reference_db": 0.8875423034649915,
-          "rce_db": 0.8875423034649915,
+          "vertical_field_v2_per_m2_w": 3.7881638420340193e-10,
+          "absolute_delta_from_published_reference_db": 0.8875146276270018,
+          "rce_db": 0.8875146276270018,
           "impedance_ohm": {
             "re": 69.85462772249473,
             "im": 40.047077855829826
@@ -675,9 +675,9 @@
         },
         {
           "depth_lambda": 0.095,
-          "vertical_field_v2_per_m2_w": 3.644134896530499e-10,
-          "absolute_delta_from_published_reference_db": 0.7191715340303608,
-          "rce_db": 0.7191715340303608,
+          "vertical_field_v2_per_m2_w": 3.644111724209937e-10,
+          "absolute_delta_from_published_reference_db": 0.7191439180303076,
+          "rce_db": 0.7191439180303076,
           "impedance_ohm": {
             "re": 72.9480400239075,
             "im": 49.64252816200212
@@ -685,9 +685,9 @@
         },
         {
           "depth_lambda": 0.1,
-          "vertical_field_v2_per_m2_w": 3.4711044619596334e-10,
-          "absolute_delta_from_published_reference_db": 0.5079039218056656,
-          "rce_db": 0.5079039218056656,
+          "vertical_field_v2_per_m2_w": 3.471082433944995e-10,
+          "absolute_delta_from_published_reference_db": 0.5078763609077862,
+          "rce_db": 0.5078763609077862,
           "impedance_ohm": {
             "re": 76.9061679449579,
             "im": 59.88552083087616
@@ -695,9 +695,9 @@
         },
         {
           "depth_lambda": 0.105,
-          "vertical_field_v2_per_m2_w": 3.265572444381382e-10,
-          "absolute_delta_from_published_reference_db": 0.24282031051387654,
-          "rce_db": 0.24282031051387654,
+          "vertical_field_v2_per_m2_w": 3.265551756702731e-10,
+          "absolute_delta_from_published_reference_db": 0.2427927975026252,
+          "rce_db": 0.2427927975026252,
           "impedance_ohm": {
             "re": 82.04260234770743,
             "im": 70.97719726245529
@@ -705,9 +705,9 @@
         },
         {
           "depth_lambda": 0.11,
-          "vertical_field_v2_per_m2_w": 3.024126957163987e-10,
-          "absolute_delta_from_published_reference_db": -0.09077272149879917,
-          "rce_db": -0.09077272149879917,
+          "vertical_field_v2_per_m2_w": 3.0241078244516523e-10,
+          "absolute_delta_from_published_reference_db": -0.09080019804920064,
+          "rce_db": -0.09080019804920064,
           "impedance_ohm": {
             "re": 88.83102609536705,
             "im": 83.14226479071435
@@ -715,9 +715,9 @@
         },
         {
           "depth_lambda": 0.115,
-          "vertical_field_v2_per_m2_w": 2.7441684666616517e-10,
-          "absolute_delta_from_published_reference_db": -0.5126652213055445,
-          "rce_db": -0.5126652213055445,
+          "vertical_field_v2_per_m2_w": 2.744151116333844e-10,
+          "absolute_delta_from_published_reference_db": -0.5126926801716409,
+          "rce_db": -0.5126926801716409,
           "impedance_ohm": {
             "re": 98.00538877051274,
             "im": 96.61072840343607
@@ -725,9 +725,9 @@
         },
         {
           "depth_lambda": 0.12,
-          "vertical_field_v2_per_m2_w": 2.4251372843610384e-10,
-          "absolute_delta_from_published_reference_db": -1.0494096309537264,
-          "rce_db": -1.0494096309537264,
+          "vertical_field_v2_per_m2_w": 2.4251219431040256e-10,
+          "absolute_delta_from_published_reference_db": -1.0494371042204276,
+          "rce_db": -1.0494371042204276,
           "impedance_ohm": {
             "re": 110.73207094559586,
             "im": 111.54968278627099
@@ -735,9 +735,9 @@
         },
         {
           "depth_lambda": 0.125,
-          "vertical_field_v2_per_m2_w": 2.0704715936878697e-10,
-          "absolute_delta_from_published_reference_db": -1.7360801518764755,
-          "rce_db": -1.7360801518764755,
+          "vertical_field_v2_per_m2_w": 2.0704584618656637e-10,
+          "absolute_delta_from_published_reference_db": -1.7361076967895508,
+          "rce_db": -1.7361076967895508,
           "impedance_ohm": {
             "re": 128.90081840532943,
             "im": 127.8565169772263
@@ -745,9 +745,9 @@
         },
         {
           "depth_lambda": 0.13,
-          "vertical_field_v2_per_m2_w": 1.6903651437699688e-10,
-          "absolute_delta_from_published_reference_db": -2.616967629107554,
-          "rce_db": -2.616967629107554,
+          "vertical_field_v2_per_m2_w": 1.6903543531693136e-10,
+          "absolute_delta_from_published_reference_db": -2.6169953527819096,
+          "rce_db": -2.6169953527819096,
           "impedance_ohm": {
             "re": 155.56817527863583,
             "im": 144.57220009517974
@@ -755,9 +755,9 @@
         },
         {
           "depth_lambda": 0.135,
-          "vertical_field_v2_per_m2_w": 1.304913381210401e-10,
-          "absolute_delta_from_published_reference_db": -3.740956070475201,
-          "rce_db": -3.740956070475201,
+          "vertical_field_v2_per_m2_w": 1.3049049343402746e-10,
+          "absolute_delta_from_published_reference_db": -3.740984182999842,
+          "rce_db": -3.740984182999842,
           "impedance_ohm": {
             "re": 195.3564985131706,
             "im": 158.2985339118906
@@ -765,9 +765,9 @@
         },
         {
           "depth_lambda": 0.14,
-          "vertical_field_v2_per_m2_w": 9.462658661515611e-11,
-          "absolute_delta_from_published_reference_db": -5.1366411722763905,
-          "rce_db": -5.1366411722763905,
+          "vertical_field_v2_per_m2_w": 9.462595640731958e-11,
+          "absolute_delta_from_published_reference_db": -5.136670096145152,
+          "rce_db": -5.136670096145152,
           "impedance_ohm": {
             "re": 253.32637917319556,
             "im": 159.46400105832774
@@ -775,9 +775,9 @@
         },
         {
           "depth_lambda": 0.145,
-          "vertical_field_v2_per_m2_w": 6.571826652768029e-11,
-          "absolute_delta_from_published_reference_db": -6.719911922779084,
-          "rce_db": -6.719911922779084,
+          "vertical_field_v2_per_m2_w": 6.571780468362946e-11,
+          "absolute_delta_from_published_reference_db": -6.719942443521363,
+          "rce_db": -6.719942443521363,
           "impedance_ohm": {
             "re": 326.54210584787677,
             "im": 127.33389536763471
@@ -785,9 +785,9 @@
         },
         {
           "depth_lambda": 0.15,
-          "vertical_field_v2_per_m2_w": 4.832316805510859e-11,
-          "absolute_delta_from_published_reference_db": -8.055218928769843,
-          "rce_db": -8.055218928769843,
+          "vertical_field_v2_per_m2_w": 4.832280119368795e-11,
+          "absolute_delta_from_published_reference_db": -8.055251899806679,
+          "rce_db": -8.055251899806679,
           "impedance_ohm": {
             "re": 382.69973542474577,
             "im": 41.0569062768218
@@ -795,9 +795,9 @@
         },
         {
           "depth_lambda": 0.155,
-          "vertical_field_v2_per_m2_w": 4.5879881579184204e-11,
-          "absolute_delta_from_published_reference_db": -8.280550033929082,
-          "rce_db": -8.280550033929082,
+          "vertical_field_v2_per_m2_w": 4.5879516649334305e-11,
+          "absolute_delta_from_published_reference_db": -8.280584577969943,
+          "rce_db": -8.280584577969943,
           "impedance_ohm": {
             "re": 370.3197148844681,
             "im": -70.46149200913912
@@ -805,9 +805,9 @@
         },
         {
           "depth_lambda": 0.16,
-          "vertical_field_v2_per_m2_w": 5.928997235651248e-11,
-          "absolute_delta_from_published_reference_db": -7.16696043805105,
-          "rce_db": -7.16696043805105,
+          "vertical_field_v2_per_m2_w": 5.928951265638892e-11,
+          "absolute_delta_from_published_reference_db": -7.1669941108616495,
+          "rce_db": -7.1669941108616495,
           "impedance_ohm": {
             "re": 300.1724639979782,
             "im": -140.4166015868187
@@ -815,9 +815,9 @@
         },
         {
           "depth_lambda": 0.165,
-          "vertical_field_v2_per_m2_w": 8.640523972847042e-11,
-          "absolute_delta_from_published_reference_db": -5.5313721219218115,
-          "rce_db": -5.5313721219218115,
+          "vertical_field_v2_per_m2_w": 8.640460351905397e-11,
+          "absolute_delta_from_published_reference_db": -5.531404099526062,
+          "rce_db": -5.531404099526062,
           "impedance_ohm": {
             "re": 226.8406559223092,
             "im": -157.41692029605025
@@ -825,9 +825,9 @@
         },
         {
           "depth_lambda": 0.17,
-          "vertical_field_v2_per_m2_w": 1.2283831361919922e-10,
-          "absolute_delta_from_published_reference_db": -4.003434460459024,
-          "rce_db": -4.003434460459024,
+          "vertical_field_v2_per_m2_w": 1.2283744724930148e-10,
+          "absolute_delta_from_published_reference_db": -4.003465091048265,
+          "rce_db": -4.003465091048265,
           "impedance_ohm": {
             "re": 173.50303145192763,
             "im": -147.46823262746815
@@ -835,9 +835,9 @@
         },
         {
           "depth_lambda": 0.17500000000000002,
-          "vertical_field_v2_per_m2_w": 1.635395027168678e-10,
-          "absolute_delta_from_published_reference_db": -2.760546188275836,
-          "rce_db": -2.760546188275836,
+          "vertical_field_v2_per_m2_w": 1.6353838387748065e-10,
+          "absolute_delta_from_published_reference_db": -2.7605759002063506,
+          "rce_db": -2.7605759002063506,
           "impedance_ohm": {
             "re": 138.56492447996018,
             "im": -129.1441793423527
@@ -845,9 +845,9 @@
         },
         {
           "depth_lambda": 0.18,
-          "vertical_field_v2_per_m2_w": 2.0417354979752343e-10,
-          "absolute_delta_from_published_reference_db": -1.796778120960443,
-          "rce_db": -1.796778120960443,
+          "vertical_field_v2_per_m2_w": 2.0417218247372516e-10,
+          "absolute_delta_from_published_reference_db": -1.7968072051963555,
+          "rce_db": -1.7968072051963555,
           "impedance_ohm": {
             "re": 115.99100831198263,
             "im": -109.96092080320922
@@ -855,9 +855,9 @@
         },
         {
           "depth_lambda": 0.185,
-          "vertical_field_v2_per_m2_w": 2.41761185002647e-10,
-          "absolute_delta_from_published_reference_db": -1.0629071595080766,
-          "rce_db": -1.0629071595080766,
+          "vertical_field_v2_per_m2_w": 2.4175959078877124e-10,
+          "absolute_delta_from_published_reference_db": -1.0629357977103577,
+          "rce_db": -1.0629357977103577,
           "impedance_ohm": {
             "re": 101.19133968107839,
             "im": -92.24502020047392
@@ -865,9 +865,9 @@
         },
         {
           "depth_lambda": 0.19,
-          "vertical_field_v2_per_m2_w": 2.7466292545454305e-10,
-          "absolute_delta_from_published_reference_db": -0.5087725021602639,
-          "rce_db": -0.5087725021602639,
+          "vertical_field_v2_per_m2_w": 2.7466113523785093e-10,
+          "absolute_delta_from_published_reference_db": -0.5088008089935682,
+          "rce_db": -0.5088008089935682,
           "impedance_ohm": {
             "re": 91.30344163623701,
             "im": -76.44720808994371
@@ -875,9 +875,9 @@
         },
         {
           "depth_lambda": 0.195,
-          "vertical_field_v2_per_m2_w": 3.0224213477692653e-10,
-          "absolute_delta_from_published_reference_db": -0.09322283594658148,
-          "rce_db": -0.09322283594658148,
+          "vertical_field_v2_per_m2_w": 3.0224018265054374e-10,
+          "absolute_delta_from_published_reference_db": -0.09325088631932474,
+          "rce_db": -0.09325088631932474,
           "impedance_ohm": {
             "re": 84.60988427594003,
             "im": -62.42532690999094
@@ -885,9 +885,9 @@
         },
         {
           "depth_lambda": 0.2,
-          "vertical_field_v2_per_m2_w": 3.24482528063505e-10,
-          "absolute_delta_from_published_reference_db": 0.2151402528195505,
-          "rce_db": 0.2151402528195505,
+          "vertical_field_v2_per_m2_w": 3.2448044765034626e-10,
+          "absolute_delta_from_published_reference_db": 0.2151124080275132,
+          "rce_db": 0.2151124080275132,
           "impedance_ohm": {
             "re": 80.07395122029453,
             "im": -49.88960503882552
@@ -904,9 +904,9 @@
       "expected_quarter_ground_wavelength_lambda": 0.07195602497125371,
       "measured_peak": {
         "depth_lambda": 0.07,
-        "vertical_field_v2_per_m2_w": 1.2125240252836593e-10,
-        "absolute_delta_from_published_reference_db": -3.744940829807061,
-        "rce_db": -3.744940829807061,
+        "vertical_field_v2_per_m2_w": 1.212499568127567e-10,
+        "absolute_delta_from_published_reference_db": -3.7450284298449588,
+        "rce_db": -3.7450284298449588,
         "impedance_ohm": {
           "re": 37.54845106146204,
           "im": -480.73062017079405
@@ -914,9 +914,9 @@
       },
       "measured_minimum_excluding_zero": {
         "depth_lambda": 0.005,
-        "vertical_field_v2_per_m2_w": 1.7745159084894077e-11,
-        "absolute_delta_from_published_reference_db": -12.09104538430356,
-        "rce_db": -12.09104538430356,
+        "vertical_field_v2_per_m2_w": 1.7744784404222192e-11,
+        "absolute_delta_from_published_reference_db": -12.09113708450496,
+        "rce_db": -12.09113708450496,
         "impedance_ohm": {
           "re": 233.1502576915996,
           "im": -689.087516144532
@@ -925,9 +925,9 @@
       "samples": [
         {
           "depth_lambda": 0.0,
-          "vertical_field_v2_per_m2_w": 1.904981292003456e-11,
-          "absolute_delta_from_published_reference_db": -11.782937205557698,
-          "rce_db": -11.782937205557698,
+          "vertical_field_v2_per_m2_w": 1.9049827127170426e-11,
+          "absolute_delta_from_published_reference_db": -11.782933966639586,
+          "rce_db": -11.782933966639586,
           "impedance_ohm": {
             "re": 295.7638159248272,
             "im": -14210.554308038192
@@ -935,9 +935,9 @@
         },
         {
           "depth_lambda": 0.005,
-          "vertical_field_v2_per_m2_w": 1.7745159084894077e-11,
-          "absolute_delta_from_published_reference_db": -12.09104538430356,
-          "rce_db": -12.09104538430356,
+          "vertical_field_v2_per_m2_w": 1.7744784404222192e-11,
+          "absolute_delta_from_published_reference_db": -12.09113708450496,
+          "rce_db": -12.09113708450496,
           "impedance_ohm": {
             "re": 233.1502576915996,
             "im": -689.087516144532
@@ -945,9 +945,9 @@
         },
         {
           "depth_lambda": 0.01,
-          "vertical_field_v2_per_m2_w": 2.974032367530704e-11,
-          "absolute_delta_from_published_reference_db": -9.848387447658059,
-          "rce_db": -9.848387447658059,
+          "vertical_field_v2_per_m2_w": 2.973969801382512e-11,
+          "absolute_delta_from_published_reference_db": -9.848478813236424,
+          "rce_db": -9.848478813236424,
           "impedance_ohm": {
             "re": 140.45675706310286,
             "im": -609.8772537101239
@@ -955,9 +955,9 @@
         },
         {
           "depth_lambda": 0.015,
-          "vertical_field_v2_per_m2_w": 4.1000569240544574e-11,
-          "absolute_delta_from_published_reference_db": -8.453945491844,
-          "rce_db": -8.453945491844,
+          "vertical_field_v2_per_m2_w": 4.0999710061478623e-11,
+          "absolute_delta_from_published_reference_db": -8.454036500491895,
+          "rce_db": -8.454036500491895,
           "impedance_ohm": {
             "re": 102.76060724190927,
             "im": -575.2295947372941
@@ -965,9 +965,9 @@
         },
         {
           "depth_lambda": 0.02,
-          "vertical_field_v2_per_m2_w": 5.187178782376535e-11,
-          "absolute_delta_from_published_reference_db": -7.432532188353003,
-          "rce_db": -7.432532188353003,
+          "vertical_field_v2_per_m2_w": 5.18707049967822e-11,
+          "absolute_delta_from_published_reference_db": -7.4326228485580685,
+          "rce_db": -7.4326228485580685,
           "impedance_ohm": {
             "re": 81.88167414827687,
             "im": -554.6058494940891
@@ -975,9 +975,9 @@
         },
         {
           "depth_lambda": 0.025,
-          "vertical_field_v2_per_m2_w": 6.242799055323044e-11,
-          "absolute_delta_from_published_reference_db": -6.628050795864144,
-          "rce_db": -6.628050795864144,
+          "vertical_field_v2_per_m2_w": 6.242669225901189e-11,
+          "absolute_delta_from_published_reference_db": -6.6281411155866135,
+          "rce_db": -6.6281411155866135,
           "impedance_ohm": {
             "re": 68.56658338957011,
             "im": -540.3384286914985
@@ -985,9 +985,9 @@
         },
         {
           "depth_lambda": 0.03,
-          "vertical_field_v2_per_m2_w": 7.264473045458802e-11,
-          "absolute_delta_from_published_reference_db": -5.969803188976273,
-          "rce_db": -5.969803188976273,
+          "vertical_field_v2_per_m2_w": 7.264322528267777e-11,
+          "absolute_delta_from_published_reference_db": -5.9698931741167005,
+          "rce_db": -5.9698931741167005,
           "impedance_ohm": {
             "re": 59.372401995140216,
             "im": -529.5009754108331
@@ -995,9 +995,9 @@
         },
         {
           "depth_lambda": 0.035,
-          "vertical_field_v2_per_m2_w": 8.243062566696746e-11,
-          "absolute_delta_from_published_reference_db": -5.420958393213647,
-          "rce_db": -5.420958393213647,
+          "vertical_field_v2_per_m2_w": 8.242892399447382e-11,
+          "absolute_delta_from_published_reference_db": -5.421048048556699,
+          "rce_db": -5.421048048556699,
           "impedance_ohm": {
             "re": 52.71612333400764,
             "im": -520.7191380127011
@@ -1005,9 +1005,9 @@
         },
         {
           "depth_lambda": 0.04,
-          "vertical_field_v2_per_m2_w": 9.163568172324189e-11,
-          "absolute_delta_from_published_reference_db": -4.961198204387095,
-          "rce_db": -4.961198204387095,
+          "vertical_field_v2_per_m2_w": 9.163379688319382e-11,
+          "absolute_delta_from_published_reference_db": -4.9612875346605705,
+          "rce_db": -4.9612875346605705,
           "impedance_ohm": {
             "re": 47.77094354451138,
             "im": -513.2580710531433
@@ -1015,9 +1015,9 @@
         },
         {
           "depth_lambda": 0.045,
-          "vertical_field_v2_per_m2_w": 1.0005553317263394e-10,
-          "absolute_delta_from_published_reference_db": -4.5794332500786545,
-          "rce_db": -4.5794332500786545,
+          "vertical_field_v2_per_m2_w": 1.0005348250495004e-10,
+          "absolute_delta_from_published_reference_db": -4.5795222609267014,
+          "rce_db": -4.5795222609267014,
           "impedance_ohm": {
             "re": 44.06874498853621,
             "im": -506.68906316540483
@@ -1025,9 +1025,9 @@
         },
         {
           "depth_lambda": 0.05,
-          "vertical_field_v2_per_m2_w": 1.0743937426702349e-10,
-          "absolute_delta_from_published_reference_db": -4.270209652577999,
-          "rce_db": -4.270209652577999,
+          "vertical_field_v2_per_m2_w": 1.0743717998177558e-10,
+          "absolute_delta_from_published_reference_db": -4.270298351503598,
+          "rce_db": -4.270298351503598,
           "impedance_ohm": {
             "re": 41.331528592361295,
             "im": -500.7472848764334
@@ -1035,9 +1035,9 @@
         },
         {
           "depth_lambda": 0.055,
-          "vertical_field_v2_per_m2_w": 1.1350673089087656e-10,
-          "absolute_delta_from_published_reference_db": -4.031628198376633,
-          "rce_db": -4.031628198376633,
+          "vertical_field_v2_per_m2_w": 1.1350442057095618e-10,
+          "absolute_delta_from_published_reference_db": -4.031716595725082,
+          "rce_db": -4.031716595725082,
           "impedance_ohm": {
             "re": 39.39108398112106,
             "im": -495.2644763164858
@@ -1045,9 +1045,9 @@
         },
         {
           "depth_lambda": 0.06,
-          "vertical_field_v2_per_m2_w": 1.1797648846512268e-10,
-          "absolute_delta_from_published_reference_db": -3.8638897019005976,
-          "rce_db": -3.8638897019005976,
+          "vertical_field_v2_per_m2_w": 1.1797409497226052e-10,
+          "absolute_delta_from_published_reference_db": -3.863977811938504,
+          "rce_db": -3.863977811938504,
           "impedance_ohm": {
             "re": 38.146955718635205,
             "im": -490.13501108356587
@@ -1055,9 +1055,9 @@
         },
         {
           "depth_lambda": 0.065,
-          "vertical_field_v2_per_m2_w": 1.2060843482655761e-10,
-          "absolute_delta_from_published_reference_db": -3.7680675404695316,
-          "rce_db": -3.7680675404695316,
+          "vertical_field_v2_per_m2_w": 1.2060599537734013e-10,
+          "absolute_delta_from_published_reference_db": -3.7681553825885277,
+          "rce_db": -3.7681553825885277,
           "impedance_ohm": {
             "re": 37.5423286075378,
             "im": -485.2984106836579
@@ -1065,9 +1065,9 @@
         },
         {
           "depth_lambda": 0.07,
-          "vertical_field_v2_per_m2_w": 1.2125240252836593e-10,
-          "absolute_delta_from_published_reference_db": -3.744940829807061,
-          "rce_db": -3.744940829807061,
+          "vertical_field_v2_per_m2_w": 1.212499568127567e-10,
+          "absolute_delta_from_published_reference_db": -3.7450284298449588,
+          "rce_db": -3.7450284298449588,
           "impedance_ohm": {
             "re": 37.54845106146204,
             "im": -480.73062017079405
@@ -1075,9 +1075,9 @@
         },
         {
           "depth_lambda": 0.075,
-          "vertical_field_v2_per_m2_w": 1.1989409538573193e-10,
-          "absolute_delta_from_published_reference_db": -3.7938664033245195,
-          "rce_db": -3.7938664033245195,
+          "vertical_field_v2_per_m2_w": 1.198916828215113e-10,
+          "absolute_delta_from_published_reference_db": -3.7939537949401627,
+          "rce_db": -3.7939537949401627,
           "impedance_ohm": {
             "re": 38.15272540189349,
             "im": -476.44006755062685
@@ -1085,9 +1085,9 @@
         },
         {
           "depth_lambda": 0.08,
-          "vertical_field_v2_per_m2_w": 1.166829901802041e-10,
-          "absolute_delta_from_published_reference_db": -3.911768855171837,
-          "rce_db": -3.911768855171837,
+          "vertical_field_v2_per_m2_w": 1.166806466821819e-10,
+          "absolute_delta_from_published_reference_db": -3.9118560811229837,
+          "rce_db": -3.9118560811229837,
           "impedance_ohm": {
             "re": 39.34763146269897,
             "im": -472.46596411716877
@@ -1095,9 +1095,9 @@
         },
         {
           "depth_lambda": 0.085,
-          "vertical_field_v2_per_m2_w": 1.1192996232496019e-10,
-          "absolute_delta_from_published_reference_db": -4.092380779909974,
-          "rce_db": -4.092380779909974,
+          "vertical_field_v2_per_m2_w": 1.119277171979798e-10,
+          "absolute_delta_from_published_reference_db": -4.092467892959736,
+          "rce_db": -4.092467892959736,
           "impedance_ohm": {
             "re": 41.118767275038884,
             "im": -468.87668383363473
@@ -1105,9 +1105,9 @@
         },
         {
           "depth_lambda": 0.09,
-          "vertical_field_v2_per_m2_w": 1.0607188608599034e-10,
-          "absolute_delta_from_published_reference_db": -4.325841443705593,
-          "rce_db": -4.325841443705593,
+          "vertical_field_v2_per_m2_w": 1.0606975968418346e-10,
+          "absolute_delta_from_published_reference_db": -4.3259285067212225,
+          "rce_db": -4.3259285067212225,
           "impedance_ohm": {
             "re": 43.431080970439304,
             "im": -465.7660581655416
@@ -1115,9 +1115,9 @@
         },
         {
           "depth_lambda": 0.095,
-          "vertical_field_v2_per_m2_w": 9.961692373071811e-11,
-          "absolute_delta_from_published_reference_db": -4.598513094106213,
-          "rce_db": -4.598513094106213,
+          "vertical_field_v2_per_m2_w": 9.961492623570777e-11,
+          "absolute_delta_from_published_reference_db": -4.5986001786823785,
+          "rce_db": -4.5986001786823785,
           "impedance_ohm": {
             "re": 46.211583343452666,
             "im": -463.24640243851456
@@ -1125,9 +1125,9 @@
         },
         {
           "depth_lambda": 0.1,
-          "vertical_field_v2_per_m2_w": 9.320393348585144e-11,
-          "absolute_delta_from_published_reference_db": -4.887501942983424,
-          "rce_db": -4.887501942983424,
+          "vertical_field_v2_per_m2_w": 9.320206255276595e-11,
+          "absolute_delta_from_published_reference_db": -4.887589122144217,
+          "rce_db": -4.887589122144217,
           "impedance_ohm": {
             "re": 49.27159270226285,
             "im": -461.4586621123081
@@ -1135,9 +1135,9 @@
         },
         {
           "depth_lambda": 0.105,
-          "vertical_field_v2_per_m2_w": 8.698313572616844e-11,
-          "absolute_delta_from_published_reference_db": -5.18749375721923,
-          "rce_db": -5.18749375721923,
+          "vertical_field_v2_per_m2_w": 8.698138621854894e-11,
+          "absolute_delta_from_published_reference_db": -5.1875811085362376,
+          "rce_db": -5.1875811085362376,
           "impedance_ohm": {
             "re": 52.57381642366032,
             "im": -460.4147662875101
@@ -1145,9 +1145,9 @@
         },
         {
           "depth_lambda": 0.11,
-          "vertical_field_v2_per_m2_w": 8.121547129561495e-11,
-          "absolute_delta_from_published_reference_db": -5.485456666949849,
-          "rce_db": -5.485456666949849,
+          "vertical_field_v2_per_m2_w": 8.121383313262358e-11,
+          "absolute_delta_from_published_reference_db": -5.485544267540165,
+          "rce_db": -5.485544267540165,
           "impedance_ohm": {
             "re": 55.97407266808745,
             "im": -460.164312756662
@@ -1155,9 +1155,9 @@
         },
         {
           "depth_lambda": 0.115,
-          "vertical_field_v2_per_m2_w": 7.62685850074784e-11,
-          "absolute_delta_from_published_reference_db": -5.758387464667799,
-          "rce_db": -5.758387464667799,
+          "vertical_field_v2_per_m2_w": 7.626704122347339e-11,
+          "absolute_delta_from_published_reference_db": -5.758475372901596,
+          "rce_db": -5.758475372901596,
           "impedance_ohm": {
             "re": 59.17760406062265,
             "im": -460.7185125752587
@@ -1165,9 +1165,9 @@
         },
         {
           "depth_lambda": 0.12,
-          "vertical_field_v2_per_m2_w": 7.225313029513683e-11,
-          "absolute_delta_from_published_reference_db": -5.993277683568277,
-          "rce_db": -5.993277683568277,
+          "vertical_field_v2_per_m2_w": 7.225166207844514e-11,
+          "absolute_delta_from_published_reference_db": -5.993365935092254,
+          "rce_db": -5.993365935092254,
           "impedance_ohm": {
             "re": 61.97566077016153,
             "im": -461.9777327645878
@@ -1175,9 +1175,9 @@
         },
         {
           "depth_lambda": 0.125,
-          "vertical_field_v2_per_m2_w": 6.919183049931026e-11,
-          "absolute_delta_from_published_reference_db": -6.181296153695182,
-          "rce_db": -6.181296153695182,
+          "vertical_field_v2_per_m2_w": 6.919041889281335e-11,
+          "absolute_delta_from_published_reference_db": -6.181384756520318,
+          "rce_db": -6.181384756520318,
           "impedance_ohm": {
             "re": 64.20593462734821,
             "im": -463.7753978731468
@@ -1185,9 +1185,9 @@
         },
         {
           "depth_lambda": 0.13,
-          "vertical_field_v2_per_m2_w": 6.704372126875763e-11,
-          "absolute_delta_from_published_reference_db": -6.3182632371840874,
-          "rce_db": -6.3182632371840874,
+          "vertical_field_v2_per_m2_w": 6.704234837587456e-11,
+          "absolute_delta_from_published_reference_db": -6.31835217107632,
+          "rce_db": -6.31835217107632,
           "impedance_ohm": {
             "re": 65.77721324638233,
             "im": -465.9043472853304
@@ -1195,9 +1195,9 @@
         },
         {
           "depth_lambda": 0.135,
-          "vertical_field_v2_per_m2_w": 6.572628082968751e-11,
-          "absolute_delta_from_published_reference_db": -6.404453774697547,
-          "rce_db": -6.404453774697547,
+          "vertical_field_v2_per_m2_w": 6.572493057784692e-11,
+          "absolute_delta_from_published_reference_db": -6.404542995164562,
+          "rce_db": -6.404542995164562,
           "impedance_ohm": {
             "re": 66.6767246203498,
             "im": -468.15149481556193
@@ -1205,9 +1205,9 @@
         },
         {
           "depth_lambda": 0.14,
-          "vertical_field_v2_per_m2_w": 6.513313172974443e-11,
-          "absolute_delta_from_published_reference_db": -6.443824751568387,
-          "rce_db": -6.443824751568387,
+          "vertical_field_v2_per_m2_w": 6.513179028585798e-11,
+          "absolute_delta_from_published_reference_db": -6.443914197240894,
+          "rce_db": -6.443914197240894,
           "impedance_ohm": {
             "re": 66.95983530179542,
             "im": -470.32922853093646
@@ -1215,9 +1215,9 @@
         },
         {
           "depth_lambda": 0.145,
-          "vertical_field_v2_per_m2_w": 6.514702652302717e-11,
-          "absolute_delta_from_published_reference_db": -6.442898373806233,
-          "rce_db": -6.442898373806233,
+          "vertical_field_v2_per_m2_w": 6.514568245787147e-11,
+          "absolute_delta_from_published_reference_db": -6.442987975148476,
+          "rce_db": -6.442987975148476,
           "impedance_ohm": {
             "re": 66.72832775576732,
             "im": -472.2953443397548
@@ -1225,9 +1225,9 @@
         },
         {
           "depth_lambda": 0.15,
-          "vertical_field_v2_per_m2_w": 6.56487117734447e-11,
-          "absolute_delta_from_published_reference_db": -6.409582272342332,
-          "rce_db": -6.409582272342332,
+          "vertical_field_v2_per_m2_w": 6.564735605778843e-11,
+          "absolute_delta_from_published_reference_db": -6.40967195969372,
+          "rce_db": -6.40967195969372,
           "impedance_ohm": {
             "re": 66.10591932551924,
             "im": -473.9593959696602
@@ -1235,9 +1235,9 @@
         },
         {
           "depth_lambda": 0.155,
-          "vertical_field_v2_per_m2_w": 6.652263146234148e-11,
-          "absolute_delta_from_published_reference_db": -6.352150151224465,
-          "rce_db": -6.352150151224465,
+          "vertical_field_v2_per_m2_w": 6.652125735732559e-11,
+          "absolute_delta_from_published_reference_db": -6.352239860903169,
+          "rce_db": -6.352239860903169,
           "impedance_ohm": {
             "re": 65.21773758588125,
             "im": -475.27837751785
@@ -1245,9 +1245,9 @@
         },
         {
           "depth_lambda": 0.16,
-          "vertical_field_v2_per_m2_w": 6.766043682397102e-11,
-          "absolute_delta_from_published_reference_db": -6.278496382514996,
-          "rce_db": -6.278496382514996,
+          "vertical_field_v2_per_m2_w": 6.765903970854553e-11,
+          "absolute_delta_from_published_reference_db": -6.2785860605917145,
+          "rce_db": -6.2785860605917145,
           "impedance_ohm": {
             "re": 64.17673278560653,
             "im": -476.2466532656698
@@ -1255,9 +1255,9 @@
         },
         {
           "depth_lambda": 0.165,
-          "vertical_field_v2_per_m2_w": 6.896310177597968e-11,
-          "absolute_delta_from_published_reference_db": -6.1956764890938505,
-          "rce_db": -6.1956764890938505,
+          "vertical_field_v2_per_m2_w": 6.896167893828322e-11,
+          "absolute_delta_from_published_reference_db": -6.195766093087714,
+          "rce_db": -6.195766093087714,
           "impedance_ohm": {
             "re": 63.076880481493234,
             "im": -476.88448354526577
@@ -1265,9 +1265,9 @@
         },
         {
           "depth_lambda": 0.17,
-          "vertical_field_v2_per_m2_w": 7.03422236579565e-11,
-          "absolute_delta_from_published_reference_db": -6.1096834245775264,
-          "rce_db": -6.1096834245775264,
+          "vertical_field_v2_per_m2_w": 7.034077406618897e-11,
+          "absolute_delta_from_published_reference_db": -6.109772923623731,
+          "rce_db": -6.109772923623731,
           "impedance_ohm": {
             "re": 61.991437701471405,
             "im": -477.2278343044693
@@ -1275,9 +1275,9 @@
         },
         {
           "depth_lambda": 0.17500000000000002,
-          "vertical_field_v2_per_m2_w": 7.172088031554733e-11,
-          "absolute_delta_from_published_reference_db": -6.025388240354128,
-          "rce_db": -6.025388240354128,
+          "vertical_field_v2_per_m2_w": 7.171940437676137e-11,
+          "absolute_delta_from_published_reference_db": -6.025477614419686,
+          "rce_db": -6.025477614419686,
           "impedance_ohm": {
             "re": 60.97422835750211,
             "im": -477.32056724766227
@@ -1285,9 +1285,9 @@
         },
         {
           "depth_lambda": 0.18,
-          "vertical_field_v2_per_m2_w": 7.303424126259765e-11,
-          "absolute_delta_from_published_reference_db": -5.946579137394639,
-          "rce_db": -5.946579137394639,
+          "vertical_field_v2_per_m2_w": 7.303274057411971e-11,
+          "absolute_delta_from_published_reference_db": -5.946668376005153,
+          "rce_db": -5.946668376005153,
           "impedance_ohm": {
             "re": 60.06232777318029,
             "im": -477.20906644682833
@@ -1295,9 +1295,9 @@
         },
         {
           "depth_lambda": 0.185,
-          "vertical_field_v2_per_m2_w": 7.422999973062976e-11,
-          "absolute_delta_from_published_reference_db": -5.876049765935716,
-          "rce_db": -5.876049765935716,
+          "vertical_field_v2_per_m2_w": 7.422847682761523e-11,
+          "absolute_delta_from_published_reference_db": -5.876138866725517,
+          "rce_db": -5.876138866725517,
           "impedance_ohm": {
             "re": 59.27908898433374,
             "im": -476.9388643064033
@@ -1305,9 +1305,9 @@
         },
         {
           "depth_lambda": 0.19,
-          "vertical_field_v2_per_m2_w": 7.526860424541143e-11,
-          "absolute_delta_from_published_reference_db": -5.815705728658179,
-          "rce_db": -5.815705728658179,
+          "vertical_field_v2_per_m2_w": 7.526706234846697e-11,
+          "absolute_delta_from_published_reference_db": -5.815794695924186,
+          "rce_db": -5.815794695924186,
           "impedance_ohm": {
             "re": 58.63694662896605,
             "im": -476.55270197584423
@@ -1315,9 +1315,9 @@
         },
         {
           "depth_lambda": 0.195,
-          "vertical_field_v2_per_m2_w": 7.612322061716045e-11,
-          "absolute_delta_from_published_reference_db": -5.766672814587913,
-          "rce_db": -5.766672814587913,
+          "vertical_field_v2_per_m2_w": 7.612166338523083e-11,
+          "absolute_delta_from_published_reference_db": -5.766761657932441,
+          "rce_db": -5.766761657932441,
           "impedance_ohm": {
             "re": 58.13977264513215,
             "im": -476.08951577067
@@ -1325,9 +1325,9 @@
         },
         {
           "depth_lambda": 0.2,
-          "vertical_field_v2_per_m2_w": 7.677934397924175e-11,
-          "absolute_delta_from_published_reference_db": -5.729400384871375,
-          "rce_db": -5.729400384871375,
+          "vertical_field_v2_per_m2_w": 7.677777527434995e-11,
+          "absolute_delta_from_published_reference_db": -5.72948911796061,
+          "rce_db": -5.72948911796061,
           "impedance_ohm": {
             "re": 57.78475603144089,
             "im": -475.5839626194225
@@ -1335,8 +1335,8 @@
         }
       ],
       "height_separation_db": {
-        "minimum": 5.566792086493965,
-        "maximum": 8.701772922066546
+        "minimum": 5.566850637177625,
+        "maximum": 8.701834787146854
       }
     },
     {
@@ -1348,9 +1348,9 @@
       "expected_quarter_ground_wavelength_lambda": 0.07195602497125371,
       "measured_peak": {
         "depth_lambda": 0.065,
-        "vertical_field_v2_per_m2_w": 4.3730513238017554e-10,
-        "absolute_delta_from_published_reference_db": 1.8260013885053574,
-        "rce_db": 1.8260013885053574,
+        "vertical_field_v2_per_m2_w": 4.3730220307765783e-10,
+        "absolute_delta_from_published_reference_db": 1.8259722970521377,
+        "rce_db": 1.8259722970521377,
         "impedance_ohm": {
           "re": 92.96621364228427,
           "im": 23.159367069933804
@@ -1358,9 +1358,9 @@
       },
       "measured_minimum_excluding_zero": {
         "depth_lambda": 0.005,
-        "vertical_field_v2_per_m2_w": 1.3160039394764195e-10,
-        "absolute_delta_from_published_reference_db": -3.389272462237016,
-        "rce_db": -3.389272462237016,
+        "vertical_field_v2_per_m2_w": 1.3159948988361025e-10,
+        "absolute_delta_from_published_reference_db": -3.389302297358106,
+        "rce_db": -3.389302297358106,
         "impedance_ohm": {
           "re": 292.5526873407843,
           "im": -194.10347274763242
@@ -1369,9 +1369,9 @@
       "samples": [
         {
           "depth_lambda": 0.0,
-          "vertical_field_v2_per_m2_w": 1.4011975643539064e-10,
-          "absolute_delta_from_published_reference_db": -3.1168506184080664,
-          "rce_db": -3.1168506184080664,
+          "vertical_field_v2_per_m2_w": 1.401197897184537e-10,
+          "absolute_delta_from_published_reference_db": -3.1168495868155723,
+          "rce_db": -3.1168495868155723,
           "impedance_ohm": {
             "re": 383.6352268143541,
             "im": -13500.699988640396
@@ -1379,9 +1379,9 @@
         },
         {
           "depth_lambda": 0.005,
-          "vertical_field_v2_per_m2_w": 1.3160039394764195e-10,
-          "absolute_delta_from_published_reference_db": -3.389272462237016,
-          "rce_db": -3.389272462237016,
+          "vertical_field_v2_per_m2_w": 1.3159948988361025e-10,
+          "absolute_delta_from_published_reference_db": -3.389302297358106,
+          "rce_db": -3.389302297358106,
           "impedance_ohm": {
             "re": 292.5526873407843,
             "im": -194.10347274763242
@@ -1389,9 +1389,9 @@
         },
         {
           "depth_lambda": 0.01,
-          "vertical_field_v2_per_m2_w": 1.9506723679136102e-10,
-          "absolute_delta_from_published_reference_db": -1.6800010351857133,
-          "rce_db": -1.6800010351857133,
+          "vertical_field_v2_per_m2_w": 1.950658999111738e-10,
+          "absolute_delta_from_published_reference_db": -1.6800307993679202,
+          "rce_db": -1.6800307993679202,
           "impedance_ohm": {
             "re": 198.7599396718064,
             "im": -113.00311118128404
@@ -1399,9 +1399,9 @@
         },
         {
           "depth_lambda": 0.015,
-          "vertical_field_v2_per_m2_w": 2.436034918344129e-10,
-          "absolute_delta_from_published_reference_db": -0.7150092634855276,
-          "rce_db": -0.7150092634855276,
+          "vertical_field_v2_per_m2_w": 2.4360182666185437e-10,
+          "absolute_delta_from_published_reference_db": -0.7150389501587282,
+          "rce_db": -0.7150389501587282,
           "impedance_ohm": {
             "re": 160.09150099034684,
             "im": -76.71915128252566
@@ -1409,9 +1409,9 @@
         },
         {
           "depth_lambda": 0.02,
-          "vertical_field_v2_per_m2_w": 2.8314331825482594e-10,
-          "absolute_delta_from_published_reference_db": -0.06178118166068454,
-          "rce_db": -0.06178118166068454,
+          "vertical_field_v2_per_m2_w": 2.8314138755037566e-10,
+          "absolute_delta_from_published_reference_db": -0.061810795537956896,
+          "rce_db": -0.061810795537956896,
           "impedance_ohm": {
             "re": 138.4512028288502,
             "im": -54.682452581806004
@@ -1419,9 +1419,9 @@
         },
         {
           "depth_lambda": 0.025,
-          "vertical_field_v2_per_m2_w": 3.1624907671830723e-10,
-          "absolute_delta_from_published_reference_db": 0.4184483070300379,
-          "rce_db": 0.4184483070300379,
+          "vertical_field_v2_per_m2_w": 3.162469252563401e-10,
+          "absolute_delta_from_published_reference_db": 0.4184187616081713,
+          "rce_db": 0.4184187616081713,
           "impedance_ohm": {
             "re": 124.55136531383208,
             "im": -39.166083804630894
@@ -1429,9 +1429,9 @@
         },
         {
           "depth_lambda": 0.03,
-          "vertical_field_v2_per_m2_w": 3.443113274327624e-10,
-          "absolute_delta_from_published_reference_db": 0.7876687514085887,
-          "rce_db": 0.7876687514085887,
+          "vertical_field_v2_per_m2_w": 3.44308990225384e-10,
+          "absolute_delta_from_published_reference_db": 0.7876392711204974,
+          "rce_db": 0.7876392711204974,
           "impedance_ohm": {
             "re": 114.91732768494465,
             "im": -27.19817798275246
@@ -1439,9 +1439,9 @@
         },
         {
           "depth_lambda": 0.035,
-          "vertical_field_v2_per_m2_w": 3.6814158980472756e-10,
-          "absolute_delta_from_published_reference_db": 1.0783044789757399,
-          "rce_db": 1.0783044789757399,
+          "vertical_field_v2_per_m2_w": 3.681390961378555e-10,
+          "absolute_delta_from_published_reference_db": 1.078275061233759,
+          "rce_db": 1.078275061233759,
           "impedance_ohm": {
             "re": 107.9442123660243,
             "im": -17.37378276338673
@@ -1449,9 +1449,9 @@
         },
         {
           "depth_lambda": 0.04,
-          "vertical_field_v2_per_m2_w": 3.8821523527939933e-10,
-          "absolute_delta_from_published_reference_db": 1.3088813944895255,
-          "rce_db": 1.3088813944895255,
+          "vertical_field_v2_per_m2_w": 3.882126110368934e-10,
+          "absolute_delta_from_published_reference_db": 1.3088520371179446,
+          "rce_db": 1.3088520371179446,
           "impedance_ohm": {
             "re": 102.79106983477145,
             "im": -8.937889893743739
@@ -1459,9 +1459,9 @@
         },
         {
           "depth_lambda": 0.045,
-          "vertical_field_v2_per_m2_w": 4.047927124958563e-10,
-          "absolute_delta_from_published_reference_db": 1.4904824970583417,
-          "rce_db": 1.4904824970583417,
+          "vertical_field_v2_per_m2_w": 4.0478998163056977e-10,
+          "absolute_delta_from_published_reference_db": 1.490453198019877,
+          "rce_db": 1.490453198019877,
           "impedance_ohm": {
             "re": 98.9811278558588,
             "im": -1.4488969568018377
@@ -1469,9 +1469,9 @@
         },
         {
           "depth_lambda": 0.05,
-          "vertical_field_v2_per_m2_w": 4.1799056532822563e-10,
-          "absolute_delta_from_published_reference_db": 1.6298204363986253,
-          "rce_db": 1.6298204363986253,
+          "vertical_field_v2_per_m2_w": 4.179877508344693e-10,
+          "absolute_delta_from_published_reference_db": 1.6297911935562195,
+          "rce_db": 1.6297911935562195,
           "impedance_ohm": {
             "re": 96.2316232103576,
             "im": 5.36551147306861
@@ -1479,9 +1479,9 @@
         },
         {
           "depth_lambda": 0.055,
-          "vertical_field_v2_per_m2_w": 4.278309091144995e-10,
-          "absolute_delta_from_published_reference_db": 1.7308772188112422,
-          "rce_db": 1.7308772188112422,
+          "vertical_field_v2_per_m2_w": 4.2782803365538125e-10,
+          "absolute_delta_from_published_reference_db": 1.7308480297040973,
+          "rce_db": 1.7308480297040973,
           "impedance_ohm": {
             "re": 94.37232168639724,
             "im": 11.676679304957032
@@ -1489,9 +1489,9 @@
         },
         {
           "depth_lambda": 0.06,
-          "vertical_field_v2_per_m2_w": 4.342831338503536e-10,
-          "absolute_delta_from_published_reference_db": 1.7958852752911176,
-          "rce_db": 1.7958852752911176,
+          "vertical_field_v2_per_m2_w": 4.3428022009805546e-10,
+          "absolute_delta_from_published_reference_db": 1.795856136909007,
+          "rce_db": 1.795856136909007,
           "impedance_ohm": {
             "re": 93.30255542859513,
             "im": 17.589369625747338
@@ -1499,9 +1499,9 @@
         },
         {
           "depth_lambda": 0.065,
-          "vertical_field_v2_per_m2_w": 4.3730513238017554e-10,
-          "absolute_delta_from_published_reference_db": 1.8260013885053574,
-          "rce_db": 1.8260013885053574,
+          "vertical_field_v2_per_m2_w": 4.3730220307765783e-10,
+          "absolute_delta_from_published_reference_db": 1.8259722970521377,
+          "rce_db": 1.8259722970521377,
           "impedance_ohm": {
             "re": 92.96621364228427,
             "im": 23.159367069933804
@@ -1509,9 +1509,9 @@
         },
         {
           "depth_lambda": 0.07,
-          "vertical_field_v2_per_m2_w": 4.36887441816201e-10,
-          "absolute_delta_from_published_reference_db": 1.8218512566869038,
-          "rce_db": 1.8218512566869038,
+          "vertical_field_v2_per_m2_w": 4.3688451954660227e-10,
+          "absolute_delta_from_published_reference_db": 1.8218222073326666,
+          "rce_db": 1.8218222073326666,
           "impedance_ohm": {
             "re": 93.33515441818652,
             "im": 28.40215183272041
@@ -1519,9 +1519,9 @@
         },
         {
           "depth_lambda": 0.075,
-          "vertical_field_v2_per_m2_w": 4.331001557619581e-10,
-          "absolute_delta_from_published_reference_db": 1.784039043510982,
-          "rce_db": 1.784039043510982,
+          "vertical_field_v2_per_m2_w": 4.330972624137182e-10,
+          "absolute_delta_from_published_reference_db": 1.7840100301440875,
+          "rce_db": 1.7840100301440875,
           "impedance_ohm": {
             "re": 94.39605096202935,
             "im": 33.296807899236754
@@ -1529,9 +1529,9 @@
         },
         {
           "depth_lambda": 0.08,
-          "vertical_field_v2_per_m2_w": 4.261385948670305e-10,
-          "absolute_delta_from_published_reference_db": 1.7136643394753837,
-          "rce_db": 1.7136643394753837,
+          "vertical_field_v2_per_m2_w": 4.2613575080993367e-10,
+          "absolute_delta_from_published_reference_db": 1.713635354482238,
+          "rce_db": 1.713635354482238,
           "impedance_ohm": {
             "re": 96.13779077596722,
             "im": 37.78795397009216
@@ -1539,9 +1539,9 @@
         },
         {
           "depth_lambda": 0.085,
-          "vertical_field_v2_per_m2_w": 4.163598276653347e-10,
-          "absolute_delta_from_published_reference_db": 1.6128438453598566,
-          "rce_db": 1.6128438453598566,
+          "vertical_field_v2_per_m2_w": 4.163570507045252e-10,
+          "absolute_delta_from_published_reference_db": 1.612814879482321,
+          "rce_db": 1.612814879482321,
           "impedance_ohm": {
             "re": 98.53783014686252,
             "im": 41.788204888094214
@@ -1549,9 +1549,9 @@
         },
         {
           "depth_lambda": 0.09,
-          "vertical_field_v2_per_m2_w": 4.042995249580887e-10,
-          "absolute_delta_from_published_reference_db": 1.485187954784698,
-          "rce_db": 1.485187954784698,
+          "vertical_field_v2_per_m2_w": 4.0429682920032364e-10,
+          "absolute_delta_from_published_reference_db": 1.4851589971294747,
+          "rce_db": 1.4851589971294747,
           "impedance_ohm": {
             "re": 101.54717774109595,
             "im": 45.183849946682805
@@ -1559,9 +1559,9 @@
         },
         {
           "depth_lambda": 0.095,
-          "vertical_field_v2_per_m2_w": 3.906592248726017e-10,
-          "absolute_delta_from_published_reference_db": 1.3361364845473873,
-          "rce_db": 1.3361364845473873,
+          "vertical_field_v2_per_m2_w": 3.9065661970007316e-10,
+          "absolute_delta_from_published_reference_db": 1.336107522839739,
+          "rce_db": 1.336107522839739,
           "impedance_ohm": {
             "re": 105.07537698705309,
             "im": 47.8464788667473
@@ -1569,9 +1569,9 @@
         },
         {
           "depth_lambda": 0.1,
-          "vertical_field_v2_per_m2_w": 3.7625930070992283e-10,
-          "absolute_delta_from_published_reference_db": 1.1730280843914276,
-          "rce_db": 1.1730280843914276,
+          "vertical_field_v2_per_m2_w": 3.762567900820827e-10,
+          "absolute_delta_from_published_reference_db": 1.1729991055607971,
+          "rce_db": 1.1729991055607971,
           "impedance_ohm": {
             "re": 108.97898319350496,
             "im": 49.65244219811129
@@ -1579,9 +1579,9 @@
         },
         {
           "depth_lambda": 0.105,
-          "vertical_field_v2_per_m2_w": 3.6196220499240127e-10,
-          "absolute_delta_from_published_reference_db": 1.0047878960331003,
-          "rce_db": 1.0047878960331003,
+          "vertical_field_v2_per_m2_w": 3.619597872602949e-10,
+          "absolute_delta_from_published_reference_db": 1.0047588871696107,
+          "rce_db": 1.0047588871696107,
           "impedance_ohm": {
             "re": 113.05887686167708,
             "im": 50.50957013899118
@@ -1589,9 +1589,9 @@
         },
         {
           "depth_lambda": 0.11,
-          "vertical_field_v2_per_m2_w": 3.485805995607712e-10,
-          "absolute_delta_from_published_reference_db": 0.8411877698523157,
-          "rce_db": 0.8411877698523157,
+          "vertical_field_v2_per_m2_w": 3.48578267878826e-10,
+          "absolute_delta_from_published_reference_db": 0.8411587194694065,
+          "rce_db": 0.8411587194694065,
           "impedance_ohm": {
             "re": 117.07181086616849,
             "im": 50.38646407898842
@@ -1599,9 +1599,9 @@
         },
         {
           "depth_lambda": 0.115,
-          "vertical_field_v2_per_m2_w": 3.367911156487155e-10,
-          "absolute_delta_from_published_reference_db": 0.691761909757898,
-          "rce_db": 0.691761909757898,
+          "vertical_field_v2_per_m2_w": 3.36788858933132e-10,
+          "absolute_delta_from_published_reference_db": 0.6917328091562733,
+          "rce_db": 0.6917328091562733,
           "impedance_ohm": {
             "re": 120.75822454774257,
             "im": 49.335465544808926
@@ -1609,9 +1609,9 @@
         },
         {
           "depth_lambda": 0.12,
-          "vertical_field_v2_per_m2_w": 3.2707299874799293e-10,
-          "absolute_delta_from_published_reference_db": 0.5646025719802812,
-          "rce_db": 0.5646025719802812,
+          "vertical_field_v2_per_m2_w": 3.270708030090174e-10,
+          "absolute_delta_from_published_reference_db": 0.5645734163934447,
+          "rce_db": 0.5645734163934447,
           "impedance_ohm": {
             "re": 123.88173822093152,
             "im": 47.49920646953213
@@ -1619,9 +1619,9 @@
         },
         {
           "depth_lambda": 0.125,
-          "vertical_field_v2_per_m2_w": 3.19682498570885e-10,
-          "absolute_delta_from_published_reference_db": 0.4653442534282862,
-          "rce_db": 0.4653442534282862,
+          "vertical_field_v2_per_m2_w": 3.196803483818205e-10,
+          "absolute_delta_from_published_reference_db": 0.4653150426209889,
+          "rce_db": 0.4653150426209889,
           "impedance_ohm": {
             "re": 126.26894760974237,
             "im": 45.09497679264593
@@ -1629,9 +1629,9 @@
         },
         {
           "depth_lambda": 0.13,
-          "vertical_field_v2_per_m2_w": 3.146629629141907e-10,
-          "absolute_delta_from_published_reference_db": 0.3966119215836881,
-          "rce_db": 0.3966119215836881,
+          "vertical_field_v2_per_m2_w": 3.146608427869273e-10,
+          "absolute_delta_from_published_reference_db": 0.39658265971362744,
+          "rce_db": 0.39658265971362744,
           "impedance_ohm": {
             "re": 127.83593872532259,
             "im": 42.380049245634005
@@ -1639,9 +1639,9 @@
         },
         {
           "depth_lambda": 0.135,
-          "vertical_field_v2_per_m2_w": 3.118814010480454e-10,
-          "absolute_delta_from_published_reference_db": 0.35805040940502075,
-          "rce_db": 0.35805040940502075,
+          "vertical_field_v2_per_m2_w": 3.118792965497522e-10,
+          "absolute_delta_from_published_reference_db": 0.35802110419231914,
+          "rce_db": 0.35802110419231914,
           "impedance_ohm": {
             "re": 128.59306584689307,
             "im": 39.609383795026325
@@ -1649,9 +1649,9 @@
         },
         {
           "depth_lambda": 0.14,
-          "vertical_field_v2_per_m2_w": 3.1107843988540576e-10,
-          "absolute_delta_from_published_reference_db": 0.34685476652973213,
-          "rce_db": 0.34685476652973213,
+          "vertical_field_v2_per_m2_w": 3.1107633841804867e-10,
+          "absolute_delta_from_published_reference_db": 0.3468254279886194,
+          "rce_db": 0.3468254279886194,
           "impedance_ohm": {
             "re": 128.62889042411888,
             "im": 36.999384893910126
@@ -1659,9 +1659,9 @@
         },
         {
           "depth_lambda": 0.145,
-          "vertical_field_v2_per_m2_w": 3.1191962769877707e-10,
-          "absolute_delta_from_published_reference_db": 0.3585826824449855,
-          "rce_db": 0.3585826824449855,
+          "vertical_field_v2_per_m2_w": 3.1191751894091544e-10,
+          "absolute_delta_from_published_reference_db": 0.35855332151616226,
+          "rce_db": 0.35855332151616226,
           "impedance_ohm": {
             "re": 128.0818589078839,
             "im": 34.706742919433715
@@ -1669,9 +1669,9 @@
         },
         {
           "depth_lambda": 0.15,
-          "vertical_field_v2_per_m2_w": 3.1403991026160993e-10,
-          "absolute_delta_from_published_reference_db": 0.3880040901555793,
-          "rce_db": 0.3880040901555793,
+          "vertical_field_v2_per_m2_w": 3.1403778632305873e-10,
+          "absolute_delta_from_published_reference_db": 0.38797471752229834,
+          "rce_db": 0.38797471752229834,
           "impedance_ohm": {
             "re": 127.11033988486186,
             "im": 32.823813839720074
@@ -1679,9 +1679,9 @@
         },
         {
           "depth_lambda": 0.155,
-          "vertical_field_v2_per_m2_w": 3.1707748817650344e-10,
-          "absolute_delta_from_published_reference_db": 0.4298097357199954,
-          "rce_db": 0.4298097357199954,
+          "vertical_field_v2_per_m2_w": 3.170753435386732e-10,
+          "absolute_delta_from_published_reference_db": 0.429780360959566,
+          "rce_db": 0.429780360959566,
           "impedance_ohm": {
             "re": 125.86867176727027,
             "im": 31.38623431713505
@@ -1689,9 +1689,9 @@
         },
         {
           "depth_lambda": 0.16,
-          "vertical_field_v2_per_m2_w": 3.206966777156063e-10,
-          "absolute_delta_from_published_reference_db": 0.4791002527101488,
-          "rce_db": 0.4791002527101488,
+          "vertical_field_v2_per_m2_w": 3.2069450903068653e-10,
+          "absolute_delta_from_published_reference_db": 0.47907088380352414,
+          "rce_db": 0.47907088380352414,
           "impedance_ohm": {
             "re": 124.49217179018366,
             "im": 30.386552404429608
@@ -1699,9 +1699,9 @@
         },
         {
           "depth_lambda": 0.165,
-          "vertical_field_v2_per_m2_w": 3.2460137218644655e-10,
-          "absolute_delta_from_published_reference_db": 0.5316591581564436,
-          "rce_db": 0.5316591581564436,
+          "vertical_field_v2_per_m2_w": 3.245991779967444e-10,
+          "absolute_delta_from_published_reference_db": 0.5316298012965446,
+          "rce_db": 0.5316298012965446,
           "impedance_ohm": {
             "re": 123.09040202815267,
             "im": 29.788713286324175
@@ -1709,9 +1709,9 @@
         },
         {
           "depth_lambda": 0.17,
-          "vertical_field_v2_per_m2_w": 3.2854143912403785e-10,
-          "absolute_delta_from_published_reference_db": 0.584057195976356,
-          "rce_db": 0.584057195976356,
+          "vertical_field_v2_per_m2_w": 3.285392195467631e-10,
+          "absolute_delta_from_published_reference_db": 0.5840278555856491,
+          "rce_db": 0.5840278555856491,
           "impedance_ohm": {
             "re": 121.7462993375742,
             "im": 29.540411246185123
@@ -1719,9 +1719,9 @@
         },
         {
           "depth_lambda": 0.17500000000000002,
-          "vertical_field_v2_per_m2_w": 3.323143330256475e-10,
-          "absolute_delta_from_published_reference_db": 0.6336463763654353,
-          "rce_db": 0.6336463763654353,
+          "vertical_field_v2_per_m2_w": 3.3231208943325464e-10,
+          "absolute_delta_from_published_reference_db": 0.6336170552381694,
+          "rce_db": 0.6336170552381694,
           "impedance_ohm": {
             "re": 120.51862767598598,
             "im": 29.5822468941808
@@ -1729,9 +1729,9 @@
         },
         {
           "depth_lambda": 0.18,
-          "vertical_field_v2_per_m2_w": 3.3576376435624804e-10,
-          "absolute_delta_from_published_reference_db": 0.6784938967648174,
-          "rce_db": 0.6784938967648174,
+          "vertical_field_v2_per_m2_w": 3.3576149907043624e-10,
+          "absolute_delta_from_published_reference_db": 0.6784645962699121,
+          "rce_db": 0.6784645962699121,
           "impedance_ohm": {
             "re": 119.44580651624213,
             "im": 29.85381938858422
@@ -1739,9 +1739,9 @@
         },
         {
           "depth_lambda": 0.185,
-          "vertical_field_v2_per_m2_w": 3.3877672617884537e-10,
-          "absolute_delta_from_published_reference_db": 0.7172913126169629,
-          "rce_db": 0.7172913126169629,
+          "vertical_field_v2_per_m2_w": 3.387744421879558e-10,
+          "absolute_delta_from_published_reference_db": 0.717262032920126,
+          "rce_db": 0.717262032920126,
           "impedance_ohm": {
             "re": 118.54991011862408,
             "im": 30.297400625863293
@@ -1749,9 +1749,9 @@
         },
         {
           "depth_lambda": 0.19,
-          "vertical_field_v2_per_m2_w": 3.4127969377638043e-10,
-          "absolute_delta_from_published_reference_db": 0.7492601285128899,
-          "rce_db": 0.7492601285128899,
+          "vertical_field_v2_per_m2_w": 3.412773944807875e-10,
+          "absolute_delta_from_published_reference_db": 0.7492308687951178,
+          "rce_db": 0.7492308687951178,
           "impedance_ohm": {
             "re": 117.84023459694286,
             "im": 30.859930949831373
@@ -1759,9 +1759,9 @@
         },
         {
           "depth_lambda": 0.195,
-          "vertical_field_v2_per_m2_w": 3.432344409316449e-10,
-          "absolute_delta_from_published_reference_db": 0.7740642389808522,
-          "rce_db": 0.7740642389808522,
+          "vertical_field_v2_per_m2_w": 3.432321299189932e-10,
+          "absolute_delta_from_published_reference_db": 0.7740349976431133,
+          "rce_db": 0.7740349976431133,
           "impedance_ohm": {
             "re": 117.31622570761675,
             "im": 31.493967981797752
@@ -1769,9 +1769,9 @@
         },
         {
           "depth_lambda": 0.2,
-          "vertical_field_v2_per_m2_w": 3.446336677563199e-10,
-          "absolute_delta_from_published_reference_db": 0.7917326646384825,
-          "rce_db": 0.7917326646384825,
+          "vertical_field_v2_per_m2_w": 3.4463134860729233e-10,
+          "absolute_delta_from_published_reference_db": 0.7917034394899125,
+          "rce_db": 0.7917034394899125,
           "impedance_ohm": {
             "re": 116.96978153491139,
             "im": 32.158051613900426
@@ -1788,9 +1788,9 @@
       "expected_quarter_ground_wavelength_lambda": 0.03363382899165825,
       "measured_peak": {
         "depth_lambda": 0.03,
-        "vertical_field_v2_per_m2_w": 9.719581521526994e-09,
-        "absolute_delta_from_published_reference_db": -4.537333182211064,
-        "rce_db": -4.537333182211064,
+        "vertical_field_v2_per_m2_w": 9.719367047910215e-09,
+        "absolute_delta_from_published_reference_db": -4.537429015283468,
+        "rce_db": -4.537429015283468,
         "impedance_ohm": {
           "re": 18.08842436367571,
           "im": -490.91188644816054
@@ -1798,9 +1798,9 @@
       },
       "measured_minimum_excluding_zero": {
         "depth_lambda": 0.005,
-        "vertical_field_v2_per_m2_w": 4.159126896688174e-09,
-        "absolute_delta_from_published_reference_db": -8.223787138445052,
-        "rce_db": -8.223787138445052,
+        "vertical_field_v2_per_m2_w": 4.159034944506063e-09,
+        "absolute_delta_from_published_reference_db": -8.223883155632631,
+        "rce_db": -8.223883155632631,
         "impedance_ohm": {
           "re": 42.11970895635155,
           "im": -500.2335334007304
@@ -1809,9 +1809,9 @@
       "samples": [
         {
           "depth_lambda": 0.0,
-          "vertical_field_v2_per_m2_w": 3.3287607736384796e-09,
-          "absolute_delta_from_published_reference_db": -9.19098299859549,
-          "rce_db": -9.19098299859549,
+          "vertical_field_v2_per_m2_w": 3.3287633127350045e-09,
+          "absolute_delta_from_published_reference_db": -9.190979685905681,
+          "rce_db": -9.190979685905681,
           "impedance_ohm": {
             "re": 72.48064170683436,
             "im": -13904.136539250223
@@ -1819,9 +1819,9 @@
         },
         {
           "depth_lambda": 0.005,
-          "vertical_field_v2_per_m2_w": 4.159126896688174e-09,
-          "absolute_delta_from_published_reference_db": -8.223787138445052,
-          "rce_db": -8.223787138445052,
+          "vertical_field_v2_per_m2_w": 4.159034944506063e-09,
+          "absolute_delta_from_published_reference_db": -8.223883155632631,
+          "rce_db": -8.223883155632631,
           "impedance_ohm": {
             "re": 42.11970895635155,
             "im": -500.2335334007304
@@ -1829,9 +1829,9 @@
         },
         {
           "depth_lambda": 0.01,
-          "vertical_field_v2_per_m2_w": 6.177042831614754e-09,
-          "absolute_delta_from_published_reference_db": -6.506002721704565,
-          "rce_db": -6.506002721704565,
+          "vertical_field_v2_per_m2_w": 6.176906323767972e-09,
+          "absolute_delta_from_published_reference_db": -6.506098698470941,
+          "rce_db": -6.506098698470941,
           "impedance_ohm": {
             "re": 28.379380548541356,
             "im": -497.9087049547147
@@ -1839,9 +1839,9 @@
         },
         {
           "depth_lambda": 0.015,
-          "vertical_field_v2_per_m2_w": 7.716615611236e-09,
-          "absolute_delta_from_published_reference_db": -5.539540176945338,
-          "rce_db": -5.539540176945338,
+          "vertical_field_v2_per_m2_w": 7.716445148437565e-09,
+          "absolute_delta_from_published_reference_db": -5.539636115209154,
+          "rce_db": -5.539636115209154,
           "impedance_ohm": {
             "re": 22.73443455889933,
             "im": -495.85859791366084
@@ -1849,9 +1849,9 @@
         },
         {
           "depth_lambda": 0.02,
-          "vertical_field_v2_per_m2_w": 8.819072240751509e-09,
-          "absolute_delta_from_published_reference_db": -4.9595798480905415,
-          "rce_db": -4.9595798480905415,
+          "vertical_field_v2_per_m2_w": 8.818877503535992e-09,
+          "absolute_delta_from_published_reference_db": -4.959675747329796,
+          "rce_db": -4.959675747329796,
           "impedance_ohm": {
             "re": 19.908228591438828,
             "im": -493.96921430148933
@@ -1859,9 +1859,9 @@
         },
         {
           "depth_lambda": 0.025,
-          "vertical_field_v2_per_m2_w": 9.47238389826445e-09,
-          "absolute_delta_from_published_reference_db": -4.6492159402591735,
-          "rce_db": -4.6492159402591735,
+          "vertical_field_v2_per_m2_w": 9.472174814569734e-09,
+          "absolute_delta_from_published_reference_db": -4.64931180303038,
+          "rce_db": -4.64931180303038,
           "impedance_ohm": {
             "re": 18.549071814105016,
             "im": -492.2884334118845
@@ -1869,9 +1869,9 @@
         },
         {
           "depth_lambda": 0.03,
-          "vertical_field_v2_per_m2_w": 9.719581521526994e-09,
-          "absolute_delta_from_published_reference_db": -4.537333182211064,
-          "rce_db": -4.537333182211064,
+          "vertical_field_v2_per_m2_w": 9.719367047910215e-09,
+          "absolute_delta_from_published_reference_db": -4.537429015283468,
+          "rce_db": -4.537429015283468,
           "impedance_ohm": {
             "re": 18.08842436367571,
             "im": -490.91188644816054
@@ -1879,9 +1879,9 @@
         },
         {
           "depth_lambda": 0.035,
-          "vertical_field_v2_per_m2_w": 9.680594213672057e-09,
-          "absolute_delta_from_published_reference_db": -4.554788689512523,
-          "rce_db": -4.554788689512523,
+          "vertical_field_v2_per_m2_w": 9.680380644245024e-09,
+          "absolute_delta_from_published_reference_db": -4.554884502894181,
+          "rce_db": -4.554884502894181,
           "impedance_ohm": {
             "re": 18.168691685622004,
             "im": -489.920186968978
@@ -1889,9 +1889,9 @@
         },
         {
           "depth_lambda": 0.04,
-          "vertical_field_v2_per_m2_w": 9.50529603440803e-09,
-          "absolute_delta_from_published_reference_db": -4.63415237769989,
-          "rce_db": -4.63415237769989,
+          "vertical_field_v2_per_m2_w": 9.505086352078058e-09,
+          "absolute_delta_from_published_reference_db": -4.634248182063014,
+          "rce_db": -4.634248182063014,
           "impedance_ohm": {
             "re": 18.50722948354266,
             "im": -489.3279576400172
@@ -1899,9 +1899,9 @@
         },
         {
           "depth_lambda": 0.045,
-          "vertical_field_v2_per_m2_w": 9.311886957413502e-09,
-          "absolute_delta_from_published_reference_db": -4.723431897401573,
-          "rce_db": -4.723431897401573,
+          "vertical_field_v2_per_m2_w": 9.31168154265068e-09,
+          "absolute_delta_from_published_reference_db": -4.723527701272888,
+          "rce_db": -4.723527701272888,
           "impedance_ohm": {
             "re": 18.891825427602896,
             "im": -489.0700516041107
@@ -1909,9 +1909,9 @@
         },
         {
           "depth_lambda": 0.05,
-          "vertical_field_v2_per_m2_w": 9.16163308484291e-09,
-          "absolute_delta_from_published_reference_db": -4.794079902311841,
-          "rce_db": -4.794079902311841,
+          "vertical_field_v2_per_m2_w": 9.161430975359985e-09,
+          "absolute_delta_from_published_reference_db": -4.7941757105597285,
+          "rce_db": -4.7941757105597285,
           "impedance_ohm": {
             "re": 19.19991990267983,
             "im": -489.0333302974015
@@ -1919,9 +1919,9 @@
         },
         {
           "depth_lambda": 0.055,
-          "vertical_field_v2_per_m2_w": 9.069585229823782e-09,
-          "absolute_delta_from_published_reference_db": -4.837934585529578,
-          "rce_db": -4.837934585529578,
+          "vertical_field_v2_per_m2_w": 9.069385138838476e-09,
+          "absolute_delta_from_published_reference_db": -4.838030399579697,
+          "rce_db": -4.838030399579697,
           "impedance_ohm": {
             "re": 19.392453208628677,
             "im": -489.10517800298135
@@ -1929,9 +1929,9 @@
         },
         {
           "depth_lambda": 0.06,
-          "vertical_field_v2_per_m2_w": 9.026372696946862e-09,
-          "absolute_delta_from_published_reference_db": -4.858676234383657,
-          "rce_db": -4.858676234383657,
+          "vertical_field_v2_per_m2_w": 9.026173548881428e-09,
+          "absolute_delta_from_published_reference_db": -4.858772053449539,
+          "rce_db": -4.858772053449539,
           "impedance_ohm": {
             "re": 19.483271793135067,
             "im": -489.20502814314756
@@ -1939,9 +1939,9 @@
         },
         {
           "depth_lambda": 0.065,
-          "vertical_field_v2_per_m2_w": 9.015114995214289e-09,
-          "absolute_delta_from_published_reference_db": -4.864096140390684,
-          "rce_db": -4.864096140390684,
+          "vertical_field_v2_per_m2_w": 9.014916088602695e-09,
+          "absolute_delta_from_published_reference_db": -4.864191962792133,
+          "rce_db": -4.864191962792133,
           "impedance_ohm": {
             "re": 19.506259065069408,
             "im": -489.2901745662201
@@ -1949,9 +1949,9 @@
         },
         {
           "depth_lambda": 0.07,
-          "vertical_field_v2_per_m2_w": 9.020361736938682e-09,
-          "absolute_delta_from_published_reference_db": -4.861569308328526,
-          "rce_db": -4.861569308328526,
+          "vertical_field_v2_per_m2_w": 9.020162711100959e-09,
+          "absolute_delta_from_published_reference_db": -4.861665132397644,
+          "rce_db": -4.861665132397644,
           "impedance_ohm": {
             "re": 19.49424480613519,
             "im": -489.34637470399133
@@ -1959,9 +1959,9 @@
         },
         {
           "depth_lambda": 0.075,
-          "vertical_field_v2_per_m2_w": 9.031279339676515e-09,
-          "absolute_delta_from_published_reference_db": -4.856316095966679,
-          "rce_db": -4.856316095966679,
+          "vertical_field_v2_per_m2_w": 9.031080072038017e-09,
+          "absolute_delta_from_published_reference_db": -4.8564119204753755,
+          "rce_db": -4.8564119204753755,
           "impedance_ohm": {
             "re": 19.470505726846916,
             "im": -489.37528693745355
@@ -1969,9 +1969,9 @@
         },
         {
           "depth_lambda": 0.08,
-          "vertical_field_v2_per_m2_w": 9.041756567398143e-09,
-          "absolute_delta_from_published_reference_db": -4.851280746379292,
-          "rce_db": -4.851280746379292,
+          "vertical_field_v2_per_m2_w": 9.041557069139622e-09,
+          "absolute_delta_from_published_reference_db": -4.8513765706231995,
+          "rce_db": -4.8513765706231995,
           "impedance_ohm": {
             "re": 19.448053498504446,
             "im": -489.38476137305275
@@ -1979,9 +1979,9 @@
         },
         {
           "depth_lambda": 0.085,
-          "vertical_field_v2_per_m2_w": 9.049245826854749e-09,
-          "absolute_delta_from_published_reference_db": -4.847684987371065,
-          "rce_db": -4.847684987371065,
+          "vertical_field_v2_per_m2_w": 9.049046164482215e-09,
+          "absolute_delta_from_published_reference_db": -4.84778081107275,
+          "rce_db": -4.84778081107275,
           "impedance_ohm": {
             "re": 19.432177691841513,
             "im": -489.3831543518062
@@ -1989,9 +1989,9 @@
         },
         {
           "depth_lambda": 0.09,
-          "vertical_field_v2_per_m2_w": 9.05334481301308e-09,
-          "absolute_delta_from_published_reference_db": -4.8457182334010955,
-          "rce_db": -4.8457182334010955,
+          "vertical_field_v2_per_m2_w": 9.053145061345412e-09,
+          "absolute_delta_from_published_reference_db": -4.8458140565535945,
+          "rce_db": -4.8458140565535945,
           "impedance_ohm": {
             "re": 19.423600786080108,
             "im": -489.3767841976607
@@ -1999,9 +1999,9 @@
         },
         {
           "depth_lambda": 0.095,
-          "vertical_field_v2_per_m2_w": 9.054511549303836e-09,
-          "absolute_delta_from_published_reference_db": -4.84515857893568,
-          "rce_db": -4.84515857893568,
+          "vertical_field_v2_per_m2_w": 9.054311772807211e-09,
+          "absolute_delta_from_published_reference_db": -4.845254401649899,
+          "rce_db": -4.845254401649899,
           "impedance_ohm": {
             "re": 19.421273571755872,
             "im": -489.3691117435263
@@ -2009,9 +2009,9 @@
         },
         {
           "depth_lambda": 0.1,
-          "vertical_field_v2_per_m2_w": 9.050911247932457e-09,
-          "absolute_delta_from_published_reference_db": -4.846885786366182,
-          "rce_db": -4.846885786366182,
+          "vertical_field_v2_per_m2_w": 9.05071155171584e-09,
+          "absolute_delta_from_published_reference_db": -4.846981608675483,
+          "rce_db": -4.846981608675483,
           "impedance_ohm": {
             "re": 19.429159006446216,
             "im": -489.3565398696557
@@ -2019,9 +2019,9 @@
         },
         {
           "depth_lambda": 0.105,
-          "vertical_field_v2_per_m2_w": 9.048390916649789e-09,
-          "absolute_delta_from_published_reference_db": -4.848095298164762,
-          "rce_db": -4.848095298164762,
+          "vertical_field_v2_per_m2_w": 9.048191275585403e-09,
+          "absolute_delta_from_published_reference_db": -4.848191120692691,
+          "rce_db": -4.848191120692691,
           "impedance_ohm": {
             "re": 19.43448176108067,
             "im": -489.35411655660045
@@ -2029,9 +2029,9 @@
         },
         {
           "depth_lambda": 0.11,
-          "vertical_field_v2_per_m2_w": 9.048686847259295e-09,
-          "absolute_delta_from_published_reference_db": -4.847953263044591,
-          "rce_db": -4.847953263044591,
+          "vertical_field_v2_per_m2_w": 9.048487199599336e-09,
+          "absolute_delta_from_published_reference_db": -4.848049085604317,
+          "rce_db": -4.848049085604317,
           "impedance_ohm": {
             "re": 19.433833647856773,
             "im": -489.3552719696509
@@ -2039,9 +2039,9 @@
         },
         {
           "depth_lambda": 0.115,
-          "vertical_field_v2_per_m2_w": 9.04909291223515e-09,
-          "absolute_delta_from_published_reference_db": -4.847758375295175,
-          "rce_db": -4.847758375295175,
+          "vertical_field_v2_per_m2_w": 9.048893255629398e-09,
+          "absolute_delta_from_published_reference_db": -4.8478541978484175,
+          "rce_db": -4.8478541978484175,
           "impedance_ohm": {
             "re": 19.432964434729037,
             "im": -489.3558168625866
@@ -2049,9 +2049,9 @@
         },
         {
           "depth_lambda": 0.12,
-          "vertical_field_v2_per_m2_w": 9.049442638736565e-09,
-          "absolute_delta_from_published_reference_db": -4.847590533770837,
-          "rce_db": -4.847590533770837,
+          "vertical_field_v2_per_m2_w": 9.049242974467962e-09,
+          "absolute_delta_from_published_reference_db": -4.847686356298443,
+          "rce_db": -4.847686356298443,
           "impedance_ohm": {
             "re": 19.432223906679013,
             "im": -489.3558989215079
@@ -2059,9 +2059,9 @@
         },
         {
           "depth_lambda": 0.125,
-          "vertical_field_v2_per_m2_w": 9.049679367138358e-09,
-          "absolute_delta_from_published_reference_db": -4.847476926228349,
-          "rce_db": -4.847476926228349,
+          "vertical_field_v2_per_m2_w": 9.049479697708375e-09,
+          "absolute_delta_from_published_reference_db": -4.847572748726332,
+          "rce_db": -4.847572748726332,
           "impedance_ohm": {
             "re": 19.43172758994737,
             "im": -489.35573379275934
@@ -2069,9 +2069,9 @@
         },
         {
           "depth_lambda": 0.13,
-          "vertical_field_v2_per_m2_w": 9.049807751538573e-09,
-          "absolute_delta_from_published_reference_db": -4.847415314939353,
-          "rce_db": -4.847415314939353,
+          "vertical_field_v2_per_m2_w": 9.049608079328142e-09,
+          "absolute_delta_from_published_reference_db": -4.847511137412291,
+          "rce_db": -4.847511137412291,
           "impedance_ohm": {
             "re": 19.43146202747219,
             "im": -489.3554891510801
@@ -2079,9 +2079,9 @@
         },
         {
           "depth_lambda": 0.135,
-          "vertical_field_v2_per_m2_w": 9.049856634326828e-09,
-          "absolute_delta_from_published_reference_db": -4.847391856465486,
-          "rce_db": -4.847391856465486,
+          "vertical_field_v2_per_m2_w": 9.049656961073917e-09,
+          "absolute_delta_from_published_reference_db": -4.847487678921122,
+          "rce_db": -4.847487678921122,
           "impedance_ohm": {
             "re": 19.431364021208214,
             "im": -489.35526288230176
@@ -2089,9 +2089,9 @@
         },
         {
           "depth_lambda": 0.14,
-          "vertical_field_v2_per_m2_w": 9.049858129986094e-09,
-          "absolute_delta_from_published_reference_db": -4.847391138712114,
-          "rce_db": -4.847391138712114,
+          "vertical_field_v2_per_m2_w": 9.049658456720582e-09,
+          "absolute_delta_from_published_reference_db": -4.84748696115796,
+          "rce_db": -4.84748696115796,
           "impedance_ohm": {
             "re": 19.43136472201662,
             "im": -489.3550958553527
@@ -2099,9 +2099,9 @@
         },
         {
           "depth_lambda": 0.145,
-          "vertical_field_v2_per_m2_w": 9.049837894275023e-09,
-          "absolute_delta_from_published_reference_db": -4.8474008496571415,
-          "rce_db": -4.8474008496571415,
+          "vertical_field_v2_per_m2_w": 9.04963822146449e-09,
+          "absolute_delta_from_published_reference_db": -4.847496672098907,
+          "rce_db": -4.847496672098907,
           "impedance_ohm": {
             "re": 19.431409783630656,
             "im": -489.35499294125685
@@ -2109,9 +2109,9 @@
         },
         {
           "depth_lambda": 0.15,
-          "vertical_field_v2_per_m2_w": 9.049812495614593e-09,
-          "absolute_delta_from_published_reference_db": -4.847413038288231,
-          "rce_db": -4.847413038288231,
+          "vertical_field_v2_per_m2_w": 9.049612823365517e-09,
+          "absolute_delta_from_published_reference_db": -4.847508860729483,
+          "rce_db": -4.847508860729483,
           "impedance_ohm": {
             "re": 19.43146450050503,
             "im": -489.3549415557484
@@ -2119,9 +2119,9 @@
         },
         {
           "depth_lambda": 0.155,
-          "vertical_field_v2_per_m2_w": 9.049790497967813e-09,
-          "absolute_delta_from_published_reference_db": -4.847423594825426,
-          "rce_db": -4.847423594825426,
+          "vertical_field_v2_per_m2_w": 9.049590826201482e-09,
+          "absolute_delta_from_published_reference_db": -4.847519417267928,
+          "rce_db": -4.847519417267928,
           "impedance_ohm": {
             "re": 19.431511213045408,
             "im": -489.3549242638892
@@ -2129,9 +2129,9 @@
         },
         {
           "depth_lambda": 0.16,
-          "vertical_field_v2_per_m2_w": 9.049774889973737e-09,
-          "absolute_delta_from_published_reference_db": -4.847431085022628,
-          "rce_db": -4.847431085022628,
+          "vertical_field_v2_per_m2_w": 9.049575218548063e-09,
+          "absolute_delta_from_published_reference_db": -4.847526907466912,
+          "rce_db": -4.847526907466912,
           "impedance_ohm": {
             "re": 19.431543998827497,
             "im": -489.3549255782556
@@ -2139,9 +2139,9 @@
         },
         {
           "depth_lambda": 0.165,
-          "vertical_field_v2_per_m2_w": 9.049765503311731e-09,
-          "absolute_delta_from_published_reference_db": -4.847435589640341,
-          "rce_db": -4.847435589640341,
+          "vertical_field_v2_per_m2_w": 9.049565832089761e-09,
+          "absolute_delta_from_published_reference_db": -4.847531412086257,
+          "rce_db": -4.847531412086257,
           "impedance_ohm": {
             "re": 19.431563491768046,
             "im": -489.35493450420444
@@ -2149,9 +2149,9 @@
         },
         {
           "depth_lambda": 0.17,
-          "vertical_field_v2_per_m2_w": 9.049760833045222e-09,
-          "absolute_delta_from_published_reference_db": -4.847437830882389,
-          "rce_db": -4.847437830882389,
+          "vertical_field_v2_per_m2_w": 9.049561161923769e-09,
+          "absolute_delta_from_published_reference_db": -4.847533653329518,
+          "rce_db": -4.847533653329518,
           "impedance_ohm": {
             "re": 19.431573031224364,
             "im": -489.3549445844804
@@ -2159,9 +2159,9 @@
         },
         {
           "depth_lambda": 0.17500000000000002,
-          "vertical_field_v2_per_m2_w": 9.04975915204487e-09,
-          "absolute_delta_from_published_reference_db": -4.847438637587956,
-          "rce_db": -4.847438637587956,
+          "vertical_field_v2_per_m2_w": 9.049559480958918e-09,
+          "absolute_delta_from_published_reference_db": -4.847534460035846,
+          "rce_db": -4.847534460035846,
           "impedance_ohm": {
             "re": 19.431576334256963,
             "im": -489.3549528341891
@@ -2169,9 +2169,9 @@
         },
         {
           "depth_lambda": 0.18,
-          "vertical_field_v2_per_m2_w": 9.049759046589192e-09,
-          "absolute_delta_from_published_reference_db": -4.847438688195734,
-          "rce_db": -4.847438688195734,
+          "vertical_field_v2_per_m2_w": 9.049559375504724e-09,
+          "absolute_delta_from_published_reference_db": -4.847534510644028,
+          "rce_db": -4.847534510644028,
           "impedance_ohm": {
             "re": 19.431576398592416,
             "im": -489.35495844946536
@@ -2179,9 +2179,9 @@
         },
         {
           "depth_lambda": 0.185,
-          "vertical_field_v2_per_m2_w": 9.04975957084188e-09,
-          "absolute_delta_from_published_reference_db": -4.847438436608877,
-          "rce_db": -4.847438436608877,
+          "vertical_field_v2_per_m2_w": 9.04955989974549e-09,
+          "absolute_delta_from_published_reference_db": -4.847534259057342,
+          "rce_db": -4.847534259057342,
           "impedance_ohm": {
             "re": 19.431575205728894,
             "im": -489.35496173112745
@@ -2189,9 +2189,9 @@
         },
         {
           "depth_lambda": 0.19,
-          "vertical_field_v2_per_m2_w": 9.04976019957281e-09,
-          "absolute_delta_from_published_reference_db": -4.8474381348833315,
-          "rce_db": -4.8474381348833315,
+          "vertical_field_v2_per_m2_w": 9.049560528462466e-09,
+          "absolute_delta_from_published_reference_db": -4.847533957331836,
+          "rce_db": -4.847533957331836,
           "impedance_ohm": {
             "re": 19.431573840681917,
             "im": -489.3549633623326
@@ -2199,9 +2199,9 @@
         },
         {
           "depth_lambda": 0.195,
-          "vertical_field_v2_per_m2_w": 9.049760706144339e-09,
-          "absolute_delta_from_published_reference_db": -4.847437891781627,
-          "rce_db": -4.847437891781627,
+          "vertical_field_v2_per_m2_w": 9.049561035022853e-09,
+          "absolute_delta_from_published_reference_db": -4.8475337142301145,
+          "rce_db": -4.8475337142301145,
           "impedance_ohm": {
             "re": 19.431572760387514,
             "im": -489.35496401346734
@@ -2209,9 +2209,9 @@
         },
         {
           "depth_lambda": 0.2,
-          "vertical_field_v2_per_m2_w": 9.049761038709632e-09,
-          "absolute_delta_from_published_reference_db": -4.847437732184844,
-          "rce_db": -4.847437732184844,
+          "vertical_field_v2_per_m2_w": 9.049561367580872e-09,
+          "absolute_delta_from_published_reference_db": -4.847533554633301,
+          "rce_db": -4.847533554633301,
           "impedance_ohm": {
             "re": 19.43157205914829,
             "im": -489.3549641823317
@@ -2219,8 +2219,8 @@
         }
       ],
       "height_separation_db": {
-        "minimum": 4.31085195014639,
-        "maximum": 7.062172224478794
+        "minimum": 4.310917014495926,
+        "maximum": 7.062169963612493
       }
     },
     {
@@ -2232,9 +2232,9 @@
       "expected_quarter_ground_wavelength_lambda": 0.03363382899165825,
       "measured_peak": {
         "depth_lambda": 0.03,
-        "vertical_field_v2_per_m2_w": 2.6226042563431768e-08,
-        "absolute_delta_from_published_reference_db": -0.22648123206467377,
-        "rce_db": -0.22648123206467377,
+        "vertical_field_v2_per_m2_w": 2.622585675886581e-08,
+        "absolute_delta_from_published_reference_db": -0.22651200078754194,
+        "rce_db": -0.22651200078754194,
         "impedance_ohm": {
           "re": 63.94724508836646,
           "im": 29.759383603474223
@@ -2242,9 +2242,9 @@
       },
       "measured_minimum_excluding_zero": {
         "depth_lambda": 0.005,
-        "vertical_field_v2_per_m2_w": 1.8866997123883193e-08,
-        "absolute_delta_from_published_reference_db": -1.656781016728782,
-        "rce_db": -1.656781016728782,
+        "vertical_field_v2_per_m2_w": 1.886686327039075e-08,
+        "absolute_delta_from_published_reference_db": -1.6568118282241042,
+        "rce_db": -1.6568118282241042,
         "impedance_ohm": {
           "re": 88.66431880171038,
           "im": 19.72307220241324
@@ -2253,9 +2253,9 @@
       "samples": [
         {
           "depth_lambda": 0.0,
-          "vertical_field_v2_per_m2_w": 1.6923874943083727e-08,
-          "absolute_delta_from_published_reference_db": -2.1288107741166966,
-          "rce_db": -2.1288107741166966,
+          "vertical_field_v2_per_m2_w": 1.6923879041899717e-08,
+          "absolute_delta_from_published_reference_db": -2.1288097222931883,
+          "rce_db": -2.1288097222931883,
           "impedance_ohm": {
             "re": 139.21418564951202,
             "im": -13156.030902359977
@@ -2263,9 +2263,9 @@
         },
         {
           "depth_lambda": 0.005,
-          "vertical_field_v2_per_m2_w": 1.8866997123883193e-08,
-          "absolute_delta_from_published_reference_db": -1.656781016728782,
-          "rce_db": -1.656781016728782,
+          "vertical_field_v2_per_m2_w": 1.886686327039075e-08,
+          "absolute_delta_from_published_reference_db": -1.6568118282241042,
+          "rce_db": -1.6568118282241042,
           "impedance_ohm": {
             "re": 88.66431880171038,
             "im": 19.72307220241324
@@ -2273,9 +2273,9 @@
         },
         {
           "depth_lambda": 0.01,
-          "vertical_field_v2_per_m2_w": 2.242901793482752e-08,
-          "absolute_delta_from_published_reference_db": -0.9057062670681661,
-          "rce_db": -0.9057062670681661,
+          "vertical_field_v2_per_m2_w": 2.2428858863357823e-08,
+          "absolute_delta_from_published_reference_db": -0.9057370682859003,
+          "rce_db": -0.9057370682859003,
           "impedance_ohm": {
             "re": 74.62148802045897,
             "im": 22.198304513730392
@@ -2283,9 +2283,9 @@
         },
         {
           "depth_lambda": 0.015,
-          "vertical_field_v2_per_m2_w": 2.4352292459050865e-08,
-          "absolute_delta_from_published_reference_db": -0.5484103413166302,
-          "rce_db": -0.5484103413166302,
+          "vertical_field_v2_per_m2_w": 2.4352119797372733e-08,
+          "absolute_delta_from_published_reference_db": -0.5484411336044643,
+          "rce_db": -0.5484411336044643,
           "impedance_ohm": {
             "re": 68.76489082332527,
             "im": 24.393091826256978
@@ -2293,9 +2293,9 @@
         },
         {
           "depth_lambda": 0.02,
-          "vertical_field_v2_per_m2_w": 2.5458439678123397e-08,
-          "absolute_delta_from_published_reference_db": -0.3554910225034712,
-          "rce_db": -0.3554910225034712,
+          "vertical_field_v2_per_m2_w": 2.5458259225152374e-08,
+          "absolute_delta_from_published_reference_db": -0.3555218060111398,
+          "rce_db": -0.3555218060111398,
           "impedance_ohm": {
             "re": 65.81335702855968,
             "im": 26.436578747302388
@@ -2303,9 +2303,9 @@
         },
         {
           "depth_lambda": 0.025,
-          "vertical_field_v2_per_m2_w": 2.6029670857724878e-08,
-          "absolute_delta_from_published_reference_db": -0.2591220837767909,
-          "rce_db": -0.2591220837767909,
+          "vertical_field_v2_per_m2_w": 2.602948640452907e-08,
+          "absolute_delta_from_published_reference_db": -0.259152859152084,
+          "rce_db": -0.259152859152084,
           "impedance_ohm": {
             "re": 64.40234049458984,
             "im": 28.26296742931062
@@ -2313,9 +2313,9 @@
         },
         {
           "depth_lambda": 0.03,
-          "vertical_field_v2_per_m2_w": 2.6226042563431768e-08,
-          "absolute_delta_from_published_reference_db": -0.22648123206467377,
-          "rce_db": -0.22648123206467377,
+          "vertical_field_v2_per_m2_w": 2.622585675886581e-08,
+          "absolute_delta_from_published_reference_db": -0.22651200078754194,
+          "rce_db": -0.22651200078754194,
           "impedance_ohm": {
             "re": 63.94724508836646,
             "im": 29.759383603474223
@@ -2323,9 +2323,9 @@
         },
         {
           "depth_lambda": 0.035,
-          "vertical_field_v2_per_m2_w": 2.6183503608022307e-08,
-          "absolute_delta_from_published_reference_db": -0.23353125978168524,
-          "rce_db": -0.23353125978168524,
+          "vertical_field_v2_per_m2_w": 2.6183318132006643e-08,
+          "absolute_delta_from_published_reference_db": -0.23356202399744339,
+          "rce_db": -0.23356202399744339,
           "impedance_ohm": {
             "re": 64.06953695523083,
             "im": 30.83293487875116
@@ -2333,9 +2333,9 @@
         },
         {
           "depth_lambda": 0.04,
-          "vertical_field_v2_per_m2_w": 2.602711645338515e-08,
-          "absolute_delta_from_published_reference_db": -0.2595482966752372,
-          "rce_db": -0.2595482966752372,
+          "vertical_field_v2_per_m2_w": 2.6026932098443443e-08,
+          "absolute_delta_from_published_reference_db": -0.2595790586759359,
+          "rce_db": -0.2595790586759359,
           "impedance_ohm": {
             "re": 64.46355688749931,
             "im": 31.466467668453507
@@ -2343,9 +2343,9 @@
         },
         {
           "depth_lambda": 0.045,
-          "vertical_field_v2_per_m2_w": 2.5853332068239843e-08,
-          "absolute_delta_from_published_reference_db": -0.2886436048104555,
-          "rce_db": -0.2886436048104555,
+          "vertical_field_v2_per_m2_w": 2.5853148946374517e-08,
+          "absolute_delta_from_published_reference_db": -0.2886743664535096,
+          "rce_db": -0.2886743664535096,
           "impedance_ohm": {
             "re": 64.89828112461859,
             "im": 31.732832904388864
@@ -2353,9 +2353,9 @@
         },
         {
           "depth_lambda": 0.05,
-          "vertical_field_v2_per_m2_w": 2.5716194644011993e-08,
-          "absolute_delta_from_published_reference_db": -0.3117418067118478,
-          "rce_db": -0.3117418067118478,
+          "vertical_field_v2_per_m2_w": 2.5716012489108135e-08,
+          "absolute_delta_from_published_reference_db": -0.31177256909752316,
+          "rce_db": -0.31177256909752316,
           "impedance_ohm": {
             "re": 65.24121134457887,
             "im": 31.75836757585858
@@ -2363,9 +2363,9 @@
         },
         {
           "depth_lambda": 0.055,
-          "vertical_field_v2_per_m2_w": 2.5631510431660633e-08,
-          "absolute_delta_from_published_reference_db": -0.3260668556772067,
-          "rce_db": -0.3260668556772067,
+          "vertical_field_v2_per_m2_w": 2.5631328869995235e-08,
+          "absolute_delta_from_published_reference_db": -0.3260976191817186,
+          "rce_db": -0.3260976191817186,
           "impedance_ohm": {
             "re": 65.45205630200613,
             "im": 31.668210244870203
@@ -2373,9 +2373,9 @@
         },
         {
           "depth_lambda": 0.06,
-          "vertical_field_v2_per_m2_w": 2.55921075270838e-08,
-          "absolute_delta_from_published_reference_db": -0.332748331170688,
-          "rce_db": -0.332748331170688,
+          "vertical_field_v2_per_m2_w": 2.559192623853218e-08,
+          "absolute_delta_from_published_reference_db": -0.3327790956930633,
+          "rce_db": -0.3327790956930633,
           "impedance_ohm": {
             "re": 65.54856804206366,
             "im": 31.551168834010568
@@ -2383,9 +2383,9 @@
         },
         {
           "depth_lambda": 0.065,
-          "vertical_field_v2_per_m2_w": 2.5582631083211527e-08,
-          "absolute_delta_from_published_reference_db": -0.33435676823967914,
-          "rce_db": -0.33435676823967914,
+          "vertical_field_v2_per_m2_w": 2.5582449857605147e-08,
+          "absolute_delta_from_published_reference_db": -0.3343875334722884,
+          "rce_db": -0.3343875334722884,
           "impedance_ohm": {
             "re": 65.56989221977835,
             "im": 31.453572564557913
@@ -2393,9 +2393,9 @@
         },
         {
           "depth_lambda": 0.07,
-          "vertical_field_v2_per_m2_w": 2.5588515640788183e-08,
-          "absolute_delta_from_published_reference_db": -0.3333579120252449,
-          "rce_db": -0.3333579120252449,
+          "vertical_field_v2_per_m2_w": 2.558833437122415e-08,
+          "absolute_delta_from_published_reference_db": -0.3333886776434407,
+          "rce_db": -0.3333886776434407,
           "impedance_ohm": {
             "re": 65.5532229926243,
             "im": 31.390076189578306
@@ -2403,9 +2403,9 @@
         },
         {
           "depth_lambda": 0.075,
-          "vertical_field_v2_per_m2_w": 2.5599487678927244e-08,
-          "absolute_delta_from_published_reference_db": -0.3314961102814883,
-          "rce_db": -0.3314961102814883,
+          "vertical_field_v2_per_m2_w": 2.5599306330829623e-08,
+          "absolute_delta_from_published_reference_db": -0.33152687603666825,
+          "rce_db": -0.33152687603666825,
           "impedance_ohm": {
             "re": 65.52457568441578,
             "im": 31.35785581898793
@@ -2413,9 +2413,9 @@
         },
         {
           "depth_lambda": 0.08,
-          "vertical_field_v2_per_m2_w": 2.5609814763521715e-08,
-          "absolute_delta_from_published_reference_db": -0.32974447700377796,
-          "rce_db": -0.32974447700377796,
+          "vertical_field_v2_per_m2_w": 2.560963334234287e-08,
+          "absolute_delta_from_published_reference_db": -0.32977524274600545,
+          "rce_db": -0.32977524274600545,
           "impedance_ohm": {
             "re": 65.49822370017867,
             "im": 31.347488330460138
@@ -2423,9 +2423,9 @@
         },
         {
           "depth_lambda": 0.085,
-          "vertical_field_v2_per_m2_w": 2.5617242927057266e-08,
-          "absolute_delta_from_published_reference_db": -0.3284849822749335,
-          "rce_db": -0.3284849822749335,
+          "vertical_field_v2_per_m2_w": 2.5617061453943912e-08,
+          "absolute_delta_from_published_reference_db": -0.32851574790069754,
+          "rce_db": -0.32851574790069754,
           "impedance_ohm": {
             "re": 65.4797292315346,
             "im": 31.350348396520683
@@ -2433,9 +2433,9 @@
         },
         {
           "depth_lambda": 0.09,
-          "vertical_field_v2_per_m2_w": 2.562119412188812e-08,
-          "absolute_delta_from_published_reference_db": -0.3278151795978037,
-          "rce_db": -0.3278151795978037,
+          "vertical_field_v2_per_m2_w": 2.5621012621668528e-08,
+          "absolute_delta_from_published_reference_db": -0.32784594507370457,
+          "rce_db": -0.32784594507370457,
           "impedance_ohm": {
             "re": 65.47026026995073,
             "im": 31.358639513078
@@ -2443,9 +2443,9 @@
         },
         {
           "depth_lambda": 0.095,
-          "vertical_field_v2_per_m2_w": 2.562234890985836e-08,
-          "absolute_delta_from_published_reference_db": -0.3276194405783459,
-          "rce_db": -0.3276194405783459,
+          "vertical_field_v2_per_m2_w": 2.5622167402125963e-08,
+          "absolute_delta_from_published_reference_db": -0.32765020594107214,
+          "rce_db": -0.32765020594107214,
           "impedance_ohm": {
             "re": 65.46777768801255,
             "im": 31.366739161674417
@@ -2453,9 +2453,9 @@
         },
         {
           "depth_lambda": 0.1,
-          "vertical_field_v2_per_m2_w": 2.5621879211675602e-08,
-          "absolute_delta_from_published_reference_db": -0.32769905435590296,
-          "rce_db": -0.32769905435590296,
+          "vertical_field_v2_per_m2_w": 2.5621697707593717e-08,
+          "absolute_delta_from_published_reference_db": -0.32772981966384795,
+          "rce_db": -0.32772981966384795,
           "impedance_ohm": {
             "re": 65.46919838992365,
             "im": 31.372276489967845
@@ -2463,9 +2463,9 @@
         },
         {
           "depth_lambda": 0.105,
-          "vertical_field_v2_per_m2_w": 2.5620803707838344e-08,
-          "absolute_delta_from_published_reference_db": -0.3278813576059456,
-          "rce_db": -0.3278813576059456,
+          "vertical_field_v2_per_m2_w": 2.5620622211405067e-08,
+          "absolute_delta_from_published_reference_db": -0.3279121229088399,
+          "rce_db": -0.3279121229088399,
           "impedance_ohm": {
             "re": 65.4719595507566,
             "im": 31.374984787350545
@@ -2473,9 +2473,9 @@
         },
         {
           "depth_lambda": 0.11,
-          "vertical_field_v2_per_m2_w": 2.561976430130062e-08,
-          "absolute_delta_from_published_reference_db": -0.32805754945603166,
-          "rce_db": -0.32805754945603166,
+          "vertical_field_v2_per_m2_w": 2.5619582812089423e-08,
+          "absolute_delta_from_published_reference_db": -0.32808831478283124,
+          "rce_db": -0.32808831478283124,
           "impedance_ohm": {
             "re": 65.47451003593886,
             "im": 31.375598954540237
@@ -2483,9 +2483,9 @@
         },
         {
           "depth_lambda": 0.115,
-          "vertical_field_v2_per_m2_w": 2.561904233249982e-08,
-          "absolute_delta_from_published_reference_db": -0.32817993601688766,
-          "rce_db": -0.32817993601688766,
+          "vertical_field_v2_per_m2_w": 2.561886084820916e-08,
+          "absolute_delta_from_published_reference_db": -0.32821070137655056,
+          "rce_db": -0.32821070137655056,
           "impedance_ohm": {
             "re": 65.47621488953733,
             "im": 31.375074539187214
@@ -2493,9 +2493,9 @@
         },
         {
           "depth_lambda": 0.12,
-          "vertical_field_v2_per_m2_w": 2.5618673726243757e-08,
-          "absolute_delta_from_published_reference_db": -0.3282424226674726,
-          "rce_db": -0.3282424226674726,
+          "vertical_field_v2_per_m2_w": 2.5618492244395574e-08,
+          "absolute_delta_from_published_reference_db": -0.32827318805573646,
+          "rce_db": -0.32827318805573646,
           "impedance_ohm": {
             "re": 65.47703687397244,
             "im": 31.374179395812032
@@ -2503,9 +2503,9 @@
         },
         {
           "depth_lambda": 0.125,
-          "vertical_field_v2_per_m2_w": 2.561857306267636e-08,
-          "absolute_delta_from_published_reference_db": -0.32825948745318545,
-          "rce_db": -0.32825948745318545,
+          "vertical_field_v2_per_m2_w": 2.561839158143125e-08,
+          "absolute_delta_from_published_reference_db": -0.32829025286010166,
+          "rce_db": -0.32829025286010166,
           "impedance_ohm": {
             "re": 65.47721704527521,
             "im": 31.373369892821934
@@ -2513,9 +2513,9 @@
         },
         {
           "depth_lambda": 0.13,
-          "vertical_field_v2_per_m2_w": 2.561862475506462e-08,
-          "absolute_delta_from_published_reference_db": -0.32825072439824354,
-          "rce_db": -0.32825072439824354,
+          "vertical_field_v2_per_m2_w": 2.5618443273402814e-08,
+          "absolute_delta_from_published_reference_db": -0.32828148981372196,
+          "rce_db": -0.32828148981372196,
           "impedance_ohm": {
             "re": 65.47705053046703,
             "im": 31.372828598551166
@@ -2523,9 +2523,9 @@
         },
         {
           "depth_lambda": 0.135,
-          "vertical_field_v2_per_m2_w": 2.5618732776564528e-08,
-          "absolute_delta_from_published_reference_db": -0.3282324123136253,
-          "rce_db": -0.3282324123136253,
+          "vertical_field_v2_per_m2_w": 2.5618551294130558e-08,
+          "absolute_delta_from_published_reference_db": -0.32826317773028046,
+          "rce_db": -0.32826317773028046,
           "impedance_ohm": {
             "re": 65.47677084137452,
             "im": 31.372561745751167
@@ -2533,9 +2533,9 @@
         },
         {
           "depth_lambda": 0.14,
-          "vertical_field_v2_per_m2_w": 2.5618837385517676e-08,
-          "absolute_delta_from_published_reference_db": -0.32821467880637034,
-          "rce_db": -0.32821467880637034,
+          "vertical_field_v2_per_m2_w": 2.561865590235937e-08,
+          "absolute_delta_from_published_reference_db": -0.3282454442201922,
+          "rce_db": -0.3282454442201922,
           "impedance_ohm": {
             "re": 65.47651627185333,
             "im": 31.372494304131912
@@ -2543,9 +2543,9 @@
         },
         {
           "depth_lambda": 0.145,
-          "vertical_field_v2_per_m2_w": 2.56189122479471e-08,
-          "absolute_delta_from_published_reference_db": -0.3282019880304352,
-          "rce_db": -0.3282019880304352,
+          "vertical_field_v2_per_m2_w": 2.561873076428256e-08,
+          "absolute_delta_from_published_reference_db": -0.3282327534401739,
+          "rce_db": -0.3282327534401739,
           "impedance_ohm": {
             "re": 65.47634252038782,
             "im": 31.372536109790286
@@ -2553,9 +2553,9 @@
         },
         {
           "depth_lambda": 0.15,
-          "vertical_field_v2_per_m2_w": 2.561895360702511e-08,
-          "absolute_delta_from_published_reference_db": -0.32819497680190046,
-          "rce_db": -0.32819497680190046,
+          "vertical_field_v2_per_m2_w": 2.5618772123089017e-08,
+          "absolute_delta_from_published_reference_db": -0.32822574220800593,
+          "rce_db": -0.32822574220800593,
           "impedance_ohm": {
             "re": 65.476252178835,
             "im": 31.37261586378243
@@ -2563,9 +2563,9 @@
         },
         {
           "depth_lambda": 0.155,
-          "vertical_field_v2_per_m2_w": 2.5618968986509084e-08,
-          "absolute_delta_from_published_reference_db": -0.32819236966067167,
-          "rce_db": -0.32819236966067167,
+          "vertical_field_v2_per_m2_w": 2.5618787502478646e-08,
+          "absolute_delta_from_published_reference_db": -0.3282231350643012,
+          "rce_db": -0.3282231350643012,
           "impedance_ohm": {
             "re": 65.47622319528628,
             "im": 31.372690969363106
@@ -2573,9 +2573,9 @@
         },
         {
           "depth_lambda": 0.16,
-          "vertical_field_v2_per_m2_w": 2.561896890480656e-08,
-          "absolute_delta_from_published_reference_db": -0.3281923835109382,
-          "rce_db": -0.3281923835109382,
+          "vertical_field_v2_per_m2_w": 2.5618787420784317e-08,
+          "absolute_delta_from_published_reference_db": -0.32822314891327686,
+          "rce_db": -0.32822314891327686,
           "impedance_ohm": {
             "re": 65.47622868051968,
             "im": 31.372743750754758
@@ -2583,9 +2583,9 @@
         },
         {
           "depth_lambda": 0.165,
-          "vertical_field_v2_per_m2_w": 2.5618962294129154e-08,
-          "absolute_delta_from_published_reference_db": -0.32819350415755766,
-          "rce_db": -0.32819350415755766,
+          "vertical_field_v2_per_m2_w": 2.5618780810156162e-08,
+          "absolute_delta_from_published_reference_db": -0.3282242695594857,
+          "rce_db": -0.3282242695594857,
           "impedance_ohm": {
             "re": 65.47624716716227,
             "im": 31.372772668779646
@@ -2593,9 +2593,9 @@
         },
         {
           "depth_lambda": 0.17,
-          "vertical_field_v2_per_m2_w": 2.5618954881398964e-08,
-          "absolute_delta_from_published_reference_db": -0.32819476076906495,
-          "rce_db": -0.32819476076906495,
+          "vertical_field_v2_per_m2_w": 2.5618773397477992e-08,
+          "absolute_delta_from_published_reference_db": -0.32822552617107636,
+          "rce_db": -0.32822552617107636,
           "impedance_ohm": {
             "re": 65.47626566842025,
             "im": 31.3727838064285
@@ -2603,9 +2603,9 @@
         },
         {
           "depth_lambda": 0.17500000000000002,
-          "vertical_field_v2_per_m2_w": 2.5618949358090858e-08,
-          "absolute_delta_from_published_reference_db": -0.32819569708457946,
-          "rce_db": -0.32819569708457946,
+          "vertical_field_v2_per_m2_w": 2.5618767874207486e-08,
+          "absolute_delta_from_published_reference_db": -0.3282264624868494,
+          "rce_db": -0.3282264624868494,
           "impedance_ohm": {
             "re": 65.47627864344591,
             "im": 31.372784898613947
@@ -2613,9 +2613,9 @@
         },
         {
           "depth_lambda": 0.18,
-          "vertical_field_v2_per_m2_w": 2.5618946307325383e-08,
-          "absolute_delta_from_published_reference_db": -0.32819621425281714,
-          "rce_db": -0.32819621425281714,
+          "vertical_field_v2_per_m2_w": 2.5618764823462218e-08,
+          "absolute_delta_from_published_reference_db": -0.3282269796553258,
+          "rce_db": -0.3282269796553258,
           "impedance_ohm": {
             "re": 65.47628542398496,
             "im": 31.37278219625068
@@ -2623,9 +2623,9 @@
         },
         {
           "depth_lambda": 0.185,
-          "vertical_field_v2_per_m2_w": 2.5618945211596035e-08,
-          "absolute_delta_from_published_reference_db": -0.32819640000176037,
-          "rce_db": -0.32819640000176037,
+          "vertical_field_v2_per_m2_w": 2.5618763727739864e-08,
+          "absolute_delta_from_published_reference_db": -0.3282271654043988,
+          "rce_db": -0.3282271654043988,
           "impedance_ohm": {
             "re": 65.47628768169794,
             "im": 31.372779488757747
@@ -2633,9 +2633,9 @@
         },
         {
           "depth_lambda": 0.19,
-          "vertical_field_v2_per_m2_w": 2.5618945214318938e-08,
-          "absolute_delta_from_published_reference_db": -0.3281963995401713,
-          "rce_db": -0.3281963995401713,
+          "vertical_field_v2_per_m2_w": 2.561876373046268e-08,
+          "absolute_delta_from_published_reference_db": -0.3282271649428215,
+          "rce_db": -0.3282271649428215,
           "impedance_ohm": {
             "re": 65.4762876315394,
             "im": 31.37277837086436
@@ -2643,9 +2643,9 @@
         },
         {
           "depth_lambda": 0.195,
-          "vertical_field_v2_per_m2_w": 2.5618945557065516e-08,
-          "absolute_delta_from_published_reference_db": -0.328196341437488,
-          "rce_db": -0.328196341437488,
+          "vertical_field_v2_per_m2_w": 2.561876407320727e-08,
+          "absolute_delta_from_published_reference_db": -0.32822710684006356,
+          "rce_db": -0.32822710684006356,
           "impedance_ohm": {
             "re": 65.47628707480534,
             "im": 31.372778992544205
@@ -2653,9 +2653,9 @@
         },
         {
           "depth_lambda": 0.2,
-          "vertical_field_v2_per_m2_w": 2.5618945747806073e-08,
-          "absolute_delta_from_published_reference_db": -0.32819630910299125,
-          "rce_db": -0.32819630910299125,
+          "vertical_field_v2_per_m2_w": 2.5618764263947186e-08,
+          "absolute_delta_from_published_reference_db": -0.3282270745054464,
+          "rce_db": -0.3282270745054464,
           "impedance_ohm": {
             "re": 65.47628709181573,
             "im": 31.37278081477082
@@ -2672,9 +2672,9 @@
       "expected_quarter_ground_wavelength_lambda": 0.011124578636683629,
       "measured_peak": {
         "depth_lambda": 0.01,
-        "vertical_field_v2_per_m2_w": 1.8831388523440334e-06,
-        "absolute_delta_from_published_reference_db": -8.075439571672302,
-        "rce_db": -8.075439571672302,
+        "vertical_field_v2_per_m2_w": 1.88312108390133e-06,
+        "absolute_delta_from_published_reference_db": -8.075480549919948,
+        "rce_db": -8.075480549919948,
         "impedance_ohm": {
           "re": 9.25753160249968,
           "im": -500.8474332097877
@@ -2682,9 +2682,9 @@
       },
       "measured_minimum_excluding_zero": {
         "depth_lambda": 0.02,
-        "vertical_field_v2_per_m2_w": 1.8085581002013636e-06,
-        "absolute_delta_from_published_reference_db": -8.25093835763385,
-        "rce_db": -8.25093835763385,
+        "vertical_field_v2_per_m2_w": 1.8085410364801048e-06,
+        "absolute_delta_from_published_reference_db": -8.25097933345289,
+        "rce_db": -8.25097933345289,
         "impedance_ohm": {
           "re": 9.639170845970028,
           "im": -500.7114849841589
@@ -2693,9 +2693,9 @@
       "samples": [
         {
           "depth_lambda": 0.0,
-          "vertical_field_v2_per_m2_w": 1.635461337448457e-06,
-          "absolute_delta_from_published_reference_db": -8.687860190651705,
-          "rce_db": -8.687860190651705,
+          "vertical_field_v2_per_m2_w": 1.6354618852891374e-06,
+          "absolute_delta_from_published_reference_db": -8.687858735868645,
+          "rce_db": -8.687858735868645,
           "impedance_ohm": {
             "re": 14.688092283911805,
             "im": -13900.348250956285
@@ -2703,9 +2703,9 @@
         },
         {
           "depth_lambda": 0.005,
-          "vertical_field_v2_per_m2_w": 1.8270738953739158e-06,
-          "absolute_delta_from_published_reference_db": -8.206701882624,
-          "rce_db": -8.206701882624,
+          "vertical_field_v2_per_m2_w": 1.8270566541470864e-06,
+          "absolute_delta_from_published_reference_db": -8.206742865120775,
+          "rce_db": -8.206742865120775,
           "impedance_ohm": {
             "re": 9.540362971085191,
             "im": -502.1813867779267
@@ -2713,9 +2713,9 @@
         },
         {
           "depth_lambda": 0.01,
-          "vertical_field_v2_per_m2_w": 1.8831388523440334e-06,
-          "absolute_delta_from_published_reference_db": -8.075439571672302,
-          "rce_db": -8.075439571672302,
+          "vertical_field_v2_per_m2_w": 1.88312108390133e-06,
+          "absolute_delta_from_published_reference_db": -8.075480549919948,
+          "rce_db": -8.075480549919948,
           "impedance_ohm": {
             "re": 9.25753160249968,
             "im": -500.8474332097877
@@ -2723,9 +2723,9 @@
         },
         {
           "depth_lambda": 0.015,
-          "vertical_field_v2_per_m2_w": 1.8218963244275563e-06,
-          "absolute_delta_from_published_reference_db": -8.219026411821336,
-          "rce_db": -8.219026411821336,
+          "vertical_field_v2_per_m2_w": 1.8218791349283125e-06,
+          "absolute_delta_from_published_reference_db": -8.219067387478326,
+          "rce_db": -8.219067387478326,
           "impedance_ohm": {
             "re": 9.568781195596305,
             "im": -500.6399026995434
@@ -2733,9 +2733,9 @@
         },
         {
           "depth_lambda": 0.02,
-          "vertical_field_v2_per_m2_w": 1.8085581002013636e-06,
-          "absolute_delta_from_published_reference_db": -8.25093835763385,
-          "rce_db": -8.25093835763385,
+          "vertical_field_v2_per_m2_w": 1.8085410364801048e-06,
+          "absolute_delta_from_published_reference_db": -8.25097933345289,
+          "rce_db": -8.25097933345289,
           "impedance_ohm": {
             "re": 9.639170845970028,
             "im": -500.7114849841589
@@ -2743,9 +2743,9 @@
         },
         {
           "depth_lambda": 0.025,
-          "vertical_field_v2_per_m2_w": 1.8113597223913865e-06,
-          "absolute_delta_from_published_reference_db": -8.244215943700317,
-          "rce_db": -8.244215943700317,
+          "vertical_field_v2_per_m2_w": 1.811342632110669e-06,
+          "absolute_delta_from_published_reference_db": -8.244256919821918,
+          "rce_db": -8.244256919821918,
           "impedance_ohm": {
             "re": 9.624233842813586,
             "im": -500.73188241818417
@@ -2753,9 +2753,9 @@
         },
         {
           "depth_lambda": 0.03,
-          "vertical_field_v2_per_m2_w": 1.8124172168045377e-06,
-          "absolute_delta_from_published_reference_db": -8.241681218141775,
-          "rce_db": -8.241681218141775,
+          "vertical_field_v2_per_m2_w": 1.8124001165356818e-06,
+          "absolute_delta_from_published_reference_db": -8.241722194288819,
+          "rce_db": -8.241722194288819,
           "impedance_ohm": {
             "re": 9.618631518050972,
             "im": -500.72891455281035
@@ -2763,9 +2763,9 @@
         },
         {
           "depth_lambda": 0.035,
-          "vertical_field_v2_per_m2_w": 1.8123074103268886e-06,
-          "absolute_delta_from_published_reference_db": -8.24194434625351,
-          "rce_db": -8.24194434625351,
+          "vertical_field_v2_per_m2_w": 1.812290311103598e-06,
+          "absolute_delta_from_published_reference_db": -8.241985322377708,
+          "rce_db": -8.241985322377708,
           "impedance_ohm": {
             "re": 9.61921863279715,
             "im": -500.72737400742034
@@ -2773,9 +2773,9 @@
         },
         {
           "depth_lambda": 0.04,
-          "vertical_field_v2_per_m2_w": 1.812224714466204e-06,
-          "absolute_delta_from_published_reference_db": -8.242142520002513,
-          "rce_db": -8.242142520002513,
+          "vertical_field_v2_per_m2_w": 1.812207616025075e-06,
+          "absolute_delta_from_published_reference_db": -8.242183496122106,
+          "rce_db": -8.242183496122106,
           "impedance_ohm": {
             "re": 9.619657101697856,
             "im": -500.7274806339054
@@ -2783,9 +2783,9 @@
         },
         {
           "depth_lambda": 0.045,
-          "vertical_field_v2_per_m2_w": 1.8122254791988647e-06,
-          "absolute_delta_from_published_reference_db": -8.242140687342898,
-          "rce_db": -8.242140687342898,
+          "vertical_field_v2_per_m2_w": 1.8122083807500611e-06,
+          "absolute_delta_from_published_reference_db": -8.242181663463592,
+          "rce_db": -8.242181663463592,
           "impedance_ohm": {
             "re": 9.61965273672791,
             "im": -500.72761248035954
@@ -2793,9 +2793,9 @@
         },
         {
           "depth_lambda": 0.05,
-          "vertical_field_v2_per_m2_w": 1.8122324295313736e-06,
-          "absolute_delta_from_published_reference_db": -8.242124031108327,
-          "rce_db": -8.242124031108327,
+          "vertical_field_v2_per_m2_w": 1.8122153310168443e-06,
+          "absolute_delta_from_published_reference_db": -8.242165007229378,
+          "rce_db": -8.242165007229378,
           "impedance_ohm": {
             "re": 9.619615859447503,
             "im": -500.7276256794106
@@ -2803,9 +2803,9 @@
         },
         {
           "depth_lambda": 0.055,
-          "vertical_field_v2_per_m2_w": 1.8122342063315742e-06,
-          "absolute_delta_from_published_reference_db": -8.242119773077562,
-          "rce_db": -8.242119773077562,
+          "vertical_field_v2_per_m2_w": 1.8122171078002946e-06,
+          "absolute_delta_from_published_reference_db": -8.242160749198577,
+          "rce_db": -8.242160749198577,
           "impedance_ohm": {
             "re": 9.61960645338982,
             "im": -500.72761936570913
@@ -2813,9 +2813,9 @@
         },
         {
           "depth_lambda": 0.06,
-          "vertical_field_v2_per_m2_w": 1.8122345035052656e-06,
-          "absolute_delta_from_published_reference_db": -8.242119060913076,
-          "rce_db": -8.242119060913076,
+          "vertical_field_v2_per_m2_w": 1.8122174049712057e-06,
+          "absolute_delta_from_published_reference_db": -8.242160037034038,
+          "rce_db": -8.242160037034038,
           "impedance_ohm": {
             "re": 9.619604893670205,
             "im": -500.727615720939
@@ -2823,9 +2823,9 @@
         },
         {
           "depth_lambda": 0.065,
-          "vertical_field_v2_per_m2_w": 1.8122344694430099e-06,
-          "absolute_delta_from_published_reference_db": -8.24211914254186,
-          "rce_db": -8.24211914254186,
+          "vertical_field_v2_per_m2_w": 1.8122173709093228e-06,
+          "absolute_delta_from_published_reference_db": -8.242160118662698,
+          "rce_db": -8.242160118662698,
           "impedance_ohm": {
             "re": 9.619605099724076,
             "im": -500.72761302638867
@@ -2833,9 +2833,9 @@
         },
         {
           "depth_lambda": 0.07,
-          "vertical_field_v2_per_m2_w": 1.812234177580971e-06,
-          "absolute_delta_from_published_reference_db": -8.2421198419772,
-          "rce_db": -8.2421198419772,
+          "vertical_field_v2_per_m2_w": 1.8122170790501287e-06,
+          "absolute_delta_from_published_reference_db": -8.242160818097819,
+          "rce_db": -8.242160818097819,
           "impedance_ohm": {
             "re": 9.619606678796043,
             "im": -500.72761069151164
@@ -2843,9 +2843,9 @@
         },
         {
           "depth_lambda": 0.075,
-          "vertical_field_v2_per_m2_w": 1.8122336884751777e-06,
-          "absolute_delta_from_published_reference_db": -8.242121014099315,
-          "rce_db": -8.242121014099315,
+          "vertical_field_v2_per_m2_w": 1.8122165899490876e-06,
+          "absolute_delta_from_published_reference_db": -8.242161990219605,
+          "rce_db": -8.242161990219605,
           "impedance_ohm": {
             "re": 9.619609313521353,
             "im": -500.7276085979786
@@ -2853,9 +2853,9 @@
         },
         {
           "depth_lambda": 0.08,
-          "vertical_field_v2_per_m2_w": 1.8122329789124897e-06,
-          "absolute_delta_from_published_reference_db": -8.242122714537963,
-          "rce_db": -8.242122714537963,
+          "vertical_field_v2_per_m2_w": 1.8122158803933267e-06,
+          "absolute_delta_from_published_reference_db": -8.242163690657696,
+          "rce_db": -8.242163690657696,
           "impedance_ohm": {
             "re": 9.619613147655818,
             "im": -500.7276058971393
@@ -2863,9 +2863,9 @@
         },
         {
           "depth_lambda": 0.085,
-          "vertical_field_v2_per_m2_w": 1.8122317852754138e-06,
-          "absolute_delta_from_published_reference_db": -8.242125575043053,
-          "rce_db": -8.242125575043053,
+          "vertical_field_v2_per_m2_w": 1.8122146867679826e-06,
+          "absolute_delta_from_published_reference_db": -8.24216655116166,
+          "rce_db": -8.24216655116166,
           "impedance_ohm": {
             "re": 9.61961963585747,
             "im": -500.72760055597354
@@ -2873,9 +2873,9 @@
         },
         {
           "depth_lambda": 0.09,
-          "vertical_field_v2_per_m2_w": 1.8122292023578166e-06,
-          "absolute_delta_from_published_reference_db": -8.242131764911635,
-          "rce_db": -8.242131764911635,
+          "vertical_field_v2_per_m2_w": 1.8122121038759392e-06,
+          "absolute_delta_from_published_reference_db": -8.242172741027407,
+          "rce_db": -8.242172741027407,
           "impedance_ohm": {
             "re": 9.619633776188193,
             "im": -500.72758626315874
@@ -2883,9 +2883,9 @@
         },
         {
           "depth_lambda": 0.095,
-          "vertical_field_v2_per_m2_w": 1.8122211448481697e-06,
-          "absolute_delta_from_published_reference_db": -8.242151074498704,
-          "rce_db": -8.242151074498704,
+          "vertical_field_v2_per_m2_w": 1.8122040464465785e-06,
+          "absolute_delta_from_published_reference_db": -8.242192050604256,
+          "rce_db": -8.242192050604256,
           "impedance_ohm": {
             "re": 9.619678338782085,
             "im": -500.727529333861
@@ -2893,9 +2893,9 @@
         },
         {
           "depth_lambda": 0.1,
-          "vertical_field_v2_per_m2_w": 1.8121718428328717e-06,
-          "absolute_delta_from_published_reference_db": -8.242269227211528,
-          "rce_db": -8.242269227211528,
+          "vertical_field_v2_per_m2_w": 1.8121547449237813e-06,
+          "absolute_delta_from_published_reference_db": -8.242310203251575,
+          "rce_db": -8.242310203251575,
           "impedance_ohm": {
             "re": 9.619952120434943,
             "im": -500.72715648866574
@@ -2903,9 +2903,9 @@
         },
         {
           "depth_lambda": 0.105,
-          "vertical_field_v2_per_m2_w": 1.8122434694359535e-06,
-          "absolute_delta_from_published_reference_db": -8.242097574485229,
-          "rce_db": -8.242097574485229,
+          "vertical_field_v2_per_m2_w": 1.8122263708137807e-06,
+          "absolute_delta_from_published_reference_db": -8.242138550614621,
+          "rce_db": -8.242138550614621,
           "impedance_ohm": {
             "re": 9.619556387025217,
             "im": -500.72764349617125
@@ -2913,9 +2913,9 @@
         },
         {
           "depth_lambda": 0.11,
-          "vertical_field_v2_per_m2_w": 1.8122360650439634e-06,
-          "absolute_delta_from_published_reference_db": -8.24211531875197,
-          "rce_db": -8.24211531875197,
+          "vertical_field_v2_per_m2_w": 1.8122189664949548e-06,
+          "absolute_delta_from_published_reference_db": -8.242156294873446,
+          "rce_db": -8.242156294873446,
           "impedance_ohm": {
             "re": 9.619596787174459,
             "im": -500.72760963536456
@@ -2923,9 +2923,9 @@
         },
         {
           "depth_lambda": 0.115,
-          "vertical_field_v2_per_m2_w": 1.8122348230837298e-06,
-          "absolute_delta_from_published_reference_db": -8.24211829505661,
-          "rce_db": -8.24211829505661,
+          "vertical_field_v2_per_m2_w": 1.8122177245467036e-06,
+          "absolute_delta_from_published_reference_db": -8.242159271177453,
+          "rce_db": -8.242159271177453,
           "impedance_ohm": {
             "re": 9.619603235149766,
             "im": -500.72761466797385
@@ -2933,9 +2933,9 @@
         },
         {
           "depth_lambda": 0.12,
-          "vertical_field_v2_per_m2_w": 1.812234924543909e-06,
-          "absolute_delta_from_published_reference_db": -8.242118051911548,
-          "rce_db": -8.242118051911548,
+          "vertical_field_v2_per_m2_w": 1.8122178260058573e-06,
+          "absolute_delta_from_published_reference_db": -8.242159028032555,
+          "rce_db": -8.242159028032555,
           "impedance_ohm": {
             "re": 9.619602653575457,
             "im": -500.7276160397797
@@ -2943,9 +2943,9 @@
         },
         {
           "depth_lambda": 0.125,
-          "vertical_field_v2_per_m2_w": 1.812234976957387e-06,
-          "absolute_delta_from_published_reference_db": -8.242117926304854,
-          "rce_db": -8.242117926304854,
+          "vertical_field_v2_per_m2_w": 1.8122178784188248e-06,
+          "absolute_delta_from_published_reference_db": -8.2421589024259,
+          "rce_db": -8.2421589024259,
           "impedance_ohm": {
             "re": 9.619602375685266,
             "im": -500.7276160108581
@@ -2953,9 +2953,9 @@
         },
         {
           "depth_lambda": 0.13,
-          "vertical_field_v2_per_m2_w": 1.8122349792995286e-06,
-          "absolute_delta_from_published_reference_db": -8.24211792069201,
-          "rce_db": -8.24211792069201,
+          "vertical_field_v2_per_m2_w": 1.8122178807609448e-06,
+          "absolute_delta_from_published_reference_db": -8.242158896813054,
+          "rce_db": -8.242158896813054,
           "impedance_ohm": {
             "re": 9.619602364718235,
             "im": -500.727615961791
@@ -2963,9 +2963,9 @@
         },
         {
           "depth_lambda": 0.135,
-          "vertical_field_v2_per_m2_w": 1.8122349780653512e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923649664,
-          "rce_db": -8.242117923649664,
+          "vertical_field_v2_per_m2_w": 1.81221787952678e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899770706,
+          "rce_db": -8.242158899770706,
           "impedance_ohm": {
             "re": 9.619602371404758,
             "im": -500.7276159577752
@@ -2973,9 +2973,9 @@
         },
         {
           "depth_lambda": 0.14,
-          "vertical_field_v2_per_m2_w": 1.812234977982568e-06,
-          "absolute_delta_from_published_reference_db": -8.24211792384805,
-          "rce_db": -8.24211792384805,
+          "vertical_field_v2_per_m2_w": 1.8122178794439972e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899969095,
+          "rce_db": -8.242158899969095,
           "impedance_ohm": {
             "re": 9.619602371826188,
             "im": -500.72761595837824
@@ -2983,9 +2983,9 @@
         },
         {
           "depth_lambda": 0.145,
-          "vertical_field_v2_per_m2_w": 1.8122349780076553e-06,
-          "absolute_delta_from_published_reference_db": -8.24211792378793,
-          "rce_db": -8.24211792378793,
+          "vertical_field_v2_per_m2_w": 1.8122178794690842e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899908974,
+          "rce_db": -8.242158899908974,
           "impedance_ohm": {
             "re": 9.619602371698333,
             "im": -500.72761595818514
@@ -2993,9 +2993,9 @@
         },
         {
           "depth_lambda": 0.15,
-          "vertical_field_v2_per_m2_w": 1.8122349779890034e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923832629,
-          "rce_db": -8.242117923832629,
+          "vertical_field_v2_per_m2_w": 1.8122178794504326e-06,
+          "absolute_delta_from_published_reference_db": -8.24215889995367,
+          "rce_db": -8.24215889995367,
           "impedance_ohm": {
             "re": 9.619602371801149,
             "im": -500.7276159580692
@@ -3003,9 +3003,9 @@
         },
         {
           "depth_lambda": 0.155,
-          "vertical_field_v2_per_m2_w": 1.812234977976464e-06,
-          "absolute_delta_from_published_reference_db": -8.24211792386268,
-          "rce_db": -8.24211792386268,
+          "vertical_field_v2_per_m2_w": 1.8122178794378935e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899983721,
+          "rce_db": -8.242158899983721,
           "impedance_ohm": {
             "re": 9.619602371867591,
             "im": -500.7276159580812
@@ -3013,9 +3013,9 @@
         },
         {
           "depth_lambda": 0.16,
-          "vertical_field_v2_per_m2_w": 1.8122349779740901e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923868367,
-          "rce_db": -8.242117923868367,
+          "vertical_field_v2_per_m2_w": 1.812217879435519e-06,
+          "absolute_delta_from_published_reference_db": -8.24215889998941,
+          "rce_db": -8.24215889998941,
           "impedance_ohm": {
             "re": 9.619602371879594,
             "im": -500.72761595810334
@@ -3023,9 +3023,9 @@
         },
         {
           "depth_lambda": 0.165,
-          "vertical_field_v2_per_m2_w": 1.812234977974567e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923867225,
-          "rce_db": -8.242117923867225,
+          "vertical_field_v2_per_m2_w": 1.812217879435997e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899988265,
+          "rce_db": -8.242158899988265,
           "impedance_ohm": {
             "re": 9.619602371876782,
             "im": -500.7276159581116
@@ -3033,9 +3033,9 @@
         },
         {
           "depth_lambda": 0.17,
-          "vertical_field_v2_per_m2_w": 1.8122349779750954e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923865958,
-          "rce_db": -8.242117923865958,
+          "vertical_field_v2_per_m2_w": 1.812217879436525e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899987,
+          "rce_db": -8.242158899987,
           "impedance_ohm": {
             "re": 9.619602371873915,
             "im": -500.7276159581129
@@ -3043,9 +3043,9 @@
         },
         {
           "depth_lambda": 0.17500000000000002,
-          "vertical_field_v2_per_m2_w": 1.8122349779753478e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923865354,
-          "rce_db": -8.242117923865354,
+          "vertical_field_v2_per_m2_w": 1.8122178794367773e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899986396,
+          "rce_db": -8.242158899986396,
           "impedance_ohm": {
             "re": 9.619602371872586,
             "im": -500.7276159581129
@@ -3053,9 +3053,9 @@
         },
         {
           "depth_lambda": 0.18,
-          "vertical_field_v2_per_m2_w": 1.8122349779754e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923865228,
-          "rce_db": -8.242117923865228,
+          "vertical_field_v2_per_m2_w": 1.8122178794368297e-06,
+          "absolute_delta_from_published_reference_db": -8.24215889998627,
+          "rce_db": -8.24215889998627,
           "impedance_ohm": {
             "re": 9.619602371872313,
             "im": -500.7276159581125
@@ -3063,9 +3063,9 @@
         },
         {
           "depth_lambda": 0.185,
-          "vertical_field_v2_per_m2_w": 1.8122349779754028e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923865223,
-          "rce_db": -8.242117923865223,
+          "vertical_field_v2_per_m2_w": 1.8122178794368324e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899986263,
+          "rce_db": -8.242158899986263,
           "impedance_ohm": {
             "re": 9.619602371872304,
             "im": -500.7276159581124
@@ -3073,9 +3073,9 @@
         },
         {
           "depth_lambda": 0.19,
-          "vertical_field_v2_per_m2_w": 1.8122349779753929e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923865246,
-          "rce_db": -8.242117923865246,
+          "vertical_field_v2_per_m2_w": 1.8122178794368225e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899986288,
+          "rce_db": -8.242158899986288,
           "impedance_ohm": {
             "re": 9.619602371872363,
             "im": -500.7276159581124
@@ -3083,9 +3083,9 @@
         },
         {
           "depth_lambda": 0.195,
-          "vertical_field_v2_per_m2_w": 1.8122349779753865e-06,
-          "absolute_delta_from_published_reference_db": -8.24211792386526,
-          "rce_db": -8.24211792386526,
+          "vertical_field_v2_per_m2_w": 1.8122178794368163e-06,
+          "absolute_delta_from_published_reference_db": -8.242158899986302,
+          "rce_db": -8.242158899986302,
           "impedance_ohm": {
             "re": 9.619602371872396,
             "im": -500.7276159581124
@@ -3093,9 +3093,9 @@
         },
         {
           "depth_lambda": 0.2,
-          "vertical_field_v2_per_m2_w": 1.812234977975384e-06,
-          "absolute_delta_from_published_reference_db": -8.242117923865267,
-          "rce_db": -8.242117923865267,
+          "vertical_field_v2_per_m2_w": 1.8122178794368138e-06,
+          "absolute_delta_from_published_reference_db": -8.24215889998631,
+          "rce_db": -8.24215889998631,
           "impedance_ohm": {
             "re": 9.619602371872409,
             "im": -500.7276159581124
@@ -3103,8 +3103,8 @@
         }
       ],
       "height_separation_db": {
-        "minimum": 2.75821899225054,
-        "maximum": 3.2193451364991477
+        "minimum": 2.7582486252412384,
+        "maximum": 3.2193440839160843
       }
     },
     {
@@ -3116,9 +3116,9 @@
       "expected_quarter_ground_wavelength_lambda": 0.011124578636683629,
       "measured_peak": {
         "depth_lambda": 0.01,
-        "vertical_field_v2_per_m2_w": 3.5538921400840594e-06,
-        "absolute_delta_from_published_reference_db": -5.317220579421762,
-        "rce_db": -5.317220579421762,
+        "vertical_field_v2_per_m2_w": 3.553882856114653e-06,
+        "absolute_delta_from_published_reference_db": -5.31723192467871,
+        "rce_db": -5.31723192467871,
         "impedance_ohm": {
           "re": 48.15328224995905,
           "im": 19.896066360728643
@@ -3126,9 +3126,9 @@
       },
       "measured_minimum_excluding_zero": {
         "depth_lambda": 0.02,
-        "vertical_field_v2_per_m2_w": 3.5257424185189334e-06,
-        "absolute_delta_from_published_reference_db": -5.351757201527421,
-        "rce_db": -5.351757201527421,
+        "vertical_field_v2_per_m2_w": 3.5257332086293605e-06,
+        "absolute_delta_from_published_reference_db": -5.351768546115226,
+        "rce_db": -5.351768546115226,
         "impedance_ohm": {
           "re": 48.53733864675951,
           "im": 20.03129607689761
@@ -3137,9 +3137,9 @@
       "samples": [
         {
           "depth_lambda": 0.0,
-          "vertical_field_v2_per_m2_w": 3.4322174534338905e-06,
-          "absolute_delta_from_published_reference_db": -5.468515054152557,
-          "rce_db": -5.468515054152557,
+          "vertical_field_v2_per_m2_w": 3.432217771291466e-06,
+          "absolute_delta_from_published_reference_db": -5.46851465195256,
+          "rce_db": -5.46851465195256,
           "impedance_ohm": {
             "re": 70.25663350438363,
             "im": -13151.1006488531
@@ -3147,9 +3147,9 @@
         },
         {
           "depth_lambda": 0.005,
-          "vertical_field_v2_per_m2_w": 3.5329460624791633e-06,
-          "absolute_delta_from_published_reference_db": -5.342892937532627,
-          "rce_db": -5.342892937532627,
+          "vertical_field_v2_per_m2_w": 3.5329368323830125e-06,
+          "absolute_delta_from_published_reference_db": -5.342904283828299,
+          "rce_db": -5.342904283828299,
           "impedance_ohm": {
             "re": 48.43352800170785,
             "im": 18.538822602619025
@@ -3157,9 +3157,9 @@
         },
         {
           "depth_lambda": 0.01,
-          "vertical_field_v2_per_m2_w": 3.5538921400840594e-06,
-          "absolute_delta_from_published_reference_db": -5.317220579421762,
-          "rce_db": -5.317220579421762,
+          "vertical_field_v2_per_m2_w": 3.553882856114653e-06,
+          "absolute_delta_from_published_reference_db": -5.31723192467871,
+          "rce_db": -5.31723192467871,
           "impedance_ohm": {
             "re": 48.15328224995905,
             "im": 19.896066360728643
@@ -3167,9 +3167,9 @@
         },
         {
           "depth_lambda": 0.015,
-          "vertical_field_v2_per_m2_w": 3.5309609241952147e-06,
-          "absolute_delta_from_published_reference_db": -5.345333894433264,
-          "rce_db": -5.345333894433264,
+          "vertical_field_v2_per_m2_w": 3.5309517006882023e-06,
+          "absolute_delta_from_published_reference_db": -5.345345239003532,
+          "rce_db": -5.345345239003532,
           "impedance_ohm": {
             "re": 48.46632744307959,
             "im": 20.10444359051723
@@ -3177,9 +3177,9 @@
         },
         {
           "depth_lambda": 0.02,
-          "vertical_field_v2_per_m2_w": 3.5257424185189334e-06,
-          "absolute_delta_from_published_reference_db": -5.351757201527421,
-          "rce_db": -5.351757201527421,
+          "vertical_field_v2_per_m2_w": 3.5257332086293605e-06,
+          "absolute_delta_from_published_reference_db": -5.351768546115226,
+          "rce_db": -5.351768546115226,
           "impedance_ohm": {
             "re": 48.53733864675951,
             "im": 20.03129607689761
@@ -3187,9 +3187,9 @@
         },
         {
           "depth_lambda": 0.025,
-          "vertical_field_v2_per_m2_w": 3.5268613790546347e-06,
-          "absolute_delta_from_published_reference_db": -5.3503791051416085,
-          "rce_db": -5.3503791051416085,
+          "vertical_field_v2_per_m2_w": 3.5268521661781767e-06,
+          "absolute_delta_from_published_reference_db": -5.350390449808166,
+          "rce_db": -5.350390449808166,
           "impedance_ohm": {
             "re": 48.52180526122565,
             "im": 20.010405231976346
@@ -3197,9 +3197,9 @@
         },
         {
           "depth_lambda": 0.03,
-          "vertical_field_v2_per_m2_w": 3.5272922281564125e-06,
-          "absolute_delta_from_published_reference_db": -5.349848593905005,
-          "rce_db": -5.349848593905005,
+          "vertical_field_v2_per_m2_w": 3.527283014145989e-06,
+          "absolute_delta_from_published_reference_db": -5.349859938582028,
+          "rce_db": -5.349859938582028,
           "impedance_ohm": {
             "re": 48.51593336978086,
             "im": 20.01357781359305
@@ -3207,9 +3207,9 @@
         },
         {
           "depth_lambda": 0.035,
-          "vertical_field_v2_per_m2_w": 3.5272481514650856e-06,
-          "absolute_delta_from_published_reference_db": -5.3499028632487,
-          "rce_db": -5.3499028632487,
+          "vertical_field_v2_per_m2_w": 3.527238937575059e-06,
+          "absolute_delta_from_published_reference_db": -5.349914207919247,
+          "rce_db": -5.349914207919247,
           "impedance_ohm": {
             "re": 48.51656219665309,
             "im": 20.015236505678217
@@ -3217,9 +3217,9 @@
         },
         {
           "depth_lambda": 0.04,
-          "vertical_field_v2_per_m2_w": 3.5272149324286404e-06,
-          "absolute_delta_from_published_reference_db": -5.349943764573297,
-          "rce_db": -5.349943764573297,
+          "vertical_field_v2_per_m2_w": 3.5272057186265842e-06,
+          "absolute_delta_from_published_reference_db": -5.349955109242373,
+          "rce_db": -5.349955109242373,
           "impedance_ohm": {
             "re": 48.517017971421296,
             "im": 20.015130890033753
@@ -3227,9 +3227,9 @@
         },
         {
           "depth_lambda": 0.045,
-          "vertical_field_v2_per_m2_w": 3.527215665319881e-06,
-          "absolute_delta_from_published_reference_db": -5.349942862188286,
-          "rce_db": -5.349942862188286,
+          "vertical_field_v2_per_m2_w": 3.527206451515791e-06,
+          "absolute_delta_from_published_reference_db": -5.349954206857509,
+          "rce_db": -5.349954206857509,
           "impedance_ohm": {
             "re": 48.51700759912383,
             "im": 20.015007568471766
@@ -3237,9 +3237,9 @@
         },
         {
           "depth_lambda": 0.05,
-          "vertical_field_v2_per_m2_w": 3.527218080258015e-06,
-          "absolute_delta_from_published_reference_db": -5.349939888755284,
-          "rce_db": -5.349939888755284,
+          "vertical_field_v2_per_m2_w": 3.527208866447736e-06,
+          "absolute_delta_from_published_reference_db": -5.34995123342436,
+          "rce_db": -5.34995123342436,
           "impedance_ohm": {
             "re": 48.51697499578579,
             "im": 20.01500477048981
@@ -3247,9 +3247,9 @@
         },
         {
           "depth_lambda": 0.055,
-          "vertical_field_v2_per_m2_w": 3.5272182635093194e-06,
-          "absolute_delta_from_published_reference_db": -5.349939663124131,
-          "rce_db": -5.349939663124131,
+          "vertical_field_v2_per_m2_w": 3.5272090496986806e-06,
+          "absolute_delta_from_published_reference_db": -5.349951007793059,
+          "rce_db": -5.349951007793059,
           "impedance_ohm": {
             "re": 48.516972491169035,
             "im": 20.01501280712943
@@ -3257,9 +3257,9 @@
         },
         {
           "depth_lambda": 0.06,
-          "vertical_field_v2_per_m2_w": 3.527218129900527e-06,
-          "absolute_delta_from_published_reference_db": -5.349939827632131,
-          "rce_db": -5.349939827632131,
+          "vertical_field_v2_per_m2_w": 3.527208916090255e-06,
+          "absolute_delta_from_published_reference_db": -5.349951172301038,
+          "rce_db": -5.349951172301038,
           "impedance_ohm": {
             "re": 48.51697412700841,
             "im": 20.015013879150953
@@ -3267,9 +3267,9 @@
         },
         {
           "depth_lambda": 0.065,
-          "vertical_field_v2_per_m2_w": 3.5272181033438776e-06,
-          "absolute_delta_from_published_reference_db": -5.349939860330439,
-          "rce_db": -5.349939860330439,
+          "vertical_field_v2_per_m2_w": 3.5272088895336556e-06,
+          "absolute_delta_from_published_reference_db": -5.34995120499937,
+          "rce_db": -5.34995120499937,
           "impedance_ohm": {
             "re": 48.516974379822045,
             "im": 20.01501368010917
@@ -3277,9 +3277,9 @@
         },
         {
           "depth_lambda": 0.07,
-          "vertical_field_v2_per_m2_w": 3.527218101901415e-06,
-          "absolute_delta_from_published_reference_db": -5.349939862106494,
-          "rce_db": -5.349939862106494,
+          "vertical_field_v2_per_m2_w": 3.5272088880911877e-06,
+          "absolute_delta_from_published_reference_db": -5.349951206775437,
+          "rce_db": -5.349951206775437,
           "impedance_ohm": {
             "re": 48.516974372493664,
             "im": 20.015013712871962
@@ -3287,9 +3287,9 @@
         },
         {
           "depth_lambda": 0.075,
-          "vertical_field_v2_per_m2_w": 3.527218097653918e-06,
-          "absolute_delta_from_published_reference_db": -5.349939867336294,
-          "rce_db": -5.349939867336294,
+          "vertical_field_v2_per_m2_w": 3.5272088838436957e-06,
+          "absolute_delta_from_published_reference_db": -5.349951212005244,
+          "rce_db": -5.349951212005244,
           "impedance_ohm": {
             "re": 48.5169744338523,
             "im": 20.015013748920335
@@ -3297,9 +3297,9 @@
         },
         {
           "depth_lambda": 0.08,
-          "vertical_field_v2_per_m2_w": 3.527218094743939e-06,
-          "absolute_delta_from_published_reference_db": -5.349939870919254,
-          "rce_db": -5.349939870919254,
+          "vertical_field_v2_per_m2_w": 3.5272088809337237e-06,
+          "absolute_delta_from_published_reference_db": -5.349951215588204,
+          "rce_db": -5.349951215588204,
           "impedance_ohm": {
             "re": 48.51697448074626,
             "im": 20.0150137321861
@@ -3307,9 +3307,9 @@
         },
         {
           "depth_lambda": 0.085,
-          "vertical_field_v2_per_m2_w": 3.5272180940784294e-06,
-          "absolute_delta_from_published_reference_db": -5.349939871738672,
-          "rce_db": -5.349939871738672,
+          "vertical_field_v2_per_m2_w": 3.527208880268216e-06,
+          "absolute_delta_from_published_reference_db": -5.349951216407623,
+          "rce_db": -5.349951216407623,
           "impedance_ohm": {
             "re": 48.516974494011265,
             "im": 20.01501370954433
@@ -3317,9 +3317,9 @@
         },
         {
           "depth_lambda": 0.09,
-          "vertical_field_v2_per_m2_w": 3.5272180941787117e-06,
-          "absolute_delta_from_published_reference_db": -5.349939871615199,
-          "rce_db": -5.349939871615199,
+          "vertical_field_v2_per_m2_w": 3.5272088803685e-06,
+          "absolute_delta_from_published_reference_db": -5.349951216284147,
+          "rce_db": -5.349951216284147,
           "impedance_ohm": {
             "re": 48.516974494045485,
             "im": 20.015013699442886
@@ -3327,9 +3327,9 @@
         },
         {
           "depth_lambda": 0.095,
-          "vertical_field_v2_per_m2_w": 3.5272180941760347e-06,
-          "absolute_delta_from_published_reference_db": -5.349939871618494,
-          "rce_db": -5.349939871618494,
+          "vertical_field_v2_per_m2_w": 3.527208880365822e-06,
+          "absolute_delta_from_published_reference_db": -5.349951216287444,
+          "rce_db": -5.349951216287444,
           "impedance_ohm": {
             "re": 48.51697449420168,
             "im": 20.015013698919525
@@ -3337,9 +3337,9 @@
         },
         {
           "depth_lambda": 0.1,
-          "vertical_field_v2_per_m2_w": 3.527218093889988e-06,
-          "absolute_delta_from_published_reference_db": -5.349939871970695,
-          "rce_db": -5.349939871970695,
+          "vertical_field_v2_per_m2_w": 3.527208880079775e-06,
+          "absolute_delta_from_published_reference_db": -5.349951216639645,
+          "rce_db": -5.349951216639645,
           "impedance_ohm": {
             "re": 48.51697449796248,
             "im": 20.015013702346046
@@ -3347,9 +3347,9 @@
         },
         {
           "depth_lambda": 0.105,
-          "vertical_field_v2_per_m2_w": 3.5272180933870697e-06,
-          "absolute_delta_from_published_reference_db": -5.34993987258992,
-          "rce_db": -5.34993987258992,
+          "vertical_field_v2_per_m2_w": 3.5272088795768587e-06,
+          "absolute_delta_from_published_reference_db": -5.34995121725887,
+          "rce_db": -5.34995121725887,
           "impedance_ohm": {
             "re": 48.516974504808765,
             "im": 20.015013706521934
@@ -3357,9 +3357,9 @@
         },
         {
           "depth_lambda": 0.11,
-          "vertical_field_v2_per_m2_w": 3.5272180927605385e-06,
-          "absolute_delta_from_published_reference_db": -5.349939873361347,
-          "rce_db": -5.349939873361347,
+          "vertical_field_v2_per_m2_w": 3.5272088789503313e-06,
+          "absolute_delta_from_published_reference_db": -5.349951218030295,
+          "rce_db": -5.349951218030295,
           "impedance_ohm": {
             "re": 48.516974513520424,
             "im": 20.015013710410685
@@ -3367,9 +3367,9 @@
         },
         {
           "depth_lambda": 0.115,
-          "vertical_field_v2_per_m2_w": 3.5272180920652e-06,
-          "absolute_delta_from_published_reference_db": -5.349939874217494,
-          "rce_db": -5.349939874217494,
+          "vertical_field_v2_per_m2_w": 3.527208878254994e-06,
+          "absolute_delta_from_published_reference_db": -5.349951218886443,
+          "rce_db": -5.349951218886443,
           "impedance_ohm": {
             "re": 48.516974523313785,
             "im": 20.015013714078396
@@ -3377,9 +3377,9 @@
         },
         {
           "depth_lambda": 0.12,
-          "vertical_field_v2_per_m2_w": 3.527218091315434e-06,
-          "absolute_delta_from_published_reference_db": -5.349939875140654,
-          "rce_db": -5.349939875140654,
+          "vertical_field_v2_per_m2_w": 3.5272088775052312e-06,
+          "absolute_delta_from_published_reference_db": -5.349951219809602,
+          "rce_db": -5.349951219809602,
           "impedance_ohm": {
             "re": 48.51697453396855,
             "im": 20.015013717902743
@@ -3387,9 +3387,9 @@
         },
         {
           "depth_lambda": 0.125,
-          "vertical_field_v2_per_m2_w": 3.5272180905018167e-06,
-          "absolute_delta_from_published_reference_db": -5.349939876142436,
-          "rce_db": -5.349939876142436,
+          "vertical_field_v2_per_m2_w": 3.5272088766916163e-06,
+          "absolute_delta_from_published_reference_db": -5.349951220811382,
+          "rce_db": -5.349951220811382,
           "impedance_ohm": {
             "re": 48.51697454561678,
             "im": 20.0150137222089
@@ -3397,9 +3397,9 @@
         },
         {
           "depth_lambda": 0.13,
-          "vertical_field_v2_per_m2_w": 3.527218089605758e-06,
-          "absolute_delta_from_published_reference_db": -5.349939877245722,
-          "rce_db": -5.349939877245722,
+          "vertical_field_v2_per_m2_w": 3.52720887579556e-06,
+          "absolute_delta_from_published_reference_db": -5.349951221914669,
+          "rce_db": -5.349951221914669,
           "impedance_ohm": {
             "re": 48.516974558531096,
             "im": 20.01501372719853
@@ -3407,9 +3407,9 @@
         },
         {
           "depth_lambda": 0.135,
-          "vertical_field_v2_per_m2_w": 3.5272180886063886e-06,
-          "absolute_delta_from_published_reference_db": -5.349939878476212,
-          "rce_db": -5.349939878476212,
+          "vertical_field_v2_per_m2_w": 3.5272088747961937e-06,
+          "absolute_delta_from_published_reference_db": -5.349951223145157,
+          "rce_db": -5.349951223145157,
           "impedance_ohm": {
             "re": 48.516974573023234,
             "im": 20.01501373300153
@@ -3417,9 +3417,9 @@
         },
         {
           "depth_lambda": 0.14,
-          "vertical_field_v2_per_m2_w": 3.5272180874816246e-06,
-          "absolute_delta_from_published_reference_db": -5.349939879861097,
-          "rce_db": -5.349939879861097,
+          "vertical_field_v2_per_m2_w": 3.5272088736714343e-06,
+          "absolute_delta_from_published_reference_db": -5.34995122453004,
+          "rce_db": -5.34995122453004,
           "impedance_ohm": {
             "re": 48.51697458942707,
             "im": 20.01501373973933
@@ -3427,9 +3427,9 @@
         },
         {
           "depth_lambda": 0.145,
-          "vertical_field_v2_per_m2_w": 3.5272180862065046e-06,
-          "absolute_delta_from_published_reference_db": -5.349939881431109,
-          "rce_db": -5.349939881431109,
+          "vertical_field_v2_per_m2_w": 3.527208872396318e-06,
+          "absolute_delta_from_published_reference_db": -5.3499512261000515,
+          "rce_db": -5.3499512261000515,
           "impedance_ohm": {
             "re": 48.51697460812251,
             "im": 20.015013747565963
@@ -3437,9 +3437,9 @@
         },
         {
           "depth_lambda": 0.15,
-          "vertical_field_v2_per_m2_w": 3.527218084750738e-06,
-          "absolute_delta_from_published_reference_db": -5.349939883223545,
-          "rce_db": -5.349939883223545,
+          "vertical_field_v2_per_m2_w": 3.527208870940557e-06,
+          "absolute_delta_from_published_reference_db": -5.349951227892485,
+          "rce_db": -5.349951227892485,
           "impedance_ohm": {
             "re": 48.51697462957348,
             "im": 20.015013756688447
@@ -3447,9 +3447,9 @@
         },
         {
           "depth_lambda": 0.155,
-          "vertical_field_v2_per_m2_w": 3.527218083076125e-06,
-          "absolute_delta_from_published_reference_db": -5.34993988528544,
-          "rce_db": -5.34993988528544,
+          "vertical_field_v2_per_m2_w": 3.5272088692659486e-06,
+          "absolute_delta_from_published_reference_db": -5.34995122995438,
+          "rce_db": -5.34995122995438,
           "impedance_ohm": {
             "re": 48.516974654366074,
             "im": 20.01501376738153
@@ -3457,9 +3457,9 @@
         },
         {
           "depth_lambda": 0.16,
-          "vertical_field_v2_per_m2_w": 3.5272180811337043e-06,
-          "absolute_delta_from_published_reference_db": -5.349939887677077,
-          "rce_db": -5.349939887677077,
+          "vertical_field_v2_per_m2_w": 3.5272088673235344e-06,
+          "absolute_delta_from_published_reference_db": -5.349951232346015,
+          "rce_db": -5.349951232346015,
           "impedance_ohm": {
             "re": 48.51697468325298,
             "im": 20.015013780005287
@@ -3467,9 +3467,9 @@
         },
         {
           "depth_lambda": 0.165,
-          "vertical_field_v2_per_m2_w": 3.527218078859987e-06,
-          "absolute_delta_from_published_reference_db": -5.349939890476628,
-          "rce_db": -5.349939890476628,
+          "vertical_field_v2_per_m2_w": 3.527208865049827e-06,
+          "absolute_delta_from_published_reference_db": -5.349951235145562,
+          "rce_db": -5.349951235145562,
           "impedance_ohm": {
             "re": 48.51697471721279,
             "im": 20.015013795033052
@@ -3477,9 +3477,9 @@
         },
         {
           "depth_lambda": 0.17,
-          "vertical_field_v2_per_m2_w": 3.5272180761716993e-06,
-          "absolute_delta_from_published_reference_db": -5.349939893786626,
-          "rce_db": -5.349939893786626,
+          "vertical_field_v2_per_m2_w": 3.527208862361548e-06,
+          "absolute_delta_from_published_reference_db": -5.349951238455558,
+          "rce_db": -5.349951238455558,
           "impedance_ohm": {
             "re": 48.51697475753199,
             "im": 20.01501381309469
@@ -3487,9 +3487,9 @@
         },
         {
           "depth_lambda": 0.17500000000000002,
-          "vertical_field_v2_per_m2_w": 3.5272180729580017e-06,
-          "absolute_delta_from_published_reference_db": -5.349939897743544,
-          "rce_db": -5.349939897743544,
+          "vertical_field_v2_per_m2_w": 3.527208859147859e-06,
+          "absolute_delta_from_published_reference_db": -5.349951242412477,
+          "rce_db": -5.349951242412477,
           "impedance_ohm": {
             "re": 48.516974805928385,
             "im": 20.015013835042783
@@ -3497,9 +3497,9 @@
         },
         {
           "depth_lambda": 0.18,
-          "vertical_field_v2_per_m2_w": 3.5272180690688313e-06,
-          "absolute_delta_from_published_reference_db": -5.349939902532148,
-          "rce_db": -5.349939902532148,
+          "vertical_field_v2_per_m2_w": 3.527208855258703e-06,
+          "absolute_delta_from_published_reference_db": -5.349951247201075,
+          "rce_db": -5.349951247201075,
           "impedance_ohm": {
             "re": 48.51697486473392,
             "im": 20.015013862052253
@@ -3507,9 +3507,9 @@
         },
         {
           "depth_lambda": 0.185,
-          "vertical_field_v2_per_m2_w": 3.5272180642971597e-06,
-          "absolute_delta_from_published_reference_db": -5.349939908407348,
-          "rce_db": -5.349939908407348,
+          "vertical_field_v2_per_m2_w": 3.5272088504870465e-06,
+          "absolute_delta_from_published_reference_db": -5.34995125307627,
+          "rce_db": -5.34995125307627,
           "impedance_ohm": {
             "re": 48.516974937177345,
             "im": 20.01501389577795
@@ -3517,9 +3517,9 @@
         },
         {
           "depth_lambda": 0.19,
-          "vertical_field_v2_per_m2_w": 3.5272180583511243e-06,
-          "absolute_delta_from_published_reference_db": -5.3499399157285,
-          "rce_db": -5.3499399157285,
+          "vertical_field_v2_per_m2_w": 3.527208844541031e-06,
+          "absolute_delta_from_published_reference_db": -5.349951260397418,
+          "rce_db": -5.349951260397418,
           "impedance_ohm": {
             "re": 48.51697502782767,
             "im": 20.015013938608103
@@ -3527,9 +3527,9 @@
         },
         {
           "depth_lambda": 0.195,
-          "vertical_field_v2_per_m2_w": 3.5272180508087004e-06,
-          "absolute_delta_from_published_reference_db": -5.349939925015232,
-          "rce_db": -5.349939925015232,
+          "vertical_field_v2_per_m2_w": 3.5272088369986342e-06,
+          "absolute_delta_from_published_reference_db": -5.349951269684141,
+          "rce_db": -5.349951269684141,
           "impedance_ohm": {
             "re": 48.51697514331691,
             "im": 20.015013994081627
@@ -3537,9 +3537,9 @@
         },
         {
           "depth_lambda": 0.2,
-          "vertical_field_v2_per_m2_w": 3.5272180410417032e-06,
-          "absolute_delta_from_published_reference_db": -5.3499399370410075,
-          "rce_db": -5.3499399370410075,
+          "vertical_field_v2_per_m2_w": 3.527208827231671e-06,
+          "absolute_delta_from_published_reference_db": -5.349951281709906,
+          "rce_db": -5.349951281709906,
           "impedance_ohm": {
             "re": 48.51697529356092,
             "im": 20.015014067612434
@@ -3555,9 +3555,9 @@
       "depth_lambda": 0.065,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": -2.538937338124703,
-      "fine_rce_db": -2.632954894103905,
-      "fine_minus_coarse_db": -0.0940175559792018
+      "coarse_rce_db": -2.5390230621122365,
+      "fine_rce_db": -2.633040619539551,
+      "fine_minus_coarse_db": -0.09401755742731455
     },
     {
       "ground_imaginary_epsilon": 1.0,
@@ -3565,9 +3565,9 @@
       "depth_lambda": 0.155,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": -20.085076915944263,
-      "fine_rce_db": -20.17423233189659,
-      "fine_minus_coarse_db": -0.08915541595232668
+      "coarse_rce_db": -20.085229942019126,
+      "fine_rce_db": -20.17438542414876,
+      "fine_minus_coarse_db": -0.08915548212963387
     },
     {
       "ground_imaginary_epsilon": 1.0,
@@ -3575,9 +3575,9 @@
       "depth_lambda": 0.055,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": 1.3388505778326667,
-      "fine_rce_db": 1.2430935123633633,
-      "fine_minus_coarse_db": -0.0957570654693034
+      "coarse_rce_db": 1.338822422581337,
+      "fine_rce_db": 1.243065366219699,
+      "fine_minus_coarse_db": -0.0957570563616379
     },
     {
       "ground_imaginary_epsilon": 1.0,
@@ -3585,9 +3585,9 @@
       "depth_lambda": 0.155,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": -8.280550033929082,
-      "fine_rce_db": -8.368730284080144,
-      "fine_minus_coarse_db": -0.08818025015106201
+      "coarse_rce_db": -8.280584577969943,
+      "fine_rce_db": -8.368764818465502,
+      "fine_minus_coarse_db": -0.08818024049555895
     },
     {
       "ground_imaginary_epsilon": 10.0,
@@ -3595,9 +3595,9 @@
       "depth_lambda": 0.07,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": -3.744940829807061,
-      "fine_rce_db": -3.8361531350528684,
-      "fine_minus_coarse_db": -0.09121230524580737
+      "coarse_rce_db": -3.7450284298449588,
+      "fine_rce_db": -3.836240738184796,
+      "fine_minus_coarse_db": -0.09121230833983729
     },
     {
       "ground_imaginary_epsilon": 10.0,
@@ -3605,9 +3605,9 @@
       "depth_lambda": 0.065,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": 1.8260013885053574,
-      "fine_rce_db": 1.7306317787737457,
-      "fine_minus_coarse_db": -0.09536960973161168
+      "coarse_rce_db": 1.8259722970521377,
+      "fine_rce_db": 1.730602697008761,
+      "fine_minus_coarse_db": -0.0953696000433768
     },
     {
       "ground_imaginary_epsilon": 100.0,
@@ -3615,9 +3615,9 @@
       "depth_lambda": 0.03,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": -4.537333182211064,
-      "fine_rce_db": -4.631545584606042,
-      "fine_minus_coarse_db": -0.09421240239497752
+      "coarse_rce_db": -4.537429015283468,
+      "fine_rce_db": -4.631641424692763,
+      "fine_minus_coarse_db": -0.09421240940929465
     },
     {
       "ground_imaginary_epsilon": 100.0,
@@ -3625,9 +3625,9 @@
       "depth_lambda": 0.03,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": -0.22648123206467377,
-      "fine_rce_db": -0.3224951683330518,
-      "fine_minus_coarse_db": -0.09601393626837804
+      "coarse_rce_db": -0.22651200078754194,
+      "fine_rce_db": -0.32252592718520984,
+      "fine_minus_coarse_db": -0.0960139263976679
     },
     {
       "ground_imaginary_epsilon": 1000.0,
@@ -3635,9 +3635,9 @@
       "depth_lambda": 0.01,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": -8.075439571672302,
-      "fine_rce_db": -8.174656405343088,
-      "fine_minus_coarse_db": -0.09921683367078593
+      "coarse_rce_db": -8.075480549919948,
+      "fine_rce_db": -8.174697385433817,
+      "fine_minus_coarse_db": -0.09921683551386806
     },
     {
       "ground_imaginary_epsilon": 1000.0,
@@ -3645,9 +3645,9 @@
       "depth_lambda": 0.01,
       "coarse_segment_length_lambda": 0.005,
       "fine_segment_length_lambda": 0.0025,
-      "coarse_rce_db": -5.317220579421762,
-      "fine_rce_db": -5.413584127661394,
-      "fine_minus_coarse_db": -0.09636354823963167
+      "coarse_rce_db": -5.31723192467871,
+      "fine_rce_db": -5.413595465822178,
+      "fine_minus_coarse_db": -0.09636354114346801
     }
   ]
 }

@@ -1,0 +1,717 @@
+{
+  "schema": "nec2c-nec4-m10d-radial-screen",
+  "schema_version": 2,
+  "source": "Burke-King-Miller 1984 surface-wave report, Figure 5 and appendix",
+  "evidence_capture": "Recovered at printed 0.001 dB precision from the completed 2026-11-19 production sweep; exact refinement endpoints retained separately below. RCE values were subsequently corrected to the report-defined same-path reference normalization.",
+  "frequency_mhz": 299.792458,
+  "monopole_height_lambda": 0.25,
+  "wire_radius_lambda": 1e-06,
+  "screen_depth_lambda": 1e-05,
+  "observation": {
+    "rho_lambda": 1000,
+    "z_lambda": 0,
+    "component": "Ez"
+  },
+  "maximum_radial_pitch_lambda": 0.02,
+  "curves": [
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1
+      },
+      "radial_count": 5,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 1.82659,
+          "rce_db_published_reference_original": 1.664
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 2.38259,
+          "rce_db_published_reference_original": 2.22
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 2.62459,
+          "rce_db_published_reference_original": 2.462
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 0.32959,
+          "rce_db_published_reference_original": 0.167
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": -1.13041,
+          "rce_db_published_reference_original": -1.293
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": -3.43141,
+          "rce_db_published_reference_original": -3.594
+        },
+        {
+          "screen_radius_lambda": 0.5,
+          "rce_db": -0.42541,
+          "rce_db_published_reference_original": -0.588
+        },
+        {
+          "screen_radius_lambda": 0.6,
+          "rce_db": 0.50259,
+          "rce_db_published_reference_original": 0.34
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1
+      },
+      "radial_count": 10,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 1.95959,
+          "rce_db_published_reference_original": 1.797
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 2.48559,
+          "rce_db_published_reference_original": 2.323
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 2.77659,
+          "rce_db_published_reference_original": 2.614
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 0.38259,
+          "rce_db_published_reference_original": 0.22
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": -1.86241,
+          "rce_db_published_reference_original": -2.025
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": -0.37141,
+          "rce_db_published_reference_original": -0.534
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1
+      },
+      "radial_count": 20,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 2.05459,
+          "rce_db_published_reference_original": 1.892
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 2.55759,
+          "rce_db_published_reference_original": 2.395
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 2.89359,
+          "rce_db_published_reference_original": 2.731
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 0.94259,
+          "rce_db_published_reference_original": 0.78
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": -0.91241,
+          "rce_db_published_reference_original": -1.075
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 1.68959,
+          "rce_db_published_reference_original": 1.527
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1
+      },
+      "radial_count": 50,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 2.61559,
+          "rce_db_published_reference_original": 2.453
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1
+      },
+      "radial_count": 100,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 2.64259,
+          "rce_db_published_reference_original": 2.48
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -10
+      },
+      "radial_count": 5,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 2.842124,
+          "rce_db_published_reference_original": 2.207
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 3.978124,
+          "rce_db_published_reference_original": 3.343
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 3.839124,
+          "rce_db_published_reference_original": 3.204
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 2.907124,
+          "rce_db_published_reference_original": 2.272
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 2.585124,
+          "rce_db_published_reference_original": 1.95
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 2.659124,
+          "rce_db_published_reference_original": 2.024
+        },
+        {
+          "screen_radius_lambda": 0.5,
+          "rce_db": 2.593124,
+          "rce_db_published_reference_original": 1.958
+        },
+        {
+          "screen_radius_lambda": 0.6,
+          "rce_db": 2.576124,
+          "rce_db_published_reference_original": 1.941
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -10
+      },
+      "radial_count": 10,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 3.257124,
+          "rce_db_published_reference_original": 2.622
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 4.352124,
+          "rce_db_published_reference_original": 3.717
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 4.384124,
+          "rce_db_published_reference_original": 3.749
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 3.731124,
+          "rce_db_published_reference_original": 3.096
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 3.527124,
+          "rce_db_published_reference_original": 2.892
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 3.584124,
+          "rce_db_published_reference_original": 2.949
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -10
+      },
+      "radial_count": 20,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 3.584124,
+          "rce_db_published_reference_original": 2.949
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 4.624124,
+          "rce_db_published_reference_original": 3.989
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 4.816124,
+          "rce_db_published_reference_original": 4.181
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 4.817124,
+          "rce_db_published_reference_original": 4.182
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 4.613124,
+          "rce_db_published_reference_original": 3.978
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 4.608124,
+          "rce_db_published_reference_original": 3.973
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -10
+      },
+      "radial_count": 50,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 4.827124,
+          "rce_db_published_reference_original": 4.192
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -10
+      },
+      "radial_count": 100,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 4.906124,
+          "rce_db_published_reference_original": 4.271
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -100
+      },
+      "radial_count": 5,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 1.501051,
+          "rce_db_published_reference_original": 0.345
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 1.585051,
+          "rce_db_published_reference_original": 0.429
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 1.572051,
+          "rce_db_published_reference_original": 0.416
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 1.617051,
+          "rce_db_published_reference_original": 0.461
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 1.631051,
+          "rce_db_published_reference_original": 0.475
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 1.638051,
+          "rce_db_published_reference_original": 0.482
+        },
+        {
+          "screen_radius_lambda": 0.5,
+          "rce_db": 1.642051,
+          "rce_db_published_reference_original": 0.486
+        },
+        {
+          "screen_radius_lambda": 0.6,
+          "rce_db": 1.642051,
+          "rce_db_published_reference_original": 0.486
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -100
+      },
+      "radial_count": 10,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 1.653051,
+          "rce_db_published_reference_original": 0.497
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 1.827051,
+          "rce_db_published_reference_original": 0.671
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 1.827051,
+          "rce_db_published_reference_original": 0.671
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 1.896051,
+          "rce_db_published_reference_original": 0.74
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 1.922051,
+          "rce_db_published_reference_original": 0.766
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 1.934051,
+          "rce_db_published_reference_original": 0.778
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -100
+      },
+      "radial_count": 20,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 1.780051,
+          "rce_db_published_reference_original": 0.624
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 2.049051,
+          "rce_db_published_reference_original": 0.893
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 2.084051,
+          "rce_db_published_reference_original": 0.928
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 2.190051,
+          "rce_db_published_reference_original": 1.034
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 2.237051,
+          "rce_db_published_reference_original": 1.081
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 2.258051,
+          "rce_db_published_reference_original": 1.102
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -100
+      },
+      "radial_count": 50,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 2.227051,
+          "rce_db_published_reference_original": 1.071
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -100
+      },
+      "radial_count": 100,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 2.283051,
+          "rce_db_published_reference_original": 1.127
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1000
+      },
+      "radial_count": 5,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 0.50181,
+          "rce_db_published_reference_original": -5.094
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 0.50281,
+          "rce_db_published_reference_original": -5.093
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 0.50581,
+          "rce_db_published_reference_original": -5.09
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 0.50481,
+          "rce_db_published_reference_original": -5.091
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 0.50581,
+          "rce_db_published_reference_original": -5.09
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 0.50581,
+          "rce_db_published_reference_original": -5.09
+        },
+        {
+          "screen_radius_lambda": 0.5,
+          "rce_db": 0.50581,
+          "rce_db_published_reference_original": -5.09
+        },
+        {
+          "screen_radius_lambda": 0.6,
+          "rce_db": 0.50581,
+          "rce_db_published_reference_original": -5.09
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1000
+      },
+      "radial_count": 10,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 0.56781,
+          "rce_db_published_reference_original": -5.028
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 0.57681,
+          "rce_db_published_reference_original": -5.019
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 0.58081,
+          "rce_db_published_reference_original": -5.015
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 0.58281,
+          "rce_db_published_reference_original": -5.013
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 0.58481,
+          "rce_db_published_reference_original": -5.011
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 0.58581,
+          "rce_db_published_reference_original": -5.01
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1000
+      },
+      "radial_count": 20,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.05,
+          "rce_db": 0.63681,
+          "rce_db_published_reference_original": -4.959
+        },
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 0.66181,
+          "rce_db_published_reference_original": -4.934
+        },
+        {
+          "screen_radius_lambda": 0.15,
+          "rce_db": 0.66881,
+          "rce_db_published_reference_original": -4.927
+        },
+        {
+          "screen_radius_lambda": 0.2,
+          "rce_db": 0.67481,
+          "rce_db_published_reference_original": -4.921
+        },
+        {
+          "screen_radius_lambda": 0.3,
+          "rce_db": 0.67881,
+          "rce_db_published_reference_original": -4.917
+        },
+        {
+          "screen_radius_lambda": 0.4,
+          "rce_db": 0.67981,
+          "rce_db_published_reference_original": -4.916
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1000
+      },
+      "radial_count": 50,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 0.76281,
+          "rce_db_published_reference_original": -4.833
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10,
+        "im": -1000
+      },
+      "radial_count": 100,
+      "samples": [
+        {
+          "screen_radius_lambda": 0.1,
+          "rce_db": 0.81381,
+          "rce_db_published_reference_original": -4.782
+        }
+      ]
+    }
+  ],
+  "refinement_checks": [
+    {
+      "ground_imaginary_epsilon": 1,
+      "radial_count": 5,
+      "screen_radius_lambda": 0.2,
+      "coarse_pitch_lambda": 0.02,
+      "fine_pitch_lambda": 0.01,
+      "coarse_rce_db": 0.3296283748501633,
+      "fine_rce_db": -0.11701940330926391,
+      "fine_minus_coarse_db": -0.4466477781594272,
+      "coarse_rce_db_published_reference_original": 0.167038738328666,
+      "fine_rce_db_published_reference_original": -0.2796090398307612,
+      "normalization": "same-path reference"
+    },
+    {
+      "ground_imaginary_epsilon": 10,
+      "radial_count": 20,
+      "screen_radius_lambda": 0.2,
+      "coarse_pitch_lambda": 0.02,
+      "fine_pitch_lambda": 0.01,
+      "coarse_rce_db": 4.8170251216153055,
+      "fine_rce_db": 5.267420742295062,
+      "fine_minus_coarse_db": 0.4503956206797568,
+      "coarse_rce_db_published_reference_original": 4.181900967701177,
+      "fine_rce_db_published_reference_original": 4.6322965883809335,
+      "normalization": "same-path reference"
+    },
+    {
+      "ground_imaginary_epsilon": 10,
+      "radial_count": 100,
+      "screen_radius_lambda": 0.1,
+      "coarse_pitch_lambda": 0.02,
+      "fine_pitch_lambda": 0.01,
+      "coarse_rce_db": 4.9060265612091465,
+      "fine_rce_db": 4.881911215301447,
+      "fine_minus_coarse_db": -0.024115345907699925,
+      "coarse_rce_db_published_reference_original": 4.270902407295018,
+      "fine_rce_db_published_reference_original": 4.246787061387318,
+      "normalization": "same-path reference"
+    }
+  ],
+  "reference_controls": [
+    {
+      "ground_imaginary_epsilon": 1.0,
+      "published_v2_per_m2_w": 3.088e-10,
+      "computed_v2_per_m2_w": 2.974529826008e-10,
+      "computed_minus_published_db": -0.16258963652149727,
+      "reference_radius_lambda": 0.0001,
+      "reference_radius_status": "inferred-report-omits-radius",
+      "normalization_role": "same-path denominator required by RCE definition"
+    },
+    {
+      "ground_imaginary_epsilon": 10.0,
+      "published_v2_per_m2_w": 2.872e-10,
+      "computed_v2_per_m2_w": 2.481258547505e-10,
+      "computed_minus_published_db": -0.6351241539141288,
+      "reference_radius_lambda": 0.0001,
+      "reference_radius_status": "inferred-report-omits-radius",
+      "normalization_role": "same-path denominator required by RCE definition"
+    },
+    {
+      "ground_imaginary_epsilon": 100.0,
+      "published_v2_per_m2_w": 2.763e-08,
+      "computed_v2_per_m2_w": 2.117267995744e-08,
+      "computed_minus_published_db": -1.1560505207112182,
+      "reference_radius_lambda": 0.0001,
+      "reference_radius_status": "inferred-report-omits-radius",
+      "normalization_role": "same-path denominator required by RCE definition"
+    },
+    {
+      "ground_imaginary_epsilon": 1000.0,
+      "published_v2_per_m2_w": 1.209e-05,
+      "computed_v2_per_m2_w": 3.333076389465e-06,
+      "computed_minus_published_db": -5.595810336620386,
+      "reference_radius_lambda": 0.0001,
+      "reference_radius_status": "inferred-report-omits-radius",
+      "normalization_role": "same-path denominator required by RCE definition"
+    }
+  ]
+}

@@ -23,6 +23,7 @@ typedef struct {
   size_t lower_segments;
   size_t interface_endpoints;
   size_t crossing_junctions;
+  size_t radial_screen_junctions;
   size_t one_sided_interface_ends;
   size_t unsupported_interface_junctions;
   size_t unsplit_crossings;

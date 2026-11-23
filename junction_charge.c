@@ -252,7 +252,8 @@ static void join(size_t *parent,size_t a,size_t b)
   if(a!=b) parent[b]=a;
 }
 
-int junction_charge_prepare(FILE *report,int strict)
+int junction_charge_prepare(FILE *report,int strict,
+                            const unsigned char *prescribed_endpoints)
 {
   size_t endpoints=2*(size_t)data.n,*parent,*counts,*offsets,*cursor,*members;
   size_t i,end,root,group;
@@ -291,31 +292,48 @@ int junction_charge_prepare(FILE *report,int strict)
     size_t count=counts[root];
     double *length,*radius,(*direction)[3],residual=0.,pivot_ratio=1.;
     double complex *factor;
-    int equal_radii=1,success;
+    int equal_radii=1,all_prescribed=prescribed_endpoints!=NULL;
+    int success;
     if(count<2) continue;
     ++last_diagnostics.junctions;
     if(count>last_diagnostics.maximum_order) last_diagnostics.maximum_order=count;
     length=malloc(count*sizeof(*length));radius=malloc(count*sizeof(*radius));
     factor=malloc(count*sizeof(*factor));direction=malloc(count*sizeof(*direction));
-    if(!length||!radius||!factor||!direction) abort_on_error(-1);
+    if(!length||!radius||!factor||!direction)
+      abort_on_error(-1);
     for(group=0;group<count;++group)
     {
-      size_t endpoint=members[offsets[root]+group],segment=endpoint/2;
-      int which=(int)(endpoint&1);
+      size_t endpoint_index=members[offsets[root]+group];
+      size_t segment=endpoint_index/2;
+      int which=(int)(endpoint_index&1);
       length[group]=data.si[segment];radius[group]=data.bi[segment];
       direction[group][0]=(which?-1.:1.)*data.cab[segment];
       direction[group][1]=(which?-1.:1.)*data.sab[segment];
       direction[group][2]=(which?-1.:1.)*data.salp[segment];
       if(group && fabs(radius[group]/radius[0]-1.)>1.e-12) equal_radii=0;
+      if(!prescribed_endpoints || !prescribed_endpoints[endpoint_index])
+        all_prescribed=0;
     }
-    if(count==2 && equal_radii)
+    if(all_prescribed)
+    {
+      /* The NEC4 interface condition owns these endpoint ratios.  Solving a
+         homogeneous local junction problem here would both be redundant and
+         ill-conditioned for a dense regular radial screen. */
+      success=1;
+      ++last_diagnostics.prescribed;
+    }
+    else if(count==2 && equal_radii)
     { factor[0]=factor[1]=1.;success=1;++last_diagnostics.symmetric; }
     else
     {
       success=junction_charge_solve(count,length,radius,direction,factor,&residual,&pivot_ratio);
       if(success) ++last_diagnostics.solved;
     }
-    if(success)
+    if(all_prescribed)
+    {
+      /* Ratios remain owned by nec4_medium_state. */
+    }
+    else if(success)
     {
       for(group=0;group<count;++group)
       { size_t endpoint=members[offsets[root]+group];end_factor[endpoint]=factor[group];end_assigned[endpoint]=1; }
@@ -326,9 +344,10 @@ int junction_charge_prepare(FILE *report,int strict)
     free(length);free(radius);free(factor);free(direction);
   }
   if(report && last_diagnostics.junctions)
-    fprintf(report,"\n NEC4 JUNCTION CHARGE: %zu JUNCTIONS, %zu LOCAL SOLVES, %zu SYMMETRIC, %zu FALLBACKS"
+    fprintf(report,"\n NEC4 JUNCTION CHARGE: %zu JUNCTIONS, %zu LOCAL SOLVES, %zu SYMMETRIC, %zu INTERFACE-PRESCRIBED, %zu FALLBACKS"
       "\n                       MAX ORDER %zu, RESIDUAL %.3E, PIVOT RATIO %.3E\n",
       last_diagnostics.junctions,last_diagnostics.solved,last_diagnostics.symmetric,
+      last_diagnostics.prescribed,
       last_diagnostics.fallback,last_diagnostics.maximum_order,
       last_diagnostics.maximum_scaled_residual,last_diagnostics.maximum_pivot_ratio);
   free(parent);free(counts);free(offsets);free(cursor);free(members);

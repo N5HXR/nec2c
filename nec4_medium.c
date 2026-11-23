@@ -30,6 +30,30 @@ static int same_endpoint(const nec4_medium_geometry *g,size_t a,int ae,
   return hypot(hypot(dx,dy),dz)<=tolerance;
 }
 
+static int radial_screen_group(const nec4_medium_geometry *g,
+    const nec4_medium_state *state,size_t origin,int origin_end,
+    double tolerance,int lower_count)
+{
+  double sum_x=0.,sum_y=0.;
+  int found=0;
+  size_t j;
+  if(lower_count<3) return 0;
+  for(j=0;j<g->count;++j) for(int je=0;je<2;++je)
+    if(state->segment_medium[j]==NEC4_MEDIUM_LOWER&&
+       !side(endpoint(g,j,je,2),tolerance)&&
+       same_endpoint(g,origin,origin_end,j,je,tolerance))
+    {
+      double sign=je?-1.:1.;
+      double dx=sign*(g->x2[j]-g->x1[j]);
+      double dy=sign*(g->y2[j]-g->y1[j]);
+      double dz=sign*(g->z2[j]-g->z1[j]);
+      double horizontal=hypot(dx,dy),length=hypot(horizontal,dz);
+      if(!(horizontal>0.)||fabs(dz)/length>.1) return 0;
+      sum_x+=dx/horizontal;sum_y+=dy/horizontal;++found;
+    }
+  return found==lower_count&&hypot(sum_x,sum_y)<=1.e-6*lower_count;
+}
+
 void nec4_medium_state_init(nec4_medium_state *state)
 { memset(state,0,sizeof(*state)); }
 
@@ -108,10 +132,12 @@ int nec4_medium_classify(const nec4_medium_geometry *g,double er,double loss,
         upper_count+=state->segment_medium[j]==NEC4_MEDIUM_UPPER;
         lower_count+=state->segment_medium[j]==NEC4_MEDIUM_LOWER;
       }
-    if(upper_count==1&&lower_count==1)
+    if(upper_count==1&&(lower_count==1||
+       radial_screen_group(g,state,i,ie,tolerance,lower_count)))
     {
       double worst=1.;
       ++state->crossing_junctions;
+      if(lower_count>1) ++state->radial_screen_junctions;
       for(j=0;j<g->count;++j) for(int je=0;je<2;++je)
         if(!side(endpoint(g,j,je,2),tolerance)&&
            same_endpoint(g,i,ie,j,je,tolerance))
@@ -197,7 +223,7 @@ void nec4_medium_print(FILE *stream,const nec4_medium_state *s)
 {
   if(!stream||!s) return;
   fprintf(stream,"\n  NEC4 INTERFACE PREFLIGHT: %lu UPPER, %lu LOWER, "
-      "%lu INTERFACE ENDPOINTS, %lu CROSSING JUNCTIONS, %lu ONE-SIDED ENDS"
+      "%lu INTERFACE ENDPOINTS, %lu CROSSING JUNCTIONS, %lu RADIAL-SCREEN JUNCTIONS, %lu ONE-SIDED ENDS"
       "\n                            %lu UNSUPPORTED INTERFACE JUNCTIONS, "
       "%lu UNSPLIT CROSSINGS, %lu IN-PLANE "
       "SEGMENTS, %lu OBLIQUE CROSSINGS; TOLERANCE %.6E M"
@@ -205,6 +231,7 @@ void nec4_medium_print(FILE *stream,const nec4_medium_state *s)
       "K %.9G%+.9GJ 1/M, ETA %.9G%+.9GJ OHM\n",
       (unsigned long)s->upper_segments,(unsigned long)s->lower_segments,
       (unsigned long)s->interface_endpoints,(unsigned long)s->crossing_junctions,
+      (unsigned long)s->radial_screen_junctions,
       (unsigned long)s->one_sided_interface_ends,
       (unsigned long)s->unsupported_interface_junctions,
       (unsigned long)s->unsplit_crossings,(unsigned long)s->in_plane_segments,

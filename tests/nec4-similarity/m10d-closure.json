@@ -1,0 +1,450 @@
+{
+  "schema": "nec2c-nec4-m10d-closure",
+  "schema_version": 1,
+  "source": "Burke-King-Miller 1984 surface-wave report, Figure 5 and Appendix A",
+  "pec_quarter_wave_monopole_impedance_ohm": {
+    "re": 38.6,
+    "im": 22.2
+  },
+  "convergence": [
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -1.0
+      },
+      "radial_count": 5,
+      "screen_radius_lambda": 0.3,
+      "samples": [
+        {
+          "maximum_pitch_lambda": 0.02,
+          "radial_segments_each": 16,
+          "rce_db": -1.1303502125437028,
+          "impedance_ohm": {
+            "re": 99.98746225961773,
+            "im": -52.35538491135273
+          },
+          "wall_seconds": 41.46036041690968
+        },
+        {
+          "maximum_pitch_lambda": 0.01,
+          "radial_segments_each": 31,
+          "rce_db": 1.0681083998718424,
+          "impedance_ohm": {
+            "re": 68.60642971264005,
+            "im": 8.758094543755183
+          },
+          "wall_seconds": 13.14797488390468,
+          "rce_change_from_previous_db": 2.1984586124155454,
+          "impedance_change_from_previous_ohm": 68.69953838872841
+        },
+        {
+          "maximum_pitch_lambda": 0.005,
+          "radial_segments_each": 60,
+          "rce_db": 1.0697869773094955,
+          "impedance_ohm": {
+            "re": 68.5988866637901,
+            "im": 8.705129316886028
+          },
+          "wall_seconds": 53.71556325885467,
+          "rce_change_from_previous_db": 0.0016785774376530949,
+          "impedance_change_from_previous_ohm": 0.053499652739563065
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -1.0
+      },
+      "radial_count": 5,
+      "screen_radius_lambda": 0.4,
+      "samples": [
+        {
+          "maximum_pitch_lambda": 0.02,
+          "radial_segments_each": 21,
+          "rce_db": -3.431172405365495,
+          "impedance_ohm": {
+            "re": 240.79002535842176,
+            "im": 81.23484965164806
+          },
+          "wall_seconds": 15.28356461180374
+        },
+        {
+          "maximum_pitch_lambda": 0.01,
+          "radial_segments_each": 41,
+          "rce_db": -1.3775541166135832,
+          "impedance_ohm": {
+            "re": 99.3657751869177,
+            "im": 32.70645700570455
+          },
+          "wall_seconds": 53.186372328782454,
+          "rce_change_from_previous_db": 2.053618288751912,
+          "impedance_change_from_previous_ohm": 149.5186390700873
+        },
+        {
+          "maximum_pitch_lambda": 0.005,
+          "radial_segments_each": 80,
+          "rce_db": -1.3593478350261008,
+          "impedance_ohm": {
+            "re": 98.969556312597,
+            "im": 32.88217349046381
+          },
+          "wall_seconds": 196.56895259395242,
+          "rce_change_from_previous_db": 0.018206281587482387,
+          "impedance_change_from_previous_ohm": 0.433434746396861
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -1.0
+      },
+      "radial_count": 5,
+      "screen_radius_lambda": 0.5,
+      "samples": [
+        {
+          "maximum_pitch_lambda": 0.02,
+          "radial_segments_each": 26,
+          "rce_db": -0.42589330510979506,
+          "impedance_ohm": {
+            "re": 86.11971159790365,
+            "im": 71.95323243979988
+          },
+          "wall_seconds": 30.150082867825404
+        },
+        {
+          "maximum_pitch_lambda": 0.01,
+          "radial_segments_each": 51,
+          "rce_db": 0.8467562278306835,
+          "impedance_ohm": {
+            "re": 70.54615635331879,
+            "im": 17.524052277366916
+          },
+          "wall_seconds": 104.5711273981724,
+          "rce_change_from_previous_db": 1.2726495329404786,
+          "impedance_change_from_previous_ohm": 56.613348921528406
+        },
+        {
+          "maximum_pitch_lambda": 0.005,
+          "radial_segments_each": 100,
+          "rce_db": 0.8478500306910747,
+          "impedance_ohm": {
+            "re": 70.52352425666902,
+            "im": 17.41885252050338
+          },
+          "wall_seconds": 379.1886259219609,
+          "rce_change_from_previous_db": 0.0010938028603911798,
+          "impedance_change_from_previous_ohm": 0.10760669422908653
+        }
+      ]
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -10.0
+      },
+      "radial_count": 20,
+      "screen_radius_lambda": 0.2,
+      "samples": [
+        {
+          "maximum_pitch_lambda": 0.02,
+          "radial_segments_each": 11,
+          "rce_db": 4.817025121615078,
+          "impedance_ohm": {
+            "re": 56.777158987961926,
+            "im": 37.05177889584974
+          },
+          "wall_seconds": 28.463412950979546
+        },
+        {
+          "maximum_pitch_lambda": 0.01,
+          "radial_segments_each": 21,
+          "rce_db": 5.267420742294835,
+          "impedance_ohm": {
+            "re": 47.8928397237086,
+            "im": 26.27977883313468
+          },
+          "wall_seconds": 27.7077827998437,
+          "rce_change_from_previous_db": 0.4503956206797568,
+          "impedance_change_from_previous_ohm": 13.963062491456382
+        },
+        {
+          "maximum_pitch_lambda": 0.005,
+          "radial_segments_each": 40,
+          "rce_db": 5.269128934571946,
+          "impedance_ohm": {
+            "re": 47.8733541099465,
+            "im": 26.233371708888036
+          },
+          "wall_seconds": 100.93926608981565,
+          "rce_change_from_previous_db": 0.0017081922771113867,
+          "impedance_change_from_previous_ohm": 0.0503320009986621
+        }
+      ]
+    }
+  ],
+  "appendix_impedance_anchors": [
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -1.0
+      },
+      "radial_count": 20,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 44.71054840002775,
+        "im": 6.245007159974521
+      },
+      "delta_impedance_ohm": {
+        "re": 6.110548400027746,
+        "im": -15.95499284002548
+      },
+      "rce_db": 2.532548041712328,
+      "wall_seconds": 0.1585460810456425,
+      "digitized_necgs_symbol_ohm": {
+        "re": 6.3,
+        "im": -16.0
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 1.3,
+        "im": 2.0
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -1.0
+      },
+      "radial_count": 50,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 43.987305723693964,
+        "im": 6.675256393907644
+      },
+      "delta_impedance_ohm": {
+        "re": 5.387305723693963,
+        "im": -15.524743606092354
+      },
+      "rce_db": 2.5983612305300694,
+      "wall_seconds": 0.4581327971536666,
+      "digitized_necgs_symbol_ohm": {
+        "re": 5.5,
+        "im": -15.5
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 1.0,
+        "im": 1.5
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -1.0
+      },
+      "radial_count": 100,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 43.63063091647375,
+        "im": 6.837273878391552
+      },
+      "delta_impedance_ohm": {
+        "re": 5.030630916473747,
+        "im": -15.362726121608446
+      },
+      "rce_db": 2.6300718035839976,
+      "wall_seconds": 1.5524081459734589,
+      "digitized_necgs_symbol_ohm": {
+        "re": 5.0,
+        "im": -15.5
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 1.0,
+        "im": 1.5
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -10.0
+      },
+      "radial_count": 20,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 53.072520346839816,
+        "im": 12.741471676904153
+      },
+      "delta_impedance_ohm": {
+        "re": 14.472520346839815,
+        "im": -9.458528323095846
+      },
+      "rce_db": 4.568491370242876,
+      "wall_seconds": 0.1653284840285778,
+      "digitized_necgs_symbol_ohm": {
+        "re": 15.0,
+        "im": -9.5
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 2.0,
+        "im": 1.5
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -10.0
+      },
+      "radial_count": 50,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 50.22553991275535,
+        "im": 11.127628160604786
+      },
+      "delta_impedance_ohm": {
+        "re": 11.62553991275535,
+        "im": -11.072371839395213
+      },
+      "rce_db": 4.791161448526339,
+      "wall_seconds": 0.4979238568339497,
+      "digitized_necgs_symbol_ohm": {
+        "re": 11.5,
+        "im": -11.0
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 1.5,
+        "im": 1.5
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -10.0
+      },
+      "radial_count": 100,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 49.07337595432488,
+        "im": 10.464941591841345
+      },
+      "delta_impedance_ohm": {
+        "re": 10.47337595432488,
+        "im": -11.735058408158654
+      },
+      "rce_db": 4.88191121530122,
+      "wall_seconds": 1.4384194840677083,
+      "digitized_necgs_symbol_ohm": {
+        "re": 10.0,
+        "im": -11.5
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 1.5,
+        "im": 1.5
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -100.0
+      },
+      "radial_count": 20,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 47.09305397537638,
+        "im": 25.79794414096354
+      },
+      "delta_impedance_ohm": {
+        "re": 8.493053975376377,
+        "im": 3.5979441409635413
+      },
+      "rce_db": 2.042778268665588,
+      "wall_seconds": 54.680532092927024,
+      "digitized_necgs_symbol_ohm": {
+        "re": 8.2,
+        "im": 3.0
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 0.8,
+        "im": 1.0
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -100.0
+      },
+      "radial_count": 50,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 45.028026908997035,
+        "im": 22.93851108986191
+      },
+      "delta_impedance_ohm": {
+        "re": 6.428026908997033,
+        "im": 0.7385110898619089
+      },
+      "rce_db": 2.218939012166833,
+      "wall_seconds": 130.44909567199647,
+      "digitized_necgs_symbol_ohm": {
+        "re": 6.3,
+        "im": 0.8
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 0.7,
+        "im": 0.8
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    },
+    {
+      "ground_epsilon_relative": {
+        "re": 10.0,
+        "im": -100.0
+      },
+      "radial_count": 100,
+      "screen_radius_lambda": 0.1,
+      "maximum_pitch_lambda": 0.01,
+      "radial_segments_each": 11,
+      "input_impedance_ohm": {
+        "re": 44.300895882814125,
+        "im": 21.465366612005536
+      },
+      "delta_impedance_ohm": {
+        "re": 5.700895882814123,
+        "im": -0.7346333879944638
+      },
+      "rce_db": 2.2768561771137725,
+      "wall_seconds": 490.49228523811325,
+      "digitized_necgs_symbol_ohm": {
+        "re": 5.6,
+        "im": -0.8
+      },
+      "digitization_uncertainty_ohm": {
+        "re": 0.6,
+        "im": 0.8
+      },
+      "digitization_provenance": "Appendix A1-A3 scanned NEC symbols at radius 0.1 lambda; bounds include line thickness and scan-reading error"
+    }
+  ]
+}

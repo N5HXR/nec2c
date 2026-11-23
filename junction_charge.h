@@ -10,6 +10,7 @@ typedef struct
   size_t junctions;
   size_t solved;
   size_t symmetric;
+  size_t prescribed;
   size_t fallback;
   size_t maximum_order;
   double maximum_scaled_residual;
@@ -27,7 +28,8 @@ int junction_charge_solve(size_t count, const double *length,
                           double *pivot_ratio);
 
 /* Build the endpoint graph and prepare factors for the current frequency. */
-int junction_charge_prepare(FILE *report, int strict);
+int junction_charge_prepare(FILE *report, int strict,
+                            const unsigned char *prescribed_endpoints);
 double complex junction_charge_factor(size_t segment, int end,
                                       double complex fallback);
 const junction_charge_diagnostics *junction_charge_last_diagnostics(void);

@@ -376,7 +376,8 @@ int wire_operator_prepare_frequency(FILE *report)
     if(report && gnd.nradl)
       fprintf(report,"  NEC4 GROUND NOTICE: radial-screen reflection of flat-cap "
           "fields uses the homogeneous-ground coefficient.\n");
-    if(!junction_charge_prepare(report,!strcmp(model_check_policy,"strict")))
+    if(!junction_charge_prepare(report,!strcmp(model_check_policy,"strict"),
+        medium_state?medium_state->endpoint_factor_assigned:NULL))
       return 0;
     return strcmp(model_check_policy,"strict") || valid;
   }

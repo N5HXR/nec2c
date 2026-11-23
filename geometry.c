@@ -414,6 +414,12 @@ void conect( int ignd )
 
 		  /* Record max. no. of connections */
 		  ic++;
+		  if( ic > data.n+data.m+1 )
+		  {
+			fprintf(stderr,"nec2c: connection cycle did not close "
+			    "(start=%d current=%d)\n",jx,ix);
+			stop(-1);
+		  }
 		  if( ic >= segj.maxcon )
 		  {
 			segj.maxcon = ic+1;

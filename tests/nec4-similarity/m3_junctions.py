@@ -196,9 +196,10 @@ def main():
             document, report = run_deck(fixture.read_text(encoding="ascii"),
                                         "nec4", temporary, fixture.stem)
             match = re.search(
-                r"(\d+) JUNCTIONS, (\d+) LOCAL SOLVES, (\d+) SYMMETRIC, (\d+) FALLBACKS",
+                r"(\d+) JUNCTIONS, (\d+) LOCAL SOLVES, (\d+) SYMMETRIC, "
+                r"(\d+) INTERFACE-PRESCRIBED, (\d+) FALLBACKS",
                 report)
-            if not match or int(match.group(4)):
+            if not match or int(match.group(5)):
                 raise AssertionError(("topology fixture", fixture_name,
                                       report[-2000:]))
             topology_models[fixture_name] = {
