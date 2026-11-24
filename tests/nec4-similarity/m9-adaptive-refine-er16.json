@@ -1,0 +1,40 @@
+{
+  "schema": "nec2c-nec4-m9-adaptive-refine",
+  "schema_version": 1,
+  "direct_strip_lambda0": 0.16,
+  "results": [
+    {
+      "center_threshold": 0.001,
+      "refined_cells": 944,
+      "total_cells": 24576,
+      "additional_level3_nodes": 8508,
+      "base_level2_nodes": 27489,
+      "validation_points": 3754,
+      "rms_vector_error": 0.00048490427813747624,
+      "maximum_vector_error": 0.010460869453219057,
+      "maximum_component_error_relative_to_local_peak": 0.007667681152539719
+    },
+    {
+      "center_threshold": 0.0025,
+      "refined_cells": 152,
+      "total_cells": 24576,
+      "additional_level3_nodes": 1602,
+      "base_level2_nodes": 27489,
+      "validation_points": 3754,
+      "rms_vector_error": 0.0005276341814367852,
+      "maximum_vector_error": 0.010460869453219057,
+      "maximum_component_error_relative_to_local_peak": 0.007667681152539719
+    },
+    {
+      "center_threshold": 0.005,
+      "refined_cells": 1,
+      "total_cells": 24576,
+      "additional_level3_nodes": 19,
+      "base_level2_nodes": 27489,
+      "validation_points": 3754,
+      "rms_vector_error": 0.0005906837827165602,
+      "maximum_vector_error": 0.010460869453219057,
+      "maximum_component_error_relative_to_local_peak": 0.008027315935575862
+    }
+  ]
+}

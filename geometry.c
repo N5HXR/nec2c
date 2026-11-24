@@ -414,6 +414,12 @@ void conect( int ignd )
 
 		  /* Record max. no. of connections */
 		  ic++;
+		  if( ic > data.n+data.m+1 )
+		  {
+			fprintf(stderr,"nec2c: connection cycle did not close "
+			    "(start=%d current=%d)\n",jx,ix);
+			stop(-1);
+		  }
 		  if( ic >= segj.maxcon )
 		  {
 			segj.maxcon = ic+1;
@@ -523,7 +529,7 @@ void conect( int ignd )
   } /* for( j = 0; j < data.n; j++ ) */
 
   mreq = (size_t)segj.maxcon;
-  mreq *= sizeof(double);
+  mreq *= sizeof(complex double);
   mem_realloc( (void *)&segj.ax, mreq );
   mem_realloc( (void *)&segj.bx, mreq );
   mem_realloc( (void *)&segj.cx, mreq );
@@ -2450,4 +2456,3 @@ void wire( double xw1, double yw1, double zw1,
 }
 
 /*-----------------------------------------------------------------------*/
-

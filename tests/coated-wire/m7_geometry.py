@@ -118,7 +118,8 @@ def run(directory, name, deck, backend="builtin", threads=1,
     result = directory / f"{name}.json"
     source.write_text(deck, encoding="ascii")
     command = [
-        str(BINARY), "--backend", backend, "--jobs", "1", "--threads",
+        str(BINARY), "--wire-engine", "nec2", "--ground-engine", "nec2",
+        "--backend", backend, "--jobs", "1", "--threads",
         str(threads), "--result-json", str(result)]
     if experimental:
         command.extend(("--coated-wire-junctions", "experimental"))

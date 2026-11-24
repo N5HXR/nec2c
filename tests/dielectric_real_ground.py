@@ -22,7 +22,8 @@ def test_vacuum_and_solvers(d):
     vacuum = solve(d, er=1)
     deck = (d/'model.nec').read_text().replace('DF "model.diel"\n', '')
     (d/'model.nec').write_text(deck)
-    result = subprocess.run([str(ground.BINARY), '-i', str(d/'model.nec'),
+    result = subprocess.run([str(ground.BINARY), '--wire-engine', 'nec2',
+                             '--ground-engine', 'nec2', '-i', str(d/'model.nec'),
                              '-o', str(d/'legacy.out')], capture_output=True)
     legacy = (d/'legacy.out').read_text()
     assert result.returncode == 0, legacy

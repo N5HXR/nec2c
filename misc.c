@@ -5,6 +5,7 @@
 #include "shared.h"
 #include "result_json.h"
 #include "performance.h"
+#include "wire_operator.h"
 
 /*------------------------------------------------------------------------*/
 
@@ -21,6 +22,8 @@ void usage(void)
 	  " [--fft-backend <name>]"
 	  " [--jobs <count>] [--threads <count>] [--validate-only]"
 	  " [--coated-wire-junctions <policy>]"
+	  " [--wire-engine <name>] [--ground-engine <name>] [--model-check <policy>]"
+	  " [--nec4ish-ground-model <name>] [--nec4ish-ground-cache <directory>]"
 	  "\n       --capabilities-json: write machine capabilities and exit."
 	  "\n       --result-json file: atomically write result schema version 1."
 	  "\n       --timing-json file: atomically write timing schema version 1."
@@ -30,6 +33,11 @@ void usage(void)
 	  "\n       --threads auto|N: numerical-library threads per job (default auto)."
 	  "\n       --validate-only: validate without solving (requires --result-json)."
 	  "\n       --coated-wire-junctions strict|experimental: junction policy (default strict)."
+	  "\n       --wire-engine auto|nec2|nec4ish: wire operator (default nec2)."
+	  "\n       --ground-engine auto|nec2|nec4ish: ground operator (default nec2)."
+	  "\n       --nec4ish-ground-model grid|direct|adaptive: interface evaluator (default grid)."
+	  "\n       --nec4ish-ground-cache DIR|none: persistent interface-table cache."
+	  "\n       --model-check warn|strict|off: validity diagnostic policy (default warn)."
 	  "\n       -s dense|gmres|fft: DF solver (default dense; FFT requires uniform cubes/material).\n       -r tolerance: GMRES relative residual target (default 1e-12).\n       -n iterations: GMRES iteration limit (default 300)."
 	  "\n       -h: print this usage information and exit."
 	  "\n       -v: print nec2c version number and exit.\n");

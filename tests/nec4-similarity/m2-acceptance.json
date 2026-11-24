@@ -1,0 +1,101 @@
+{
+  "conditioning_improvement": 30.354255976542397,
+  "nec2_deep_short_drift": 0.013603736735211092,
+  "nec4_deep_short_drift": 0.0004481657117777482,
+  "ordinary_equivalence": [
+    {
+      "deck": "tests/coated-wire/m0-bare-dipole.nec",
+      "maximum_delta_path": "/jobs/0/executions/0/feeds/0/impedance_ohm/im",
+      "maximum_scaled_delta": 1.9673779300688975e-09
+    },
+    {
+      "deck": "tests/nec4-similarity/m2-loop.nec",
+      "maximum_delta_path": "/jobs/0/executions/0/feeds/0/impedance_ohm/im",
+      "maximum_scaled_delta": 2.5434082510871216e-11
+    },
+    {
+      "deck": "tests/decks/nt-network.nec",
+      "maximum_delta_path": "/jobs/0/executions/0/feeds/0/impedance_ohm/im",
+      "maximum_scaled_delta": 3.646602626361516e-15
+    },
+    {
+      "deck": "tests/performance/m3-real-ground-sweep.nec",
+      "maximum_delta_path": "/jobs/0/executions/0/feeds/0/impedance_ohm/im",
+      "maximum_scaled_delta": 2.8475521735589546e-09
+    }
+  ],
+  "ordinary_maximum_scaled_delta": 2.8475521735589546e-09,
+  "schema": "nec2c-nec4-m2-acceptance",
+  "schema_version": 1,
+  "short_frequency_results": {
+    "nec2": [
+      {
+        "capacitive_scale": 324307.7491318908,
+        "frequency_mhz": 300.0,
+        "impedance_ohm": [
+          1426.3627174871986,
+          -1081.0258304396361
+        ]
+      },
+      {
+        "capacitive_scale": 61062.59478076945,
+        "frequency_mhz": 3.0,
+        "impedance_ohm": [
+          0.019529021270377388,
+          -20354.198260256482
+        ]
+      },
+      {
+        "capacitive_scale": 61085.012034678664,
+        "frequency_mhz": 0.03,
+        "impedance_ohm": [
+          1.952534753496891e-06,
+          -2036167.0678226221
+        ]
+      },
+      {
+        "capacitive_scale": 61893.27423254523,
+        "frequency_mhz": 0.0003,
+        "impedance_ohm": [
+          1.9405037813240366e-10,
+          -206310914.10848412
+        ]
+      }
+    ],
+    "nec4": [
+      {
+        "capacitive_scale": 324307.7491318911,
+        "frequency_mhz": 300.0,
+        "impedance_ohm": [
+          1426.3627174871967,
+          -1081.025830439637
+        ]
+      },
+      {
+        "capacitive_scale": 61062.5947689397,
+        "frequency_mhz": 3.0,
+        "impedance_ohm": [
+          0.019529021274019783,
+          -20354.198256313233
+        ]
+      },
+      {
+        "capacitive_scale": 61084.63759166835,
+        "frequency_mhz": 0.03,
+        "impedance_ohm": [
+          1.952541669008539e-06,
+          -2036154.5863889449
+        ]
+      },
+      {
+        "capacitive_scale": 61035.22860769208,
+        "frequency_mhz": 0.0003,
+        "impedance_ohm": [
+          1.9541532628851208e-10,
+          -203450762.02564028
+        ]
+      }
+    ]
+  },
+  "short_reference_frequency_mhz": 3.0
+}

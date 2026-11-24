@@ -30,7 +30,8 @@ def invoke(directory, text, validate=True):
     report = directory / "case.out"
     result = directory / "case.json"
     source.write_text(text, encoding="ascii")
-    command = [str(BINARY)]
+    command = [str(BINARY), "--wire-engine", "nec2",
+               "--ground-engine", "nec2"]
     if validate:
         command.append("--validate-only")
     command += ["--result-json", str(result), "-i", str(source), "-o", str(report)]

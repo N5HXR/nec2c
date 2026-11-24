@@ -1,0 +1,32 @@
+{
+  "schema": "nec2c-nec4-m9-seawater-witness",
+  "schema_version": 1,
+  "model": "5 m whip with 1 m seawater ground stake",
+  "frequency_mhz": 14.0,
+  "material": {
+    "relative_permittivity": 80.0,
+    "conductivity_s_per_m": 4.0
+  },
+  "grid_impedance_ohm": {
+    "re": 14.585259668530531,
+    "im": -2554.221946076436
+  },
+  "direct_impedance_ohm": {
+    "re": 14.582174114706438,
+    "im": -2554.2228340334277
+  },
+  "grid_direct": {
+    "impedance_relative_delta": 1.2570273493467111e-6,
+    "current_l2_relative_delta": 6.794152140005107e-6,
+    "grid_matrix_fill_seconds": 1.89325983193703,
+    "direct_matrix_fill_seconds": 6.73976629099343,
+    "matrix_fill_speedup": 3.559873915508917
+  },
+  "cache": {
+    "cold_table_seconds": 170.50486413005274,
+    "warm_table_seconds": 0.12713389401324093,
+    "warm_hits": 4,
+    "warm_results_exact": true
+  },
+  "direct_interface_strip_used": true
+}

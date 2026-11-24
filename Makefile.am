@@ -41,6 +41,178 @@ EXTRA_DIST = \
   docs/COATED-WIRE-M8-RESULTS.md \
   docs/COATED-WIRE-M9-RESULTS.md \
   docs/COATED-WIRE-ANTENNA-TURTLE-SPEC.md \
+  docs/NEC4-SIMILARITY-ASSESSMENT.md \
+  docs/NEC4-SIMILARITY-PLAN.md \
+  docs/NEC4-SIMILARITY-M0-BASELINE.md \
+  docs/NEC4-SIMILARITY-M1-RESULTS.md \
+  docs/NEC4-SIMILARITY-M2-RESULTS.md \
+  docs/NEC4-SIMILARITY-M3-RESULTS.md \
+  docs/NEC4-SIMILARITY-M4-RESULTS.md \
+  docs/NEC4-SIMILARITY-M5-RESULTS.md \
+  docs/NEC4-SIMILARITY-M6-RESULTS.md \
+  docs/NEC4-SIMILARITY-M7-RESULTS.md \
+  docs/NEC4-SIMILARITY-M8-SPEC.md \
+  docs/NEC4-SIMILARITY-M8-RESULTS.md \
+  docs/NEC4-SIMILARITY-M9-SPEC.md \
+  docs/NEC4-SIMILARITY-M10A-SPEC.md \
+  docs/NEC4-SIMILARITY-M10A-RESULTS.md \
+  docs/NEC4-SIMILARITY-M10B-SPEC.md \
+  docs/NEC4-SIMILARITY-M10B-RESULTS.md \
+  docs/NEC4-SIMILARITY-M10C-SPEC.md \
+  docs/NEC4-SIMILARITY-M10C-RESULTS.md \
+  docs/NEC4-SIMILARITY-M10D-SPEC.md \
+  docs/NEC4-SIMILARITY-M10D-RESULTS.md \
+  docs/NEC4-SIMILARITY-M11-RESEARCH.md \
+  docs/NEC4-SIMILARITY-M11A-RESULTS.md \
+  docs/NEC4-SIMILARITY-M11B-RESULTS.md \
+  docs/NEC4-SIMILARITY-M11C-RESULTS.md \
+  docs/NEC4-SIMILARITY-M11D-RESULTS.md \
+  docs/NEC4-SIMILARITY-M11E-RESULTS.md \
+  docs/NEC4-SIMILARITY-M12-RESULTS.md \
+  docs/NEC4ISH-USER-GUIDE.md \
+  tests/nec4-similarity/m0-baseline.json \
+  tests/nec4-similarity/m0_baseline.py \
+  tests/nec4-similarity/m1-witnesses.json \
+  tests/nec4-similarity/m1-oracles.json \
+  tests/nec4-similarity/m1-kernel-error-map.png \
+  tests/nec4-similarity/m1-sommerfeld-error-map.png \
+  tests/nec4-similarity/m1_operator.py \
+  tests/nec4-similarity/m2-loop.nec \
+  tests/nec4-similarity/m2-acceptance.json \
+  tests/nec4-similarity/m2-current-equivalence.png \
+  tests/nec4-similarity/m2-short-conditioning.png \
+  tests/nec4-similarity/m2_basis.py \
+  tests/nec4-similarity/m3-acceptance.json \
+  tests/nec4-similarity/m3-junction-convergence.png \
+  tests/nec4-similarity/m3-star.nec \
+  tests/nec4-similarity/m3-step-dipole.nec \
+  tests/nec4-similarity/m3-tee.nec \
+  tests/nec4-similarity/m3-y.nec \
+  tests/nec4-similarity/m3_junctions.py \
+  tests/nec4-similarity/m4-acceptance.json \
+  tests/nec4-similarity/m4-model-convergence.png \
+  tests/nec4-similarity/m4_kernel.py \
+  tests/nec4-similarity/m4_models.py \
+  tests/nec4-similarity/m5-cap-monopole.nec \
+  tests/nec4-similarity/m5-acceptance.json \
+  tests/nec4-similarity/m5-cap-convergence.png \
+  tests/nec4-similarity/m5_endcap_oracle.py \
+  tests/nec4-similarity/m5_models.py \
+  tests/nec4-similarity/m6-acceptance.json \
+  tests/nec4-similarity/m6_combined.py \
+  tests/nec4-similarity/m6-user-above-ground.nec \
+  tests/nec4-similarity/m7-acceptance.json \
+  tests/nec4-similarity/m7-buried-dipole.nec \
+  tests/nec4-similarity/m7-ground-stake.nec \
+  tests/nec4-similarity/m7_medium.py \
+  tests/nec4-similarity/m8-equation-lock.json \
+  tests/nec4-similarity/m8-bessel-gate.json \
+  tests/nec4-similarity/m8-hankel-gate.json \
+  tests/nec4-similarity/m8-hankel-compact-gate.json \
+  tests/nec4-similarity/m9-interface-plane.json \
+  tests/nec4-similarity/m8-limits-gate.json \
+  tests/nec4-similarity/m8-pairing-gate.json \
+  tests/nec4-similarity/m8-singularity-gate.json \
+  tests/nec4-similarity/m8-qualification.csv \
+  tests/nec4-similarity/m8-qualification.json \
+  tests/nec4-similarity/m8_bessel.py \
+  tests/nec4-similarity/m8_equations.py \
+  tests/nec4-similarity/m8_hankel.py \
+  tests/nec4-similarity/m8_limits.py \
+  tests/nec4-similarity/m8_pairings.py \
+  tests/nec4-similarity/m8_oracle.py \
+  tests/nec4-similarity/m8_qualification.py \
+  tests/nec4-similarity/m8_singularity.py \
+  tests/nec4-similarity/m9-table-equation-lock.json \
+  tests/nec4-similarity/m9-linear-gate.json \
+  tests/nec4-similarity/m9-linear-outer-gate.json \
+  tests/nec4-similarity/m9-linear-qualification.json \
+  tests/nec4-similarity/m9-table-layout.json \
+  tests/nec4-similarity/m9-model-rank.json \
+  tests/nec4-similarity/m9-model-fit.json \
+  tests/nec4-similarity/m9-model-fit-er16.json \
+  tests/nec4-similarity/m9-model-selection.json \
+  tests/nec4-similarity/m9-asymptotic-gate.json \
+  tests/nec4-similarity/m9-dispatch-gate.json \
+  tests/nec4-similarity/m9-grazing-warning-gate.json \
+  tests/nec4-similarity/m9-adaptive-screen.json \
+  tests/nec4-similarity/m9-grid-fixed-l0.json \
+  tests/nec4-similarity/m9-grid-fixed-l1.json \
+  tests/nec4-similarity/m9-grid-fixed-l2.json \
+  tests/nec4-similarity/m9-grid-fixed-er16-l3.json \
+  tests/nec4-similarity/m9-grid-hybrid-materials.json \
+  tests/nec4-similarity/m9-grid-hybrid-soil-l2.json \
+  tests/nec4-similarity/m9-adaptive-refine-er16.json \
+  tests/nec4-similarity/m9_linear.py \
+  tests/nec4-similarity/m9_linear_outer.py \
+  tests/nec4-similarity/m9_linear_qualification.py \
+  tests/nec4-similarity/m9_table_layout.py \
+  tests/nec4-similarity/m9_model_rank.py \
+  tests/nec4-similarity/m9_model_fit.py \
+  tests/nec4-similarity/m9_asymptotic.py \
+  tests/nec4-similarity/m9_dispatch.py \
+  tests/nec4-similarity/m9_grazing_warning.py \
+  tests/nec4-similarity/m9_tables.py \
+  tests/nec4-similarity/m9_production.py \
+  tests/nec4-similarity/m9-interface-dipole.nec \
+  tests/nec4-similarity/m9-separated-media.nec \
+  tests/nec4-similarity/m9-grazing-cli.nec \
+  tests/nec4-similarity/m9-seawater-whip.nec \
+  tests/nec4-similarity/m9-seawater-whip-gate.json \
+  tests/nec4-similarity/m9-production-gate.json \
+  tests/nec4-similarity/m10a-normalization-gate.json \
+  tests/nec4-similarity/m10a-identical-free.nec \
+  tests/nec4-similarity/m10a-identical-buried.nec \
+  tests/nec4-similarity/m10a_normalization.py \
+  tests/nec4-similarity/m10b-surface-reference.json \
+  tests/nec4-similarity/m10b-surface-reference.nec \
+  tests/nec4-similarity/m10b_surface_reference.py \
+  tests/nec4-similarity/m10c-ground-stake.json \
+  tests/nec4-similarity/m10c-ground-stake.nec \
+  tests/nec4-similarity/m10c-ground-stake.png \
+  tests/nec4-similarity/m10c_ground_stake.py \
+  tests/nec4-similarity/m10d-radial-screen.json \
+  tests/nec4-similarity/m10d-radial-screen.nec \
+  tests/nec4-similarity/m10d-radial-screen.png \
+  tests/nec4-similarity/m10d-closure.json \
+  tests/nec4-similarity/m10d-closure.png \
+  tests/nec4-similarity/m11b-adaptive.json \
+  tests/nec4-similarity/m11b-adaptive.png \
+  tests/nec4-similarity/m11b_adaptive.py \
+  tests/nec4-similarity/m11c-interference.json \
+  tests/nec4-similarity/m11c-interference.png \
+  tests/nec4-similarity/m11c_interference.py \
+  tests/nec4-similarity/m11d-magnetic.json \
+  tests/nec4-similarity/m11d-magnetic.png \
+  tests/nec4-similarity/m11d_magnetic.py \
+  tests/nec4-similarity/m11e-production.json \
+  tests/nec4-similarity/m11e-production.nec \
+  tests/nec4-similarity/m11e_production.py \
+  tests/nec4-similarity/m12-performance.json \
+  tests/nec4-similarity/m12_release.py \
+  tests/nec4-similarity/m10d_closure.py \
+  tests/nec4-similarity/m10d_radial_screen.py \
+  tests/nec4-similarity/m11a-measurement.json \
+  tests/nec4-similarity/m11a-measurement.png \
+  tests/nec4-similarity/m11a_measurement.py \
+  tools/nec4_m7_reference.py \
+  tools/nec4_m8_direct.py \
+  tools/nec4_m8_equations.py \
+  tools/nec4_m8_oracle.py \
+  tools/nec4_m8_qualify.py \
+  tools/nec4_m9_tables.py \
+  tools/nec4_m9_model_fit.py \
+  tools/nec4_m9_model_selection.py \
+  tools/nec4_m9_asymptotic.py \
+  tools/nec4_m9_asymptotic_qualify.py \
+  tools/nec4_m9_adaptive_experiment.py \
+  tools/nec4_m9_grid_experiment.py \
+  tools/nec4_m9_adaptive_refine.py \
+  tools/nec4_m9_dispatch.py \
+  tools/nec4_m9_grazing_qualify.py \
+  tools/nec4_m9_table_layout.py \
+  docs/nec4-m8-convergence.png \
+  tools/nec4_m1_oracles.py \
   tests/coated-wire/README.md \
   tests/coated-wire/m0-bare-dipole.nec \
   tests/coated-wire/m0-baseline.json \
@@ -133,6 +305,7 @@ EXTRA_DIST = \
   tests/performance/m2-dense-backend.json \
   tests/performance/m2-cross-solver.json \
   tests/performance/m3-frequency-jobs.json \
+  tests/performance/m3-real-ground-sweep.nec \
   tests/performance/m4a-fft-scaling.json \
   tests/performance/m4a-fft-full-solve.json \
   tests/performance/m4b-builtin-scaling.json \
@@ -392,7 +565,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/nec4-similarity/m8_equations.py tests/nec4-similarity/m8_bessel.py tests/nec4-similarity/m8_hankel.py tests/nec4-similarity/m8_limits.py tests/nec4-similarity/m8_pairings.py tests/nec4-similarity/m8_oracle.py tests/nec4-similarity/m8_qualification.py tests/nec4-similarity/m8_singularity.py tests/nec4-similarity/m9_tables.py tests/nec4-similarity/m9_linear.py tests/nec4-similarity/m9_linear_outer.py tests/nec4-similarity/m9_linear_qualification.py tests/nec4-similarity/m9_table_layout.py tests/nec4-similarity/m9_model_rank.py tests/nec4-similarity/m9_model_fit.py tests/nec4-similarity/m9_asymptotic.py tests/nec4-similarity/m9_dispatch.py tests/nec4-similarity/m9_grazing_warning.py tests/nec4-similarity/m9_production.py tests/nec4-similarity/m10a_normalization.py tests/nec4-similarity/m10b_surface_reference.py tests/nec4-similarity/m10c_ground_stake.py tests/nec4-similarity/m10d_radial_screen.py tests/nec4-similarity/m10d_closure.py tests/nec4-similarity/m11a_measurement.py tests/nec4-similarity/m11b_adaptive.py tests/nec4-similarity/m11c_interference.py tests/nec4-similarity/m11d_magnetic.py tests/nec4-similarity/m11e_production.py tests/nec4-similarity/m12_release.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -402,6 +575,19 @@ TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_paralle
 	tests/dielectric_patch.py \
 	tests/result_json.py \
 	tests/performance_json.py \
+	tests/junction_charge_test \
+	tests/nec4_endcap_test \
+	tests/nec4_kernel_test \
+	tests/nec4_medium_test \
+	tests/nec4_ground_dispatch_test \
+	tests/nec4_ground_cache_test \
+  tests/nec4_ground_direct_test \
+  tests/nec4_ground_asymptotic_test \
+  tests/nec4_ground_table_test \
+	tests/nec4_ground_matrix_test \
+	tests/nec4_ground_runtime_test \
+	tests/nec4_ground_adaptive_test \
+	tests/nec4_ground_adaptive_field_test \
 	tests/dense_backend_test \
 	tests/vie_kernel_test \
 	tests/vie_iterative_test \
@@ -431,7 +617,7 @@ AM_CFLAGS = @OPENMP_CFLAGS@
 
 bin_PROGRAMS = nec2c
 
-check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test tests/concurrency_test
+check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test tests/concurrency_test tests/junction_charge_test tests/nec4_endcap_test tests/nec4_kernel_test tests/nec4_medium_test tests/nec4_ground_dispatch_test tests/nec4_ground_cache_test tests/nec4_ground_direct_test tests/nec4_ground_asymptotic_test tests/nec4_ground_table_test tests/nec4_ground_matrix_test tests/nec4_ground_runtime_test tests/nec4_ground_adaptive_test tests/nec4_ground_adaptive_field_test
 tests_dense_backend_test_SOURCES = tests/dense_backend_test.c dense_backend.c dense_backend.h
 tests_dense_backend_test_LDADD = -lm
 tests_concurrency_test_SOURCES = tests/concurrency_test.c concurrency.c concurrency.h
@@ -441,21 +627,101 @@ tests_vie_ground_test_SOURCES = tests/vie_ground_test.c vie_ground.c vie_ground.
 tests_vie_ground_test_LDADD = -lm
 tests_dielectric_fft_test_SOURCES = tests/dielectric_fft_test.c vie_ground.c vie_ground.h dielectric_fft.c dielectric_fft.h dielectric.h vie_fft.c vie_fft.h vie_kernel.c vie_kernel.h vie_iterative.c vie_iterative.h
 tests_dielectric_fft_test_LDADD = -lm
-noinst_PROGRAMS = tools/m9_fft_benchmark
+noinst_PROGRAMS = tools/m9_fft_benchmark tools/nec4_m9_grid_oracle \
+	tools/nec4_m11_measure tools/nec4_m11b_qualify tools/nec4_m11c_qualify \
+	tools/nec4_m11d_qualify
 
 tests_vie_fft_test_SOURCES = tests/vie_fft_test.c vie_fft.c vie_fft.h vie_kernel.c vie_kernel.h vie_iterative.c vie_iterative.h
 tests_vie_fft_test_LDADD = -lm
 
 tools_m9_fft_benchmark_SOURCES = tools/m9_fft_benchmark.c vie_fft.c vie_fft.h vie_kernel.c vie_kernel.h vie_iterative.c vie_iterative.h
 tools_m9_fft_benchmark_LDADD = -lm
+tools_nec4_m9_grid_oracle_SOURCES = tools/nec4_m9_grid_oracle.c nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tools_nec4_m9_grid_oracle_LDADD = -lm $(OPENMP_LIBS)
+tools_nec4_m11_measure_SOURCES = tools/nec4_m11_measure.c nec4_ground_direct.c nec4_ground_direct.h nec4_ground_asymptotic.c nec4_ground_asymptotic.h nec4_ground_dispatch.c nec4_ground_dispatch.h complex_bessel.c
+tools_nec4_m11_measure_LDADD = -lm $(OPENMP_LIBS)
+tools_nec4_m11b_qualify_SOURCES = tools/nec4_m11b_qualify.c nec4_ground_adaptive_e.c nec4_ground_adaptive_e.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_table.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tools_nec4_m11b_qualify_LDADD = -lm $(OPENMP_LIBS)
+tools_nec4_m11c_qualify_SOURCES = tools/nec4_m11c_qualify.c nec4_ground_adaptive_e.c nec4_ground_adaptive_e.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_table.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tools_nec4_m11c_qualify_LDADD = -lm $(OPENMP_LIBS)
+tools_nec4_m11d_qualify_SOURCES = tools/nec4_m11d_qualify.c nec4_ground_adaptive_h.c nec4_ground_adaptive_h.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_table.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tools_nec4_m11d_qualify_LDADD = -lm $(OPENMP_LIBS)
 tests_vie_kernel_test_SOURCES = tests/vie_kernel_test.c vie_kernel.c vie_kernel.h
 tests_vie_kernel_test_LDADD = -lm
 
 tests_vie_iterative_test_SOURCES = tests/vie_iterative_test.c vie_iterative.c vie_iterative.h
 tests_vie_iterative_test_LDADD = -lm
 
+tests_junction_charge_test_SOURCES = tests/junction_charge_test.c junction_charge.c junction_charge.h
+tests_junction_charge_test_CPPFLAGS = -DJUNCTION_CHARGE_PURE
+tests_junction_charge_test_LDADD = -lm
+
+tests_nec4_endcap_test_SOURCES = tests/nec4_endcap_test.c nec4_endcap.c nec4_endcap.h
+tests_nec4_endcap_test_LDADD = -lm
+
+tests_nec4_kernel_test_SOURCES = tests/nec4_kernel_test.c nec4_kernel.c nec4_kernel.h
+tests_nec4_kernel_test_LDADD = -lm
+
+tests_nec4_medium_test_SOURCES = tests/nec4_medium_test.c nec4_medium.c nec4_medium.h
+tests_nec4_medium_test_LDADD = -lm
+
+tests_nec4_ground_dispatch_test_SOURCES = tests/nec4_ground_dispatch_test.c nec4_ground_dispatch.c nec4_ground_dispatch.h
+tests_nec4_ground_dispatch_test_LDADD = -lm
+
+tests_nec4_ground_cache_test_SOURCES = tests/nec4_ground_cache_test.c nec4_ground_cache.c nec4_ground_cache.h
+
+tests_nec4_ground_direct_test_SOURCES = tests/nec4_ground_direct_test.c nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tests_nec4_ground_direct_test_LDADD = -lm
+tests_nec4_ground_asymptotic_test_SOURCES = tests/nec4_ground_asymptotic_test.c nec4_ground_asymptotic.c nec4_ground_asymptotic.h nec4_ground_direct.h
+tests_nec4_ground_asymptotic_test_LDADD = -lm
+tests_nec4_ground_table_test_SOURCES = tests/nec4_ground_table_test.c nec4_ground_table.c nec4_ground_table.h nec4_ground_cache.c nec4_ground_cache.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tests_nec4_ground_table_test_LDADD = -lm $(OPENMP_LIBS)
+
+tests_nec4_ground_matrix_test_SOURCES = tests/nec4_ground_matrix_test.c nec4_ground_matrix.c nec4_ground_matrix.h nec4_ground_table.c nec4_ground_table.h nec4_ground_cache.c nec4_ground_cache.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tests_nec4_ground_matrix_test_LDADD = -lm
+
+tests_nec4_ground_runtime_test_SOURCES = tests/nec4_ground_runtime_test.c nec4_ground_runtime.c nec4_ground_runtime.h nec4_ground_dispatch.c nec4_ground_dispatch.h nec4_ground_asymptotic.c nec4_ground_asymptotic.h nec4_ground_model_grid.c nec4_ground_model_grid.h nec4_ground_adaptive_e.c nec4_ground_adaptive_e.h nec4_ground_adaptive_h.c nec4_ground_adaptive_h.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_matrix.c nec4_ground_matrix.h nec4_ground_table.c nec4_ground_table.h nec4_ground_cache.c nec4_ground_cache.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tests_nec4_ground_runtime_test_LDADD = -lm $(OPENMP_LIBS)
+tests_nec4_ground_adaptive_test_SOURCES = tests/nec4_ground_adaptive_test.c nec4_ground_adaptive.c nec4_ground_adaptive.h
+tests_nec4_ground_adaptive_test_LDADD = -lm $(OPENMP_LIBS)
+tests_nec4_ground_adaptive_field_test_SOURCES = tests/nec4_ground_adaptive_field_test.c nec4_ground_adaptive_e.c nec4_ground_adaptive_e.h nec4_ground_adaptive_h.c nec4_ground_adaptive_h.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tests_nec4_ground_adaptive_field_test_LDADD = -lm $(OPENMP_LIBS)
+
 nec2c_SOURCES = \
   calculations.c \
+  complex_bessel.c \
+  junction_charge.c \
+  junction_charge.h \
+  nec4_kernel.c \
+  nec4_kernel.h \
+  nec4_ground_dispatch.c \
+  nec4_ground_dispatch.h \
+  nec4_ground_cache.c \
+  nec4_ground_cache.h \
+  nec4_ground_direct.c \
+  nec4_ground_direct.h \
+  nec4_ground_asymptotic.c \
+  nec4_ground_asymptotic.h \
+  nec4_ground_model_grid.c \
+  nec4_ground_model_grid.h \
+  nec4_ground_adaptive.c \
+  nec4_ground_adaptive.h \
+  nec4_ground_adaptive_e.c \
+  nec4_ground_adaptive_e.h \
+  nec4_ground_adaptive_h.c \
+  nec4_ground_adaptive_h.h \
+  nec4_ground_table.c \
+  nec4_ground_table.h \
+  nec4_ground_matrix.c \
+  nec4_ground_matrix.h \
+  nec4_ground_runtime.c \
+  nec4_ground_runtime.h \
+  nec4_endcap.c \
+  nec4_endcap.h \
+  nec4_medium.c \
+  nec4_medium.h \
+  wire_operator.c \
+  wire_operator.h \
   coated_wire.c \
   coated_wire.h \
   dielectric_io.c \

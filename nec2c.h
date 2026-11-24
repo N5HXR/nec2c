@@ -13,6 +13,8 @@
 #include <time.h>
 #include <sys/types.h>
 
+#include "wire_operator.h"
+
 #ifndef _WIN32
 #include <sys/times.h>
 #endif
@@ -376,7 +378,7 @@ typedef struct
 	jsno,	/* Total number of entries in ax, bx, cx */
 	maxcon; /* Max. no. connections */
 
-  double
+  complex double
 	*ax, *bx, *cx;	/* Store constants A, B, C used in current expansion */
 
 } segj_t;
@@ -469,7 +471,8 @@ void intrp(double x, double y, complex double *f1, complex double *f2, complex d
 void intx(double el1, double el2, double b, int ij, double *sgr, double *sgi);
 int min(int a, int b);
 void test(double f1r, double f2r, double *tr, double f1i, double f2i, double *ti, double dmin);
-void sbf(int i, int is, double *aa, double *bb, double *cc);
+void sbf(int i, int is, double complex *aa, double complex *bb,
+         double complex *cc);
 void tbf(int i, int icap);
 void trio(int j);
 void zint(double sigl, double rolam, complex double *zt);
@@ -551,6 +554,8 @@ void evlua(complex double *erv, complex double *ezv, complex double *erh, comple
 void fbar(complex double p, complex double *r);
 void gshank(complex double start, complex double dela, complex double *sum, int nans, complex double *seed, int ibk, complex double bk, complex double delb);
 void hankel(complex double z, complex double *h0, complex double *h0p);
+void hankel2(complex double z, complex double *h0, complex double *h0p);
+void hankel2(complex double z, complex double *h0, complex double *h0p);
 void lambda(double t, complex double *xlam, complex double *dxlam);
 void rom1(int n, complex double *sum, int nx);
 void saoa(double t, complex double *ans);

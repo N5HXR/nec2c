@@ -269,7 +269,7 @@ static int dw_wire_reflected(const dielectric_cell *cell,const double *point,
       double ell=.5*data.si[segment]*nodes[j],source[3];
       complex double n[3][3],h[3][3];
       complex double moment=data.wlam*data.wlam*.5*data.si[segment]*weights[j]*
-                             (a+b*sin(TP*ell)+c*cos(TP*ell));
+        wire_operator_current(a,b,c,(size_t)segment,ell);
       for(p=0;p<3;++p) source[p]=data.wlam*((p==0 ? data.x[segment]:p==1 ? data.y[segment]:data.z[segment])+ell*tangent[p]);
       if(cell ? !vie_halfspace_cuboid_point(&testing,source,k0,dielectric_ground_epsilon(k0*DW_C0/(2*DW_PI*1e6)),NULL,n,h,NULL):
                 !vie_halfspace_point(point,source,k0,dielectric_ground_epsilon(k0*DW_C0/(2*DW_PI*1e6)),NULL,n,h,NULL)) return 0;
@@ -298,7 +298,8 @@ static int dw_wire_background_basis(const dielectric_cell *cell,double k0,
     for(j=0;j<ORDER;++j)
     {
       double ell=.5*data.si[segment]*nodes[j],source[3];
-      double shape[3]={1,sin(TP*ell),cos(TP*ell)};
+      complex double phase=wire_operator_segment_phase((size_t)segment,ell);
+      complex double shape[3]={1,csin(phase),wire_operator_cosine_shape(phase)};
       complex double n[3][3],h[3][3];
       complex double weight=data.wlam*data.wlam*.5*data.si[segment]*weights[j]/
                               (I*(k0*DW_C0)*DW_EPSILON_0);

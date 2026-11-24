@@ -29,7 +29,8 @@ def solve(d, geometry='', boxes=(BOX,), er=3, ground='GN 1',
     source = ('CE\n'+geometry+'GE\nFR 0 '+str(frequencies)+' 0 0 '+str(frequency)+' '+str(step)+'\n'+ground+
               '\n'+excitation+'\nDF "model.diel"\n'+output+'\nEN\n')
     (d/'model.nec').write_text(source)
-    result=subprocess.run([str(BINARY),'-s',mode,'-r','1e-13','-i',str(d/'model.nec'),
+    result=subprocess.run([str(BINARY),'--wire-engine','nec2','--ground-engine','nec2',
+                           '-s',mode,'-r','1e-13','-i',str(d/'model.nec'),
                            '-o',str(d/'model.out')],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     text=(d/'model.out').read_text()
     assert (result.returncode==0)==success, text+result.stderr.decode()
@@ -140,7 +141,8 @@ def test_vacuum_and_patch(d):
         vacuum=solve(d,geometry=geometry,excitation=ex,boxes=(box,),er=1)
         source=(d/'model.nec').read_text().replace('DF "model.diel"\n','')
         (d/'model.nec').write_text(source)
-        result=subprocess.run([str(BINARY),'-i',str(d/'model.nec'),'-o',str(d/'legacy.out')],
+        result=subprocess.run([str(BINARY),'--wire-engine','nec2','--ground-engine','nec2',
+                               '-i',str(d/'model.nec'),'-o',str(d/'legacy.out')],
                               stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         legacy=(d/'legacy.out').read_text()
         assert result.returncode==0,legacy

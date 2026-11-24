@@ -197,7 +197,9 @@ static int ground_spectrum(void *context,double k,double u,complex double w,
       complex double base=ground_segment_integral(phase,q,length);
       complex double plus=ground_segment_integral(phase,q+TP,length);
       complex double minus=ground_segment_integral(phase,q-TP,length);
-      complex double moment=lambda*lambda*(a*base+b*(plus-minus)/(2*I)+cc*(plus+minus)/2);
+      complex double cosine=wire_operator_nec4_basis() ?
+        (plus+minus)/2-base:(plus+minus)/2;
+      complex double moment=lambda*lambda*(a*base+b*(plus-minus)/(2*I)+cc*cosine);
       for(p=0;p<3;++p) source[p]+=moment*direction[p];
     }
   if(sources->conductor)

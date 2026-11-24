@@ -83,16 +83,31 @@ The user returned `PASS` on 2026-11-02. Milestone 4 may proceed. Their manual
 measurement found 0.804100 s for the full classic-compatible baseline and
 0.236884 s for the new defaults, a 3.39x cumulative speedup.
 
+## Real-ground result-JSON follow-up
+
+On 2026-11-16 the schema-v1 real-ground restriction was removed for ordinary
+positive-conductivity `GN 2` sweeps.  The parent registers the immutable ground
+description before forking, so every frequency worker inherits the same stable
+ground-state ID; only the ordered execution fragments need to be returned.
+The retained regression now requires serial/parallel identity for the complete
+machine result, its ground-state table, and the traditional report, and also
+requires that the requested worker count was actually used.
+
+On the same 32-logical-CPU host, the retained 401-segment, nine-frequency
+Sommerfeld fixture improved from 0.8411 seconds with one job and one thread to
+0.1680 seconds with automatic allocation, a 5.01x end-to-end speedup.  Automatic
+mode selected nine frequency workers and three threads per worker.  Sommerfeld
+table construction remains serial within each frequency, but independent
+frequencies now construct their tables concurrently.
+
 ## Conservative serial fallbacks
 
 Correctness takes precedence over concurrency.  Classic execution remains
 serial for matrix-reuse entry paths, a later sweep after the parent has already
 entered a numerical runtime, receiving-pattern plane-wave excitation, CP
-coupling, plot-file output, and negative-conductivity ground notation.  A
-frequency-dependent real-ground sweep is parallel for the normal text report,
-but currently stays serial when result JSON is requested because schema-v1
-ground-state fragments need a separate ordered merge.  Unsupported platforms
-use the serial path; Linux/POSIX is the accepted Milestone 3 target.
+coupling, plot-file output, and negative-conductivity ground notation.
+Unsupported platforms use the serial path; Linux/POSIX is the accepted
+Milestone 3 target.
 
 ## Manual acceptance
 

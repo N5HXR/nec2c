@@ -86,7 +86,7 @@ static void cmset_serial( int nrow, complex double *cm, double rkhx, int iexkx )
   {
 	for( j = 1; j <= data.n; j++ )
 	{
-	  trio(j);
+	  wire_operator_trio(j);
 	  for( i = 0; i < segj.jsno; i++ )
 	  {
 		ij= segj.jco[i];
@@ -115,7 +115,8 @@ static void cmset_serial( int nrow, complex double *cm, double rkhx, int iexkx )
 	  for( i = 0; i < segj.jsno; i++ )
 	  {
 		jss= segj.jco[i];
-		cm[(jss-1)+(ipr-1)*nrow] -= ( segj.ax[i]+ segj.cx[i])* zaj;
+		cm[(jss-1)+(ipr-1)*nrow] -=
+		  wire_operator_center_basis(segj.ax[i],segj.cx[i])*zaj;
 	  }
 
 	} /* for( j = 1; j <= n; j++ ) */
@@ -223,7 +224,7 @@ static void cmset_columns(int nrow,complex double *cm,double rkhx,int iexkx,
   if(data.n!=0)
     for(j=1;j<=data.n;++j)
     {
-      trio(j);
+      wire_operator_trio(j);
       for(i=0;i<segj.jsno;++i)
       {
         ij=segj.jco[i];
@@ -243,7 +244,8 @@ static void cmset_columns(int nrow,complex double *cm,double rkhx,int iexkx,
       for(i=0;i<segj.jsno;++i)
       {
         jss=segj.jco[i];
-        cm[(jss-1)+(size_t)(ipr-1)*nrow]-=(segj.ax[i]+segj.cx[i])*zaj;
+        cm[(jss-1)+(size_t)(ipr-1)*nrow]-=
+          wire_operator_center_basis(segj.ax[i],segj.cx[i])*zaj;
       }
     }
 
@@ -547,7 +549,7 @@ void cmsw( int j1, int j2, int i1, int i2, complex double *cm,
 			  pyl= cos( pyl);
 			  dataj.exc= emel[8]* fsign;
 
-			  trio(i+1);
+			  wire_operator_trio(i+1);
 
 			  il= i-ncw;
 			  if( i < data.np)
@@ -625,6 +627,7 @@ void cmws( int j, int i1, int i2, complex double *cm,
   dataj.cabj= data.cab[j];
   dataj.sabj= data.sab[j];
   dataj.salpj= data.salp[j];
+  wire_operator_set_source_segment((size_t)j);
 
   /* observation loop */
   ipr= -1;
@@ -640,7 +643,7 @@ void cmws( int j, int i1, int i2, complex double *cm,
 	  xi= data.px[js];
 	  yi= data.py[js];
 	  zi= data.pz[js];
-	  hsfld( xi, yi, zi,0.);
+	  wire_operator_hsfld( xi, yi, zi,0.);
 
 	  if( ik != 0 )
 	  {
@@ -715,13 +718,33 @@ void cmws( int j, int i1, int i2, complex double *cm,
 
 /*-----------------------------------------------------------------------*/
 
+static complex double cmww_basis_value(int segment,int basis,
+    complex double etk,complex double ets,complex double etc,
+    int cap1_active,complex double cap1,int cap2_active,complex double cap2,
+    complex double gap)
+{
+  complex double value=etk*segj.ax[basis]+ets*segj.bx[basis]+
+    etc*segj.cx[basis];
+  if(cap1_active)
+    value+=cap1*wire_operator_current(segj.ax[basis],segj.bx[basis],
+                                      segj.cx[basis],(size_t)segment,
+                                      -.5*data.si[segment]);
+  if(cap2_active)
+    value+=cap2*wire_operator_current(segj.ax[basis],segj.bx[basis],
+                                      segj.cx[basis],(size_t)segment,
+                                      .5*data.si[segment]);
+  if(cabs(gap)>1.e-30)
+    value+=gap*wire_operator_center_basis(segj.ax[basis],segj.cx[basis]);
+  return value;
+}
+
 /* cmww computes matrix elements for wire-wire interactions */
 void cmww( int j, int i1, int i2, complex double *cm,
 	int nr, complex double *cw, int nw, int itrp)
 {
-  int ipr, iprx, i, ij, jx, coating_active;
+  int ipr, iprx, i, ij, jx, coating_active, cap1_active, cap2_active;
   double xi, yi, zi, ai, cabi, sabi, salpi;
-  complex double etk, ets, etc;
+  complex double etk, ets, etc, cap1, cap2, gap, load_voltage;
 
   /* set source segment parameters */
   jx = j;
@@ -734,7 +757,12 @@ void cmww( int j, int i1, int i2, complex double *cm,
   dataj.cabj= data.cab[j];
   dataj.sabj= data.sab[j];
   dataj.salpj= data.salp[j];
+  wire_operator_set_source_segment((size_t)j);
   coating_active=coated_wire_segment_active(jx);
+  cap1_active=wire_operator_nec4_basis() && data.icon1[j]==0;
+  cap2_active=wire_operator_nec4_basis() && data.icon2[j]==0;
+  load_voltage=(wire_operator_nec4_basis() && zload.nload!=0)?
+    zload.zarray[j]*data.si[j]:CPLX_00;
 
   /* decide whether ext. t.w. approx. can be used */
   if( dataj.iexk != 0)
@@ -858,13 +886,35 @@ void cmww( int j, int i1, int i2, complex double *cm,
 	sabi= data.sab[i];
 	salpi= data.salp[i];
 
-	efld( xi, yi, zi, ai, ij);
+	wire_operator_efld( xi, yi, zi, ai, ij);
 
 	etk= dataj.exk* cabi+ dataj.eyk* sabi+ dataj.ezk* salpi;
 	ets= dataj.exs* cabi+ dataj.eys* sabi+ dataj.ezs* salpi;
 	etc= dataj.exc* cabi+ dataj.eyc* sabi+ dataj.ezc* salpi;
 	if(coating_active)
 	  coated_wire_field_correction(j+1, i+1, &ets, &etc);
+	cap1=cap2=gap=CPLX_00;
+	if(cap1_active)
+	{
+	  complex double ex,ey,ez;
+	  if(!wire_operator_endcap_current_field((size_t)j,0,xi,yi,zi,
+	        &ex,&ey,&ez)) stop(-1);
+	  cap1=ex*cabi+ey*sabi+ez*salpi;
+	}
+	if(cap2_active)
+	{
+	  complex double ex,ey,ez;
+	  if(!wire_operator_endcap_current_field((size_t)j,1,xi,yi,zi,
+	        &ex,&ey,&ez)) stop(-1);
+	  cap2=ex*cabi+ey*sabi+ez*salpi;
+	}
+	if(cabs(load_voltage)>1.e-30)
+	{
+	  complex double ex,ey,ez;
+	  if(!wire_operator_gap_voltage_field((size_t)j,xi,yi,zi,
+	        &ex,&ey,&ez)) stop(-1);
+	  gap=(ex*cabi+ey*sabi+ez*salpi)*load_voltage;
+	}
 
 	/* fill matrix elements. element locations */
 	/* determined by connection data. */
@@ -875,7 +925,8 @@ void cmww( int j, int i1, int i2, complex double *cm,
 	  for( ij = 0; ij < segj.jsno; ij++ )
 	  {
 		jx = segj.jco[ij]-1;
-		cm[ipr+jx*nr] += etk* segj.ax[ij]+ ets* segj.bx[ij]+ etc* segj.cx[ij];
+		cm[ipr+jx*nr] += cmww_basis_value(j,ij,etk,ets,etc,
+		  cap1_active,cap1,cap2_active,cap2,gap);
 	  }
 	  continue;
 	}
@@ -886,7 +937,8 @@ void cmww( int j, int i1, int i2, complex double *cm,
 	  for( ij = 0; ij < segj.jsno; ij++ )
 	  {
 		jx= segj.jco[ij]-1;
-		cm[jx+ipr*nr] += etk* segj.ax[ij]+ ets* segj.bx[ij]+ etc* segj.cx[ij];
+		cm[jx+ipr*nr] += cmww_basis_value(j,ij,etk,ets,etc,
+		  cap1_active,cap1,cap2_active,cap2,gap);
 	  }
 	  continue;
 	}
@@ -896,11 +948,13 @@ void cmww( int j, int i1, int i2, complex double *cm,
 	{
 	  jx= segj.jco[ij]-1;
 	  if( jx < nr)
-		cm[jx+ipr*nr] += etk* segj.ax[ij]+ ets* segj.bx[ij]+ etc* segj.cx[ij];
+		cm[jx+ipr*nr] += cmww_basis_value(j,ij,etk,ets,etc,
+		  cap1_active,cap1,cap2_active,cap2,gap);
 	  else
 	  {
 		jx -= nr;
-		cw[jx*ipr*nw] += etk* segj.ax[ij]+ ets* segj.bx[ij]+ etc* segj.cx[ij];
+		cw[jx*ipr*nw] += cmww_basis_value(j,ij,etk,ets,etc,
+		  cap1_active,cap1,cap2_active,cap2,gap);
 	  }
 
 	} /* for( ij = 0; ij < segj.jsno; ij++ ) */
@@ -938,6 +992,24 @@ void etmns( double p1, double p2, double p3, double p4,
 	  {
 		is= vsorc.isant[i]-1;
 		e[is]= -vsorc.vsant[i]/( data.si[is]* data.wlam);
+	  }
+
+	  if(wire_operator_nec4_basis())
+	  {
+		int source,observer;
+		for(source=0;source<vsorc.nsant;++source)
+		{
+		  size_t segment=(size_t)(vsorc.isant[source]-1);
+		  for(observer=0;observer<data.n;++observer)
+		  {
+			complex double ex,ey,ez;
+			if(!wire_operator_gap_voltage_field(segment,data.x[observer],
+			      data.y[observer],data.z[observer],&ex,&ey,&ez)) stop(-1);
+			e[observer]-=vsorc.vsant[source]/data.wlam*
+			  (ex*data.cab[observer]+ey*data.sab[observer]+
+			   ez*data.salp[observer]);
+		  }
+		}
 	  }
 	}
 

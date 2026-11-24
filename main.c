@@ -36,6 +36,8 @@
 #include "performance.h"
 #include "dense_backend.h"
 #include "concurrency.h"
+#include "nec4_medium.h"
+#include "nec4_ground_runtime.h"
 
 #include <ctype.h>
 #include <getopt.h>
@@ -55,6 +57,21 @@ static int numerical_fork_safe = 1;
 static size_t classic_fill_processes = 1;
 static size_t classic_factor_threads = 1;
 static size_t classic_field_threads = 1;
+
+static int nec4_ground_cache_default(char *path,size_t capacity)
+{
+  const char *base=getenv("XDG_CACHE_HOME");
+  int length;
+  if(!path||capacity==0) return 0;
+  if(base&&*base)
+    length=snprintf(path,capacity,"%s/nec2c/nec4-ground",base);
+  else {
+    base=getenv("HOME");
+    if(!base||!*base) return 0;
+    length=snprintf(path,capacity,"%s/.cache/nec2c/nec4-ground",base);
+  }
+  return length>0&&(size_t)length<capacity;
+}
 
 static concurrency_plan plan_concurrency(size_t frequency_count,
     size_t worker_bytes, size_t automatic_thread_limit)
@@ -152,6 +169,7 @@ typedef struct
   FILE *report;
   FILE *json;
   FILE *status;
+  classic_worker_status result;
 } classic_worker_slot;
 
 typedef struct
@@ -184,6 +202,45 @@ static int finish_classic_worker(classic_worker_state *worker,
   _exit(status.success ? 0 : 1);
 }
 
+static int classic_worker_path(char *path, size_t size, const char *directory,
+    size_t index, const char *kind)
+{
+  int count = snprintf(path, size, "%s/%lu.%s", directory,
+      (unsigned long)index, kind);
+  return count > 0 && (size_t)count < size;
+}
+
+static FILE *open_classic_worker_file(const char *directory, size_t index,
+    const char *kind, const char *mode)
+{
+  char path[NEC2C_PATH_MAX * 4 + 96];
+  if(!classic_worker_path(path, sizeof(path), directory, index, kind))
+    return NULL;
+  return fopen(path, mode);
+}
+
+static void remove_classic_worker_files(const char *directory, size_t index)
+{
+  static const char *kinds[] = { "report", "json", "status" };
+  char path[NEC2C_PATH_MAX * 4 + 96];
+  size_t kind;
+  for(kind = 0; kind < sizeof(kinds) / sizeof(kinds[0]); ++kind)
+    if(classic_worker_path(path, sizeof(path), directory, index, kinds[kind]))
+      unlink(path);
+}
+
+static int classic_worker_test_failure(size_t index)
+{
+  const char *text = getenv("NEC2C_TEST_CLASSIC_WORKER_FAIL_INDEX");
+  char *end;
+  unsigned long requested;
+  if(!text || !*text) return 0;
+  errno = 0;
+  requested = strtoul(text, &end, 10);
+  return errno == 0 && end != text && *end == '\0' &&
+      requested == (unsigned long)(index + 1);
+}
+
 /* Fork all but the final frequency from the pristine case-1 solver state.
    The parent runs the final frequency normally, preserving the legacy global
    state expected by any later cards. */
@@ -196,9 +253,15 @@ static int start_classic_frequency_workers(int frequency_mode,
   concurrency_plan plan = plan_concurrency((size_t)*frequency_count,
       worker_bytes, 16);
   classic_worker_slot *slots;
+  char worker_directory[NEC2C_PATH_MAX * 4 + 96];
+  const char *temporary_root;
   size_t child_count = (size_t)*frequency_count - 1;
   size_t base_execution = result_json_next_execution();
   size_t next = 0, active = 0, done = 0, index;
+  size_t failed_index = SIZE_MAX;
+  int failed_wait_status = 0, failure_errno = 0;
+  const char *failure_operation = "worker execution";
+  int importing = 0;
   int original_count = *frequency_count;
   if(plan.jobs > (size_t)original_count) plan.jobs = (size_t)original_count;
   configure_classic_concurrency(&plan, threaded_backend, (size_t)netcx.npeq);
@@ -212,6 +275,19 @@ static int start_classic_frequency_workers(int frequency_mode,
       plan.jobs_automatic, plan.threads_automatic, plan.memory_limited);
   slots = calloc(child_count, sizeof(*slots));
   if(!slots) return 0;
+  temporary_root = getenv("TMPDIR");
+  if(!temporary_root || !*temporary_root) temporary_root = "/tmp";
+  {
+    int directory_length = snprintf(worker_directory, sizeof(worker_directory),
+        "%s/nec2c-frequency-XXXXXX", temporary_root);
+    if(directory_length <= 0 ||
+       (size_t)directory_length >= sizeof(worker_directory) ||
+       !mkdtemp(worker_directory))
+    {
+      free(slots);
+      return 0;
+    }
+  }
   if(result_json_active()) result_json_ground_state();
   fflush(parent_report);
 
@@ -221,13 +297,24 @@ static int start_classic_frequency_workers(int frequency_mode,
     {
       classic_worker_slot *slot = &slots[next];
       pid_t process;
-      slot->report = tmpfile(); slot->json = tmpfile(); slot->status = tmpfile();
-      if(!slot->report || !slot->json || !slot->status ||
-         !result_json_worker_prepare()) goto failure;
+      if(!result_json_worker_prepare())
+      {
+        failed_index = next;
+        failure_errno = errno;
+        failure_operation = "worker setup";
+        goto failure;
+      }
       process = fork();
       if(process == 0)
       {
         worker_process_enable();
+        slot->report = open_classic_worker_file(worker_directory, next,
+            "report", "w+b");
+        slot->json = open_classic_worker_file(worker_directory, next,
+            "json", "w+b");
+        slot->status = open_classic_worker_file(worker_directory, next,
+            "status", "w+b");
+        if(!slot->report || !slot->json || !slot->status) _exit(125);
         worker->active = 1; worker->index = next; worker->slot = slot;
         worker->started = performance_now();
         output_fp = slot->report;
@@ -237,9 +324,16 @@ static int start_classic_frequency_workers(int frequency_mode,
             requested_frequency(frequency_mode, first_mhz, step,
                 (int)next - 1);
         if(!result_json_worker_begin(base_execution + next)) _exit(125);
+        if(classic_worker_test_failure(next)) _exit(124);
         return 1;
       }
-      if(process < 0) goto failure;
+      if(process < 0)
+      {
+        failed_index = next;
+        failure_errno = errno;
+        failure_operation = "fork";
+        goto failure;
+      }
       slot->process = process;
       ++next; ++active;
     }
@@ -249,37 +343,77 @@ static int start_classic_frequency_workers(int frequency_mode,
       if(completed < 0)
       {
         if(errno == EINTR) continue;
+        failure_errno = errno;
+        failure_operation = "waitpid";
         goto failure;
       }
       for(index = 0; index < next; ++index)
         if(slots[index].process == completed)
         {
           slots[index].process = 0;
+          --active; ++done;
           if(!WIFEXITED(wait_status) || WEXITSTATUS(wait_status) != 0)
+          {
+            failed_index = index;
+            failed_wait_status = wait_status;
             goto failure;
+          }
+          slots[index].report = open_classic_worker_file(worker_directory,
+              index, "report", "rb");
+          slots[index].json = open_classic_worker_file(worker_directory,
+              index, "json", "rb");
+          slots[index].status = open_classic_worker_file(worker_directory,
+              index, "status", "rb");
+          if(!slots[index].report || !slots[index].json ||
+             !slots[index].status)
+          {
+            failed_index = index;
+            failure_errno = errno;
+            failure_operation = "worker output open";
+            goto failure;
+          }
+          rewind(slots[index].status);
+          if(fread(&slots[index].result, sizeof(slots[index].result), 1,
+                 slots[index].status) != 1 ||
+             !slots[index].result.success)
+          {
+            failed_index = index;
+            failure_operation = "worker status read";
+            goto failure;
+          }
+          fclose(slots[index].report); slots[index].report = NULL;
+          fclose(slots[index].json); slots[index].json = NULL;
+          fclose(slots[index].status); slots[index].status = NULL;
           break;
         }
-      --active; ++done;
     }
   }
 
+  importing = 1;
   for(index = 0; index < child_count; ++index)
   {
-    classic_worker_status status;
-    rewind(slots[index].status);
-    if(fread(&status, sizeof(status), 1, slots[index].status) != 1 ||
-       !status.success || !copy_stream(parent_report, slots[index].report) ||
-       !result_json_worker_import(slots[index].json)) goto failure;
-    if(iped && fnorm) memcpy(fnorm + 4 * index, status.impedance,
-        sizeof(status.impedance));
-    if(status.normalization > *zpnorm) *zpnorm = status.normalization;
-    performance_add("frequency_worker", status.elapsed_seconds);
+    classic_worker_status *status = &slots[index].result;
+    slots[index].report = open_classic_worker_file(worker_directory, index,
+        "report", "rb");
+    slots[index].json = open_classic_worker_file(worker_directory, index,
+        "json", "rb");
+    if(!slots[index].report || !slots[index].json ||
+       !copy_stream(parent_report, slots[index].report) ||
+       !result_json_worker_import(slots[index].json))
+    {
+      failed_index = index;
+      failure_operation = "result import";
+      goto failure;
+    }
+    fclose(slots[index].report); slots[index].report = NULL;
+    fclose(slots[index].json); slots[index].json = NULL;
+    remove_classic_worker_files(worker_directory, index);
+    if(iped && fnorm) memcpy(fnorm + 4 * index, status->impedance,
+        sizeof(status->impedance));
+    if(status->normalization > *zpnorm) *zpnorm = status->normalization;
+    performance_add("frequency_worker", status->elapsed_seconds);
   }
-  for(index = 0; index < child_count; ++index)
-  {
-    fclose(slots[index].report); fclose(slots[index].json);
-    fclose(slots[index].status);
-  }
+  rmdir(worker_directory);
   free(slots);
   *frequency_index = original_count;
   *frequency_count = original_count;
@@ -301,9 +435,47 @@ failure:
     if(slots[index].json) fclose(slots[index].json);
     if(slots[index].status) fclose(slots[index].status);
   }
+  for(index = 0; index < child_count; ++index)
+    remove_classic_worker_files(worker_directory, index);
+  rmdir(worker_directory);
   free(slots);
-  fprintf(stderr, "nec2c: classic frequency worker failed\n");
-  stop(-1);
+  if(failed_index != SIZE_MAX)
+  {
+    double frequency = requested_frequency(frequency_mode, first_mhz, step,
+        (int)failed_index);
+    if(failed_wait_status && WIFSIGNALED(failed_wait_status))
+      fprintf(stderr, "nec2c: classic frequency worker %lu at %.12g MHz "
+          "terminated by signal %d\n", (unsigned long)(failed_index + 1),
+          frequency, WTERMSIG(failed_wait_status));
+    else if(failed_wait_status && WIFEXITED(failed_wait_status))
+      fprintf(stderr, "nec2c: classic frequency worker %lu at %.12g MHz "
+          "exited with status %d\n", (unsigned long)(failed_index + 1),
+          frequency, WEXITSTATUS(failed_wait_status));
+    else if(failure_errno)
+      fprintf(stderr, "nec2c: classic frequency %s failed for worker %lu "
+          "at %.12g MHz: %s\n", failure_operation,
+          (unsigned long)(failed_index + 1), frequency,
+          strerror(failure_errno));
+    else
+      fprintf(stderr, "nec2c: classic frequency %s failed for worker %lu "
+          "at %.12g MHz\n", failure_operation,
+          (unsigned long)(failed_index + 1), frequency);
+  }
+  else if(failure_errno)
+    fprintf(stderr, "nec2c: classic frequency %s failed: %s\n",
+        failure_operation, strerror(failure_errno));
+  else
+    fprintf(stderr, "nec2c: classic frequency %s failed\n",
+        failure_operation);
+  if(importing)
+  {
+    fprintf(stderr, "nec2c: cannot retry after frequency results were imported\n");
+    stop(-1);
+  }
+  fprintf(stderr, "nec2c: retrying the frequency sweep serially\n");
+  *frequency_index = 1;
+  *frequency_count = original_count;
+  *current_mhz = first_mhz;
   return 0;
 }
 #endif
@@ -783,6 +955,255 @@ static void publish_coated_failure(const dielectric_model *dielectric,
   result_json_finish("validation-error");
 }
 
+static int prepare_nec4_medium_preflight(nec4_medium_state *state)
+{
+  nec4_medium_geometry geometry;
+  double loss;
+  int loss_is_epsilon;
+  char context[1024];
+
+  if(gnd.ksymp != 2 || gnd.iperf != 2)
+  {
+    result_json_diagnostic("error", "NEC4ISH_M7_GROUND_REQUIRED",
+        "M7 lower-medium preflight requires a finite Sommerfeld GN 2 medium",
+        "{\"required_card\":\"GN 2\"}");
+    fprintf(output_fp, "\n\n  NEC4ISH M7 PREFLIGHT ERROR: lower-medium and "
+        "interface models require a finite Sommerfeld GN 2 medium.");
+    return 0;
+  }
+  if(data.m != 0)
+  {
+    result_json_diagnostic("error", "NEC4ISH_M7_PATCH_UNSUPPORTED",
+        "M7 lower-medium preflight does not yet qualify surface patches", "{}");
+    fprintf(output_fp, "\n\n  NEC4ISH M7 PREFLIGHT ERROR: surface patches are "
+        "deferred until the interface field engine is available.");
+    return 0;
+  }
+
+  geometry.count=(size_t)data.n;
+  geometry.x1=data.x1; geometry.y1=data.y1; geometry.z1=data.z1;
+  geometry.x2=data.x2; geometry.y2=data.y2; geometry.z2=data.z2;
+  loss_is_epsilon=save.sig<0.;
+  loss=loss_is_epsilon ? -save.sig : save.sig;
+  if(!nec4_medium_classify(&geometry,save.epsr,loss,save.fmhz,
+      loss_is_epsilon,state))
+  {
+    snprintf(context,sizeof(context),
+        "{\"segments\":%lu,\"one_sided_interface_ends\":%lu,"
+        "\"unsupported_interface_junctions\":%lu,"
+        "\"unsplit_crossings\":%lu,"
+        "\"in_plane_segments\":%lu}",
+        (unsigned long)geometry.count,
+        (unsigned long)state->one_sided_interface_ends,
+        (unsigned long)state->unsupported_interface_junctions,
+        (unsigned long)state->unsplit_crossings,
+        (unsigned long)state->in_plane_segments);
+    result_json_diagnostic("error", "NEC4ISH_M7_INTERFACE_TOPOLOGY",
+        "wires may end freely at the interface, form a simple split crossing, or form one upper wire feeding buried radial wires; they may not lie in the interface plane",
+        context);
+    nec4_medium_print(output_fp,state);
+    fprintf(output_fp, "\n  NEC4ISH M7 PREFLIGHT ERROR: split every crossing "
+        "at z=0; only a simple crossing or one upper wire feeding lower-medium "
+        "radials is supported, and complete segments in the interface plane "
+        "are deferred.");
+    return 0;
+  }
+
+  wire_operator_set_medium_state(state);
+  nec4_medium_print(output_fp,state);
+  snprintf(context,sizeof(context),
+      "{\"frequency_mhz\":%.17g,\"upper_segments\":%lu,"
+      "\"lower_segments\":%lu,\"interface_endpoints\":%lu,"
+      "\"crossing_junctions\":%lu,\"one_sided_interface_ends\":%lu,"
+      "\"radial_screen_junctions\":%lu,"
+      "\"unsupported_interface_junctions\":%lu,"
+      "\"oblique_crossings\":%lu,"
+      "\"interface_tolerance_m\":%.17g,\"relative_permittivity\":%.17g,"
+      "\"epsilon_relative\":{\"real\":%.17g,\"imag\":%.17g},"
+      "\"wave_number_per_m\":{\"real\":%.17g,\"imag\":%.17g},"
+      "\"intrinsic_impedance_ohm\":{\"real\":%.17g,\"imag\":%.17g}}",
+      state->frequency_mhz,(unsigned long)state->upper_segments,
+      (unsigned long)state->lower_segments,
+      (unsigned long)state->interface_endpoints,
+      (unsigned long)state->crossing_junctions,
+      (unsigned long)state->one_sided_interface_ends,
+      (unsigned long)state->radial_screen_junctions,
+      (unsigned long)state->unsupported_interface_junctions,
+      (unsigned long)state->oblique_crossings,state->interface_tolerance_m,
+      state->relative_permittivity,creal(state->epsilon_relative),
+      cimag(state->epsilon_relative),creal(state->wave_number_per_m),
+      cimag(state->wave_number_per_m),creal(state->intrinsic_impedance_ohm),
+      cimag(state->intrinsic_impedance_ohm));
+  result_json_diagnostic("info", "NEC4ISH_M7_MEDIUM_PREFLIGHT",
+      "lower-medium material and interface topology prepared",context);
+  if(state->oblique_crossings)
+  {
+    snprintf(context,sizeof(context),"{\"oblique_crossings\":%lu}",
+        (unsigned long)state->oblique_crossings);
+    result_json_diagnostic("info", "NEC4ISH_M7_HIGHLY_OBLIQUE_AUDIT",
+        "one or more crossings exceed 60 degrees from the interface normal; retained as audit metadata because the public guide reports apparently good results in this region",
+        context);
+  }
+  return 1;
+}
+
+static void enforce_nec4_m9_boundary(nec4_medium_state *state,
+    const dielectric_model *dielectric,size_t coated_domain_count)
+{
+  int newly_prepared=0;
+  if(!wire_operator_nec4_ground()) return;
+  if(!wire_operator_nec4_basis())
+  {
+    result_json_diagnostic("error", "NEC4ISH_M7_WIRE_ENGINE_REQUIRED",
+        "M7 lower-medium preflight requires --wire-engine nec4ish", "{}");
+    fprintf(output_fp,"\n\n  NEC4ISH M7 PREFLIGHT ERROR: --ground-engine "
+        "nec4ish requires --wire-engine nec4ish.");
+    result_json_job_end(dielectric);result_json_finish("validation-error");
+    stop(-1);
+  }
+  if((dielectric&&dielectric->loaded)||coated_domain_count)
+  {
+    result_json_diagnostic("error", "NEC4ISH_M7_COMBINATION_UNSUPPORTED",
+        "M7 lower-medium preflight does not yet qualify dielectric VIE or coated-wire combinations",
+        "{}");
+    fprintf(output_fp,"\n\n  NEC4ISH M7 PREFLIGHT ERROR: dielectric VIE and "
+        "LD 7 coated-wire combinations are deferred for requalification.");
+    result_json_job_end(dielectric);result_json_finish("validation-error");
+    stop(-1);
+  }
+  if(!state->valid)
+  {
+    if(!prepare_nec4_medium_preflight(state))
+    {
+      result_json_job_end(dielectric);
+      result_json_finish("validation-error");
+      fprintf(stderr,"nec2c: NEC4ish M7 interface preflight failed\n");
+      stop(-1);
+    }
+    newly_prepared=1;
+  }
+  if(newly_prepared)
+    result_json_diagnostic("info", "NEC4ISH_M9_GROUND_ENGINE",
+        "NEC4ish similarity interface-field engine enabled",
+        "{\"implementation\":\"documented-interface-integrals\"}");
+}
+
+static void resolve_automatic_engines(const dielectric_model *dielectric,
+    size_t coated_domain_count,int *reported)
+{
+  char context[512];
+  wire_operator_set_model_features((size_t)data.m,coated_domain_count,
+      dielectric&&dielectric->loaded);
+  wire_operator_resolve_auto();
+  if(*reported) return;
+  *reported=1;
+  if(strcmp(wire_operator_requested_engine(),"auto")&&
+     strcmp(wire_operator_requested_ground_engine(),"auto"))
+    return;
+  snprintf(context,sizeof(context),
+      "{\"wire\":{\"requested\":\"%s\",\"resolved\":\"%s\"},"
+      "\"ground\":{\"requested\":\"%s\",\"resolved\":\"%s\"},"
+      "\"reason\":\"%s\"}",
+      wire_operator_requested_engine(),wire_operator_resolved_engine(),
+      wire_operator_requested_ground_engine(),
+      wire_operator_resolved_ground_engine(),
+      wire_operator_selection_reason());
+  result_json_diagnostic("info","ENGINE_AUTO_SELECTION",
+      "wire and ground engine selection resolved",context);
+  fprintf(output_fp,
+      "\n  ENGINE AUTO SELECTION: wire %s -> %s, ground %s -> %s (%s)",
+      wire_operator_requested_engine(),wire_operator_resolved_engine(),
+      wire_operator_requested_ground_engine(),
+      wire_operator_resolved_ground_engine(),
+      wire_operator_selection_reason());
+}
+
+static int prepare_nec4_ground_frequency(nec4_medium_state *medium,
+    nec4_ground_runtime *runtime,const char *cache_directory,
+    nec4_ground_model model)
+{
+  const double pi=acos(-1.),c0=299792458.;
+  double complex epsilon,upper_k;
+  nec4_ground_runtime_options options;
+  concurrency_plan plan;
+  double started;
+  if(!wire_operator_nec4_ground()) return 1;
+  epsilon=medium->loss_is_epsilon?
+      medium->relative_permittivity+I*cimag(medium->epsilon_relative):
+      nec4_medium_epsilon(medium->relative_permittivity,
+          medium->conductivity_s_per_m,save.fmhz,0);
+  if(!nec4_medium_update_frequency(medium,save.fmhz,epsilon)) return 0;
+  memset(&options,0,sizeof(options));
+  plan=plan_concurrency(1,40u*1024u*1024u,16);
+  options.cache_directory=cache_directory;
+  options.workers=(int)plan.threads;
+  options.model=model;
+  upper_k=2.*pi*save.fmhz*1.e6/c0;
+  started=performance_now();
+  if(!nec4_ground_runtime_prepare(runtime,save.fmhz*1.e6,epsilon,
+      medium->wave_number_per_m,upper_k,&options)) return 0;
+  performance_add("nec4ish_ground_tables",performance_now()-started);
+  wire_operator_set_medium_state(medium);
+  wire_operator_set_ground_matrix_context(
+      nec4_ground_runtime_matrix_context(runtime));
+  fprintf(output_fp,"\n  NEC4ISH INTERFACE FIELD: %s model region, "
+      "%lu/%lu cached tables, %d build workers",
+      nec4_ground_model_name(model),
+      (unsigned long)runtime->cache_hits,
+      (unsigned long)(runtime->cache_hits+runtime->cache_misses),
+      options.workers);
+  return 1;
+}
+
+static void audit_nec4_ground_routes(nec4_ground_runtime *runtime,
+    const nec4_medium_state *medium)
+{
+  static const double offsets[3]={-.5,0.,.5};
+  if(!runtime||!runtime->ready||!medium||!medium->valid) return;
+  for(size_t source=0;source<medium->segment_count;++source)
+    for(size_t observer=0;observer<medium->segment_count;++observer)
+      for(size_t si=0;si<3;++si) for(size_t oi=0;oi<3;++oi)
+      {
+        double sl=data.si[source]*data.wlam*offsets[si];
+        double ol=data.si[observer]*data.wlam*offsets[oi];
+        double sx=data.x[source]*data.wlam+sl*data.cab[source];
+        double sy=data.y[source]*data.wlam+sl*data.sab[source];
+        double sz=data.z[source]*data.wlam+sl*data.salp[source];
+        double ox=data.x[observer]*data.wlam+ol*data.cab[observer];
+        double oy=data.y[observer]*data.wlam+ol*data.sab[observer];
+        double oz=data.z[observer]*data.wlam+ol*data.salp[observer];
+        double rho=hypot(ox-sx,oy-sy),z,depth;
+        nec4_ground_dispatch route;
+        if(medium->segment_medium[source]==NEC4_MEDIUM_LOWER&&
+           medium->segment_medium[observer]==NEC4_MEDIUM_UPPER)
+        { z=fabs(oz);depth=fabs(sz); }
+        else if(medium->segment_medium[source]==NEC4_MEDIUM_UPPER&&
+                medium->segment_medium[observer]==NEC4_MEDIUM_LOWER)
+        { z=fabs(sz);depth=fabs(oz); }
+        else if(medium->segment_medium[source]==NEC4_MEDIUM_LOWER)
+        { z=0.;depth=fabs(sz)+fabs(oz); }
+        else { z=fabs(sz)+fabs(oz);depth=0.; }
+        if(!nec4_ground_route(rho,z,-depth,
+            runtime->matrix_context.lower_wave_number_per_m,
+            runtime->matrix_context.upper_wave_number_per_m,
+            runtime->wavelength0_m,&route)) continue;
+        if(route.grazing_risk) runtime->grazing_seen=1;
+        if(route.method==NEC4_GROUND_MODEL_FIT&&
+           z<.16*runtime->wavelength0_m) runtime->direct_strip_seen=1;
+      }
+}
+
+static void report_nec4_ground_grazing(nec4_ground_runtime *runtime)
+{
+  if(!nec4_ground_runtime_claim_grazing_warning(runtime)) return;
+  result_json_diagnostic("warning","NEC4ISH_M9_GRAZING_INTERFERENCE",
+      "one or more interface interactions entered the documented grazing-angle risk region",
+      "{\"threshold_degrees\":15}");
+  fprintf(output_fp,"\n  NEC4ISH M9 WARNING: an interface interaction "
+      "entered the <=15 degree grazing region; compare with a refined "
+      "or a future post-theory grazing treatment if this result is critical.");
+}
+
 /*-------------------------------------------------------------------*/
 
 int main( int argc, char **argv )
@@ -802,14 +1223,19 @@ int main( int argc, char **argv )
   dielectric_plane_wave dielectric_wave;
   coated_wire_model coated_wires;
   coated_wire_diagnostic coated_error;
+  nec4_medium_state nec4_medium;
+  nec4_ground_runtime nec4_ground;
   int dielectric_excitation_seen, dielectric_any_excitation_seen;
   int dielectric_solved;
+  int engine_selection_reported=0;
   int dielectric_iterative = 0;
   int capabilities_json = 0;
   int validate_only = 0;
   int coated_wire_experimental_junctions = 0;
+  nec4_ground_model nec4_ground_model_choice=NEC4_GROUND_MODEL_GRID;
   char result_path[NEC2C_PATH_MAX * 4 + 1] = "";
   char timing_path[NEC2C_PATH_MAX * 4 + 1] = "";
+  char nec4_ground_cache[NEC2C_PATH_MAX * 4 + 1] = "";
 
 /* input card mnemonic list */
 #define NUM_CMNDS  21
@@ -875,6 +1301,8 @@ int main( int argc, char **argv )
 #endif
 
   /*** command line arguments handler ***/
+  (void)nec4_ground_cache_default(nec4_ground_cache,
+      sizeof(nec4_ground_cache));
   if( argc == 1 )
   {
 	usage();
@@ -893,6 +1321,14 @@ int main( int argc, char **argv )
       {"threads", required_argument, NULL, 1006},
       {"fft-backend", required_argument, NULL, 1007},
       {"coated-wire-junctions", required_argument, NULL, 1008},
+      {"wire-engine", required_argument, NULL, 1009},
+      {"ground-engine", required_argument, NULL, 1010},
+      {"model-check", required_argument, NULL, 1011},
+      {"nec4ish-ground-model", required_argument, NULL, 1012},
+      {"nec4ish-ground-cache", required_argument, NULL, 1013},
+      /* Compatibility aliases.  Public output always reports nec4ish. */
+      {"nec4-ground-model", required_argument, NULL, 1012},
+      {"nec4-ground-cache", required_argument, NULL, 1013},
       {NULL, 0, NULL, 0}
     };
   while( (option = getopt_long(argc, argv, "i:o:s:r:n:hv", long_options, NULL) ) != -1 )
@@ -1024,6 +1460,59 @@ int main( int argc, char **argv )
         }
         break;
 
+      case 1009:
+        if(!wire_operator_set_engine(optarg))
+        {
+          fprintf(stderr, "nec2c: --wire-engine requires auto, nec2, or nec4ish\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1010:
+        if(!wire_operator_set_ground_engine(optarg))
+        {
+          if(!strcmp(optarg, "nec4ish")||!strcmp(optarg, "nec4")||
+             !strcmp(optarg, "adaptive"))
+            fprintf(stderr, "nec2c: requested ground engine is planned but not available in this milestone\n");
+          else
+            fprintf(stderr, "nec2c: --ground-engine requires auto, nec2, or an available future engine\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1011:
+        if(!wire_operator_set_model_check(optarg))
+        {
+          fprintf(stderr, "nec2c: --model-check requires warn, strict, or off\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1012:
+        if(!strcmp(optarg,"grid"))
+          nec4_ground_model_choice=NEC4_GROUND_MODEL_GRID;
+        else if(!strcmp(optarg,"direct"))
+          nec4_ground_model_choice=NEC4_GROUND_MODEL_DIRECT;
+        else if(!strcmp(optarg,"adaptive"))
+          nec4_ground_model_choice=NEC4_GROUND_MODEL_ADAPTIVE;
+        else
+        {
+          fprintf(stderr,"nec2c: --nec4ish-ground-model requires grid, direct, "
+              "or adaptive\n");
+          exit(EXIT_FAILURE);
+        }
+        break;
+
+      case 1013:
+        if(!strcmp(optarg,"none")) nec4_ground_cache[0]='\0';
+        else if(strlen(optarg)>=sizeof(nec4_ground_cache))
+        {
+          fprintf(stderr,"nec2c: NEC4ish ground cache path is too long\n");
+          exit(EXIT_FAILURE);
+        }
+        else snprintf(nec4_ground_cache,sizeof(nec4_ground_cache),"%s",optarg);
+        break;
+
 	  default: /* print usage and exit */
 		usage();
 		exit(-1);
@@ -1153,6 +1642,8 @@ int main( int argc, char **argv )
   dielectric_model_init( &dielectric );
   dielectric_mesh_init( &dielectric_mesh );
   coated_wire_model_init( &coated_wires );
+  nec4_medium_state_init( &nec4_medium );
+  nec4_ground_runtime_init( &nec4_ground );
   coated_wire_allow_experimental_junctions(&coated_wires,
       coated_wire_experimental_junctions);
 
@@ -1197,7 +1688,12 @@ int main( int argc, char **argv )
 	dielectric_mesh_free( &dielectric_mesh );
 	dielectric_model_free( &dielectric );
 	coated_wire_model_clear( &coated_wires );
+	nec4_medium_state_free( &nec4_medium );
+	wire_operator_set_medium_state( NULL );
+	nec4_ground_runtime_destroy( &nec4_ground );
+	wire_operator_set_ground_matrix_context( NULL );
 	result_json_job_begin();
+	engine_selection_reported=0;
 	ifrtmw=0;
 	ifrtmp=0;
 	dielectric_excitation_seen=0;
@@ -1842,6 +2338,7 @@ int main( int argc, char **argv )
 		  break;
 
 		case 9: /* "nx" card, do next job */
+		  report_nec4_ground_grazing(&nec4_ground);
 		  result_json_job_end(&dielectric);
 		  next_job = TRUE;
 		  continue; /* continue card input loop */
@@ -2001,6 +2498,15 @@ int main( int argc, char **argv )
 		  abort_on_error(-5);
 
 		case 20: /* "df" card, dielectric resource */
+		  if(wire_operator_nec4_basis())
+		  {
+			fprintf(output_fp,"\n\n  NEC4ISH WIRE COMBINATION ERROR: dielectric VIE "
+			    "has not been qualified with the NEC4ish wire operator; select "
+			    "--wire-engine nec2.");
+			fprintf(stderr,"nec2c: dielectric VIE is not yet supported with "
+			    "--wire-engine nec4ish\n");
+			stop(-1);
+		  }
 		  if( dielectric.loaded )
 		  {
 			fprintf( output_fp, "\n\n  DIELECTRIC DF CARD ERROR:"
@@ -2030,6 +2536,11 @@ int main( int argc, char **argv )
 		  /******************************************************
 		   *** normal exit of nec2c when all jobs complete ok ***
 		   ******************************************************/
+
+		  resolve_automatic_engines(&dielectric,coated_wires.domain_count,
+		      &engine_selection_reported);
+		  enforce_nec4_m9_boundary(&nec4_medium,&dielectric,
+		      coated_wires.domain_count);
 
 		  if( dielectric.loaded && ! dielectric_mesh.built )
 		  {
@@ -2127,11 +2638,20 @@ int main( int argc, char **argv )
 		  secnds( &tmp1 );
 		  tmp1 -= extim;
 		  fprintf( output_fp, "\n\n  TOTAL RUN TIME: %d msec", (int)tmp1 );
+		  report_nec4_ground_grazing(&nec4_ground);
 		  result_json_job_end(&dielectric);
 		  if(!result_json_finish("ok")) stop(-1);
 		  stop(0);
 
 	  } /* switch( ain_num ) */
+
+	  /* Cards that request an immediate calculation reach this point via a
+	     switch break.  Apply the same M7 gate used by EN before any classic
+	     matrix fill can silently substitute the NEC2 ground formulation. */
+	  resolve_automatic_engines(&dielectric,coated_wires.domain_count,
+	      &engine_selection_reported);
+	  enforce_nec4_m9_boundary(&nec4_medium,&dielectric,
+	      coated_wires.domain_count);
 
 	  if( dielectric.loaded )
 	  {
@@ -2320,13 +2840,17 @@ int main( int argc, char **argv )
 
 #ifndef _WIN32
 		  classic_parallel_mode = 0;
+		  /* start_classic_frequency_workers() registers the ground state before
+		     fork, so real-ground result-JSON workers inherit its stable ID. */
 		  if(numerical_fork_safe && nfrq > 1 && fpat.ixtyp == 0 &&
-		     yparm.ncoup == 0 && plot_fp == NULL && save.sig >= 0.0 &&
-		     (gnd.ksymp == 1 || gnd.iperf == 1 || !result_json_active()))
+		     yparm.ncoup == 0 && plot_fp == NULL && save.sig >= 0.0)
 		  {
 			size_t worker_bytes = ((size_t)iresrv +
 			    (size_t)smat.nop * (size_t)smat.nop) * sizeof(complex double);
 			worker_bytes = doubled_matrix_bytes(worker_bytes);
+			if(wire_operator_nec4_ground())
+			  worker_bytes=worker_bytes<=SIZE_MAX-40u*1024u*1024u?
+			      worker_bytes+40u*1024u*1024u:SIZE_MAX;
 			classic_parallel_mode = start_classic_frequency_workers(ifrq, &nfrq, save.fmhz,
 			    delfrq, worker_bytes, &mhz, &save.fmhz, output_fp,
 			    fnorm, &zpnorm, iped, !strcmp(dense_backend_name_for_order(
@@ -2416,6 +2940,24 @@ int main( int argc, char **argv )
 				data.pz[i]= ztemp[j]* fr;
 				data.pbi[i]= bitemp[j]* fr2;
 			  }
+			}
+
+			wire_operator_set_model_features((size_t)data.m,
+			    coated_wires.domain_count,dielectric.loaded);
+			if(!prepare_nec4_ground_frequency(&nec4_medium,&nec4_ground,
+			    nec4_ground_cache,nec4_ground_model_choice))
+			{
+			  result_json_diagnostic("error","NEC4ISH_M9_RUNTIME_PREPARE",
+			      "unable to prepare the NEC4ish similarity interface-field tables",
+			      "{}");
+			  fprintf(stderr,"nec2c: NEC4ish M9 ground runtime preparation failed\n");
+			  stop(-1);
+			}
+			audit_nec4_ground_routes(&nec4_ground,&nec4_medium);
+			if(!wire_operator_prepare_frequency(output_fp))
+			{
+			  fprintf(stderr,"nec2c: NEC4ish model validity, combination, or junction charge check failed\n");
+			  stop(-1);
 			}
 
 			//igo = 2;
@@ -2530,6 +3072,28 @@ int main( int argc, char **argv )
 			coated_wire_activate(&coated_wires, data.wlam);
 			cmset_parallel_configure(classic_fill_processes, numerical_fork_safe);
 			cmset( netcx.neq, cm, rkh, iexk );
+			report_nec4_ground_grazing(&nec4_ground);
+			if(nec4_ground_runtime_direct_strip_seen(&nec4_ground))
+			  fprintf(output_fp,"\n  NEC4ISH ACCURACY: direct contour evaluation "
+			      "was used where the selected accelerated representation did "
+			      "not have an accepted value.");
+			if(nec4_ground_model_choice==NEC4_GROUND_MODEL_ADAPTIVE)
+			{
+			  char context[256];
+			  fprintf(output_fp,"\n  NEC4ISH ADAPTIVE MATRIX ROUTES: %lu table, %lu direct "
+			      "fallback, %lu near-linear interactions.",
+			      (unsigned long)nec4_ground.adaptive_hits,
+			      (unsigned long)nec4_ground.direct_fallbacks,
+			      (unsigned long)nec4_ground.linear_hits);
+			  snprintf(context,sizeof(context),
+			      "{\"adaptive_e\":%lu,\"direct_e\":%lu,\"linear_e\":%lu,"
+			      "\"workers\":%d}",
+			      (unsigned long)nec4_ground.adaptive_hits,
+			      (unsigned long)nec4_ground.direct_fallbacks,
+			      (unsigned long)nec4_ground.linear_hits,nec4_ground.workers);
+			  result_json_diagnostic("info","NEC4ISH_M11_ADAPTIVE_MATRIX_ROUTES",
+			      "NEC4ish adaptive matrix routing summary",context);
+			}
 			tim=(performance_now() - tmp1)*1000.0;
 			performance_add("matrix_fill", tim/1000.0);
 			performance_dense_backend((size_t)netcx.npeq);
@@ -3107,6 +3671,27 @@ int main( int argc, char **argv )
 				tmp1 = performance_now();
 				nfpat();
 				performance_add("near_field", performance_now() - tmp1);
+				if(nec4_ground_model_choice==NEC4_GROUND_MODEL_ADAPTIVE)
+				{
+				  char context[256];
+				  fprintf(output_fp,"\n  NEC4ISH ADAPTIVE TOTAL ROUTES: "
+				      "E %lu table/%lu direct; H %lu table/%lu direct "
+				      "lower-to-upper segment samples.",
+				      (unsigned long)nec4_ground.adaptive_hits,
+				      (unsigned long)nec4_ground.direct_fallbacks,
+				      (unsigned long)nec4_ground.h_adaptive_hits,
+				      (unsigned long)nec4_ground.h_direct_fallbacks);
+				  snprintf(context,sizeof(context),
+				      "{\"adaptive_e\":%lu,\"direct_e\":%lu,"
+				      "\"adaptive_h\":%lu,\"direct_h\":%lu,\"workers\":%d}",
+				      (unsigned long)nec4_ground.adaptive_hits,
+				      (unsigned long)nec4_ground.direct_fallbacks,
+				      (unsigned long)nec4_ground.h_adaptive_hits,
+				      (unsigned long)nec4_ground.h_direct_fallbacks,
+				      nec4_ground.workers);
+				  result_json_diagnostic("info","NEC4ISH_M11_ADAPTIVE_FIELD_ROUTES",
+				      "NEC4ish adaptive near-field routing summary",context);
+				}
 
 				if( mhz == nfrq)
 				  fpat.near=-1;

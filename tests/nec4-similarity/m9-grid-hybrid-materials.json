@@ -1,0 +1,198 @@
+{
+  "schema": "nec2c-nec4-m9-grid-screen",
+  "schema_version": 1,
+  "results": [
+    {
+      "material": "m9-grid-fixed-er16-l3.csv",
+      "transform": "f2",
+      "heldout_points": 3754,
+      "direct_strip_lambda0": 0.16,
+      "rms_vector_error": 0.00015634910816032666,
+      "maximum_vector_error": 0.0037073177409794756,
+      "p95_vector_error": 0.00021668890523266084,
+      "p99_vector_error": 0.0005813227746040378,
+      "maximum_null_aware_component_error": 0.05269626922906899,
+      "maximum_component_error_relative_to_local_peak": 0.002892706054926916,
+      "worst_point_m": {
+        "rho": 19.761709877929686,
+        "z": 7.15644114058532,
+        "source_depth": 6.2456818382386485
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.46801757812499994,
+        "z_lambda0": 0.16948635878677032,
+        "source_depth_lg": 0.5916672000000001
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.010": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.020": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.050": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-er4-l3.csv",
+      "transform": "f2",
+      "heldout_points": 3738,
+      "direct_strip_lambda0": 0.16,
+      "rms_vector_error": 0.00025544555865760854,
+      "maximum_vector_error": 0.0031232965886307286,
+      "p95_vector_error": 0.0004942559646237998,
+      "p99_vector_error": 0.0012798325297828188,
+      "maximum_null_aware_component_error": 0.06873812765843969,
+      "maximum_component_error_relative_to_local_peak": 0.00240122604555009,
+      "worst_point_m": {
+        "rho": 47.87343801413952,
+        "z": 7.3366392988014955,
+        "source_depth": 9.747933336316397
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 1.1337890625,
+        "z_lambda0": 0.17375400091449472,
+        "source_depth_lg": 0.7695360000000002
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.010": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.020": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.050": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-lowloss-l3.csv",
+      "transform": "f2",
+      "heldout_points": 3745,
+      "direct_strip_lambda0": 0.16,
+      "rms_vector_error": 0.00017375140261307787,
+      "maximum_vector_error": 0.004330535479621934,
+      "p95_vector_error": 0.0002299489913267115,
+      "p99_vector_error": 0.0006280195979531991,
+      "maximum_null_aware_component_error": 0.05109854101105552,
+      "maximum_component_error_relative_to_local_peak": 0.003370730188838154,
+      "worst_point_m": {
+        "rho": 19.761709877929686,
+        "z": 7.15644114058532,
+        "source_depth": 6.928955312747308
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.46801757812499994,
+        "z_lambda0": 0.16948635878677032,
+        "source_depth_lg": 0.5916672000000001
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.010": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.020": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.050": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        }
+      }
+    },
+    {
+      "material": "m9-grid-fixed-seawater-l3.csv",
+      "transform": "f2",
+      "heldout_points": 3768,
+      "direct_strip_lambda0": 0.16,
+      "rms_vector_error": 8.050019489043923e-05,
+      "maximum_vector_error": 0.002839609071519523,
+      "p95_vector_error": 3.894944890345651e-05,
+      "p99_vector_error": 0.0002401276688668838,
+      "maximum_null_aware_component_error": 0.022289813141221457,
+      "maximum_component_error_relative_to_local_peak": 0.002924561889483928,
+      "worst_point_m": {
+        "rho": 0.5566678838853433,
+        "z": 7.104955952523554,
+        "source_depth": 0.1392079452875952
+      },
+      "worst_point_normalized": {
+        "rho_lambda0": 0.01318359375,
+        "z_lambda0": 0.16826703246456332,
+        "source_depth_lg": 0.33177600000000007
+      },
+      "threshold_envelopes_normalized_rho_z_depth": {
+        "0.005": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.010": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.020": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        },
+        "0.050": {
+          "count": 0,
+          "fraction": 0.0,
+          "minimum_normalized": null,
+          "maximum_normalized": null
+        }
+      }
+    }
+  ]
+}

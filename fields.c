@@ -24,6 +24,7 @@
  ******************************************************************/
 
 #include "nec2c.h"
+#include "nec4_kernel.h"
 #include "shared.h"
 #include "result_json.h"
 
@@ -48,7 +49,7 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 
   int ip, ijx;
   double xij, yij, rfl, salpr, zij, zp, rhox;
-  double rhoy, rhoz, rh, r, rmag, cth, px, py;
+  double rhoy, rhoz, rh, r, rmag, cth, px, py, kernel_radius;
   double xymag, xspec, yspec, rhospc, dmin;
   complex double epx, epy, refs, refps, zrsin, zratx, zscrn;
   complex double tezs, ters, tezc, terc, tezk, terk, egnd[9];
@@ -58,7 +59,7 @@ void efld( double xi, double yi, double zi, double ai, int ij )
   ijx= ij;
   rfl=-1.;
 
-  for( ip = 0; ip < gnd.ksymp; ip++ )
+  for( ip = 0; ip < (wire_operator_ground_direct_only()?1:gnd.ksymp); ip++ )
   {
 	if( ip == 1)
 	  ijx=1;
@@ -70,7 +71,9 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 	rhoy= yij- dataj.sabj* zp;
 	rhoz= zij- salpr* zp;
 
-	rh= sqrt( rhox* rhox+ rhoy* rhoy+ rhoz* rhoz+ ai* ai);
+	kernel_radius=wire_operator_nec4_basis()?dataj.b:ai;
+	rh= sqrt( rhox* rhox+ rhoy* rhoy+ rhoz* rhoz+
+		kernel_radius*kernel_radius);
 	if( rh <= 1.e-10)
 	{
 	  rhox=0.;
@@ -109,8 +112,23 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 	} /* if( r >= dataj.rkh) */
 	else
 	{
-	  /* eksc for thin wire approx. or ekscx for extended t.w. approx. */
-	  if( dataj.iexk != 1)
+	  /* NEC4 locates current on the source cylinder and matches on the axis. */
+	  if(wire_operator_nec4_basis())
+	  {
+		nec4_segment_fields field;
+		if(!nec4_reduced_segment_field_medium(dataj.s,zp,rh,
+		    wire_operator_source_wave_number(),
+		    wire_operator_source_intrinsic_impedance(),&field))
+		{
+		  fprintf(stderr,"nec2c: NEC4ish reduced wire kernel failed\n");
+		  stop(-1);
+		}
+		tezs=field.ezs;ters=field.ers;
+		tezc=field.ezc;terc=field.erc;
+		tezk=field.ezk;terk=field.erk;
+	  }
+	  /* eksc for classic thin wire approx. or ekscx for extended t.w. approx. */
+	  else if( dataj.iexk != 1)
 		eksc( dataj.s, zp, rh, TP, ijx, &tezs, &ters,
 			&tezc, &terc, &tezk, &terk );
 	  else
@@ -220,7 +238,7 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 
   /* A caller may request the direct field while retaining material state.
      Sommerfeld corrections require both the ground image and GN 2. */
-  if( gnd.ksymp == 1 || gnd.iperf != 2)
+  if( wire_operator_ground_direct_only() || gnd.ksymp == 1 || gnd.iperf != 2)
 	return;
 
   /* field due to ground using sommerfeld/norton */
@@ -1259,15 +1277,60 @@ void nefld( double xob, double yob, double zob,
 
 	  } /* if( dataj.iexk != 0) */
 
-	  efld( xob, yob, zob, ax,1);
+	  wire_operator_set_source_segment((size_t)i);
+	  wire_operator_efld_point(xob,yob,zob,ax);
 	  acx= cmplx( crnt.air[i], crnt.aii[i]);
 	  bcx= cmplx( crnt.bir[i], crnt.bii[i]);
 	  ccx= cmplx( crnt.cir[i], crnt.cii[i]);
 	  *ex += dataj.exk* acx+ dataj.exs* bcx+ dataj.exc* ccx;
 	  *ey += dataj.eyk* acx+ dataj.eys* bcx+ dataj.eyc* ccx;
 	  *ez += dataj.ezk* acx+ dataj.ezs* bcx+ dataj.ezc* ccx;
+	  if(wire_operator_nec4_basis())
+	  {
+		int end;
+		for(end=0;end<2;++end)
+		  if((end?data.icon2[i]:data.icon1[i])==0)
+		  {
+			complex double cx,cy,cz,current;
+			if(wire_operator_endcap_current_field((size_t)i,end,xob,yob,zob,
+			     &cx,&cy,&cz))
+			{
+			  current=wire_operator_current(acx,bcx,ccx,(size_t)i,
+			    (end?1.:-1.)*.5*data.si[i]);
+			  *ex+=cx*current/data.wlam;
+			  *ey+=cy*current/data.wlam;
+			  *ez+=cz*current/data.wlam;
+			}
+		  }
+		if(zload.nload && cabs(zload.zarray[i])>1.e-30)
+		{
+		  complex double cx,cy,cz,voltage;
+		  if(wire_operator_gap_voltage_field((size_t)i,xob,yob,zob,
+		       &cx,&cy,&cz))
+		  {
+			voltage=wire_operator_center_basis(acx,ccx)*
+			  zload.zarray[i]*data.si[i];
+			*ex+=cx*voltage/data.wlam;
+			*ey+=cy*voltage/data.wlam;
+			*ez+=cz*voltage/data.wlam;
+		  }
+		}
+	  }
 
 	} /* for( i = 0; i < n; i++ ) */
+
+	if(wire_operator_nec4_basis())
+	  for(i=0;i<vsorc.nsant;++i)
+	  {
+		size_t source=(size_t)(vsorc.isant[i]-1);
+		complex double cx,cy,cz;
+		if(wire_operator_gap_voltage_field(source,xob,yob,zob,&cx,&cy,&cz))
+		{
+		  *ex+=cx*vsorc.vsant[i]/data.wlam;
+		  *ey+=cy*vsorc.vsant[i]/data.wlam;
+		  *ez+=cz*vsorc.vsant[i]/data.wlam;
+		}
+	  }
 
 	if( data.m == 0)
 	  return;
@@ -1499,6 +1562,7 @@ void nhfld( double xob, double yob, double zob,
 
 	for( i = 0; i < data.n; i++ )
 	{
+	  wire_operator_set_source_segment((size_t)i);
 	  dataj.s= data.si[i];
 	  dataj.b= data.bi[i];
 	  dataj.xj= data.x[i];
@@ -1507,7 +1571,7 @@ void nhfld( double xob, double yob, double zob,
 	  dataj.cabj= data.cab[i];
 	  dataj.sabj= data.sab[i];
 	  dataj.salpj= data.salp[i];
-	  hsfld( xob, yob, zob, ax);
+	  wire_operator_hsfld( xob, yob, zob, ax);
 	  acx= cmplx( crnt.air[i], crnt.aii[i]);
 	  bcx= cmplx( crnt.bir[i], crnt.bii[i]);
 	  ccx= cmplx( crnt.cir[i], crnt.cii[i]);

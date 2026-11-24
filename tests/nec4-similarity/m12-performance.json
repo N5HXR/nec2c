@@ -1,0 +1,11 @@
+{
+  "schema": "nec2c-nec4ish-m12-performance",
+  "schema_version": 1,
+  "host_note": "32 logical CPUs; explicit auto versus explicit NEC2; sequential engine comparison; 2 warmups and 9 measured runs",
+  "cases": [
+    {"id": "classic-small", "auto_seconds": 0.036047379, "nec2_seconds": 0.000701601, "ratio": 51.38, "auto_rss_kib": 7468, "nec2_rss_kib": 5616},
+    {"id": "antenna-turtle-loop-yagi", "auto_seconds": 0.079761025, "nec2_seconds": 0.028319603, "ratio": 2.816, "auto_rss_kib": 53828, "nec2_rss_kib": 21912},
+    {"id": "classic-scaling-801", "auto_seconds": 0.127963819, "nec2_seconds": 0.060521745, "ratio": 2.114, "auto_rss_kib": 62084, "nec2_rss_kib": 56532},
+    {"id": "classic-real-ground-sweep-401", "auto_seconds": 0.343573693, "nec2_seconds": 0.151806294, "ratio": 2.263, "auto_rss_kib": 122808, "nec2_rss_kib": 116520}
+  ]
+}

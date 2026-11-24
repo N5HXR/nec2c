@@ -102,7 +102,9 @@ def run_cases(binary, source_root):
     with tempfile.TemporaryDirectory(prefix="nec2c-regression-") as temp_dir:
         for name, case in CASES.items():
             output = Path(temp_dir) / f"{name}.out"
-            command = [str(binary), "-i", str(source_root / case["deck"]), "-o", str(output)]
+            command = [str(binary), "--wire-engine", "nec2",
+                       "--ground-engine", "nec2", "-i",
+                       str(source_root / case["deck"]), "-o", str(output)]
             process = subprocess.run(command, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             if process.returncode != 0:
                 raise RuntimeError(

@@ -1,0 +1,72 @@
+{
+  "schema": "nec2c-nec4-public-witnesses",
+  "schema_version": 1,
+  "witnesses": [
+    {
+      "id": "burke-2008-kernel-self-term",
+      "source": "reports/accuracy.pdf, equations (1)-(5), figure 1",
+      "status": "equation-level oracle reconstructed in m1-oracles.json",
+      "geometry": {
+        "source": "constant-density cylindrical segment",
+        "observation": "segment midplane at variable radial distance",
+        "dimensionless_parameters": ["Delta/a", "a/lambda", "rho/a"]
+      },
+      "observables": ["exact kernel", "extended kernel", "reduced kernel"],
+      "use": "M4 kernel accuracy and limiting-branch qualification"
+    },
+    {
+      "id": "burke-2008-thick-halfwave-dipole",
+      "source": "reports/accuracy.pdf, figures 2-4",
+      "status": "geometry reconstructed; plotted values remain tolerance-band witnesses",
+      "geometry": {
+        "length_lambda": 0.5,
+        "radius_lambda": 0.01,
+        "segment_counts": [20, 40, 80, 160, 320, 640],
+        "excitation": "center voltage source"
+      },
+      "observables": ["current distribution", "input conductance", "input susceptance"],
+      "published_behavior": {
+        "reduced_kernel": "instability reported by 80-320 segments",
+        "extended_kernel": "stable through 640 segments"
+      },
+      "use": "M4 refinement and stability witness"
+    },
+    {
+      "id": "burke-2008-close-line",
+      "source": "reports/accuracy.pdf, figure 5",
+      "status": "geometry reconstructed; plotted values remain tolerance-band witnesses",
+      "geometry": {
+        "wire_length_lambda": 10.0,
+        "wire_radius_lambda": 0.001,
+        "ground": "PEC image-equivalent two-wire line",
+        "excitation": "center voltage source; symmetry cut gives open end",
+        "separation_over_diameter": [1.0, 1.5, 2.0, 3.0, 5.0, 7.0, 10.0]
+      },
+      "observables": ["effective characteristic impedance"],
+      "use": "M4 close-wire validity envelope"
+    },
+    {
+      "id": "nec4-theory-junction",
+      "source": "nec4-theory.pdf, section 3.4 and appendix A",
+      "status": "local potential-integral element reconstructed in m1-oracles.json",
+      "geometry": {
+        "junctions": ["equal radius", "unequal radius", "bend", "multiwire"],
+        "charge_basis": "triangular functions with constant far tail"
+      },
+      "observables": ["scalar-potential continuity", "per-end charge factor"],
+      "use": "M3 local junction solve"
+    },
+    {
+      "id": "nec4-theory-ground-error-regions",
+      "source": "nec4-theory.pdf, section 5.2 figures 5-8 through 5-18",
+      "status": "fully specified public error-map family; digitization deferred to M7-M8",
+      "geometry": {
+        "interface": "single planar half-space",
+        "representative_relative_permittivities": ["16-j16", "16-j0"],
+        "source_observer_regions": ["above/above", "above/below", "below/below"]
+      },
+      "observables": ["direct Sommerfeld field", "table/interpolation error", "asymptotic error"],
+      "use": "M7 direct oracle and M8 interpolation/asymptotic engine"
+    }
+  ]
+}

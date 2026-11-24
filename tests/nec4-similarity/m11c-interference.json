@@ -1,0 +1,75 @@
+{
+  "schema": "nec2c-nec4-m11c-interference-safe",
+  "schema_version": 1,
+  "material": {
+    "name": "lossless-water",
+    "epsilon_r": 81.0,
+    "conductivity_s_per_m": 0.0,
+    "wavelength_m": 1.0
+  },
+  "cell_tolerance": 5e-05,
+  "external_accuracy_gate": 0.0001,
+  "independent_points_per_region": 256,
+  "baseline_budget": 512,
+  "directional_budget": 4096,
+  "direct_settings": {
+    "panel_subdivisions": 5,
+    "quadrature_order": 80,
+    "cutoff_decay": 120.0
+  },
+  "selection_policy": "Use a tensor table only when its withheld cell gate passes; otherwise try the bounded directional k-d table; unresolved directional leaves require direct-contour evaluation.",
+  "spectral_partition": {
+    "description": "Exact Figure 5-3a contour partition at P2; retained as a cancellation diagnostic, not represented as GN3 branch-cut equivalence.",
+    "worst_recomposition_relative_error": 2.206e-13,
+    "direct_refinement_relative_error": 0.0001657
+  },
+  "rejected_candidates": [
+    {
+      "name": "moving-contour-separated-cubic",
+      "region": "grazing-sheet",
+      "lower_cells": 5,
+      "upper_cells": 512,
+      "upper_unresolved_leaves": 391,
+      "fallbacks": 256,
+      "reason": "Individual contour pieces vary with geometry-dependent contour breakpoints and are not smooth physical ray functions."
+    },
+    {
+      "name": "appendix-j-ray-plus-remainder",
+      "region": "grazing-sheet",
+      "cells": 512,
+      "unresolved_leaves": 391,
+      "fallbacks": 256,
+      "reason": "The numerical remainder retained the difficult interference variation; no coverage improvement."
+    }
+  ],
+  "results": [
+    {
+      "region": "grazing-sheet",
+      "baseline_cells": 512,
+      "baseline_unresolved_leaves": 111,
+      "baseline_fallbacks": 233,
+      "baseline_worst_error": 2.0078332059907918e-05,
+      "directional_cells": 2341,
+      "directional_unresolved_leaves": 0,
+      "directional_fallbacks": 0,
+      "directional_worst_error": 4.0855629615858515e-05,
+      "maximum_cancellation_ratio": 116.32229199637833,
+      "baseline_build_seconds": 15.556189,
+      "directional_build_seconds": 75.649958
+    },
+    {
+      "region": "switch-volume",
+      "baseline_cells": 512,
+      "baseline_unresolved_leaves": 11,
+      "baseline_fallbacks": 227,
+      "baseline_worst_error": 4.3796101392986833e-05,
+      "directional_cells": 2115,
+      "directional_unresolved_leaves": 0,
+      "directional_fallbacks": 0,
+      "directional_worst_error": 4.7414682608377284e-05,
+      "maximum_cancellation_ratio": 279.03547290575784,
+      "baseline_build_seconds": 43.9181875,
+      "directional_build_seconds": 183.04998
+    }
+  ]
+}

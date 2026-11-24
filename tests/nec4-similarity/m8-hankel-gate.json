@@ -1,0 +1,49 @@
+{
+  "schema": "nec2c-nec4-m8-hankel-gate",
+  "schema_version": 1,
+  "mode": "full",
+  "target": "1.0e-9",
+  "worst_pointwise_identity": "3.937571522983694e-49",
+  "worst_bessel_hankel_overlap": "2.016921215559352e-10",
+  "worst_refinement": "8.027517868362823e-10",
+  "overlap_errors": {
+    "rho_v": "5.9385285658251e-17",
+    "z_v": "1.3276697853067e-16",
+    "rho_h": "1.1820890747713e-16",
+    "phi_h": "1.7615238797224e-16",
+    "z_h": "1.4112080452994e-16"
+  },
+  "overlap_refinement_errors": {
+    "rho_v": "4.7335564456301e-15",
+    "z_v": "1.0582178697192e-14",
+    "rho_h": "9.4236575530255e-15",
+    "phi_h": "1.4042092474969e-14",
+    "z_h": "1.1250691293675e-14"
+  },
+  "shallow_refinement_errors": {
+    "rho_v": "1.7246563719753e-10",
+    "z_v": "1.6053016422111e-10",
+    "rho_h": "6.3191770701907e-10",
+    "phi_h": "8.0275178683628e-10",
+    "z_h": "7.0793233426471e-10"
+  },
+  "shallow_representation_errors": {
+    "rho_v": "4.3334735578481e-11",
+    "z_v": "4.0336077208247e-11",
+    "rho_h": "1.5876777208478e-10",
+    "phi_h": "2.0169212155594e-10",
+    "z_h": "1.7786335472224e-10"
+  },
+  "root_tracking": {
+    "coarse_principal_sign_changes": [
+      0,
+      1024
+    ],
+    "refined_principal_sign_changes": [
+      0,
+      1360
+    ],
+    "refined_panels": 482,
+    "refined_order": 68
+  }
+}

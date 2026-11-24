@@ -45,6 +45,20 @@
       "provenance": "Milestone 3 frequency-sweep variant of the deterministic Milestone 1 scaling fixture"
     },
     {
+      "id": "classic-real-ground-sweep-401",
+      "description": "Nine-frequency 401-segment dipole using Sommerfeld real ground",
+      "deck": "tests/performance/m3-real-ground-sweep.nec",
+      "arguments": [],
+      "provenance": "Real-ground result-JSON frequency-parallel regression and benchmark fixture"
+    },
+    {
+      "id": "nec4-real-ground-sweep-401",
+      "description": "Nine-frequency 401-segment NEC4-similarity dipole using Sommerfeld real ground",
+      "deck": "tests/performance/m3-real-ground-sweep.nec",
+      "arguments": ["--wire-engine", "nec4", "--ground-engine", "nec2"],
+      "provenance": "NEC4-similarity Milestone 6 combined-ground concurrency and performance fixture"
+    },
+    {
       "id": "dielectric-dense",
       "description": "Wire and dielectric cube using the dense VIE solver",
       "deck": "tests/dielectric/m6-cube.nec",

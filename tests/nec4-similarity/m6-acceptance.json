@@ -1,0 +1,66 @@
+{
+  "schema": "nec2c-nec4-m6-acceptance",
+  "schema_version": 1,
+  "pec_cap_image": {
+    "tangential_relative_defect": 0.0
+  },
+  "ground_modes": {
+    "pec": {
+      "impedance_nec4_ohm": {
+        "re": 2.9451198239791,
+        "im": -390.38103554302324
+      },
+      "impedance_nec2_ohm": {
+        "re": 2.9348639823138387,
+        "im": -392.37611356872077
+      },
+      "nec2_nec4_relative_delta": 0.005084531168013933,
+      "serial_parallel_exact": true,
+      "sommerfeld_notice": false,
+      "reciprocity_scaled_defect": 9.583083854271089e-21
+    },
+    "rca": {
+      "impedance_nec4_ohm": {
+        "re": 10.001214452001703,
+        "im": -395.50070362804325
+      },
+      "impedance_nec2_ohm": {
+        "re": 10.558281671619833,
+        "im": -395.4708455251422
+      },
+      "nec2_nec4_relative_delta": 0.0014101371000878912,
+      "serial_parallel_exact": true,
+      "sommerfeld_notice": false,
+      "reciprocity_scaled_defect": 6.247406331202274e-20
+    },
+    "sommerfeld": {
+      "impedance_nec4_ohm": {
+        "re": 17.456339433425374,
+        "im": -390.69157049173566
+      },
+      "impedance_nec2_ohm": {
+        "re": 17.371007520798674,
+        "im": -392.6921724052233
+      },
+      "nec2_nec4_relative_delta": 0.005094230976105791,
+      "serial_parallel_exact": true,
+      "sommerfeld_notice": true,
+      "reciprocity_scaled_defect": 4.2856853864461685e-20
+    }
+  },
+  "wire_patch": {
+    "wire_unknowns": 201,
+    "patch_current_rows": 4,
+    "impedance_ohm": {
+      "re": 336.96586770014005,
+      "im": 555.1215869844316
+    }
+  },
+  "loaded_network": {
+    "serial_parallel_scaled_delta": 0.0
+  },
+  "combination_gates": {
+    "coated_wire": "rejected explicitly",
+    "dielectric_vie": "rejected explicitly"
+  }
+}

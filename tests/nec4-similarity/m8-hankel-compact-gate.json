@@ -1,0 +1,28 @@
+{
+  "schema": "nec2c-nec4-m8-hankel-gate",
+  "schema_version": 1,
+  "mode": "compact",
+  "target": "1.0e-9",
+  "worst_pointwise_identity": "3.937571522983694e-49",
+  "worst_bessel_hankel_overlap": "1.693787358577249e-13",
+  "worst_refinement": "0.0",
+  "overlap_errors": {
+    "rho_v": "5.709381755435e-14",
+    "z_v": "1.276321130736e-13",
+    "rho_h": "1.136750564916e-13",
+    "phi_h": "1.6937873585772e-13",
+    "z_h": "1.3571868722426e-13"
+  },
+  "overlap_refinement_errors": {},
+  "shallow_refinement_errors": {},
+  "shallow_representation_errors": {},
+  "root_tracking": {
+    "coarse_principal_sign_changes": null,
+    "refined_principal_sign_changes": [
+      0,
+      448
+    ],
+    "refined_panels": 222,
+    "refined_order": 56
+  }
+}

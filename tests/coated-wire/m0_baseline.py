@@ -22,6 +22,8 @@ def canonical_result(path):
     # The deck path is invocation-dependent; its content hash remains covered.
     document["input"]["deck"] = "tests/coated-wire/m0-bare-dipole.nec"
     for job in document["jobs"]:
+        # M12 added engine provenance without changing the legacy solution.
+        job.pop("engines", None)
         for execution in job["executions"]:
             solver = execution.get("solver")
             if solver is not None:
@@ -44,7 +46,8 @@ with tempfile.TemporaryDirectory(prefix="nec2c-coated-m0-") as directory:
     temporary = Path(directory)
     result = temporary / "result.json"
     report = temporary / "report.out"
-    command = [str(BINARY), "--backend", "builtin", "--jobs", "1",
+    command = [str(BINARY), "--wire-engine", "nec2",
+               "--ground-engine", "nec2", "--backend", "builtin", "--jobs", "1",
                "--threads", "1", "--result-json", str(result),
                "-i", str(DECK), "-o", str(report)]
     completed = subprocess.run(command, cwd=ROOT, text=True,

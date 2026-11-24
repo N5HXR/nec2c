@@ -1,0 +1,46 @@
+{
+  "schema": "nec2c-nec4-m9-interface-plane",
+  "schema_version": 1,
+  "frequency_hz": 7100000.0,
+  "radial_axis": {
+    "start_over_Lg": 0.02,
+    "stop_over_Lg": 1.0,
+    "count": 50
+  },
+  "materials": {
+    "lossless-er4": {
+      "epsilon_r": 4.0,
+      "conductivity_s_per_m": 0.0,
+      "Lg_m": 12.6672869577,
+      "worst_refinement_error": 2.88843176021e-6,
+      "worst_approach_path_error": 1.76214736216e-6
+    },
+    "average-soil": {
+      "epsilon_r": 13.0,
+      "conductivity_s_per_m": 0.005,
+      "Lg_m": 9.91253634296,
+      "worst_refinement_error": 4.39054733832e-6,
+      "worst_approach_path_error": 4.07935410401e-6
+    },
+    "seawater": {
+      "epsilon_r": 81.0,
+      "conductivity_s_per_m": 4.0,
+      "Lg_m": 0.419583968263,
+      "worst_refinement_error": 2.33076414618e-6,
+      "worst_approach_path_error": 2.35373286737e-6,
+      "finite_remainder_at_Lg": [
+        [-0.0007995015920588605, -0.00015938449501407253],
+        [-0.0010489299281001693, 0.00001206815503792852],
+        [0.08759627403474901, 10.642573865457006],
+        [-0.08817056584997662, -10.642811291502829],
+        [1.692707070847741, -8.089427555754105]
+      ]
+    }
+  },
+  "total_non_origin_points": 150,
+  "worst_refinement_error": 4.39054733832e-6,
+  "worst_approach_path_error": 4.07935410401e-6,
+  "target_table_error": 0.005,
+  "origin_policy": "analytic zero after the table-1 storage transform",
+  "exact_height_raw_hankel_policy": "rejected because interface branch-cut contributions are not represented by a naive vertical-ray limit"
+}

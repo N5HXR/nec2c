@@ -1,0 +1,9 @@
+CM M5 reproduction of NEC4 theory Figures 4-4 and 4-5
+CE
+GW 1 80 0 0 0 0 0 .25 .01
+GE 1
+GN 1
+EX 0 1 1 0 1 0
+FR 0 1 0 0 299.8 0
+XQ
+EN
