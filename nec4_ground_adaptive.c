@@ -342,8 +342,8 @@ int nec4_ground_adaptive_evaluate(const nec4_ground_adaptive *table,
   return leaf&&leaf->accepted&&interpolate_node(leaf,rho,z,depth,values);
 }
 
-#define ADAPTIVE_CACHE_MAGIC "N4ADP1\0"
-#define ADAPTIVE_CACHE_VERSION 1u
+#define ADAPTIVE_CACHE_MAGIC "N4ADP2\0"
+#define ADAPTIVE_CACHE_VERSION 2u
 #define ADAPTIVE_ENDIAN_MARKER 0x01020304u
 #define FNV_OFFSET UINT64_C(14695981039346656037)
 #define FNV_PRIME UINT64_C(1099511628211)
@@ -371,8 +371,8 @@ static int store_node(FILE *stream,const nec4_ground_adaptive_node *node,
     uint64_t *hash)
 {
   uint32_t depth=node->depth;
-  uint8_t flags[4]={node->active_mask,node->child_count,node->accepted,
-                    node->values!=NULL};
+  uint8_t flags[5]={node->active_mask,node->split_mask,node->child_count,
+                    node->accepted,node->values!=NULL};
   uint64_t values=node->values?sample_count(node->active_mask,4)*5:0;
   if(!write_hashed(stream,node->bounds.lower,sizeof(node->bounds.lower),hash)||
      !write_hashed(stream,node->bounds.upper,sizeof(node->bounds.upper),hash)||
@@ -407,15 +407,16 @@ int nec4_ground_adaptive_store(const nec4_ground_adaptive *table,
   FILE *stream;char *temporary;int descriptor,failed=0;size_t length;
   uint32_t version=ADAPTIVE_CACHE_VERSION,endian=ADAPTIVE_ENDIAN_MARKER;
   uint32_t double_size=sizeof(double),identity_bytes=(uint32_t)identity_size;
-  uint32_t maximum_depth;uint64_t maximum_cells,hash=FNV_OFFSET;
+  uint32_t maximum_depth,anisotropic;uint64_t maximum_cells,hash=FNV_OFFSET;
   if(!table||!table->root||!path||!*path||(!identity&&identity_size)||
-     identity_size>UINT32_MAX||table->anisotropic) return 0;
+     identity_size>UINT32_MAX) return 0;
   length=strlen(path);temporary=malloc(length+12);if(!temporary)return 0;
   memcpy(temporary,path,length);memcpy(temporary+length,".tmp.XXXXXX",12);
   descriptor=mkstemp(temporary);if(descriptor<0){free(temporary);return 0;}
   stream=fdopen(descriptor,"wb");
   if(!stream){close(descriptor);unlink(temporary);free(temporary);return 0;}
   maximum_depth=table->maximum_depth;maximum_cells=table->maximum_cells;
+  anisotropic=table->anisotropic!=0;
   failed=fwrite(ADAPTIVE_CACHE_MAGIC,1,8,stream)!=8||
     !write_hashed(stream,&version,sizeof(version),&hash)||
     !write_hashed(stream,&endian,sizeof(endian),&hash)||
@@ -427,6 +428,7 @@ int nec4_ground_adaptive_store(const nec4_ground_adaptive *table,
     !write_hashed(stream,&table->tolerance,sizeof(table->tolerance),&hash)||
     !write_hashed(stream,&maximum_depth,sizeof(maximum_depth),&hash)||
     !write_hashed(stream,&maximum_cells,sizeof(maximum_cells),&hash)||
+    !write_hashed(stream,&anisotropic,sizeof(anisotropic),&hash)||
     !store_stats(stream,&table->stats,&hash)||
     !store_node(stream,table->root,&hash)||
     fwrite(&hash,1,sizeof(hash),stream)!=sizeof(hash);
@@ -459,7 +461,7 @@ static int load_stats(FILE *stream,nec4_ground_adaptive_stats *stats,
 static nec4_ground_adaptive_node *load_node(FILE *stream,uint64_t *hash,
     size_t *nodes,size_t limit,unsigned int maximum_depth)
 {
-  nec4_ground_adaptive_node *node;uint32_t depth;uint8_t flags[4];uint64_t values;
+  nec4_ground_adaptive_node *node;uint32_t depth;uint8_t flags[5];uint64_t values;
   if(*nodes>=limit) return NULL;
   node=calloc(1,sizeof(*node));if(!node)return NULL;(*nodes)++;
   if(!read_hashed(stream,node->bounds.lower,sizeof(node->bounds.lower),hash)||
@@ -468,12 +470,20 @@ static nec4_ground_adaptive_node *load_node(FILE *stream,uint64_t *hash,
      !read_hashed(stream,&depth,sizeof(depth),hash)||
      !read_hashed(stream,flags,sizeof(flags),hash)||
      !read_hashed(stream,&values,sizeof(values),hash)) goto failed;
-  node->depth=depth;node->active_mask=flags[0];node->child_count=flags[1];
-  node->split_mask=node->child_count?node->active_mask:0;
-  node->accepted=flags[2];
+  node->depth=depth;node->active_mask=flags[0];node->split_mask=flags[1];
+  node->child_count=flags[2];node->accepted=flags[3];
   if(node->depth>maximum_depth||node->active_mask!=active_mask(&node->bounds)||
-     node->child_count>8||flags[3]>1||node->accepted>1||
-     values!=(flags[3]?sample_count(node->active_mask,4)*5:0)) goto failed;
+     (node->split_mask&~node->active_mask)||node->child_count>8||
+     flags[4]>1||node->accepted>1||
+     values!=(flags[4]?sample_count(node->active_mask,4)*5:0)) goto failed;
+  {
+    unsigned int split_axes=0,expected_children;
+    for(unsigned int axis=0;axis<3;++axis)
+      if(node->split_mask&(1u<<axis)) split_axes++;
+    expected_children=node->split_mask?1u<<split_axes:0;
+    if(node->child_count!=expected_children||
+       (node->child_count&&node->accepted)) goto failed;
+  }
   if(values) {
     if(values>SIZE_MAX/sizeof(*node->values)) goto failed;
     node->values=calloc((size_t)values,sizeof(*node->values));if(!node->values)goto failed;
@@ -495,7 +505,7 @@ int nec4_ground_adaptive_load(nec4_ground_adaptive *table,const char *path,
     const void *identity,size_t identity_size)
 {
   FILE *stream;char magic[8];unsigned char *actual_identity=NULL;
-  uint32_t version,endian,double_size,identity_bytes,maximum_depth;
+  uint32_t version,endian,double_size,identity_bytes,maximum_depth,anisotropic;
   uint64_t maximum_cells,hash=FNV_OFFSET,stored_hash;size_t nodes=0,limit;
   nec4_ground_adaptive loaded;
   int trailing;
@@ -521,9 +531,12 @@ int nec4_ground_adaptive_load(nec4_ground_adaptive *table,const char *path,
      !read_hashed(stream,&loaded.tolerance,sizeof(loaded.tolerance),&hash)||
      !read_hashed(stream,&maximum_depth,sizeof(maximum_depth),&hash)||
      !read_hashed(stream,&maximum_cells,sizeof(maximum_cells),&hash)||
+     !read_hashed(stream,&anisotropic,sizeof(anisotropic),&hash)||
      !load_stats(stream,&loaded.stats,&hash)) goto failed;
   loaded.maximum_depth=maximum_depth;loaded.maximum_cells=(size_t)maximum_cells;
-  if(!(loaded.tolerance>0.)||maximum_depth>20||maximum_cells>SIZE_MAX)goto failed;
+  loaded.anisotropic=anisotropic!=0;
+  if(!(loaded.tolerance>0.)||maximum_depth>(loaded.anisotropic?60u:20u)||
+     maximum_cells>SIZE_MAX||anisotropic>1)goto failed;
   for(unsigned int axis=0;axis<3;++axis)
     if(!isfinite(loaded.bounds.lower[axis])||!isfinite(loaded.bounds.upper[axis])||
        loaded.bounds.upper[axis]<loaded.bounds.lower[axis])goto failed;

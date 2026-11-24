@@ -103,7 +103,7 @@ def run_reference(directory: Path, cache: Path, loss: float,
         directory, cache, stem, reference_deck(loss), threads)
     normalized, power = normalized_vertical_field(document)
     warnings = [item for item in document.get("diagnostics", [])
-                if item.get("code") == "NEC4_M9_GRAZING_INTERFERENCE"]
+                if item.get("code") == "NEC4ISH_M9_GRAZING_INTERFERENCE"]
     if not (power > 0.0 and math.isfinite(normalized)):
         raise AssertionError(("non-finite reference result", stem))
     return {

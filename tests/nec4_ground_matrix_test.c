@@ -5,6 +5,7 @@
 #include <complex.h>
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 #define C0 299792458.0
 #define MU0 1.25663706212e-6
@@ -58,11 +59,23 @@ static void homogeneous_cartesian(double frequency,double complex k,
 static double relative(double complex a,double complex b)
 { return cabs(a-b)/fmax(1.,fmax(cabs(a),cabs(b))); }
 
+static int synthetic_h(void *opaque,double rho,double z,double depth,
+    double complex field[NEC4_GROUND_H_COMPONENT_COUNT])
+{
+  (void)opaque;(void)rho;(void)z;(void)depth;
+  field[NEC4_GROUND_H_PHI_VERTICAL]=2.+3.*I;
+  field[NEC4_GROUND_H_RHO_HORIZONTAL]=5.-I;
+  field[NEC4_GROUND_H_PHI_HORIZONTAL]=-2.+4.*I;
+  field[NEC4_GROUND_H_Z_HORIZONTAL]=1.-6.*I;
+  return 1;
+}
+
 int main(void)
 {
   const double frequency=12.e6,k=2.*acos(-1.)*frequency/C0;
   cross_context cross={frequency,k};
-  nec4_ground_matrix_context context={frequency,1.,k,k,identical_cross,&cross};
+  nec4_ground_matrix_context context={frequency,1.,k,k,identical_cross,NULL,
+    &cross};
   const double direction[3]={.36,-.48,.8};
   const struct {
     nec4_segment_medium source_medium,observer_medium;
@@ -85,6 +98,26 @@ int main(void)
       worst=fmax(worst,relative(actual[component],expected[component]));
   }
   assert(worst<2.e-5);
+
+  /* The independently qualified cylindrical H kernels must retain their
+     source-azimuth signs when assembled into Cartesian segment fields. */
+  {
+    nec4_ground_matrix_context hcontext=context;
+    double source[3]={0.,0.,-.7},observer[3]={3.,4.,.4};
+    double hdirection[3]={.6,.0,.8},cosine=.6,sine=.8;
+    double source_rho=cosine*hdirection[0]+sine*hdirection[1];
+    double source_phi=-sine*hdirection[0]+cosine*hdirection[1];
+    double complex radial=-(5.-I)*source_phi;
+    double complex azimuth=(-2.+4.*I)*source_rho+(2.+3.*I)*hdirection[2];
+    double complex actual[3],expected[3]={
+      cosine*radial-sine*azimuth,
+      sine*radial+cosine*azimuth,
+      -(1.-6.*I)*source_phi};
+    hcontext.cross_h=synthetic_h;
+    assert(nec4_ground_matrix_h_point_cross(&hcontext,source,observer,
+      hdirection,actual));
+    assert(!memcmp(actual,expected,sizeof(actual)));
+  }
 
 
   /* Independent high-precision Python/M8 fixtures for epsilon_r=4 exercise
@@ -114,7 +147,7 @@ int main(void)
     double k0=2.*acos(-1.)*10.e6/C0;
     material_context material={10.e6,2.*k0,k0};
     nec4_ground_matrix_context nonnull={10.e6,4.,2.*k0,k0,
-      material_cross,&material};
+      material_cross,NULL,&material};
     const double axes[3][3]={{0.,0.,1.},{1.,0.,0.},{0.,1.,0.}};
     double transformed_worst=0.;
     for(size_t p=0;p<4;++p)
@@ -197,7 +230,7 @@ int main(void)
     {
       material_context scaled_material={20.e6,4.*k0,2.*k0};
       nec4_ground_matrix_context scaled={20.e6,4.,4.*k0,2.*k0,
-        material_cross,&scaled_material};
+        material_cross,NULL,&scaled_material};
       double center[3]={0.,0.,-.7},observer[3]={2.,0.,.4};
       double scaled_center[3]={0.,0.,-.35},scaled_observer[3]={1.,0.,.2};
       nec4_ground_segment_field physical,physical_scaled,matrix_value,

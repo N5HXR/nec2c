@@ -126,11 +126,11 @@ def main() -> None:
         if a != s:
             raise AssertionError("NEC4 one-sided reference changed with workers")
         warnings = [item for item in auto["diagnostics"]
-                    if item["code"] == "NEC4_M9_GRAZING_INTERFERENCE"]
+                    if item["code"] == "NEC4ISH_M9_GRAZING_INTERFERENCE"]
         if len(warnings) != 1:
             raise AssertionError(("grazing warning", auto["diagnostics"]))
         preflight = [item for item in auto["diagnostics"]
-                     if item["code"] == "NEC4_M7_MEDIUM_PREFLIGHT"]
+                     if item["code"] == "NEC4ISH_M7_MEDIUM_PREFLIGHT"]
         if len(preflight) != 1 or \
            preflight[0]["context"]["one_sided_interface_ends"] != 1:
             raise AssertionError(("one-sided endpoint", preflight))

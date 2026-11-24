@@ -93,17 +93,17 @@ static int pairing(const nec4_ground_matrix_context *context,
   {
     double a=fabs(source_z),b=fabs(observer_z);
     if(!canonical(context,rho,a+b,0.,base)) {
-      fprintf(stderr,"nec2c: NEC4 upper pairing canonical term failed\n");
+      fprintf(stderr,"nec2c: NEC4ish upper pairing canonical term failed\n");
       return 0;
     }
     if(!homogeneous(context->frequency_hz,context->upper_wave_number_per_m,
          rho,a,b,direct)) {
-      fprintf(stderr,"nec2c: NEC4 upper pairing direct term failed\n");
+      fprintf(stderr,"nec2c: NEC4ish upper pairing direct term failed\n");
       return 0;
     }
     if(!homogeneous(context->frequency_hz,context->upper_wave_number_per_m,
          rho,a,-b,image)) {
-      fprintf(stderr,"nec2c: NEC4 upper pairing image term failed\n");
+      fprintf(stderr,"nec2c: NEC4ish upper pairing image term failed\n");
       return 0;
     }
     value[0]=-base[4]+direct[0]-image[0];
@@ -127,6 +127,70 @@ static void assemble(const double complex c[5],double cosine,double sine,
   field[2]=cosine*c[4]*direction[0]+sine*c[4]*direction[1]+c[1]*direction[2];
 }
 
+static void assemble_h(const double complex h[NEC4_GROUND_H_COMPONENT_COUNT],
+    double cosine,double sine,const double direction[3],double complex field[3])
+{
+  double source_rho=cosine*direction[0]+sine*direction[1];
+  double source_phi=-sine*direction[0]+cosine*direction[1];
+  double complex radial=-h[NEC4_GROUND_H_RHO_HORIZONTAL]*source_phi;
+  double complex azimuth=h[NEC4_GROUND_H_PHI_HORIZONTAL]*source_rho+
+    h[NEC4_GROUND_H_PHI_VERTICAL]*direction[2];
+  field[0]=cosine*radial-sine*azimuth;
+  field[1]=sine*radial+cosine*azimuth;
+  field[2]=-h[NEC4_GROUND_H_Z_HORIZONTAL]*source_phi;
+}
+
+int nec4_ground_matrix_h_point_cross(
+    const nec4_ground_matrix_context *context,const double source[3],
+    const double observer[3],const double direction[3],double complex field[3])
+{
+  double dx,dy,rho,cosine=1.,sine=0.;
+  double complex components[NEC4_GROUND_H_COMPONENT_COUNT];
+  if(!context||!context->cross_h||!source||!observer||!direction||!field||
+     source[2]>0.||observer[2]<0.) return 0;
+  dx=observer[0]-source[0];dy=observer[1]-source[1];rho=hypot(dx,dy);
+  if(rho>0.) { cosine=dx/rho;sine=dy/rho; }
+  if(!context->cross_h(context->cross_context,rho,observer[2],-source[2],
+      components)) return 0;
+  assemble_h(components,cosine,sine,direction,field);
+  return finite_complex(field[0])&&finite_complex(field[1])&&
+    finite_complex(field[2]);
+}
+
+int nec4_ground_matrix_h_segment_nec_cross(
+    const nec4_ground_matrix_context *context,const double center[3],
+    const double direction[3],double length,const double observer[3],
+    double normalization_length,nec4_ground_segment_field *result)
+{
+  static const double x[8]={
+    .0950125098376374402,.281603550779258913,.458016777657227386,
+    .617876244402643748,.755404408355003034,.865631202387831744,
+    .944575023073232576,.989400934991649933};
+  static const double w[8]={
+    .189450610455068496,.182603415044923589,.169156519395002538,
+    .149595988816576733,.124628971255533872,.095158511682492785,
+    .062253523938647893,.027152459411754095};
+  if(!context||!center||!direction||!observer||!result||!(length>0.)||
+     !(normalization_length>0.)) return 0;
+  memset(result,0,sizeof(*result));
+  for(int q=0;q<8;++q) for(int sign=-1;sign<=1;sign+=2) {
+    double t=.5*length*sign*x[q],source[3];
+    double complex sine=csin(context->lower_wave_number_per_m*t);
+    double complex cosine=ccos(context->lower_wave_number_per_m*t);
+    double complex value[3];
+    for(int axis=0;axis<3;++axis) source[axis]=center[axis]+t*direction[axis];
+    if(!nec4_ground_matrix_h_point_cross(context,source,observer,direction,
+        value)) return 0;
+    for(int axis=0;axis<3;++axis) {
+      double complex weighted=.5*length*w[q]*normalization_length*value[axis];
+      result->constant[axis]+=weighted;
+      result->sine[axis]+=weighted*sine;
+      result->cosine[axis]+=weighted*cosine;
+    }
+  }
+  return 1;
+}
+
 int nec4_ground_matrix_point(const nec4_ground_matrix_context *context,
     nec4_segment_medium source_medium,nec4_segment_medium observer_medium,
     const double source[3],const double observer[3],
@@ -143,7 +207,7 @@ int nec4_ground_matrix_point(const nec4_ground_matrix_context *context,
   if(!finite_complex(field[0])||!finite_complex(field[1])||
      !finite_complex(field[2]))
   {
-    fprintf(stderr,"nec2c: NEC4 non-finite assembled field at "
+    fprintf(stderr,"nec2c: NEC4ish non-finite assembled field at "
         "rho=%.17g source_z=%.17g observer_z=%.17g\n",
         rho,source[2],observer[2]);
     return 0;
@@ -161,7 +225,7 @@ static int correction_point(const nec4_ground_matrix_context *context,
   double complex free_components[5],free_field[3];
   if(!nec4_ground_matrix_point(context,source_medium,observer_medium,source,
       observer,direction,field)) {
-    fprintf(stderr,"nec2c: NEC4 complete matrix point failed at "
+    fprintf(stderr,"nec2c: NEC4ish complete matrix point failed at "
         "rho=%.17g source_z=%.17g observer_z=%.17g\n",
         rho,source[2],observer[2]);
     return 0;
@@ -170,7 +234,7 @@ static int correction_point(const nec4_ground_matrix_context *context,
        source_medium==NEC4_MEDIUM_LOWER?context->lower_wave_number_per_m:
        context->upper_wave_number_per_m,rho,
        source[2],observer[2],free_components)) {
-    fprintf(stderr,"nec2c: NEC4 free-space subtraction failed at "
+    fprintf(stderr,"nec2c: NEC4ish free-space subtraction failed at "
         "rho=%.17g source_z=%.17g observer_z=%.17g\n",
         rho,source[2],observer[2]);
     return 0;

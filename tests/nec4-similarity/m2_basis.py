@@ -87,8 +87,8 @@ def short_deck(path, frequency):
 def main():
     advertised = capabilities()
     wire_engines = advertised["features"]["wire_engines"]
-    if "nec4" not in wire_engines:
-        raise AssertionError(("NEC4 engine is not advertised", wire_engines))
+    if "nec4ish" not in wire_engines:
+        raise AssertionError(("NEC4ish engine is not advertised", wire_engines))
 
     maximum_equivalence = 0.0
     equivalence = []

@@ -128,8 +128,6 @@ int main(void)
       assert(!memcmp(one,actual,sizeof(one)));
     }
   }
-  assert(!nec4_ground_adaptive_store(&directional,cache,identity,
-                                      sizeof(identity)));
   {
     int descriptor=mkstemp(cache);double complex original[5],restored[5];
     FILE *stream;
@@ -146,6 +144,18 @@ int main(void)
     stream=fopen(cache,"ab");assert(stream);assert(fputc(0,stream)!=EOF);
     assert(!fclose(stream));
     assert(!nec4_ground_adaptive_load(&loaded,cache,identity,sizeof(identity)));
+    assert(!unlink(cache));nec4_ground_adaptive_destroy(&loaded);
+  }
+  {
+    double complex original[5],restored[5];
+    assert(nec4_ground_adaptive_store(&directional,cache,identity,
+                                      sizeof(identity)));
+    nec4_ground_adaptive_init(&loaded);
+    assert(nec4_ground_adaptive_load(&loaded,cache,identity,sizeof(identity)));
+    assert(loaded.anisotropic&&loaded.stats.cells==directional.stats.cells);
+    assert(nec4_ground_adaptive_evaluate(&directional,.371,.419,.283,original));
+    assert(nec4_ground_adaptive_evaluate(&loaded,.371,.419,.283,restored));
+    assert(!memcmp(original,restored,sizeof(original)));
     assert(!unlink(cache));nec4_ground_adaptive_destroy(&loaded);
   }
   printf("NEC4 adaptive cubic cells passed: %zu cells, depth %u, "

@@ -45,7 +45,7 @@ int main(void)
   nec4_ground_runtime first,second,changed,identical;
   nec4_ground_runtime_options options={
     .cache_directory=directory,.workers=4,.sampler=sample,
-    .sampler_context=&bias,.direct_options=NULL};
+    .sampler_context=&bias,.direct_options=NULL,.model=NEC4_GROUND_MODEL_GRID};
   assert(mkdtemp(directory));
   nec4_ground_runtime_init(&first);nec4_ground_runtime_init(&second);
   nec4_ground_runtime_init(&changed);

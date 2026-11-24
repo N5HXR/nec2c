@@ -4,6 +4,8 @@
 #include "nec4_ground_adaptive.h"
 #include "nec4_ground_table.h"
 
+#include <stdint.h>
+
 typedef struct {
   nec4_ground_adaptive table;
   double frequency_hz;
@@ -42,6 +44,23 @@ int nec4_ground_adaptive_e_load(nec4_ground_adaptive_e *table,const char *path,
     double complex upper_wave_number_per_m,
     const nec4_ground_adaptive_bounds *bounds,double tolerance,
     unsigned int maximum_depth,size_t maximum_cells,
+    const nec4_ground_table_direct_options *direct_options);
+
+int nec4_ground_adaptive_e_load_anisotropic(nec4_ground_adaptive_e *table,
+    const char *path,double frequency_hz,
+    double complex lower_wave_number_per_m,
+    double complex upper_wave_number_per_m,
+    const nec4_ground_adaptive_bounds *bounds,double tolerance,
+    unsigned int maximum_depth,size_t maximum_cells,
+    const nec4_ground_table_direct_options *direct_options);
+
+/* Stable cache filename key.  Store/load still verify the complete identity
+   and payload checksum; this hash is only used to avoid filename collisions. */
+uint64_t nec4_ground_adaptive_e_cache_key(double frequency_hz,
+    double complex lower_wave_number_per_m,
+    double complex upper_wave_number_per_m,
+    const nec4_ground_adaptive_bounds *bounds,double tolerance,
+    unsigned int maximum_depth,size_t maximum_cells,int anisotropic,
     const nec4_ground_table_direct_options *direct_options);
 
 #endif

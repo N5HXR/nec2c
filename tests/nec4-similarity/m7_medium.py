@@ -73,12 +73,12 @@ def main():
         directory = Path(name)
 
         buried, _ = run(HERE / "m7-buried-dipole.nec", directory, "buried")
-        buried_context = diagnostic(buried, "NEC4_M7_MEDIUM_PREFLIGHT")["context"]
+        buried_context = diagnostic(buried, "NEC4ISH_M7_MEDIUM_PREFLIGHT")["context"]
         if buried_context["upper_segments"] or buried_context["lower_segments"] != 41:
             raise AssertionError(("buried classification", buried_context))
 
         stake, _ = run(HERE / "m7-ground-stake.nec", directory, "stake")
-        stake_context = diagnostic(stake, "NEC4_M7_MEDIUM_PREFLIGHT")["context"]
+        stake_context = diagnostic(stake, "NEC4ISH_M7_MEDIUM_PREFLIGHT")["context"]
         if (stake_context["crossing_junctions"] != 1 or
                 stake_context["interface_endpoints"] != 2 or
                 stake_context["upper_segments"] != 21 or
@@ -99,7 +99,7 @@ def main():
         buried_wire = ["GW 1 11 -1 0 -1 1 0 -1 .001\n"]
         vacuum, _ = run(deck(buried_wire, 1.0, 0.0, 100.0), directory,
                         "vacuum")
-        vacuum_context = diagnostic(vacuum, "NEC4_M7_MEDIUM_PREFLIGHT")["context"]
+        vacuum_context = diagnostic(vacuum, "NEC4ISH_M7_MEDIUM_PREFLIGHT")["context"]
         k0 = 2.0 * math.pi * 100.0e6 / C0
         vacuum_errors = {
             "epsilon": relative(from_pair(vacuum_context["epsilon_relative"]), 1.0),
@@ -111,7 +111,7 @@ def main():
 
         lossless, _ = run(deck(buried_wire, 4.0, 0.0, 100.0), directory,
                           "lossless-er4")
-        lossless_context = diagnostic(lossless, "NEC4_M7_MEDIUM_PREFLIGHT")["context"]
+        lossless_context = diagnostic(lossless, "NEC4ISH_M7_MEDIUM_PREFLIGHT")["context"]
         scaling_errors = {
             "wave_number": relative(from_pair(lossless_context["wave_number_per_m"]), 2.0*k0),
             "impedance": relative(from_pair(lossless_context["intrinsic_impedance_ohm"]), ETA0/2.0),
@@ -124,14 +124,14 @@ def main():
 
         unsplit = deck(["GW 1 21 0 0 1 0 0 -1 .001\n"])
         failed, _ = run(unsplit, directory, "unsplit", expect_success=False)
-        topology = diagnostic(failed, "NEC4_M7_INTERFACE_TOPOLOGY")["context"]
+        topology = diagnostic(failed, "NEC4ISH_M7_INTERFACE_TOPOLOGY")["context"]
         # Geometry expands GW into segments: exactly one central segment
         # straddles z=0 for an odd count, while the others classify normally.
         if topology["unsplit_crossings"] != 1:
             raise AssertionError(("unsplit count", topology))
         in_plane = deck(["GW 1 11 -1 0 0 1 0 0 .001\n"])
         failed, _ = run(in_plane, directory, "in-plane", expect_success=False)
-        plane_context = diagnostic(failed, "NEC4_M7_INTERFACE_TOPOLOGY")["context"]
+        plane_context = diagnostic(failed, "NEC4ISH_M7_INTERFACE_TOPOLOGY")["context"]
         if plane_context["in_plane_segments"] != 11:
             raise AssertionError(("in-plane count", plane_context))
         evidence["topology_rejections"] = {"unsplit": topology,
@@ -140,7 +140,7 @@ def main():
         oblique = deck(["GW 1 5 -2 0 1 0 0 0 .001\n",
                         "GW 2 5 0 0 0 2 0 -1 .001\n"])
         warned, _ = run(oblique, directory, "oblique")
-        oblique_audit = diagnostic(warned, "NEC4_M7_HIGHLY_OBLIQUE_AUDIT")
+        oblique_audit = diagnostic(warned, "NEC4ISH_M7_HIGHLY_OBLIQUE_AUDIT")
         if (oblique_audit["severity"] != "info" or
                 oblique_audit["context"]["oblique_crossings"] != 1):
             raise AssertionError(("oblique audit", oblique_audit))

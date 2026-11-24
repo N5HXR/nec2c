@@ -26,26 +26,15 @@ capabilities = json.loads(run([str(BINARY), "--capabilities-json"]).stdout)
 features = capabilities["features"]
 assert features["wire_engines"][:2] == ["auto", "nec2"]
 assert features["ground_engines"][:2] == ["auto", "nec2"]
-if "nec4" in features["ground_engines"]:
-    assert features["planned_ground_engines"] == ["adaptive"]
-else:
-    assert features["planned_ground_engines"] == ["nec4", "adaptive"]
-
-if "nec4" not in features["wire_engines"]:
-    assert features["planned_wire_engines"] == ["nec4"]
-else:
-    assert "nec4" not in features.get("planned_wire_engines", [])
+assert "nec4ish" in features["ground_engines"]
+assert features["planned_ground_engines"] == []
+assert "nec4ish" in features["wire_engines"]
 
 commands = [
         ([str(BINARY), "--ground-engine", "adaptive", "--capabilities-json"],
          "planned but not available"),
         ([str(BINARY), "--model-check", "maybe", "--capabilities-json"],
          "warn, strict, or off")]
-if "nec4" not in features["wire_engines"]:
-    commands.insert(0,
-        ([str(BINARY), "--wire-engine", "nec4", "--capabilities-json"],
-         "planned but not available"))
-
 for command, fragment in commands:
     completed = run(command, expected=1)
     assert fragment in completed.stderr

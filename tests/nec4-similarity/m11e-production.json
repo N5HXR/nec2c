@@ -1,0 +1,53 @@
+{
+  "schema": "nec2c-nec4ish-m11e-production",
+  "schema_version": 1,
+  "witness": "lossless-water grazing sheet at 3.1 wavelengths and source depth 0.02 Lg",
+  "accuracy": {
+    "input_impedance_relative_delta_vs_direct": 2.6222275213890096e-09,
+    "wire_current_l2_relative_delta_vs_direct": 4.92244742919578e-05,
+    "near_e_l2_relative_delta_vs_direct": 5.412229740518986e-09,
+    "near_h_maximum_reported_magnitude_delta_db": 0.0,
+    "near_h_maximum_reported_phase_delta_degrees": 0.0,
+    "near_h_report_resolution": "five significant magnitude digits and 0.01 degree"
+  },
+  "routes": {
+    "matrix_e_adaptive": 288,
+    "total_e_adaptive": 336,
+    "h_adaptive": 48,
+    "direct_fallbacks": 0,
+    "near_linear_matrix_interactions": 672
+  },
+  "cache": {
+    "tables": 9,
+    "cold_hits": 0,
+    "warm_hits": 9,
+    "payload_mib": 79,
+    "cold_generation_wall_seconds": 648.8489928459749,
+    "cold_process_wall_seconds": 648.90536624589,
+    "cold_process_cpu_seconds": 8384.632712999999,
+    "warm_startup_seconds": 0.09638203401118517
+  },
+  "performance": {
+    "adaptive_warm_wall_seconds": 0.11345147085376084,
+    "direct_warm_wall_seconds": 0.23826603684574366,
+    "warm_end_to_end_speedup": 2.100158200265813,
+    "adaptive_matrix_fill_seconds": 0.002460581948980689,
+    "direct_matrix_fill_seconds": 0.003642371855676174,
+    "matrix_fill_speedup": 1.4802887817595545,
+    "adaptive_near_field_seconds": 0.000521965092048049,
+    "direct_near_field_seconds": 0.10739050409756601,
+    "near_field_speedup": 205.74269378090955
+  },
+  "determinism": {
+    "one_vs_four_workers_machine_results_exact": true,
+    "directional_tree_cache_round_trip_exact": true,
+    "e_h_cache_identities_distinct": true
+  },
+  "far_grazing_control": {
+    "geometry": "M10C field point at 1000 wavelengths on the interface",
+    "adaptive_warm_wall_seconds": 230.74072094494477,
+    "adaptive_startup_seconds": 0.10051217512227595,
+    "near_field_seconds": 230.61881742393598,
+    "policy": "outside qualified adaptive bounds; correctness-first direct E/H fallback"
+  }
+}

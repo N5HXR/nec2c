@@ -103,6 +103,9 @@ inside the domain qualified here and only after explicit user approval.
 
 ### M11E - production integration and performance
 
+Implementation and retained results are documented in
+`NEC4-SIMILARITY-M11E-RESULTS.md`.  User acceptance passed on 2026-11-23.
+
 - Add deterministic routing, diagnostics, cache lifecycle, and worker-count
   identity.
 - Compare uncached generation, cached startup, matrix fill, near-field, and

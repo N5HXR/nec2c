@@ -10,12 +10,17 @@ typedef int (*nec4_ground_cross_evaluator)(void *context,double rho_m,
     double observer_z_m,double source_depth_m,
     double complex field[5]);
 
+typedef int (*nec4_ground_cross_h_evaluator)(void *context,double rho_m,
+    double observer_z_m,double source_depth_m,
+    double complex field[NEC4_GROUND_H_COMPONENT_COUNT]);
+
 typedef struct {
   double frequency_hz;
   double complex lower_epsilon_relative;
   double complex lower_wave_number_per_m;
   double complex upper_wave_number_per_m;
   nec4_ground_cross_evaluator cross;
+  nec4_ground_cross_h_evaluator cross_h;
   void *cross_context;
 } nec4_ground_matrix_context;
 
@@ -24,6 +29,19 @@ typedef struct {
   double complex sine[3];
   double complex cosine[3];
 } nec4_ground_segment_field;
+
+/* Complete lower-medium source to upper-medium observer H field.  M11D
+   independently qualified this canonical transmission pairing; same-medium
+   H stays on the legacy path until its transformations are derived. */
+int nec4_ground_matrix_h_point_cross(
+    const nec4_ground_matrix_context *context,const double source_m[3],
+    const double observer_m[3],const double source_direction[3],
+    double complex field[3]);
+int nec4_ground_matrix_h_segment_nec_cross(
+    const nec4_ground_matrix_context *context,const double source_center_m[3],
+    const double source_direction[3],double source_length_m,
+    const double observer_m[3],double normalization_length_m,
+    nec4_ground_segment_field *field);
 
 typedef struct {
   const nec4_ground_table *table[3];

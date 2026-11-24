@@ -167,7 +167,7 @@ def main():
         _, warning_report = execute(dipole(61), "nec4", temporary,
                                     "validity-warning")
         match = re.search(
-            r"NEC4 WIRE VALIDITY: (\d+) SEGMENTS BELOW L/A=2, "
+            r"NEC4ISH WIRE VALIDITY: (\d+) SEGMENTS BELOW L/A=2, "
             r"(\d+) CLOSE PARALLEL PAIRS, (\d+) BURIED MATCH POINTS, "
             r"(\d+) OVERLAPPING BENDS(?:, \d+ SOURCE LENGTH MISMATCHES, "
             r"\d+ RADIUS-STEP JUNCTIONS(?:, \d+ LEGACY EX5 SOURCES)?)?; "

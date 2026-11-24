@@ -409,8 +409,8 @@ Acceptance metrics:
 
 ### M11 - conditional adaptive ground update
 
-**Status:** research contract and M11A-M11D were accepted on 2026-11-23.
-M11E is in progress. The engine is named `adaptive`,
+**Status:** M11A-M11E were accepted on 2026-11-23. The production engine is
+named `adaptive`,
 accuracy-first direct fallback is approved, and direct H is best-effort and
 independently deferrable with the 1992 NEC4 theory as the governing baseline
 rather than inferred NEC4.2 behavior. See
@@ -418,7 +418,8 @@ rather than inferred NEC4.2 behavior. See
 `NEC4-SIMILARITY-M11A-RESULTS.md`; M11B results are in
 `NEC4-SIMILARITY-M11B-RESULTS.md`, M11C results are in
 `NEC4-SIMILARITY-M11C-RESULTS.md`, and M11D results are in
-`NEC4-SIMILARITY-M11D-RESULTS.md`.
+`NEC4-SIMILARITY-M11D-RESULTS.md`; M11E production results are in
+`NEC4-SIMILARITY-M11E-RESULTS.md`.
 
 Goal: determine whether the public GN3 description and public field mathematics support a materially more accurate production evaluator without claiming exact NEC4.2 GN3 reproduction.
 
@@ -466,7 +467,7 @@ Work:
 Acceptance metrics:
 
 - explicit NEC2 mode reproduces the M0 corpus;
-- validated NEC4 mode becomes `auto` for supported cases only if the user approves;
+- validated NEC4ish mode becomes `auto` for supported cases only if the user approves;
 - every unsupported or out-of-envelope case has an actionable diagnostic;
 - no unreviewed dependency or system-administration requirement;
 - user performs the final free-space, above-ground, buried/crossing, VSWR, radiation-grid, and performance smoke tests.
@@ -500,7 +501,7 @@ The final portfolio will be assembled incrementally and retained as ordinary NEC
 
 ## Approved design decisions
 
-1. **Default policy:** after M12 acceptance, `auto` selects NEC4 for supported cases, while explicit `nec2` preserves old behavior. Until M12, new behavior is opt-in.
+1. **Default policy:** after M12 acceptance, `auto` selects NEC4ish for supported cases, while explicit `nec2` preserves old behavior. Until M12, new behavior is opt-in.
 2. **GN3 naming:** call the independently derived later engine `adaptive`, not `gn3`, unless subsequent research establishes a complete public specification.
 3. **Validity handling:** warn and continue by default, provide `--model-check strict` to turn validated-envelope warnings into errors, and `off` only to silence warnings. Numerically undefined geometry remains an error in every mode.
 4. **Interface scope:** use one planar homogeneous half-space, matching documented NEC4. Multilayer soil and terrain remain future projects.

@@ -51,7 +51,8 @@ int nec4_ground_adaptive_build(nec4_ground_adaptive *table,
 /* Accuracy-first k-d refinement.  Each rejected cell is bisected only along
    the active axis with the largest center-line withheld error.  This avoids
    spending 4x/8x cells when phase variation is strongly directional.  The
-   representation is not yet persistent; store() rejects these tables. */
+   versioned cache records every split axis, so reconstructed trees retain
+   the exact deterministic topology. */
 int nec4_ground_adaptive_build_anisotropic(nec4_ground_adaptive *table,
     const nec4_ground_adaptive_bounds *bounds,double tolerance,
     unsigned int maximum_depth,size_t maximum_cells,int workers,

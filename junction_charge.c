@@ -344,7 +344,7 @@ int junction_charge_prepare(FILE *report,int strict,
     free(length);free(radius);free(factor);free(direction);
   }
   if(report && last_diagnostics.junctions)
-    fprintf(report,"\n NEC4 JUNCTION CHARGE: %zu JUNCTIONS, %zu LOCAL SOLVES, %zu SYMMETRIC, %zu INTERFACE-PRESCRIBED, %zu FALLBACKS"
+    fprintf(report,"\n NEC4ISH JUNCTION CHARGE: %zu JUNCTIONS, %zu LOCAL SOLVES, %zu SYMMETRIC, %zu INTERFACE-PRESCRIBED, %zu FALLBACKS"
       "\n                       MAX ORDER %zu, RESIDUAL %.3E, PIVOT RATIO %.3E\n",
       last_diagnostics.junctions,last_diagnostics.solved,last_diagnostics.symmetric,
       last_diagnostics.prescribed,

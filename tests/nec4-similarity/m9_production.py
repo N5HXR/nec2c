@@ -100,7 +100,7 @@ def main():
         grazing, _, _ = run(HERE / "m9-grazing-cli.nec", directory,
                             "grazing")
         warnings = [row for row in grazing["diagnostics"]
-                    if row["code"] == "NEC4_M9_GRAZING_INTERFERENCE"]
+                    if row["code"] == "NEC4ISH_M9_GRAZING_INTERFERENCE"]
         if len(warnings) != 1 or warnings[0]["severity"] != "warning":
             raise AssertionError(("grazing warning", grazing["diagnostics"]))
 

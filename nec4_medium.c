@@ -222,7 +222,7 @@ int nec4_medium_update_frequency(nec4_medium_state *state,double frequency_mhz,
 void nec4_medium_print(FILE *stream,const nec4_medium_state *s)
 {
   if(!stream||!s) return;
-  fprintf(stream,"\n  NEC4 INTERFACE PREFLIGHT: %lu UPPER, %lu LOWER, "
+  fprintf(stream,"\n  NEC4ISH INTERFACE PREFLIGHT: %lu UPPER, %lu LOWER, "
       "%lu INTERFACE ENDPOINTS, %lu CROSSING JUNCTIONS, %lu RADIAL-SCREEN JUNCTIONS, %lu ONE-SIDED ENDS"
       "\n                            %lu UNSUPPORTED INTERFACE JUNCTIONS, "
       "%lu UNSPLIT CROSSINGS, %lu IN-PLANE "

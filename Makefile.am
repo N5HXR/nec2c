@@ -557,7 +557,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/nec4-similarity/m8_equations.py tests/nec4-similarity/m8_bessel.py tests/nec4-similarity/m8_hankel.py tests/nec4-similarity/m8_limits.py tests/nec4-similarity/m8_pairings.py tests/nec4-similarity/m8_oracle.py tests/nec4-similarity/m8_qualification.py tests/nec4-similarity/m8_singularity.py tests/nec4-similarity/m9_tables.py tests/nec4-similarity/m9_linear.py tests/nec4-similarity/m9_linear_outer.py tests/nec4-similarity/m9_linear_qualification.py tests/nec4-similarity/m9_table_layout.py tests/nec4-similarity/m9_model_rank.py tests/nec4-similarity/m9_model_fit.py tests/nec4-similarity/m9_asymptotic.py tests/nec4-similarity/m9_dispatch.py tests/nec4-similarity/m9_grazing_warning.py tests/nec4-similarity/m9_production.py tests/nec4-similarity/m10a_normalization.py tests/nec4-similarity/m10b_surface_reference.py tests/nec4-similarity/m10c_ground_stake.py tests/nec4-similarity/m10d_radial_screen.py tests/nec4-similarity/m10d_closure.py tests/nec4-similarity/m11a_measurement.py tests/nec4-similarity/m11b_adaptive.py tests/nec4-similarity/m11c_interference.py tests/nec4-similarity/m11d_magnetic.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/nec4-similarity/m8_equations.py tests/nec4-similarity/m8_bessel.py tests/nec4-similarity/m8_hankel.py tests/nec4-similarity/m8_limits.py tests/nec4-similarity/m8_pairings.py tests/nec4-similarity/m8_oracle.py tests/nec4-similarity/m8_qualification.py tests/nec4-similarity/m8_singularity.py tests/nec4-similarity/m9_tables.py tests/nec4-similarity/m9_linear.py tests/nec4-similarity/m9_linear_outer.py tests/nec4-similarity/m9_linear_qualification.py tests/nec4-similarity/m9_table_layout.py tests/nec4-similarity/m9_model_rank.py tests/nec4-similarity/m9_model_fit.py tests/nec4-similarity/m9_asymptotic.py tests/nec4-similarity/m9_dispatch.py tests/nec4-similarity/m9_grazing_warning.py tests/nec4-similarity/m9_production.py tests/nec4-similarity/m10a_normalization.py tests/nec4-similarity/m10b_surface_reference.py tests/nec4-similarity/m10c_ground_stake.py tests/nec4-similarity/m10d_radial_screen.py tests/nec4-similarity/m10d_closure.py tests/nec4-similarity/m11a_measurement.py tests/nec4-similarity/m11b_adaptive.py tests/nec4-similarity/m11c_interference.py tests/nec4-similarity/m11d_magnetic.py tests/nec4-similarity/m11e_production.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \
@@ -579,6 +579,7 @@ TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_paralle
 	tests/nec4_ground_matrix_test \
 	tests/nec4_ground_runtime_test \
 	tests/nec4_ground_adaptive_test \
+	tests/nec4_ground_adaptive_field_test \
 	tests/dense_backend_test \
 	tests/vie_kernel_test \
 	tests/vie_iterative_test \
@@ -608,7 +609,7 @@ AM_CFLAGS = @OPENMP_CFLAGS@
 
 bin_PROGRAMS = nec2c
 
-check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test tests/concurrency_test tests/junction_charge_test tests/nec4_endcap_test tests/nec4_kernel_test tests/nec4_medium_test tests/nec4_ground_dispatch_test tests/nec4_ground_cache_test tests/nec4_ground_direct_test tests/nec4_ground_asymptotic_test tests/nec4_ground_table_test tests/nec4_ground_matrix_test tests/nec4_ground_runtime_test tests/nec4_ground_adaptive_test
+check_PROGRAMS = tests/vie_kernel_test tests/vie_iterative_test tests/vie_fft_test tests/dielectric_fft_test tests/vie_ground_test tests/vie_halfspace_test tests/dense_backend_test tests/concurrency_test tests/junction_charge_test tests/nec4_endcap_test tests/nec4_kernel_test tests/nec4_medium_test tests/nec4_ground_dispatch_test tests/nec4_ground_cache_test tests/nec4_ground_direct_test tests/nec4_ground_asymptotic_test tests/nec4_ground_table_test tests/nec4_ground_matrix_test tests/nec4_ground_runtime_test tests/nec4_ground_adaptive_test tests/nec4_ground_adaptive_field_test
 tests_dense_backend_test_SOURCES = tests/dense_backend_test.c dense_backend.c dense_backend.h
 tests_dense_backend_test_LDADD = -lm
 tests_concurrency_test_SOURCES = tests/concurrency_test.c concurrency.c concurrency.h
@@ -671,10 +672,12 @@ tests_nec4_ground_table_test_LDADD = -lm $(OPENMP_LIBS)
 tests_nec4_ground_matrix_test_SOURCES = tests/nec4_ground_matrix_test.c nec4_ground_matrix.c nec4_ground_matrix.h nec4_ground_table.c nec4_ground_table.h nec4_ground_cache.c nec4_ground_cache.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
 tests_nec4_ground_matrix_test_LDADD = -lm
 
-tests_nec4_ground_runtime_test_SOURCES = tests/nec4_ground_runtime_test.c nec4_ground_runtime.c nec4_ground_runtime.h nec4_ground_dispatch.c nec4_ground_dispatch.h nec4_ground_asymptotic.c nec4_ground_asymptotic.h nec4_ground_model_grid.c nec4_ground_model_grid.h nec4_ground_matrix.c nec4_ground_matrix.h nec4_ground_table.c nec4_ground_table.h nec4_ground_cache.c nec4_ground_cache.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tests_nec4_ground_runtime_test_SOURCES = tests/nec4_ground_runtime_test.c nec4_ground_runtime.c nec4_ground_runtime.h nec4_ground_dispatch.c nec4_ground_dispatch.h nec4_ground_asymptotic.c nec4_ground_asymptotic.h nec4_ground_model_grid.c nec4_ground_model_grid.h nec4_ground_adaptive_e.c nec4_ground_adaptive_e.h nec4_ground_adaptive_h.c nec4_ground_adaptive_h.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_matrix.c nec4_ground_matrix.h nec4_ground_table.c nec4_ground_table.h nec4_ground_cache.c nec4_ground_cache.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
 tests_nec4_ground_runtime_test_LDADD = -lm $(OPENMP_LIBS)
 tests_nec4_ground_adaptive_test_SOURCES = tests/nec4_ground_adaptive_test.c nec4_ground_adaptive.c nec4_ground_adaptive.h
 tests_nec4_ground_adaptive_test_LDADD = -lm $(OPENMP_LIBS)
+tests_nec4_ground_adaptive_field_test_SOURCES = tests/nec4_ground_adaptive_field_test.c nec4_ground_adaptive_e.c nec4_ground_adaptive_e.h nec4_ground_adaptive_h.c nec4_ground_adaptive_h.h nec4_ground_adaptive.c nec4_ground_adaptive.h nec4_ground_direct.c nec4_ground_direct.h complex_bessel.c
+tests_nec4_ground_adaptive_field_test_LDADD = -lm $(OPENMP_LIBS)
 
 nec2c_SOURCES = \
   calculations.c \
@@ -693,6 +696,12 @@ nec2c_SOURCES = \
   nec4_ground_asymptotic.h \
   nec4_ground_model_grid.c \
   nec4_ground_model_grid.h \
+  nec4_ground_adaptive.c \
+  nec4_ground_adaptive.h \
+  nec4_ground_adaptive_e.c \
+  nec4_ground_adaptive_e.h \
+  nec4_ground_adaptive_h.c \
+  nec4_ground_adaptive_h.h \
   nec4_ground_table.c \
   nec4_ground_table.h \
   nec4_ground_matrix.c \

@@ -120,7 +120,7 @@ void efld( double xi, double yi, double zi, double ai, int ij )
 		    wire_operator_source_wave_number(),
 		    wire_operator_source_intrinsic_impedance(),&field))
 		{
-		  fprintf(stderr,"nec2c: NEC4 reduced wire kernel failed\n");
+		  fprintf(stderr,"nec2c: NEC4ish reduced wire kernel failed\n");
 		  stop(-1);
 		}
 		tezs=field.ezs;ters=field.ers;
@@ -1562,6 +1562,7 @@ void nhfld( double xob, double yob, double zob,
 
 	for( i = 0; i < data.n; i++ )
 	{
+	  wire_operator_set_source_segment((size_t)i);
 	  dataj.s= data.si[i];
 	  dataj.b= data.bi[i];
 	  dataj.xj= data.x[i];

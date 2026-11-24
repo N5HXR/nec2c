@@ -4,11 +4,11 @@
 #include <stdint.h>
 #include <string.h>
 
-#define ADAPTIVE_E_ALGORITHM_VERSION 0x000b0001u
+#define ADAPTIVE_E_ALGORITHM_VERSION 0x000b0002u
 #define ADAPTIVE_E_REPRESENTATION_F2 1u
 
 typedef struct {
-  uint32_t algorithm_version,representation;
+  uint32_t algorithm_version,representation,anisotropic;
   uint32_t panel_subdivisions,quadrature_order;
   double cutoff_decay,frequency_hz;
   double lower_real,lower_imag,upper_real,upper_imag;
@@ -20,12 +20,13 @@ typedef struct {
 static adaptive_e_identity identity(double frequency,double complex lower_k,
     double complex upper_k,const nec4_ground_table_direct_options *options,
     const nec4_ground_adaptive_bounds *bounds,double tolerance,
-    unsigned int maximum_depth,size_t maximum_cells)
+    unsigned int maximum_depth,size_t maximum_cells,int anisotropic)
 {
   adaptive_e_identity result;
   memset(&result,0,sizeof(result));
   result.algorithm_version=ADAPTIVE_E_ALGORITHM_VERSION;
   result.representation=ADAPTIVE_E_REPRESENTATION_F2;
+  result.anisotropic=anisotropic!=0;
   result.panel_subdivisions=options->panel_subdivisions;
   result.quadrature_order=options->quadrature_order;
   result.cutoff_decay=options->cutoff_decay;result.frequency_hz=frequency;
@@ -36,6 +37,29 @@ static adaptive_e_identity identity(double frequency,double complex lower_k,
   result.tolerance=tolerance;result.maximum_depth=maximum_depth;
   result.maximum_cells=maximum_cells;
   return result;
+}
+
+static uint64_t identity_hash(const void *data,size_t size)
+{
+  const unsigned char *bytes=data;
+  uint64_t hash=UINT64_C(1469598103934665603);
+  for(size_t index=0;index<size;++index)
+  { hash^=bytes[index];hash*=UINT64_C(1099511628211); }
+  return hash?hash:1;
+}
+
+uint64_t nec4_ground_adaptive_e_cache_key(double frequency,
+    double complex lower_k,double complex upper_k,
+    const nec4_ground_adaptive_bounds *bounds,double tolerance,
+    unsigned int maximum_depth,size_t maximum_cells,int anisotropic,
+    const nec4_ground_table_direct_options *options)
+{
+  const nec4_ground_table_direct_options defaults={3,48,80.};
+  adaptive_e_identity key;
+  if(!bounds) return 0;
+  key=identity(frequency,lower_k,upper_k,options?options:&defaults,bounds,
+    tolerance,maximum_depth,maximum_cells,anisotropic);
+  return identity_hash(&key,sizeof(key));
 }
 
 static int storage_factor(double complex lower_k,double complex upper_k,
@@ -156,7 +180,8 @@ int nec4_ground_adaptive_e_store(const nec4_ground_adaptive_e *table,
   key=identity(table->frequency_hz,table->lower_wave_number_per_m,
                table->upper_wave_number_per_m,&table->direct_options,
                &table->table.bounds,table->table.tolerance,
-               table->table.maximum_depth,table->table.maximum_cells);
+               table->table.maximum_depth,table->table.maximum_cells,
+               table->table.anisotropic);
   return nec4_ground_adaptive_store(&table->table,path,&key,sizeof(key));
 }
 
@@ -173,9 +198,34 @@ int nec4_ground_adaptive_e_load(nec4_ground_adaptive_e *table,const char *path,
   if(!table||!bounds||!(frequency>0.)||!(tolerance>0.)||
      cabs(lower_k)==0.||cabs(upper_k)==0.)return 0;
   key=identity(frequency,lower_k,upper_k,selected,bounds,tolerance,
-               maximum_depth,maximum_cells);
+               maximum_depth,maximum_cells,0);
   nec4_ground_adaptive_init(&loaded);
   if(!nec4_ground_adaptive_load(&loaded,path,&key,sizeof(key)))return 0;
+  nec4_ground_adaptive_e_destroy(table);table->table=loaded;
+  table->frequency_hz=frequency;table->lower_wave_number_per_m=lower_k;
+  table->upper_wave_number_per_m=upper_k;table->direct_options=*selected;
+  return 1;
+}
+
+int nec4_ground_adaptive_e_load_anisotropic(nec4_ground_adaptive_e *table,
+    const char *path,double frequency,double complex lower_k,
+    double complex upper_k,const nec4_ground_adaptive_bounds *bounds,
+    double tolerance,unsigned int maximum_depth,size_t maximum_cells,
+    const nec4_ground_table_direct_options *options)
+{
+  const nec4_ground_table_direct_options defaults={3,48,80.};
+  const nec4_ground_table_direct_options *selected=options?options:&defaults;
+  adaptive_e_identity key;
+  nec4_ground_adaptive loaded;
+  if(!table||!bounds||!(frequency>0.)||!(tolerance>0.)||
+     cabs(lower_k)==0.||cabs(upper_k)==0.) return 0;
+  key=identity(frequency,lower_k,upper_k,selected,bounds,tolerance,
+               maximum_depth,maximum_cells,1);
+  nec4_ground_adaptive_init(&loaded);
+  if(!nec4_ground_adaptive_load(&loaded,path,&key,sizeof(key))||
+     !loaded.anisotropic) {
+    nec4_ground_adaptive_destroy(&loaded);return 0;
+  }
   nec4_ground_adaptive_e_destroy(table);table->table=loaded;
   table->frequency_hz=frequency;table->lower_wave_number_per_m=lower_k;
   table->upper_wave_number_per_m=upper_k;table->direct_options=*selected;

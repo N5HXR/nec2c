@@ -964,18 +964,18 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
 
   if(gnd.ksymp != 2 || gnd.iperf != 2)
   {
-    result_json_diagnostic("error", "NEC4_M7_GROUND_REQUIRED",
+    result_json_diagnostic("error", "NEC4ISH_M7_GROUND_REQUIRED",
         "M7 lower-medium preflight requires a finite Sommerfeld GN 2 medium",
         "{\"required_card\":\"GN 2\"}");
-    fprintf(output_fp, "\n\n  NEC4 M7 PREFLIGHT ERROR: lower-medium and "
+    fprintf(output_fp, "\n\n  NEC4ISH M7 PREFLIGHT ERROR: lower-medium and "
         "interface models require a finite Sommerfeld GN 2 medium.");
     return 0;
   }
   if(data.m != 0)
   {
-    result_json_diagnostic("error", "NEC4_M7_PATCH_UNSUPPORTED",
+    result_json_diagnostic("error", "NEC4ISH_M7_PATCH_UNSUPPORTED",
         "M7 lower-medium preflight does not yet qualify surface patches", "{}");
-    fprintf(output_fp, "\n\n  NEC4 M7 PREFLIGHT ERROR: surface patches are "
+    fprintf(output_fp, "\n\n  NEC4ISH M7 PREFLIGHT ERROR: surface patches are "
         "deferred until the interface field engine is available.");
     return 0;
   }
@@ -998,11 +998,11 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
         (unsigned long)state->unsupported_interface_junctions,
         (unsigned long)state->unsplit_crossings,
         (unsigned long)state->in_plane_segments);
-    result_json_diagnostic("error", "NEC4_M7_INTERFACE_TOPOLOGY",
+    result_json_diagnostic("error", "NEC4ISH_M7_INTERFACE_TOPOLOGY",
         "wires may end freely at the interface, form a simple split crossing, or form one upper wire feeding buried radial wires; they may not lie in the interface plane",
         context);
     nec4_medium_print(output_fp,state);
-    fprintf(output_fp, "\n  NEC4 M7 PREFLIGHT ERROR: split every crossing "
+    fprintf(output_fp, "\n  NEC4ISH M7 PREFLIGHT ERROR: split every crossing "
         "at z=0; only a simple crossing or one upper wire feeding lower-medium "
         "radials is supported, and complete segments in the interface plane "
         "are deferred.");
@@ -1034,13 +1034,13 @@ static int prepare_nec4_medium_preflight(nec4_medium_state *state)
       cimag(state->epsilon_relative),creal(state->wave_number_per_m),
       cimag(state->wave_number_per_m),creal(state->intrinsic_impedance_ohm),
       cimag(state->intrinsic_impedance_ohm));
-  result_json_diagnostic("info", "NEC4_M7_MEDIUM_PREFLIGHT",
+  result_json_diagnostic("info", "NEC4ISH_M7_MEDIUM_PREFLIGHT",
       "lower-medium material and interface topology prepared",context);
   if(state->oblique_crossings)
   {
     snprintf(context,sizeof(context),"{\"oblique_crossings\":%lu}",
         (unsigned long)state->oblique_crossings);
-    result_json_diagnostic("info", "NEC4_M7_HIGHLY_OBLIQUE_AUDIT",
+    result_json_diagnostic("info", "NEC4ISH_M7_HIGHLY_OBLIQUE_AUDIT",
         "one or more crossings exceed 60 degrees from the interface normal; retained as audit metadata because the public guide reports apparently good results in this region",
         context);
   }
@@ -1054,19 +1054,19 @@ static void enforce_nec4_m9_boundary(nec4_medium_state *state,
   if(!wire_operator_nec4_ground()) return;
   if(!wire_operator_nec4_basis())
   {
-    result_json_diagnostic("error", "NEC4_M7_WIRE_ENGINE_REQUIRED",
-        "M7 lower-medium preflight requires --wire-engine nec4", "{}");
-    fprintf(output_fp,"\n\n  NEC4 M7 PREFLIGHT ERROR: --ground-engine "
-        "nec4 requires --wire-engine nec4.");
+    result_json_diagnostic("error", "NEC4ISH_M7_WIRE_ENGINE_REQUIRED",
+        "M7 lower-medium preflight requires --wire-engine nec4ish", "{}");
+    fprintf(output_fp,"\n\n  NEC4ISH M7 PREFLIGHT ERROR: --ground-engine "
+        "nec4ish requires --wire-engine nec4ish.");
     result_json_job_end(dielectric);result_json_finish("validation-error");
     stop(-1);
   }
   if((dielectric&&dielectric->loaded)||coated_domain_count)
   {
-    result_json_diagnostic("error", "NEC4_M7_COMBINATION_UNSUPPORTED",
+    result_json_diagnostic("error", "NEC4ISH_M7_COMBINATION_UNSUPPORTED",
         "M7 lower-medium preflight does not yet qualify dielectric VIE or coated-wire combinations",
         "{}");
-    fprintf(output_fp,"\n\n  NEC4 M7 PREFLIGHT ERROR: dielectric VIE and "
+    fprintf(output_fp,"\n\n  NEC4ISH M7 PREFLIGHT ERROR: dielectric VIE and "
         "LD 7 coated-wire combinations are deferred for requalification.");
     result_json_job_end(dielectric);result_json_finish("validation-error");
     stop(-1);
@@ -1077,19 +1077,20 @@ static void enforce_nec4_m9_boundary(nec4_medium_state *state,
     {
       result_json_job_end(dielectric);
       result_json_finish("validation-error");
-      fprintf(stderr,"nec2c: NEC4 M7 interface preflight failed\n");
+      fprintf(stderr,"nec2c: NEC4ish M7 interface preflight failed\n");
       stop(-1);
     }
     newly_prepared=1;
   }
   if(newly_prepared)
-    result_json_diagnostic("info", "NEC4_M9_GROUND_ENGINE",
-        "NEC4 similarity interface-field engine enabled",
+    result_json_diagnostic("info", "NEC4ISH_M9_GROUND_ENGINE",
+        "NEC4ish similarity interface-field engine enabled",
         "{\"implementation\":\"documented-interface-integrals\"}");
 }
 
 static int prepare_nec4_ground_frequency(nec4_medium_state *medium,
-    nec4_ground_runtime *runtime,const char *cache_directory,int direct_model)
+    nec4_ground_runtime *runtime,const char *cache_directory,
+    nec4_ground_model model)
 {
   const double pi=acos(-1.),c0=299792458.;
   double complex epsilon,upper_k;
@@ -1106,18 +1107,18 @@ static int prepare_nec4_ground_frequency(nec4_medium_state *medium,
   plan=plan_concurrency(1,40u*1024u*1024u,16);
   options.cache_directory=cache_directory;
   options.workers=(int)plan.threads;
-  options.direct_model=direct_model;
+  options.model=model;
   upper_k=2.*pi*save.fmhz*1.e6/c0;
   started=performance_now();
   if(!nec4_ground_runtime_prepare(runtime,save.fmhz*1.e6,epsilon,
       medium->wave_number_per_m,upper_k,&options)) return 0;
-  performance_add("nec4_ground_tables",performance_now()-started);
+  performance_add("nec4ish_ground_tables",performance_now()-started);
   wire_operator_set_medium_state(medium);
   wire_operator_set_ground_matrix_context(
       nec4_ground_runtime_matrix_context(runtime));
-  fprintf(output_fp,"\n  NEC4 M9 INTERFACE FIELD: %s model region, "
+  fprintf(output_fp,"\n  NEC4ISH INTERFACE FIELD: %s model region, "
       "%lu/%lu cached tables, %d build workers",
-      direct_model?"direct":"level-3 interpolated",
+      nec4_ground_model_name(model),
       (unsigned long)runtime->cache_hits,
       (unsigned long)(runtime->cache_hits+runtime->cache_misses),
       options.workers);
@@ -1165,12 +1166,12 @@ static void audit_nec4_ground_routes(nec4_ground_runtime *runtime,
 static void report_nec4_ground_grazing(nec4_ground_runtime *runtime)
 {
   if(!nec4_ground_runtime_claim_grazing_warning(runtime)) return;
-  result_json_diagnostic("warning","NEC4_M9_GRAZING_INTERFERENCE",
+  result_json_diagnostic("warning","NEC4ISH_M9_GRAZING_INTERFERENCE",
       "one or more interface interactions entered the documented grazing-angle risk region",
       "{\"threshold_degrees\":15}");
-  fprintf(output_fp,"\n  NEC4 M9 WARNING: an interface interaction "
+  fprintf(output_fp,"\n  NEC4ISH M9 WARNING: an interface interaction "
       "entered the <=15 degree grazing region; compare with a refined "
-      "or future NEC4.2-style treatment if this result is critical.");
+      "or a future post-theory grazing treatment if this result is critical.");
 }
 
 /*-------------------------------------------------------------------*/
@@ -1200,7 +1201,7 @@ int main( int argc, char **argv )
   int capabilities_json = 0;
   int validate_only = 0;
   int coated_wire_experimental_junctions = 0;
-  int nec4_ground_direct_model = 0;
+  nec4_ground_model nec4_ground_model_choice=NEC4_GROUND_MODEL_GRID;
   char result_path[NEC2C_PATH_MAX * 4 + 1] = "";
   char timing_path[NEC2C_PATH_MAX * 4 + 1] = "";
   char nec4_ground_cache[NEC2C_PATH_MAX * 4 + 1] = "";
@@ -1292,6 +1293,9 @@ int main( int argc, char **argv )
       {"wire-engine", required_argument, NULL, 1009},
       {"ground-engine", required_argument, NULL, 1010},
       {"model-check", required_argument, NULL, 1011},
+      {"nec4ish-ground-model", required_argument, NULL, 1012},
+      {"nec4ish-ground-cache", required_argument, NULL, 1013},
+      /* Compatibility aliases.  Public output always reports nec4ish. */
       {"nec4-ground-model", required_argument, NULL, 1012},
       {"nec4-ground-cache", required_argument, NULL, 1013},
       {NULL, 0, NULL, 0}
@@ -1428,7 +1432,7 @@ int main( int argc, char **argv )
       case 1009:
         if(!wire_operator_set_engine(optarg))
         {
-          fprintf(stderr, "nec2c: --wire-engine requires auto, nec2, or nec4\n");
+          fprintf(stderr, "nec2c: --wire-engine requires auto, nec2, or nec4ish\n");
           exit(EXIT_FAILURE);
         }
         break;
@@ -1436,7 +1440,8 @@ int main( int argc, char **argv )
       case 1010:
         if(!wire_operator_set_ground_engine(optarg))
         {
-          if(!strcmp(optarg, "nec4") || !strcmp(optarg, "adaptive"))
+          if(!strcmp(optarg, "nec4ish")||!strcmp(optarg, "nec4")||
+             !strcmp(optarg, "adaptive"))
             fprintf(stderr, "nec2c: requested ground engine is planned but not available in this milestone\n");
           else
             fprintf(stderr, "nec2c: --ground-engine requires auto, nec2, or an available future engine\n");
@@ -1453,11 +1458,16 @@ int main( int argc, char **argv )
         break;
 
       case 1012:
-        if(!strcmp(optarg,"grid")) nec4_ground_direct_model=0;
-        else if(!strcmp(optarg,"direct")) nec4_ground_direct_model=1;
+        if(!strcmp(optarg,"grid"))
+          nec4_ground_model_choice=NEC4_GROUND_MODEL_GRID;
+        else if(!strcmp(optarg,"direct"))
+          nec4_ground_model_choice=NEC4_GROUND_MODEL_DIRECT;
+        else if(!strcmp(optarg,"adaptive"))
+          nec4_ground_model_choice=NEC4_GROUND_MODEL_ADAPTIVE;
         else
         {
-          fprintf(stderr,"nec2c: --nec4-ground-model requires grid or direct\n");
+          fprintf(stderr,"nec2c: --nec4ish-ground-model requires grid, direct, "
+              "or adaptive\n");
           exit(EXIT_FAILURE);
         }
         break;
@@ -1466,7 +1476,7 @@ int main( int argc, char **argv )
         if(!strcmp(optarg,"none")) nec4_ground_cache[0]='\0';
         else if(strlen(optarg)>=sizeof(nec4_ground_cache))
         {
-          fprintf(stderr,"nec2c: NEC4 ground cache path is too long\n");
+          fprintf(stderr,"nec2c: NEC4ish ground cache path is too long\n");
           exit(EXIT_FAILURE);
         }
         else snprintf(nec4_ground_cache,sizeof(nec4_ground_cache),"%s",optarg);
@@ -2458,11 +2468,11 @@ int main( int argc, char **argv )
 		case 20: /* "df" card, dielectric resource */
 		  if(wire_operator_nec4_basis())
 		  {
-			fprintf(output_fp,"\n\n  NEC4 WIRE COMBINATION ERROR: dielectric VIE "
-			    "has not been qualified with the NEC4 wire operator; select "
+			fprintf(output_fp,"\n\n  NEC4ISH WIRE COMBINATION ERROR: dielectric VIE "
+			    "has not been qualified with the NEC4ish wire operator; select "
 			    "--wire-engine nec2.");
 			fprintf(stderr,"nec2c: dielectric VIE is not yet supported with "
-			    "--wire-engine nec4\n");
+			    "--wire-engine nec4ish\n");
 			stop(-1);
 		  }
 		  if( dielectric.loaded )
@@ -2899,18 +2909,18 @@ int main( int argc, char **argv )
 			wire_operator_set_model_features((size_t)data.m,
 			    coated_wires.domain_count,dielectric.loaded);
 			if(!prepare_nec4_ground_frequency(&nec4_medium,&nec4_ground,
-			    nec4_ground_cache,nec4_ground_direct_model))
+			    nec4_ground_cache,nec4_ground_model_choice))
 			{
-			  result_json_diagnostic("error","NEC4_M9_RUNTIME_PREPARE",
-			      "unable to prepare the NEC4 similarity interface-field tables",
+			  result_json_diagnostic("error","NEC4ISH_M9_RUNTIME_PREPARE",
+			      "unable to prepare the NEC4ish similarity interface-field tables",
 			      "{}");
-			  fprintf(stderr,"nec2c: NEC4 M9 ground runtime preparation failed\n");
+			  fprintf(stderr,"nec2c: NEC4ish M9 ground runtime preparation failed\n");
 			  stop(-1);
 			}
 			audit_nec4_ground_routes(&nec4_ground,&nec4_medium);
 			if(!wire_operator_prepare_frequency(output_fp))
 			{
-			  fprintf(stderr,"nec2c: NEC4 model validity, combination, or junction charge check failed\n");
+			  fprintf(stderr,"nec2c: NEC4ish model validity, combination, or junction charge check failed\n");
 			  stop(-1);
 			}
 
@@ -3027,10 +3037,27 @@ int main( int argc, char **argv )
 			cmset_parallel_configure(classic_fill_processes, numerical_fork_safe);
 			cmset( netcx.neq, cm, rkh, iexk );
 			report_nec4_ground_grazing(&nec4_ground);
-			if(!nec4_ground_direct_model&&
-			   nec4_ground_runtime_direct_strip_seen(&nec4_ground))
-			  fprintf(output_fp,"\n  NEC4 M9 ACCURACY: direct contour evaluation "
-			      "was used in the z < 0.16 wavelength interface strip.");
+			if(nec4_ground_runtime_direct_strip_seen(&nec4_ground))
+			  fprintf(output_fp,"\n  NEC4ISH ACCURACY: direct contour evaluation "
+			      "was used where the selected accelerated representation did "
+			      "not have an accepted value.");
+			if(nec4_ground_model_choice==NEC4_GROUND_MODEL_ADAPTIVE)
+			{
+			  char context[256];
+			  fprintf(output_fp,"\n  NEC4ISH ADAPTIVE MATRIX ROUTES: %lu table, %lu direct "
+			      "fallback, %lu near-linear interactions.",
+			      (unsigned long)nec4_ground.adaptive_hits,
+			      (unsigned long)nec4_ground.direct_fallbacks,
+			      (unsigned long)nec4_ground.linear_hits);
+			  snprintf(context,sizeof(context),
+			      "{\"adaptive_e\":%lu,\"direct_e\":%lu,\"linear_e\":%lu,"
+			      "\"workers\":%d}",
+			      (unsigned long)nec4_ground.adaptive_hits,
+			      (unsigned long)nec4_ground.direct_fallbacks,
+			      (unsigned long)nec4_ground.linear_hits,nec4_ground.workers);
+			  result_json_diagnostic("info","NEC4ISH_M11_ADAPTIVE_MATRIX_ROUTES",
+			      "NEC4ish adaptive matrix routing summary",context);
+			}
 			tim=(performance_now() - tmp1)*1000.0;
 			performance_add("matrix_fill", tim/1000.0);
 			performance_dense_backend((size_t)netcx.npeq);
@@ -3608,6 +3635,27 @@ int main( int argc, char **argv )
 				tmp1 = performance_now();
 				nfpat();
 				performance_add("near_field", performance_now() - tmp1);
+				if(nec4_ground_model_choice==NEC4_GROUND_MODEL_ADAPTIVE)
+				{
+				  char context[256];
+				  fprintf(output_fp,"\n  NEC4ISH ADAPTIVE TOTAL ROUTES: "
+				      "E %lu table/%lu direct; H %lu table/%lu direct "
+				      "lower-to-upper segment samples.",
+				      (unsigned long)nec4_ground.adaptive_hits,
+				      (unsigned long)nec4_ground.direct_fallbacks,
+				      (unsigned long)nec4_ground.h_adaptive_hits,
+				      (unsigned long)nec4_ground.h_direct_fallbacks);
+				  snprintf(context,sizeof(context),
+				      "{\"adaptive_e\":%lu,\"direct_e\":%lu,"
+				      "\"adaptive_h\":%lu,\"direct_h\":%lu,\"workers\":%d}",
+				      (unsigned long)nec4_ground.adaptive_hits,
+				      (unsigned long)nec4_ground.direct_fallbacks,
+				      (unsigned long)nec4_ground.h_adaptive_hits,
+				      (unsigned long)nec4_ground.h_direct_fallbacks,
+				      nec4_ground.workers);
+				  result_json_diagnostic("info","NEC4ISH_M11_ADAPTIVE_FIELD_ROUTES",
+				      "NEC4ish adaptive near-field routing summary",context);
+				}
 
 				if( mhz == nfrq)
 				  fpat.near=-1;

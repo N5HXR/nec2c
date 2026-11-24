@@ -59,7 +59,7 @@
     "field_ratio_to_published": 0.9632544773340522,
     "warning": {
       "severity": "warning",
-      "code": "NEC4_M9_GRAZING_INTERFERENCE",
+      "code": "NEC4ISH_M9_GRAZING_INTERFERENCE",
       "message": "one or more interface interactions entered the documented grazing-angle risk region",
       "context": {
         "threshold_degrees": 15

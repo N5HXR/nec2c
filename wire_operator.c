@@ -21,7 +21,7 @@ static const wire_operator_vtable nec2_operator = {
 };
 
 static const wire_operator_vtable nec4_operator = {
-  "nec4", sbf, tbf, trio, efld, hsfld
+  "nec4ish", sbf, tbf, trio, efld, hsfld
 };
 
 static const wire_operator_vtable *active_operator = &nec2_operator;
@@ -239,7 +239,7 @@ static int prepare_validity(FILE *report)
   if(last_validity.minimum_length_radius_ratio==DBL_MAX)
     last_validity.minimum_length_radius_ratio=0.;
   if(report)
-    fprintf(report,"\n  NEC4 WIRE VALIDITY: %lu SEGMENTS BELOW L/A=2, "
+    fprintf(report,"\n  NEC4ISH WIRE VALIDITY: %lu SEGMENTS BELOW L/A=2, "
             "%lu CLOSE PARALLEL PAIRS, %lu BURIED MATCH POINTS, "
             "%lu OVERLAPPING BENDS, %lu SOURCE LENGTH MISMATCHES, "
             "%lu RADIUS-STEP JUNCTIONS, %lu LEGACY EX5 SOURCES; "
@@ -274,9 +274,9 @@ int wire_operator_set_engine(const char *name)
     active_operator = &nec2_operator;
     return 1;
   }
-  if(!strcmp(name, "nec4"))
+  if(!strcmp(name, "nec4ish")||!strcmp(name, "nec4"))
   {
-    requested_engine = "nec4";
+    requested_engine = "nec4ish";
     active_operator = &nec4_operator;
     return 1;
   }
@@ -298,10 +298,10 @@ int wire_operator_set_ground_engine(const char *name)
     resolved_ground_engine = "nec2";
     return 1;
   }
-  if(!strcmp(name, "nec4"))
+  if(!strcmp(name, "nec4ish")||!strcmp(name, "nec4"))
   {
-    requested_ground_engine = "nec4";
-    resolved_ground_engine = "nec4";
+    requested_ground_engine = "nec4ish";
+    resolved_ground_engine = "nec4ish";
     return 1;
   }
   return 0;
@@ -351,7 +351,7 @@ const char *wire_operator_resolved_ground_engine(void)
 const char *wire_operator_model_check(void) { return model_check_policy; }
 int wire_operator_nec4_basis(void) { return active_operator == &nec4_operator; }
 int wire_operator_nec4_ground(void)
-{ return !strcmp(resolved_ground_engine,"nec4"); }
+{ return !strcmp(resolved_ground_engine,"nec4ish"); }
 
 int wire_operator_prepare_frequency(FILE *report)
 {
@@ -360,21 +360,21 @@ int wire_operator_prepare_frequency(FILE *report)
     int valid=prepare_validity(!strcmp(model_check_policy,"off")?NULL:report);
     if(model_coated_domains || model_dielectric_loaded)
     {
-      if(report) fprintf(report,"\n  NEC4 WIRE COMBINATION ERROR: %s%s%s has not "
-          "been qualified with the NEC4 wire operator; select --wire-engine nec2.\n",
+      if(report) fprintf(report,"\n  NEC4ISH WIRE COMBINATION ERROR: %s%s%s has not "
+          "been qualified with the NEC4ish wire operator; select --wire-engine nec2.\n",
           model_coated_domains?"LD 7 coated wire":"",
           model_coated_domains&&model_dielectric_loaded?" and ":"",
           model_dielectric_loaded?"dielectric VIE":"");
       return 0;
     }
     if(report && model_patches)
-      fprintf(report,"  NEC4 WIRE COMBINATION: %lu surface patches enabled.\n",
+      fprintf(report,"  NEC4ISH WIRE COMBINATION: %lu surface patches enabled.\n",
               (unsigned long)model_patches);
     if(report && gnd.ksymp>1 && gnd.iperf==2)
-      fprintf(report,"  NEC4 GROUND NOTICE: flat-cap direct and image fields are "
+      fprintf(report,"  NEC4ISH GROUND NOTICE: flat-cap direct and image fields are "
           "included; the cap-specific Sommerfeld correction remains provisional.\n");
     if(report && gnd.nradl)
-      fprintf(report,"  NEC4 GROUND NOTICE: radial-screen reflection of flat-cap "
+      fprintf(report,"  NEC4ISH GROUND NOTICE: radial-screen reflection of flat-cap "
           "fields uses the homogeneous-ground coefficient.\n");
     if(!junction_charge_prepare(report,!strcmp(model_check_policy,"strict"),
         medium_state?medium_state->endpoint_factor_assigned:NULL))
@@ -513,7 +513,7 @@ static void wire_operator_efld_impl(double xi,double yi,double zi,double ai,
           source_medium,observer_medium,center,direction,dataj.s*data.wlam,
           observer,ai*data.wlam,data.wlam,&correction))
       {
-        fprintf(stderr,"nec2c: NEC4 complete point-field evaluation failed "
+        fprintf(stderr,"nec2c: NEC4ish complete point-field evaluation failed "
             "(source=%lu source_xyz=%.17g,%.17g,%.17g "
             "observer_xyz=%.17g,%.17g,%.17g)\n",
             (unsigned long)matrix_source_segment,
@@ -545,7 +545,7 @@ static void wire_operator_efld_impl(double xi,double yi,double zi,double ai,
          source_medium,observer_medium,center,direction,
          dataj.s*data.wlam,observer,ai*data.wlam,data.wlam,&correction))
     {
-      fprintf(stderr,"nec2c: NEC4 ground matrix evaluation failed "
+      fprintf(stderr,"nec2c: NEC4ish ground matrix evaluation failed "
           "(source=%lu observer=%lu source_xyz=%.17g,%.17g,%.17g "
           "observer_xyz=%.17g,%.17g,%.17g)\n",
           (unsigned long)matrix_source_segment,
@@ -622,7 +622,34 @@ void wire_operator_efld_point(double xi,double yi,double zi,double ai)
 
 void wire_operator_hsfld(double xi, double yi, double zi, double ai)
 {
-  active_operator->hsfld(xi, yi, zi, ai);
+  if(wire_operator_nec4_ground()&&ground_matrix_context&&
+     ground_matrix_context->cross_h&&medium_state&&
+     matrix_source_segment<medium_state->segment_count&&
+     medium_state->segment_medium[matrix_source_segment]==NEC4_MEDIUM_LOWER&&
+     zi*data.wlam>=-medium_state->interface_tolerance_m)
+  {
+    nec4_ground_segment_field complete;
+    double center[3]={dataj.xj*data.wlam,dataj.yj*data.wlam,
+      dataj.zj*data.wlam};
+    double direction[3]={dataj.cabj,dataj.sabj,dataj.salpj};
+    double observer[3]={xi*data.wlam,yi*data.wlam,zi*data.wlam};
+    (void)ai;
+    if(!nec4_ground_matrix_h_segment_nec_cross(ground_matrix_context,center,
+        direction,dataj.s*data.wlam,observer,data.wlam,&complete))
+    {
+      fprintf(stderr,"nec2c: NEC4ish direct H evaluation failed "
+          "(source=%lu observer_xyz=%.17g,%.17g,%.17g)\n",
+          (unsigned long)matrix_source_segment,observer[0],observer[1],
+          observer[2]);
+      stop(-1);
+    }
+    dataj.exk=complete.constant[0];dataj.eyk=complete.constant[1];
+    dataj.ezk=complete.constant[2];dataj.exs=complete.sine[0];
+    dataj.eys=complete.sine[1];dataj.ezs=complete.sine[2];
+    dataj.exc=complete.cosine[0];dataj.eyc=complete.cosine[1];
+    dataj.ezc=complete.cosine[2];
+  }
+  else active_operator->hsfld(xi, yi, zi, ai);
   if(wire_operator_nec4_basis())
   {
     dataj.exc -= dataj.exk;
