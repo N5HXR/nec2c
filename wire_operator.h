@@ -16,6 +16,7 @@
 
 int wire_operator_set_engine(const char *name);
 int wire_operator_set_ground_engine(const char *name);
+int wire_operator_resolve_auto(void);
 int wire_operator_set_model_check(const char *name);
 void wire_operator_set_model_features(size_t patches, size_t coated_domains,
                                       int dielectric_loaded);
@@ -29,6 +30,7 @@ const char *wire_operator_requested_engine(void);
 const char *wire_operator_resolved_engine(void);
 const char *wire_operator_requested_ground_engine(void);
 const char *wire_operator_resolved_ground_engine(void);
+const char *wire_operator_selection_reason(void);
 const char *wire_operator_model_check(void);
 int wire_operator_nec4_basis(void);
 int wire_operator_nec4_ground(void);

@@ -144,7 +144,7 @@ Manual representative witness:
 
 ```sh
 mkdir -p tmp/m10d/manual-cache
-./nec2c --wire-engine nec4 --ground-engine nec4 --model-check warn \
+./nec2c --wire-engine nec4ish --ground-engine nec4ish --model-check warn \
   --threads 16 --nec4-ground-model grid \
   --nec4-ground-cache tmp/m10d/manual-cache \
   -i tests/nec4-similarity/m10d-radial-screen.nec \

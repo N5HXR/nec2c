@@ -16,7 +16,8 @@ def run(deck: pathlib.Path, expect_success: bool = True) -> str:
     with tempfile.NamedTemporaryFile(prefix="nec2c-m6-output-", suffix=".out") as temporary:
         output = pathlib.Path(temporary.name)
         completed = subprocess.run(
-            [str(NEC2C), "-i", str(deck), "-o", str(output)],
+            [str(NEC2C), "--wire-engine", "nec2", "--ground-engine", "nec2",
+             "-i", str(deck), "-o", str(output)],
             text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
         )
         result = output.read_text()

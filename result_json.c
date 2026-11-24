@@ -6,6 +6,7 @@
 #include "shared.h"
 #include "dielectric_fft.h"
 #include "dense_backend.h"
+#include "wire_operator.h"
 
 #include <float.h>
 #include <stdint.h>
@@ -197,9 +198,9 @@ int result_json_write_capabilities(FILE *stream)
     "\"fft_backends\":[\"auto\",\"builtin\"%s],"
     "\"default_fft_backend\":\"auto\","
     "\"wire_engines\":[\"auto\",\"nec2\",\"nec4ish\"],"
-    "\"default_wire_engine\":\"auto\","
+    "\"default_wire_engine\":\"nec2\","
     "\"ground_engines\":[\"auto\",\"nec2\",\"nec4ish\"],"
-    "\"default_ground_engine\":\"auto\","
+    "\"default_ground_engine\":\"nec2\","
     "\"nec4ish_ground_models\":[\"grid\",\"direct\",\"adaptive\"],"
     "\"default_nec4ish_ground_model\":\"grid\","
     "\"nec4ish_ground_cache\":true,"
@@ -319,8 +320,17 @@ void result_json_job_end(const dielectric_model *model)
   if(job->execution.open) result_json_execution_end(1);
   f = session.document;
   if(session.job_count++) fputc(',', f);
-  fprintf(f, "{\"job_index\":%lu,\"dielectric\":",
+  fprintf(f, "{\"job_index\":%lu,\"engines\":{\"wire\":{\"requested\":",
       (unsigned long)job->index);
+  json_string(f,wire_operator_requested_engine());
+  fputs(",\"resolved\":",f);json_string(f,wire_operator_resolved_engine());
+  fputs("},\"ground\":{\"requested\":",f);
+  json_string(f,wire_operator_requested_ground_engine());
+  fputs(",\"resolved\":",f);
+  json_string(f,wire_operator_resolved_ground_engine());
+  fputs("},\"selection_reason\":",f);
+  json_string(f,wire_operator_selection_reason());
+  fputs("},\"dielectric\":",f);
   if(!model || !model->loaded) fputs("null", f);
   else
   {

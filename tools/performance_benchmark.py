@@ -61,7 +61,7 @@ def physics_hash(path):
 
     def scrub(item, parent=None):
         if isinstance(item, dict):
-            ignored = {"elapsed_seconds"}
+            ignored = {"elapsed_seconds", "diagnostics", "engines"}
             if parent == "solver":
                 ignored.update(("requested", "used", "accounted_storage_bytes"))
             return {key: scrub(child, key) for key, child in item.items()
@@ -182,7 +182,8 @@ def summarize_runs(runs):
 
 
 def execute(binary, case, root, directory, run_index, warmup, backend, jobs,
-            threads, fft_backend, environment, legacy_cli):
+            threads, fft_backend, wire_engine, ground_engine, ground_model,
+            ground_cache, environment, legacy_cli):
     deck = (root / case["deck"]).resolve()
     prefix = "warmup" if warmup else "run"
     stem = f"{case['id']}-{prefix}-{run_index}"
@@ -192,7 +193,11 @@ def execute(binary, case, root, directory, run_index, warmup, backend, jobs,
     controls = [] if legacy_cli else [
         "--backend", backend, "--fft-backend", fft_backend,
         "--jobs", jobs, "--threads", threads,
+        "--wire-engine", wire_engine, "--ground-engine", ground_engine,
+        "--nec4ish-ground-model", ground_model,
     ]
+    if not legacy_cli and ground_cache is not None:
+        controls.extend(("--nec4ish-ground-cache", ground_cache))
     timing_arguments = [] if legacy_cli else ["--timing-json", str(timing)]
     command = [str(binary), *controls, *case.get("arguments", []),
                "--result-json", str(result), *timing_arguments,
@@ -274,6 +279,15 @@ def main():
                         help="frequency workers: auto or a positive integer")
     parser.add_argument("--threads", type=auto_or_positive, default="auto",
                         help="numerical-library threads per worker: auto or a positive integer")
+    parser.add_argument("--wire-engine",
+                        choices=("auto", "nec2", "nec4ish"), default="nec2")
+    parser.add_argument("--ground-engine",
+                        choices=("auto", "nec2", "nec4ish"), default="nec2")
+    parser.add_argument("--nec4ish-ground-model",
+                        choices=("grid", "direct", "adaptive"),
+                        default="grid")
+    parser.add_argument("--nec4ish-ground-cache", default=None,
+                        help="cache directory or 'none'; default uses nec2c's cache")
     parser.add_argument("--case", action="append", dest="cases",
                         help="run only this case ID; may be repeated")
     parser.add_argument("--legacy-cli", action="store_true",
@@ -335,6 +349,10 @@ def main():
                      "backend": arguments.backend, "jobs": arguments.jobs,
                      "threads": arguments.threads,
                      "fft_backend": arguments.fft_backend,
+                     "wire_engine": arguments.wire_engine,
+                     "ground_engine": arguments.ground_engine,
+                     "nec4ish_ground_model": arguments.nec4ish_ground_model,
+                     "nec4ish_ground_cache": arguments.nec4ish_ground_cache,
                      "legacy_cli": arguments.legacy_cli},
         "execution_control": {
             "backend": arguments.backend,
@@ -355,11 +373,17 @@ def main():
             warmup_runs = [execute(binary, case, ROOT, directory, index, True,
                                    arguments.backend, arguments.jobs,
                                    arguments.threads, arguments.fft_backend,
+                                   arguments.wire_engine, arguments.ground_engine,
+                                   arguments.nec4ish_ground_model,
+                                   arguments.nec4ish_ground_cache,
                                    child_environment, arguments.legacy_cli)
                            for index in range(arguments.warmup)]
             runs = [execute(binary, case, ROOT, directory, index, False,
                             arguments.backend, arguments.jobs,
                             arguments.threads, arguments.fft_backend,
+                            arguments.wire_engine, arguments.ground_engine,
+                            arguments.nec4ish_ground_model,
+                            arguments.nec4ish_ground_cache,
                             child_environment, arguments.legacy_cli)
                     for index in range(arguments.repeat)]
             report["cases"].append({

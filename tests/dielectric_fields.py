@@ -10,6 +10,7 @@ import tempfile
 
 ROOT = Path(os.environ.get('TEST_SRCDIR', '.')).resolve()
 BINARY = Path(os.environ.get('NEC2C', './nec2c')).resolve()
+CLASSIC = ['--wire-engine', 'nec2', '--ground-engine', 'nec2']
 EPS = 8.8541878128e-12
 C0 = 299792458.0
 K = 2*math.pi*100e6/C0
@@ -22,7 +23,7 @@ def run(directory, resource, output_card, conductor=False, success=True):
     (directory/'model.nec').write_text(
         'CE\n'+geometry+'GE\nFR 0 1 0 0 100\n'+excitation+
         '\nDF "model.diel"\n'+output_card+'\nEN\n')
-    result = subprocess.run([str(BINARY), '-i', str(directory/'model.nec'),
+    result = subprocess.run([str(BINARY), *CLASSIC, '-i', str(directory/'model.nec'),
                              '-o', str(directory/'model.out')], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     text = (directory/'model.out').read_text()
     assert (result.returncode == 0) == success, text
@@ -97,7 +98,7 @@ def main():
         run(directory, resource, 'NE 0 1 1 1 1 0 0 0 0 0')
         deck = directory/'model.nec'
         deck.write_text(deck.read_text().replace('FR 0 1 0 0 100', 'FR 0 2 0 0 100 10'))
-        subprocess.run([str(BINARY), '-i', str(deck), '-o', str(directory/'model.out')],
+        subprocess.run([str(BINARY), *CLASSIC, '-i', str(deck), '-o', str(directory/'model.out')],
                        check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         assert (directory/'model.out').read_text().count('SCATTERED NEAR ELECTRIC FIELD') == 2
 
@@ -117,7 +118,7 @@ def main():
                 results = []
                 for df in ('', 'DF "vacuum.diel"\n'):
                     (directory/'case.nec').write_text(prefix+df+card+'\nEN\n')
-                    subprocess.run([str(BINARY), '-i', str(directory/'case.nec'),
+                    subprocess.run([str(BINARY), *CLASSIC, '-i', str(directory/'case.nec'),
                                     '-o', str(directory/'case.out')], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     results.append((directory/'case.out').read_text())
                 if card.startswith('RP'):
@@ -138,7 +139,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='nec2c-m8-power-') as temporary:
         output_path = Path(temporary)/'power.out'
         for name in ('m6-vacuum.nec', 'm6-cube.nec'):
-            subprocess.run([str(BINARY), '-i', str(ROOT/'tests/dielectric'/name),
+            subprocess.run([str(BINARY), *CLASSIC, '-i', str(ROOT/'tests/dielectric'/name),
                             '-o', str(output_path)], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             text = output_path.read_text()
             defect = float(re.search(r'RELATIVE POWER DEFECT:\s*(\S+)', text)[1])

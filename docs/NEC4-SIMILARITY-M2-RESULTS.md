@@ -7,7 +7,7 @@ Branch: `codex/nec4-similarity`
 
 ## Result
 
-M2 adds an explicitly selected `--wire-engine nec4` mode whose current on a
+M2 adds an explicitly selected `--wire-engine nec4ish` mode whose current on a
 segment is stored and evaluated as
 
 ```text
@@ -89,7 +89,7 @@ materially without claiming that it completes all low-frequency NEC4 work.
 
 - `--wire-engine auto` and `--wire-engine nec2` still select the preserved
   classic engine.
-- `--wire-engine nec4` is opt-in and advertised in capabilities.
+- `--wire-engine nec4ish` is opt-in and advertised in capabilities.
 - Existing NEC card syntax and result fields are unchanged.
 - The immutable M0 free-space and real-ground hashes remain exact.
 

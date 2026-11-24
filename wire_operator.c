@@ -25,9 +25,10 @@ static const wire_operator_vtable nec4_operator = {
 };
 
 static const wire_operator_vtable *active_operator = &nec2_operator;
-static const char *requested_engine = "auto";
-static const char *requested_ground_engine = "auto";
+static const char *requested_engine = "nec2";
+static const char *requested_ground_engine = "nec2";
 static const char *resolved_ground_engine = "nec2";
+static const char *selection_reason = "not-resolved";
 static const char *model_check_policy = "warn";
 static wire_operator_validity last_validity;
 static size_t model_patches, model_coated_domains;
@@ -307,6 +308,55 @@ int wire_operator_set_ground_engine(const char *name)
   return 0;
 }
 
+int wire_operator_resolve_auto(void)
+{
+  int automatic=!strcmp(requested_engine,"auto")||
+    !strcmp(requested_ground_engine,"auto");
+  int wire_unsupported=model_coated_domains||model_dielectric_loaded;
+  int finite_sommerfeld=gnd.ksymp==2&&gnd.iperf==2;
+  int interface_wire=0;
+  for(int segment=0;segment<data.n&&!interface_wire;++segment)
+    interface_wire=data.z1[segment]<0.||data.z2[segment]<0.;
+  int ground_unsupported=wire_unsupported||model_patches||!finite_sommerfeld||
+    !interface_wire;
+
+  if(!strcmp(requested_engine,"auto"))
+  {
+    /* An explicit NEC4ish ground request also requests its required wire
+       basis.  Unsupported combinations then fail with the ordinary,
+       actionable compatibility diagnostic rather than silently changing an
+       explicit choice. */
+    if(!strcmp(requested_ground_engine,"nec4ish")||!wire_unsupported)
+      active_operator=&nec4_operator;
+    else
+      active_operator=&nec2_operator;
+  }
+
+  if(!strcmp(requested_ground_engine,"auto"))
+    resolved_ground_engine=active_operator==&nec4_operator&&
+      !ground_unsupported?"nec4ish":"nec2";
+
+  if(!automatic)
+    selection_reason="explicit-selection";
+  else if(wire_unsupported&&active_operator==&nec2_operator)
+    selection_reason=model_coated_domains&&model_dielectric_loaded?
+      "coated-wire-and-dielectric-vie":
+      (model_coated_domains?"coated-wire":"dielectric-vie");
+  else if(model_patches&&!strcmp(resolved_ground_engine,"nec2")&&
+          !strcmp(requested_ground_engine,"auto"))
+    selection_reason="surface-patch-ground-fallback";
+  else if(finite_sommerfeld&&!interface_wire&&
+          !strcmp(resolved_ground_engine,"nec2")&&
+          !strcmp(requested_ground_engine,"auto"))
+    selection_reason="above-ground-optimized-ground";
+  else if(!finite_sommerfeld&&!strcmp(resolved_ground_engine,"nec2")&&
+          !strcmp(requested_ground_engine,"auto"))
+    selection_reason="classic-ground-mode";
+  else
+    selection_reason="supported-nec4ish-model";
+  return 1;
+}
+
 int wire_operator_set_model_check(const char *name)
 {
   if(!name) return 0;
@@ -348,6 +398,7 @@ const char *wire_operator_resolved_ground_engine(void)
 {
   return resolved_ground_engine;
 }
+const char *wire_operator_selection_reason(void) { return selection_reason; }
 const char *wire_operator_model_check(void) { return model_check_policy; }
 int wire_operator_nec4_basis(void) { return active_operator == &nec4_operator; }
 int wire_operator_nec4_ground(void)

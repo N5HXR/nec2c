@@ -7,7 +7,7 @@ Status: accepted by the user on 2026-11-17.
 M7 adds the material and topology foundation needed by the buried-wire field
 work in M8 and M9. It does **not** substitute the classic NEC2 ground field
 for a buried or penetrating-wire answer. In this milestone,
-`--ground-engine nec4` therefore requires all of the following:
+`--ground-engine nec4ish` therefore requires all of the following:
 
 - a finite Sommerfeld `GN 2` lower medium;
 - `--validate-only --result-json FILE`;
@@ -99,12 +99,12 @@ system package or library is required.
 First build, then run the two supplied models through preflight:
 
 ```sh
-./nec2c --wire-engine nec4 --ground-engine nec4 --validate-only \
+./nec2c --wire-engine nec4ish --ground-engine nec4ish --validate-only \
   --result-json /tmp/m7-buried.json \
   -i tests/nec4-similarity/m7-buried-dipole.nec \
   -o /tmp/m7-buried.out
 
-./nec2c --wire-engine nec4 --ground-engine nec4 --validate-only \
+./nec2c --wire-engine nec4ish --ground-engine nec4ish --validate-only \
   --result-json /tmp/m7-stake.json \
   -i tests/nec4-similarity/m7-ground-stake.nec \
   -o /tmp/m7-stake.out

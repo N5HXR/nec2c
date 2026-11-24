@@ -40,7 +40,8 @@ def run(directory, name, text, backend="builtin", threads=1):
     report = directory / f"{name}.out"
     result = directory / f"{name}.json"
     source.write_text(text, encoding="ascii")
-    command = [str(BINARY), "--backend", backend, "--jobs", "1",
+    command = [str(BINARY), "--wire-engine", "nec2",
+               "--ground-engine", "nec2", "--backend", backend, "--jobs", "1",
                "--threads", str(threads), "--result-json", str(result),
                "-i", str(source), "-o", str(report)]
     completed = subprocess.run(command, cwd=ROOT, text=True,
@@ -61,7 +62,8 @@ def expect_error(directory, name, text, code):
     result = directory / f"{name}.json"
     source.write_text(text, encoding="ascii")
     completed = subprocess.run(
-        [str(BINARY), "--result-json", str(result), "-i", str(source),
+        [str(BINARY), "--wire-engine", "nec2", "--ground-engine", "nec2",
+         "--result-json", str(result), "-i", str(source),
          "-o", str(report)], cwd=ROOT, stdout=subprocess.PIPE,
         stderr=subprocess.PIPE, text=True)
     parsed = json.loads(result.read_text()) if result.exists() else None

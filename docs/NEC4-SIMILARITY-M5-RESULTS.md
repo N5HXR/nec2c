@@ -131,7 +131,7 @@ python3 tests/nec4-similarity/m5_models.py
 Run the published stress geometry directly:
 
 ```sh
-./nec2c --wire-engine nec4 --model-check warn \
+./nec2c --wire-engine nec4ish --model-check warn \
   -i tests/nec4-similarity/m5-cap-monopole.nec \
   -o /tmp/m5-cap-monopole.out
 ```
@@ -140,7 +140,7 @@ The current table should be smooth near the source and should retain only a
 small residual ripple at the free tip. For a loaded/networked case:
 
 ```sh
-./nec2c --wire-engine nec4 --jobs 8 --threads 1 \
+./nec2c --wire-engine nec4ish --jobs 8 --threads 1 \
   -i tests/performance/m6-loaded-network-402.nec \
   -o /tmp/m5-loaded-network.out
 ```

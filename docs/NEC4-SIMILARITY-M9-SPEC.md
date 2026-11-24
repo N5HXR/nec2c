@@ -486,7 +486,7 @@ remains the required escape hatch for later CLI integration.
 The twelfth Gate F slice completes that CLI integration. Geometry is still
 classified once per NEC job, while complex material constants, interface
 charge factors, and the complete table bank are refreshed for each frequency
-before matrix assembly. `--ground-engine nec4` is no longer reference-only.
+before matrix assembly. `--ground-engine nec4ish` is no longer reference-only.
 It attaches the immutable M9 matrix context to the existing NEC4 wire
 operator; `--nec4-ground-model grid` is the default and
 `--nec4-ground-model direct` retains the contour oracle for comparison.

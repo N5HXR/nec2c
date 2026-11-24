@@ -68,7 +68,7 @@ hemisphere radiation grid at each frequency.
 Run:
 
 ```sh
-./nec2c --wire-engine nec4 --ground-engine nec2 \
+./nec2c --wire-engine nec4ish --ground-engine nec2 \
   --backend auto --jobs auto --threads auto \
   --result-json /tmp/m6-user.json \
   -i tests/nec4-similarity/m6-user-above-ground.nec \

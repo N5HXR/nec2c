@@ -67,6 +67,9 @@ EXTRA_DIST = \
   docs/NEC4-SIMILARITY-M11B-RESULTS.md \
   docs/NEC4-SIMILARITY-M11C-RESULTS.md \
   docs/NEC4-SIMILARITY-M11D-RESULTS.md \
+  docs/NEC4-SIMILARITY-M11E-RESULTS.md \
+  docs/NEC4-SIMILARITY-M12-RESULTS.md \
+  docs/NEC4ISH-USER-GUIDE.md \
   tests/nec4-similarity/m0-baseline.json \
   tests/nec4-similarity/m0_baseline.py \
   tests/nec4-similarity/m1-witnesses.json \
@@ -182,6 +185,11 @@ EXTRA_DIST = \
   tests/nec4-similarity/m11d-magnetic.json \
   tests/nec4-similarity/m11d-magnetic.png \
   tests/nec4-similarity/m11d_magnetic.py \
+  tests/nec4-similarity/m11e-production.json \
+  tests/nec4-similarity/m11e-production.nec \
+  tests/nec4-similarity/m11e_production.py \
+  tests/nec4-similarity/m12-performance.json \
+  tests/nec4-similarity/m12_release.py \
   tests/nec4-similarity/m10d_closure.py \
   tests/nec4-similarity/m10d_radial_screen.py \
   tests/nec4-similarity/m11a-measurement.json \
@@ -557,7 +565,7 @@ EXTRA_DIST = \
   tests/decks/patch-only.nec \
   tests/regression.py
 
-TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/nec4-similarity/m8_equations.py tests/nec4-similarity/m8_bessel.py tests/nec4-similarity/m8_hankel.py tests/nec4-similarity/m8_limits.py tests/nec4-similarity/m8_pairings.py tests/nec4-similarity/m8_oracle.py tests/nec4-similarity/m8_qualification.py tests/nec4-similarity/m8_singularity.py tests/nec4-similarity/m9_tables.py tests/nec4-similarity/m9_linear.py tests/nec4-similarity/m9_linear_outer.py tests/nec4-similarity/m9_linear_qualification.py tests/nec4-similarity/m9_table_layout.py tests/nec4-similarity/m9_model_rank.py tests/nec4-similarity/m9_model_fit.py tests/nec4-similarity/m9_asymptotic.py tests/nec4-similarity/m9_dispatch.py tests/nec4-similarity/m9_grazing_warning.py tests/nec4-similarity/m9_production.py tests/nec4-similarity/m10a_normalization.py tests/nec4-similarity/m10b_surface_reference.py tests/nec4-similarity/m10c_ground_stake.py tests/nec4-similarity/m10d_radial_screen.py tests/nec4-similarity/m10d_closure.py tests/nec4-similarity/m11a_measurement.py tests/nec4-similarity/m11b_adaptive.py tests/nec4-similarity/m11c_interference.py tests/nec4-similarity/m11d_magnetic.py tests/nec4-similarity/m11e_production.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
+TESTS = tests/regression.py tests/backend_equivalence.py tests/frequency_parallel.py tests/classic_fill_parallel.py tests/coupling_parallel.py tests/field_parallel.py tests/network_cache.py tests/dielectric_assembly_parallel.py tests/dielectric_parser.py tests/dielectric_mesh.py tests/nec4-similarity/m0_baseline.py tests/nec4-similarity/m1_operator.py tests/nec4-similarity/m2_basis.py tests/nec4-similarity/m3_junctions.py tests/nec4-similarity/m4_kernel.py tests/nec4-similarity/m4_models.py tests/nec4-similarity/m5_endcap_oracle.py tests/nec4-similarity/m5_models.py tests/nec4-similarity/m6_combined.py tests/nec4-similarity/m7_medium.py tests/nec4-similarity/m8_equations.py tests/nec4-similarity/m8_bessel.py tests/nec4-similarity/m8_hankel.py tests/nec4-similarity/m8_limits.py tests/nec4-similarity/m8_pairings.py tests/nec4-similarity/m8_oracle.py tests/nec4-similarity/m8_qualification.py tests/nec4-similarity/m8_singularity.py tests/nec4-similarity/m9_tables.py tests/nec4-similarity/m9_linear.py tests/nec4-similarity/m9_linear_outer.py tests/nec4-similarity/m9_linear_qualification.py tests/nec4-similarity/m9_table_layout.py tests/nec4-similarity/m9_model_rank.py tests/nec4-similarity/m9_model_fit.py tests/nec4-similarity/m9_asymptotic.py tests/nec4-similarity/m9_dispatch.py tests/nec4-similarity/m9_grazing_warning.py tests/nec4-similarity/m9_production.py tests/nec4-similarity/m10a_normalization.py tests/nec4-similarity/m10b_surface_reference.py tests/nec4-similarity/m10c_ground_stake.py tests/nec4-similarity/m10d_radial_screen.py tests/nec4-similarity/m10d_closure.py tests/nec4-similarity/m11a_measurement.py tests/nec4-similarity/m11b_adaptive.py tests/nec4-similarity/m11c_interference.py tests/nec4-similarity/m11d_magnetic.py tests/nec4-similarity/m11e_production.py tests/nec4-similarity/m12_release.py tests/coated-wire/m0_baseline.py tests/coated-wire/m2_parser.py tests/coated-wire/m3_operator.py tests/coated-wire/m4_loss.py tests/coated-wire/m5_feed.py tests/coated-wire/m6_junctions.py tests/coated-wire/m7_geometry.py tests/coated-wire/m7_bend_envelope.py tests/coated-wire/m8_validity.py tests/coated-wire/m9_release.py \
 	tests/dielectric_solver.py \
 	tests/dielectric_fields.py \
 	tests/dielectric_ground.py \

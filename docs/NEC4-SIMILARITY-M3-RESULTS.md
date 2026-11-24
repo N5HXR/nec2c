@@ -110,7 +110,7 @@ including 109 local solves and a maximum order of 18, with zero fallback, a
 
 - `--wire-engine auto` and `--wire-engine nec2` still use the preserved
   classic implementation.
-- M3 remains opt-in through `--wire-engine nec4`.
+- M3 remains opt-in through `--wire-engine nec4ish`.
 - Existing cards and result schema are unchanged.
 - The optimized complete suite passes: 51/51, with no skips or failures.
 - An ASan/UBSan build passes M0, M2, M3, and the order-18 crash fixture; no
@@ -155,10 +155,10 @@ M3 junction solve, convergence, reciprocity, and crash gates passed
 For direct manual inspection, run the stepped dipole and unequal-radius star:
 
 ```sh
-./nec2c --wire-engine nec4 --ground-engine nec2 \
+./nec2c --wire-engine nec4ish --ground-engine nec2 \
   -i tests/nec4-similarity/m3-step-dipole.nec -o /tmp/m3-step.out
 
-./nec2c --wire-engine nec4 --ground-engine nec2 \
+./nec2c --wire-engine nec4ish --ground-engine nec2 \
   -i tests/nec4-similarity/m3-star.nec -o /tmp/m3-star.out
 
 grep -A1 "NEC4 JUNCTION CHARGE" /tmp/m3-step.out /tmp/m3-star.out

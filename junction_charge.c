@@ -265,7 +265,7 @@ int junction_charge_prepare(FILE *report,int strict,
     if(!new_factor || !new_assigned) abort_on_error(-1);
     end_factor=new_factor;end_assigned=new_assigned;endpoint_capacity=endpoints;
   }
-  memset(end_assigned,0,endpoints*sizeof(*end_assigned));
+  if(endpoints) memset(end_assigned,0,endpoints*sizeof(*end_assigned));
   if(!data.n) return 1;
   parent=malloc(endpoints*sizeof(*parent));counts=calloc(endpoints,sizeof(*counts));
   offsets=calloc(endpoints+1,sizeof(*offsets));cursor=calloc(endpoints,sizeof(*cursor));

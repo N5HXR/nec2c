@@ -5,7 +5,7 @@ Status: implementation complete; awaiting user acceptance.
 ## Outcome
 
 M4 adds the documented NEC4 reduced thin-wire interaction to the opt-in
-`--wire-engine nec4` path.  The source current is placed on the source
+`--wire-engine nec4ish` path.  The source current is placed on the source
 cylinder, the boundary condition is matched on the observation axis, and the
 operator evaluates the five Appendix B field components for sine, constant,
 and cosine-minus-constant current.  The classic and `auto` paths remain NEC2.

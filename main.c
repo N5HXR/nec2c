@@ -1088,6 +1088,36 @@ static void enforce_nec4_m9_boundary(nec4_medium_state *state,
         "{\"implementation\":\"documented-interface-integrals\"}");
 }
 
+static void resolve_automatic_engines(const dielectric_model *dielectric,
+    size_t coated_domain_count,int *reported)
+{
+  char context[512];
+  wire_operator_set_model_features((size_t)data.m,coated_domain_count,
+      dielectric&&dielectric->loaded);
+  wire_operator_resolve_auto();
+  if(*reported) return;
+  *reported=1;
+  if(strcmp(wire_operator_requested_engine(),"auto")&&
+     strcmp(wire_operator_requested_ground_engine(),"auto"))
+    return;
+  snprintf(context,sizeof(context),
+      "{\"wire\":{\"requested\":\"%s\",\"resolved\":\"%s\"},"
+      "\"ground\":{\"requested\":\"%s\",\"resolved\":\"%s\"},"
+      "\"reason\":\"%s\"}",
+      wire_operator_requested_engine(),wire_operator_resolved_engine(),
+      wire_operator_requested_ground_engine(),
+      wire_operator_resolved_ground_engine(),
+      wire_operator_selection_reason());
+  result_json_diagnostic("info","ENGINE_AUTO_SELECTION",
+      "wire and ground engine selection resolved",context);
+  fprintf(output_fp,
+      "\n  ENGINE AUTO SELECTION: wire %s -> %s, ground %s -> %s (%s)",
+      wire_operator_requested_engine(),wire_operator_resolved_engine(),
+      wire_operator_requested_ground_engine(),
+      wire_operator_resolved_ground_engine(),
+      wire_operator_selection_reason());
+}
+
 static int prepare_nec4_ground_frequency(nec4_medium_state *medium,
     nec4_ground_runtime *runtime,const char *cache_directory,
     nec4_ground_model model)
@@ -1197,6 +1227,7 @@ int main( int argc, char **argv )
   nec4_ground_runtime nec4_ground;
   int dielectric_excitation_seen, dielectric_any_excitation_seen;
   int dielectric_solved;
+  int engine_selection_reported=0;
   int dielectric_iterative = 0;
   int capabilities_json = 0;
   int validate_only = 0;
@@ -1662,6 +1693,7 @@ int main( int argc, char **argv )
 	nec4_ground_runtime_destroy( &nec4_ground );
 	wire_operator_set_ground_matrix_context( NULL );
 	result_json_job_begin();
+	engine_selection_reported=0;
 	ifrtmw=0;
 	ifrtmp=0;
 	dielectric_excitation_seen=0;
@@ -2505,6 +2537,8 @@ int main( int argc, char **argv )
 		   *** normal exit of nec2c when all jobs complete ok ***
 		   ******************************************************/
 
+		  resolve_automatic_engines(&dielectric,coated_wires.domain_count,
+		      &engine_selection_reported);
 		  enforce_nec4_m9_boundary(&nec4_medium,&dielectric,
 		      coated_wires.domain_count);
 
@@ -2614,6 +2648,8 @@ int main( int argc, char **argv )
 	  /* Cards that request an immediate calculation reach this point via a
 	     switch break.  Apply the same M7 gate used by EN before any classic
 	     matrix fill can silently substitute the NEC2 ground formulation. */
+	  resolve_automatic_engines(&dielectric,coated_wires.domain_count,
+	      &engine_selection_reported);
 	  enforce_nec4_m9_boundary(&nec4_medium,&dielectric,
 	      coated_wires.domain_count);
 

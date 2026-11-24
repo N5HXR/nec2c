@@ -16,7 +16,7 @@ cover every source/observer pairing:
 
 The oracle is validation infrastructure for the accelerated M9 ground engine.
 It is not a matrix-fill implementation, is not selected automatically, and
-must not make `--ground-engine nec4` perform a production solve in M8.
+must not make `--ground-engine nec4ish` perform a production solve in M8.
 
 The superscript `H` in the theory guide denotes a *horizontal electric-dipole
 source*. It does not denote magnetic field. The published equations used here

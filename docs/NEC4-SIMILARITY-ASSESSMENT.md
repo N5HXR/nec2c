@@ -252,7 +252,7 @@ After acceptance, making the new engine the default can be a separate user decis
 
 1. Is the target **documented NEC4 (1992) wire physics**, or should later NEC 4.2 black-box behavior be treated as normative when it differs from the manual?
 2. Is Objective A the first bounded project, leaving buried/cross-interface wires for a later project?
-3. Should the new engine begin as `--wire-engine nec4-similar` (name provisional), with `--wire-engine nec2` preserving the original path?
+3. Should the new engine begin as `--wire-engine nec4ish-similar` (name provisional), with `--wire-engine nec2` preserving the original path?
 4. Which published NEC4/5 reports should be elevated from corroborating plots to reconstructed acceptance decks? The project will not acquire or run the licensed NEC4 binary; public equations, published numerical witnesses, analytic cases, `momwire`, and openEMS form the oracle set.
 5. Should the first release explicitly exclude coated wires from the new engine until the independent `LD 7` operator is revalidated on top of the revised basis/kernel?
 

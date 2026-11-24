@@ -450,6 +450,9 @@ If these conditions cannot be met, M11 produces a research report and is closed 
 
 ### M12 - release candidate, default policy, and merge
 
+Status: **accepted (PASS, 2026-11-24)**.  The selected public name is
+`nec4ish`; `nec4` is retained only as an input compatibility alias.
+
 Goal: produce the reviewable final feature without obscuring classic behavior or unresolved limits.
 
 Work:
@@ -467,7 +470,8 @@ Work:
 Acceptance metrics:
 
 - explicit NEC2 mode reproduces the M0 corpus;
-- validated NEC4ish mode becomes `auto` for supported cases only if the user approves;
+- classic NEC2 remains the no-flag default; `auto` is an explicit opt-in to
+  qualified NEC4ish selection;
 - every unsupported or out-of-envelope case has an actionable diagnostic;
 - no unreviewed dependency or system-administration requirement;
 - user performs the final free-space, above-ground, buried/crossing, VSWR, radiation-grid, and performance smoke tests.
@@ -501,7 +505,10 @@ The final portfolio will be assembled incrementally and retained as ordinary NEC
 
 ## Approved design decisions
 
-1. **Default policy:** after M12 acceptance, `auto` selects NEC4ish for supported cases, while explicit `nec2` preserves old behavior. Until M12, new behavior is opt-in.
+1. **Default policy:** classic NEC2 remains the no-flag default.  Explicit
+   `auto` selects NEC4ish for supported cases, and explicit `nec4ish` directly
+   requests the new engine.  NEC4ish remains opt-in while it accumulates field
+   experience.
 2. **GN3 naming:** call the independently derived later engine `adaptive`, not `gn3`, unless subsequent research establishes a complete public specification.
 3. **Validity handling:** warn and continue by default, provide `--model-check strict` to turn validated-envelope warnings into errors, and `off` only to silence warnings. Numerically undefined geometry remains an error in every mode.
 4. **Interface scope:** use one planar homogeneous half-space, matching documented NEC4. Multilayer soil and terrain remain future projects.
